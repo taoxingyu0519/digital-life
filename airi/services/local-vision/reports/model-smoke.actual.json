@@ -1,0 +1,71 @@
+{
+  "at": "2026-09-29T10:01:24.756703+00:00",
+  "status": "PASS",
+  "evidence_mode": "synthetic",
+  "device": "cuda",
+  "executed_nodes": {
+    "CUDAExecutionProvider": 203
+  },
+  "profile_sha256": "97e238d0353100b557520d56ede3b10195d1342e5075136c567fd06d09caae61",
+  "providers": [
+    "CUDAExecutionProvider",
+    "CPUExecutionProvider"
+  ],
+  "elapsed_ms": 312.0000000053551,
+  "people": 0,
+  "objects": 0,
+  "quality": "one-person-required",
+  "models": {
+    "yolox": {
+      "file": "yolox-s.onnx",
+      "url": "https://github.com/Megvii-BaseDetection/YOLOX/releases/download/0.1.1rc0/yolox_s.onnx",
+      "bytes": 35858002,
+      "sha256": "c5c2d13e59ae883e6af3b45daea64af4833a4951c92d116ec270d9ddbe998063",
+      "license_file": "yolox-LICENSE.txt",
+      "license_sha256": "0ec3668d3274bcf29e8a29e9576d5a2cd96fc78d3c5bec4387355a796e5d9088",
+      "license_review": "REVIEW_REQUIRED",
+      "preprocessing": "airi-local-vision-v1"
+    },
+    "yunet": {
+      "file": "yunet.onnx",
+      "url": "https://media.githubusercontent.com/media/opencv/opencv_zoo/main/models/face_detection_yunet/face_detection_yunet_2023mar.onnx",
+      "bytes": 232589,
+      "sha256": "8f2383e4dd3cfbb4553ea8718107fc0423210dc964f9f4280604804ed2552fa4",
+      "license_file": "yunet-LICENSE.txt",
+      "license_sha256": "c83b8120c50ccbd4c4f96edf53141bdd566ebb8f8e9227e415326aa1b1aba958",
+      "license_review": "REVIEW_REQUIRED",
+      "preprocessing": "airi-local-vision-v1"
+    },
+    "sface": {
+      "file": "sface.onnx",
+      "url": "https://media.githubusercontent.com/media/opencv/opencv_zoo/main/models/face_recognition_sface/face_recognition_sface_2021dec.onnx",
+      "bytes": 38696353,
+      "sha256": "0ba9fbfa01b5270c96627c4ef784da859931e02f04419c829e83484087c34e79",
+      "license_file": "sface-LICENSE.txt",
+      "license_sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "license_review": "REVIEW_REQUIRED",
+      "preprocessing": "airi-local-vision-v1"
+    },
+    "face": {
+      "file": "face.task",
+      "url": "https://storage.googleapis.com/mediapipe-models/face_landmarker/face_landmarker/float16/1/face_landmarker.task",
+      "bytes": 3758596,
+      "sha256": "64184e229b263107bc2b804c6625db1341ff2bb731874b0bcc2fe6544e0bc9ff",
+      "license_file": "face-LICENSE.txt",
+      "license_sha256": "8707eef0533987efc5b155d64761eeb6e20793f50b9bd1a68dad1cf4719d0ed8",
+      "license_review": "REVIEW_REQUIRED",
+      "preprocessing": "airi-local-vision-v1"
+    },
+    "gesture": {
+      "file": "gesture.task",
+      "url": "https://storage.googleapis.com/mediapipe-models/gesture_recognizer/gesture_recognizer/float16/1/gesture_recognizer.task",
+      "bytes": 8373440,
+      "sha256": "97952348cf6a6a4915c2ea1496b4b37ebabc50cbbf80571435643c455f2b0482",
+      "license_file": "gesture-LICENSE.txt",
+      "license_sha256": "8707eef0533987efc5b155d64761eeb6e20793f50b9bd1a68dad1cf4719d0ed8",
+      "license_review": "REVIEW_REQUIRED",
+      "preprocessing": "airi-local-vision-v1"
+    }
+  },
+  "note": "Executed provider nodes prove this synthetic inference only. Camera quality and full performance remain untested."
+}

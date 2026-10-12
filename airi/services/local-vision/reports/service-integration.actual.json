@@ -1,0 +1,35 @@
+{
+  "at": "2026-10-06T14:04:35.396563+00:00",
+  "status": "PASS",
+  "evidence_mode": "synthetic",
+  "frames": 5,
+  "health": {
+    "protocol": "1.0",
+    "ready": true,
+    "error": "",
+    "device": "cuda",
+    "calibrated": false,
+    "camera_condition": null,
+    "grounding": "missing"
+  },
+  "round_trip_ms": [
+    250.0,
+    31.00000007543713,
+    30.999999959021807,
+    30.999999959021807,
+    30.999999959021807
+  ],
+  "checks": [
+    "custom-header-required",
+    "cross-origin-denied",
+    "private-files-blocked-six-routes",
+    "face-disabled-policy",
+    "recognition-diagnostics-empty-without-face",
+    "single-owner",
+    "real-jpeg-decode",
+    "real-model-inference",
+    "LV01-result-correlation",
+    "release"
+  ],
+  "note": "合成 JPEG 验证真实服务协议和推理，不包含真人摄像头、识别准确率、舞台帧率或完整性能验收。"
+}

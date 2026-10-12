@@ -1,0 +1,25 @@
+{
+  "name": "@proj-airi/local-vision",
+  "type": "module",
+  "private": true,
+  "description": "Local camera service boundary and ephemeral vision policies",
+  "exports": {
+    "./contracts": "./src/contracts.ts",
+    "./client": "./src/client.ts",
+    "./camera-lease": "./src/camera-lease.ts",
+    "./policy": "./src/policy.ts",
+    "./gaze": "./src/gaze.ts",
+    "./vite": "./dist/vite.mjs"
+  },
+  "scripts": {
+    "build": "tsdown",
+    "typecheck": "tsc --noEmit",
+    "test:run": "vitest run"
+  },
+  "dependencies": {
+    "valibot": "catalog:"
+  },
+  "devDependencies": {
+    "vite": "catalog:"
+  }
+}

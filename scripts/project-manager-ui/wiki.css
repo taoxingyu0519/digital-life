@@ -1,0 +1,32 @@
+.wiki-section { margin-top: 36px; padding: 26px; background: #fff; border: 1px solid #dce5dc; border-radius: 13px; }
+.wiki-section .toolbar { margin: 0; }
+.wiki-search { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+.wiki-search input { flex: 1; min-width: 220px; }
+#wiki-message { color: #657669; font-size: 13px; }
+.wiki-layout { display: grid; grid-template-columns: 290px minmax(0, 1fr); gap: 28px; margin-top: 20px; align-items: start; }
+#wiki-topics { max-height: 720px; overflow-y: auto; padding: 3px; }
+.wiki-topic { display: block; color: #243e3e; border: 1px solid #d9e4d8; border-radius: 9px; padding: 14px; text-decoration: none; margin-bottom: 10px; }
+.wiki-topic:hover { background: #f1f7ed; }
+.wiki-topic strong { font-size: 14px; }
+.wiki-topic span { display: block; font-size: 12px; color: #657669; margin-top: 8px; line-height: 1.7; }
+.wiki-topic small { display: block; font-size: 11px; color: #657669; margin-top: 8px; }
+#wiki-article { min-width: 0; max-height: 900px; overflow: auto; padding: 0 6px 12px; line-height: 1.85; overflow-wrap: anywhere; }
+#wiki-article h2 { font-size: 24px; margin: 16px 0; }
+#wiki-article h3 { font-size: 18px; margin: 28px 0 12px; }
+#wiki-article h4 { font-size: 16px; }
+#wiki-article p { margin: 12px 0; }
+#wiki-article a { color: #275b45; text-underline-offset: 3px; }
+#wiki-article .wiki-file-label { color: #657669; }
+#wiki-article code { background: #eef3ec; padding: 2px 5px; border-radius: 4px; font-size: 13px; }
+#wiki-article pre { white-space: pre-wrap; background: #f2f5f1; padding: 16px; border-radius: 9px; font-size: 12px; line-height: 1.65; }
+#wiki-article .wiki-source { max-height: 720px; overflow: auto; }
+.wiki-table { overflow-x: auto; }
+#wiki-article table { border-collapse: collapse; width: 100%; font-size: 13px; }
+#wiki-article th, #wiki-article td { border: 1px solid #dce5dc; padding: 10px 12px; text-align: left; vertical-align: top; }
+#wiki-article th { background: #eef3ec; }
+#wiki-article ul, #wiki-article ol { list-style: initial; max-height: none; padding-left: 24px; margin: 12px 0; }
+#wiki-article ol { list-style: decimal; }
+#wiki-article li { border: none; padding: 3px 0; }
+.wiki-status { padding: 10px 12px; background: #eef3ec; border-radius: 7px; font-size: 12px; }
+@media (max-width: 1050px) { .wiki-layout { grid-template-columns: 230px minmax(0, 1fr); gap: 18px; } }
+@media (max-width: 750px) { .wiki-layout { grid-template-columns: 1fr; } #wiki-topics { max-height: 250px; } .wiki-section { padding: 20px; } #wiki-article { max-height: none; } }

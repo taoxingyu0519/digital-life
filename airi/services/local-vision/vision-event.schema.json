@@ -1,0 +1,384 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:airi-local-vision:event:1",
+  "title": "Proposed LocalVisionEvent — not an existing AIRI API",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "event_id",
+    "evidence_mode",
+    "session_binding_id",
+    "source_id",
+    "epoch",
+    "seq",
+    "privacy_generation",
+    "observed_at_utc",
+    "valid_for_ms",
+    "type",
+    "payload"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0"
+    },
+    "event_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 100
+    },
+    "evidence_mode": {
+      "enum": [
+        "live",
+        "replay",
+        "mock",
+        "example"
+      ]
+    },
+    "session_binding_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 100
+    },
+    "source_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 100
+    },
+    "epoch": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "seq": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "privacy_generation": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "observed_at_utc": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "valid_for_ms": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 20000
+    },
+    "type": {
+      "enum": [
+        "observation.snapshot",
+        "interaction.candidate",
+        "source.state",
+        "service.health"
+      ]
+    },
+    "payload": {
+      "type": "object"
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "observation.snapshot"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "actors",
+              "objects",
+              "primary_track_id",
+              "frame_seq"
+            ],
+            "properties": {
+              "actors": {
+                "type": "array",
+                "maxItems": 3,
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "track_id",
+                    "bbox",
+                    "identity_status",
+                    "person_id",
+                    "display_name",
+                    "primary",
+                    "visible_cues"
+                  ],
+                  "properties": {
+                    "track_id": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 100
+                    },
+                    "bbox": {
+                      "type": "array",
+                      "items": {
+                        "type": "number",
+                        "minimum": 0,
+                        "maximum": 1
+                      },
+                      "minItems": 4,
+                      "maxItems": 4,
+                      "description": "unmirrored normalized xyxy; x1<x2,y1<y2 checked semantically"
+                    },
+                    "identity_status": {
+                      "enum": [
+                        "unavailable",
+                        "unknown",
+                        "candidate",
+                        "confirmed",
+                        "ambiguous",
+                        "revoked"
+                      ]
+                    },
+                    "person_id": {
+                      "type": [
+                        "string",
+                        "null"
+                      ],
+                      "maxLength": 100
+                    },
+                    "display_name": {
+                      "type": [
+                        "string",
+                        "null"
+                      ],
+                      "maxLength": 80
+                    },
+                    "primary": {
+                      "type": "boolean"
+                    },
+                    "visible_cues": {
+                      "type": "array",
+                      "maxItems": 12,
+                      "items": {
+                        "enum": [
+                          "head_facing_camera",
+                          "head_turned",
+                          "mouth_open",
+                          "mouth_corner_raised",
+                          "brow_lowered",
+                          "hand_visible"
+                        ]
+                      }
+                    }
+                  }
+                }
+              },
+              "objects": {
+                "type": "array",
+                "maxItems": 50,
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "label",
+                    "score",
+                    "bbox"
+                  ],
+                  "properties": {
+                    "label": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 80
+                    },
+                    "score": {
+                      "type": "number",
+                      "minimum": 0,
+                      "maximum": 1
+                    },
+                    "bbox": {
+                      "type": "array",
+                      "items": {
+                        "type": "number",
+                        "minimum": 0,
+                        "maximum": 1
+                      },
+                      "minItems": 4,
+                      "maxItems": 4,
+                      "description": "unmirrored normalized xyxy; x1<x2,y1<y2 checked semantically"
+                    }
+                  }
+                }
+              },
+              "primary_track_id": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "frame_seq": {
+                "type": "integer",
+                "minimum": 0
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "interaction.candidate"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "kind",
+              "actor_track_id",
+              "evidence_frame_seqs"
+            ],
+            "properties": {
+              "kind": {
+                "enum": [
+                  "person_entered",
+                  "person_left",
+                  "nod",
+                  "shake_head",
+                  "wave",
+                  "thumb_up"
+                ]
+              },
+              "actor_track_id": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "evidence_frame_seqs": {
+                "type": "array",
+                "minItems": 1,
+                "maxItems": 30,
+                "items": {
+                  "type": "integer",
+                  "minimum": 0
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "source.state"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "state",
+              "reason"
+            ],
+            "properties": {
+              "state": {
+                "enum": [
+                  "stopped",
+                  "awaiting_permission",
+                  "starting",
+                  "running",
+                  "degraded",
+                  "disconnected",
+                  "error"
+                ]
+              },
+              "reason": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "maxLength": 300
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "type": {
+            "const": "service.health"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "state",
+              "modules"
+            ],
+            "properties": {
+              "state": {
+                "enum": [
+                  "ready",
+                  "degraded",
+                  "loading",
+                  "blocked"
+                ]
+              },
+              "modules": {
+                "type": "array",
+                "maxItems": 12,
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "id",
+                    "state",
+                    "actual_device"
+                  ],
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "state": {
+                      "enum": [
+                        "ready",
+                        "loading",
+                        "missing_model",
+                        "error",
+                        "disabled"
+                      ]
+                    },
+                    "actual_device": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

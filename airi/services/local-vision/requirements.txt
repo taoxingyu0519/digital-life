@@ -1,0 +1,11 @@
+fastapi==0.115.12
+uvicorn==0.34.2
+websockets==15.0.1
+pydantic==2.11.4
+numpy==1.26.4
+opencv-contrib-python==4.11.0.86
+onnxruntime-gpu==1.22.0
+mediapipe==0.10.21
+supervision==0.25.1
+cryptography==44.0.3
+httpx==0.28.1

@@ -1,0 +1,861 @@
+{
+  "at": "2026-09-29T10:13:04.490666+00:00",
+  "profile": "engineering",
+  "status": "NOT_ACCEPTED",
+  "tests": [
+    {
+      "id": "AIR-01",
+      "title": "真实fork与版本",
+      "status": "NOT_RUN",
+      "reason": "Full case evidence is not attached. Component checks are listed separately.",
+      "profiles": [
+        "engineering",
+        "full"
+      ]
+    },
+    {
+      "id": "AIR-02",
+      "title": "不承接旧平台",
+      "status": "NOT_RUN",
+      "reason": "Full case evidence is not attached. Component checks are listed separately.",
+      "profiles": [
+        "engineering",
+        "full"
+      ]
+    },
+    {
+      "id": "AIR-03",
+      "title": "原聊天和角色基线",
+      "status": "NOT_RUN",
+      "reason": "Full case evidence is not attached. Component checks are listed separately.",
+      "profiles": [
+        "engineering",
+        "full"
+      ]
+    },
+    {
+      "id": "AIR-04",
+      "title": "实际主应用正式接入",
+      "status": "NOT_RUN",
+      "reason": "Full case evidence is not attached. Component checks are listed separately.",
+      "profiles": [
+        "engineering",
+        "full"
+      ]
+    },
+    {
+      "id": "AIR-05",
+      "title": "视觉关闭回归",
+      "status": "NOT_RUN",
+      "reason": "Full case evidence is not attached. Component checks are listed separately.",
+      "profiles": [
+        "engineering",
+        "full"
+      ]
+    },
+    {
+      "id": "AIR-06",
+      "title": "无API仍本地运行",
+      "status": "NOT_RUN",
+      "reason": "Camera, stage, and profile-specific hardware evidence is not attached.",
+      "profiles": [
+        "engineering",
+        "full"
+      ]
+    },
+    {
+      "id": "AIR-07",
+      "title": "现有角色声音不被替换",
+      "status": "NOT_RUN",
+      "reason": "Full case evidence is not attached. Component checks are listed separately.",
+      "profiles": [
+        "engineering",
+        "full"
+      ]
+    },
+    {
+      "id": "AIR-08",
+      "title": "构建与规范",
+      "status": "NOT_RUN",
+      "reason": "Full case evidence is not attached. Component checks are listed separately.",
+      "profiles": [
+        "engineering",
+        "full"
+      ]
+    },
+    {
+      "id": "ENV-01",
+      "title": "模型锁真实",
+      "status": "NOT_RUN",
+      "reason": "Full case evidence is not attached. Component checks are listed separately.",
+      "profiles": [
+        "engineering",
+        "full"
+      ]
+    },
+    {
+      "id": "ENV-02",
+      "title": "4090真推理",
+      "status": "NOT_RUN",
+      "reason": "Camera, stage, and profile-specific hardware evidence is not attached.",
+      "profiles": [
+        "engineering",
+        "full"
+      ]
+    },
+    {
+      "id": "ENV-03",
+      "title": "缺权重不假就绪",
+      "status": "NOT_RUN",
+      "reason": "Full case evidence is not attached. Component checks are listed separately.",
+      "profiles": [
+        "engineering",
+        "full"
+      ]
+    },
+    {
+      "id": "ENV-04",
+      "title": "完全离线本地感知",
+      "status": "NOT_RUN",
+      "reason": "Camera, stage, and profile-specific hardware evidence is not attached.",
+      "profiles": [
+        "engineering",
+        "full"
+      ]
+    },
+    {
+      "id": "CAP-01",
+      "title": "真实摄像头与来源",
+      "status": "NOT_RUN",
+      "reason": "Camera, stage, and profile-specific hardware evidence is not attached.",
+      "profiles": [
+        "engineering",
+        "full"
+      ]
+    },
+    {
+      "id": "CAP-02",
+      "title": "唯一采集所有者",
+      "status": "NOT_RUN",
+      "reason": "Full case evidence is not attached. Component checks are listed separately.",
+      "profiles": [
+        "engineering",
+        "full"
+      ]
+    },
+    {
+      "id": "CAP-03",
+      "title": "关闭一秒内停止",
+      "status": "NOT_RUN",
+      "reason": "Camera, stage, and profile-specific hardware evidence is not attached.",
+      "profiles": [
+        "engineering",
+        "full"
+      ]
+    },
+    {
+      "id": "CAP-04",
+      "title": "epoch与乱序",
+      "status": "NOT_RUN",
+      "reason": "Full case evidence is not attached. Component checks are listed separately.",
+      "profiles": [
+        "engineering",
+        "full"
+      ]
+    },
+    {
+      "id": "CAP-05",
+      "title": "有界背压",
+      "status": "NOT_RUN",
+      "reason": "Full case evidence is not attached. Component checks are listed separately.",
+      "profiles": [
+        "engineering",
+        "full"
+      ]
+    },
+    {
+      "id": "CAP-06",
+      "title": "坐标还原",
+      "status": "NOT_RUN",
+      "reason": "Full case evidence is not attached. Component checks are listed separately.",
+      "profiles": [
+        "engineering",
+        "full"
+      ]
+    },
+    {
+      "id": "CAP-07",
+      "title": "应用退出释放",
+      "status": "NOT_RUN",
+      "reason": "Camera, stage, and profile-specific hardware evidence is not attached.",
+      "profiles": [
+        "engineering",
+        "full"
+      ]
+    },
+    {
+      "id": "CAP-08",
+      "title": "权限拒绝与设备占用",
+      "status": "NOT_RUN",
+      "reason": "Full case evidence is not attached. Component checks are listed separately.",
+      "profiles": [
+        "engineering",
+        "full"
+      ]
+    },
+    {
+      "id": "DET-01",
+      "title": "人员检测质量",
+      "status": "BLOCKED_MANUAL",
+      "reason": "Independent consented recordings and frozen labels are required.",
+      "profiles": [
+        "full"
+      ]
+    },
+    {
+      "id": "DET-02",
+      "title": "常见物体质量",
+      "status": "BLOCKED_MANUAL",
+      "reason": "Independent consented recordings and frozen labels are required.",
+      "profiles": [
+        "full"
+      ]
+    },
+    {
+      "id": "TRK-01",
+      "title": "track不等于person",
+      "status": "NOT_RUN",
+      "reason": "Full case evidence is not attached. Component checks are listed separately.",
+      "profiles": [
+        "engineering",
+        "full"
+      ]
+    },
+    {
+      "id": "TRK-02",
+      "title": "多人交错保守识别",
+      "status": "BLOCKED_MANUAL",
+      "reason": "Independent consented recordings and frozen labels are required.",
+      "profiles": [
+        "full"
+      ]
+    },
+    {
+      "id": "FAC-01",
+      "title": "授权登记与质量拒绝",
+      "status": "NOT_RUN",
+      "reason": "Camera, stage, and profile-specific hardware evidence is not attached.",
+      "profiles": [
+        "engineering",
+        "full"
+      ]
+    },
+    {
+      "id": "FAC-02",
+      "title": "无校准禁止叫名",
+      "status": "NOT_RUN",
+      "reason": "Full case evidence is not attached. Component checks are listed separately.",
+      "profiles": [
+        "engineering",
+        "full"
+      ]
+    },
+    {
+      "id": "FAC-03",
+      "title": "校准与测试不泄漏",
+      "status": "BLOCKED_MANUAL",
+      "reason": "Independent consented recordings and frozen labels are required.",
+      "profiles": [
+        "full"
+      ]
+    },
+    {
+      "id": "FAC-04",
+      "title": "常规已知200次",
+      "status": "BLOCKED_MANUAL",
+      "reason": "Independent consented recordings and frozen labels are required.",
+      "profiles": [
+        "full"
+      ]
+    },
+    {
+      "id": "FAC-05",
+      "title": "未知300次",
+      "status": "BLOCKED_MANUAL",
+      "reason": "Independent consented recordings and frozen labels are required.",
+      "profiles": [
+        "full"
+      ]
+    },
+    {
+      "id": "FAC-06",
+      "title": "困难已知100次",
+      "status": "BLOCKED_MANUAL",
+      "reason": "Independent consented recordings and frozen labels are required.",
+      "profiles": [
+        "full"
+      ]
+    },
+    {
+      "id": "FAC-07",
+      "title": "纠错不污染模板",
+      "status": "NOT_RUN",
+      "reason": "Full case evidence is not attached. Component checks are listed separately.",
+      "profiles": [
+        "engineering",
+        "full"
+      ]
+    },
+    {
+      "id": "FAC-08",
+      "title": "删除与撤销生效",
+      "status": "NOT_RUN",
+      "reason": "Full case evidence is not attached. Component checks are listed separately.",
+      "profiles": [
+        "engineering",
+        "full"
+      ]
+    },
+    {
+      "id": "FAC-09",
+      "title": "模板加密与接口最小化",
+      "status": "NOT_RUN",
+      "reason": "Full case evidence is not attached. Component checks are listed separately.",
+      "profiles": [
+        "engineering",
+        "full"
+      ]
+    },
+    {
+      "id": "FAC-10",
+      "title": "照片重放不认证",
+      "status": "NOT_RUN",
+      "reason": "Full case evidence is not attached. Component checks are listed separately.",
+      "profiles": [
+        "engineering",
+        "full"
+      ]
+    },
+    {
+      "id": "ACT-01",
+      "title": "点头事件质量",
+      "status": "BLOCKED_MANUAL",
+      "reason": "Independent consented recordings and frozen labels are required.",
+      "profiles": [
+        "full"
+      ]
+    },
+    {
+      "id": "ACT-02",
+      "title": "摇头事件质量",
+      "status": "BLOCKED_MANUAL",
+      "reason": "Independent consented recordings and frozen labels are required.",
+      "profiles": [
+        "full"
+      ]
+    },
+    {
+      "id": "ACT-03",
+      "title": "动态挥手事件质量",
+      "status": "BLOCKED_MANUAL",
+      "reason": "Independent consented recordings and frozen labels are required.",
+      "profiles": [
+        "full"
+      ]
+    },
+    {
+      "id": "ACT-04",
+      "title": "点赞事件质量",
+      "status": "BLOCKED_MANUAL",
+      "reason": "Independent consented recordings and frozen labels are required.",
+      "profiles": [
+        "full"
+      ]
+    },
+    {
+      "id": "ACT-05",
+      "title": "静态摊手不是挥手",
+      "status": "NOT_RUN",
+      "reason": "Full case evidence is not attached. Component checks are listed separately.",
+      "profiles": [
+        "engineering",
+        "full"
+      ]
+    },
+    {
+      "id": "ACT-06",
+      "title": "主要对象与匿名归属",
+      "status": "NOT_RUN",
+      "reason": "Full case evidence is not attached. Component checks are listed separately.",
+      "profiles": [
+        "engineering",
+        "full"
+      ]
+    },
+    {
+      "id": "ACT-07",
+      "title": "事实不当心理判断",
+      "status": "NOT_RUN",
+      "reason": "Full case evidence is not attached. Component checks are listed separately.",
+      "profiles": [
+        "engineering",
+        "full"
+      ]
+    },
+    {
+      "id": "CTX-01",
+      "title": "每请求新鲜投影",
+      "status": "NOT_RUN",
+      "reason": "Full case evidence is not attached. Component checks are listed separately.",
+      "profiles": [
+        "engineering",
+        "full"
+      ]
+    },
+    {
+      "id": "CTX-02",
+      "title": "不破坏其他context",
+      "status": "NOT_RUN",
+      "reason": "Full case evidence is not attached. Component checks are listed separately.",
+      "profiles": [
+        "engineering",
+        "full"
+      ]
+    },
+    {
+      "id": "CTX-03",
+      "title": "不无限增加上下文",
+      "status": "NOT_RUN",
+      "reason": "Full case evidence is not attached. Component checks are listed separately.",
+      "profiles": [
+        "engineering",
+        "full"
+      ]
+    },
+    {
+      "id": "CTX-04",
+      "title": "角色会话切换",
+      "status": "NOT_RUN",
+      "reason": "Full case evidence is not attached. Component checks are listed separately.",
+      "profiles": [
+        "engineering",
+        "full"
+      ]
+    },
+    {
+      "id": "CTX-05",
+      "title": "来源分桶不冲突",
+      "status": "NOT_RUN",
+      "reason": "Full case evidence is not attached. Component checks are listed separately.",
+      "profiles": [
+        "engineering",
+        "full"
+      ]
+    },
+    {
+      "id": "SOC-01",
+      "title": "问候质量",
+      "status": "NOT_RUN",
+      "reason": "Camera, stage, and profile-specific hardware evidence is not attached.",
+      "profiles": [
+        "full"
+      ]
+    },
+    {
+      "id": "SOC-02",
+      "title": "无伪造用户消息",
+      "status": "NOT_RUN",
+      "reason": "Full case evidence is not attached. Component checks are listed separately.",
+      "profiles": [
+        "engineering",
+        "full"
+      ]
+    },
+    {
+      "id": "SOC-03",
+      "title": "冷却与取消提交",
+      "status": "NOT_RUN",
+      "reason": "Full case evidence is not attached. Component checks are listed separately.",
+      "profiles": [
+        "engineering",
+        "full"
+      ]
+    },
+    {
+      "id": "SOC-04",
+      "title": "用户讲话与TTS忙时抑制",
+      "status": "NOT_RUN",
+      "reason": "Full case evidence is not attached. Component checks are listed separately.",
+      "profiles": [
+        "engineering",
+        "full"
+      ]
+    },
+    {
+      "id": "SOC-05",
+      "title": "静音停止统一生效",
+      "status": "NOT_RUN",
+      "reason": "Full case evidence is not attached. Component checks are listed separately.",
+      "profiles": [
+        "engineering",
+        "full"
+      ]
+    },
+    {
+      "id": "SOC-06",
+      "title": "双窗口与leader更换",
+      "status": "NOT_RUN",
+      "reason": "Full case evidence is not attached. Component checks are listed separately.",
+      "profiles": [
+        "engineering",
+        "full"
+      ]
+    },
+    {
+      "id": "SOC-07",
+      "title": "私有昵称不经历史旁路外发",
+      "status": "NOT_RUN",
+      "reason": "Full case evidence is not attached. Component checks are listed separately.",
+      "profiles": [
+        "engineering",
+        "full"
+      ]
+    },
+    {
+      "id": "API-01",
+      "title": "复用原provider与能力检查",
+      "status": "NOT_RUN",
+      "reason": "Full case evidence is not attached. Component checks are listed separately.",
+      "profiles": [
+        "engineering",
+        "full"
+      ]
+    },
+    {
+      "id": "API-02",
+      "title": "真实单图看图",
+      "status": "BLOCKED_DEPENDENCY",
+      "reason": "A configured and authorized real vision provider is required.",
+      "profiles": [
+        "full"
+      ]
+    },
+    {
+      "id": "API-03",
+      "title": "真实有序多图",
+      "status": "BLOCKED_DEPENDENCY",
+      "reason": "A configured and authorized real vision provider is required.",
+      "profiles": [
+        "full"
+      ]
+    },
+    {
+      "id": "API-04",
+      "title": "50题人工质量",
+      "status": "BLOCKED_DEPENDENCY",
+      "reason": "A configured and authorized real vision provider is required.",
+      "profiles": [
+        "full"
+      ]
+    },
+    {
+      "id": "API-05",
+      "title": "超时与401/429",
+      "status": "NOT_RUN",
+      "reason": "Full case evidence is not attached. Component checks are listed separately.",
+      "profiles": [
+        "engineering",
+        "full"
+      ]
+    },
+    {
+      "id": "API-06",
+      "title": "不启动每帧云推理",
+      "status": "NOT_RUN",
+      "reason": "Full case evidence is not attached. Component checks are listed separately.",
+      "profiles": [
+        "engineering",
+        "full"
+      ]
+    },
+    {
+      "id": "API-07",
+      "title": "迟到回答与撤销",
+      "status": "NOT_RUN",
+      "reason": "Full case evidence is not attached. Component checks are listed separately.",
+      "profiles": [
+        "engineering",
+        "full"
+      ]
+    },
+    {
+      "id": "API-08",
+      "title": "云成本与队列",
+      "status": "NOT_RUN",
+      "reason": "Full case evidence is not attached. Component checks are listed separately.",
+      "profiles": [
+        "engineering",
+        "full"
+      ]
+    },
+    {
+      "id": "LOC-01",
+      "title": "本地找物质量",
+      "status": "BLOCKED_DEPENDENCY",
+      "reason": "Grounding DINO preparation and actual quality evidence are required.",
+      "profiles": [
+        "full"
+      ]
+    },
+    {
+      "id": "LOC-02",
+      "title": "中文词典与全本地",
+      "status": "BLOCKED_DEPENDENCY",
+      "reason": "Grounding DINO preparation and actual quality evidence are required.",
+      "profiles": [
+        "engineering",
+        "full"
+      ]
+    },
+    {
+      "id": "SEC-01",
+      "title": "分层许可与总出口",
+      "status": "NOT_RUN",
+      "reason": "Full case evidence is not attached. Component checks are listed separately.",
+      "profiles": [
+        "engineering",
+        "full"
+      ]
+    },
+    {
+      "id": "SEC-02",
+      "title": "本机鉴权与Origin",
+      "status": "NOT_RUN",
+      "reason": "Full case evidence is not attached. Component checks are listed separately.",
+      "profiles": [
+        "engineering",
+        "full"
+      ]
+    },
+    {
+      "id": "SEC-03",
+      "title": "媒体输入限额",
+      "status": "NOT_RUN",
+      "reason": "Full case evidence is not attached. Component checks are listed separately.",
+      "profiles": [
+        "engineering",
+        "full"
+      ]
+    },
+    {
+      "id": "SEC-04",
+      "title": "不可信图文提示注入",
+      "status": "NOT_RUN",
+      "reason": "Full case evidence is not attached. Component checks are listed separately.",
+      "profiles": [
+        "engineering",
+        "full"
+      ]
+    },
+    {
+      "id": "SEC-05",
+      "title": "密钥和敏感数据扫描",
+      "status": "NOT_RUN",
+      "reason": "Full case evidence is not attached. Component checks are listed separately.",
+      "profiles": [
+        "engineering",
+        "full"
+      ]
+    },
+    {
+      "id": "UI-01",
+      "title": "不改源码的完整流程",
+      "status": "NOT_RUN",
+      "reason": "Full case evidence is not attached. Component checks are listed separately.",
+      "profiles": [
+        "engineering",
+        "full"
+      ]
+    },
+    {
+      "id": "UI-02",
+      "title": "中文英文与错误状态",
+      "status": "NOT_RUN",
+      "reason": "Full case evidence is not attached. Component checks are listed separately.",
+      "profiles": [
+        "engineering",
+        "full"
+      ]
+    },
+    {
+      "id": "PERF-01",
+      "title": "15分钟本地时延与吞吐",
+      "status": "NOT_RUN",
+      "reason": "Camera, stage, and profile-specific hardware evidence is not attached.",
+      "profiles": [
+        "engineering",
+        "full"
+      ]
+    },
+    {
+      "id": "PERF-02",
+      "title": "找物并发与显存",
+      "status": "NOT_RUN",
+      "reason": "Camera, stage, and profile-specific hardware evidence is not attached.",
+      "profiles": [
+        "engineering",
+        "full"
+      ]
+    },
+    {
+      "id": "PERF-03",
+      "title": "身份与问候延迟",
+      "status": "NOT_RUN",
+      "reason": "Camera, stage, and profile-specific hardware evidence is not attached.",
+      "profiles": [
+        "engineering",
+        "full"
+      ]
+    },
+    {
+      "id": "PERF-04",
+      "title": "角色渲染回归",
+      "status": "NOT_RUN",
+      "reason": "Camera, stage, and profile-specific hardware evidence is not attached.",
+      "profiles": [
+        "engineering",
+        "full"
+      ]
+    },
+    {
+      "id": "PERF-05",
+      "title": "8小时稳定",
+      "status": "NOT_RUN",
+      "reason": "Camera, stage, and profile-specific hardware evidence is not attached.",
+      "profiles": [
+        "engineering",
+        "full"
+      ]
+    },
+    {
+      "id": "PERF-06",
+      "title": "时钟指标不造假",
+      "status": "NOT_RUN",
+      "reason": "Full case evidence is not attached. Component checks are listed separately.",
+      "profiles": [
+        "engineering",
+        "full"
+      ]
+    },
+    {
+      "id": "REC-01",
+      "title": "断流与worker故障恢复",
+      "status": "NOT_RUN",
+      "reason": "Camera, stage, and profile-specific hardware evidence is not attached.",
+      "profiles": [
+        "engineering",
+        "full"
+      ]
+    },
+    {
+      "id": "DEP-01",
+      "title": "干净环境安装",
+      "status": "NOT_RUN",
+      "reason": "Camera, stage, and profile-specific hardware evidence is not attached.",
+      "profiles": [
+        "engineering",
+        "full"
+      ]
+    },
+    {
+      "id": "DEP-02",
+      "title": "启动停止与回滚",
+      "status": "NOT_RUN",
+      "reason": "Full case evidence is not attached. Component checks are listed separately.",
+      "profiles": [
+        "engineering",
+        "full"
+      ]
+    },
+    {
+      "id": "DEP-03",
+      "title": "验收拒绝虚假通过",
+      "status": "NOT_RUN",
+      "reason": "Full case evidence is not attached. Component checks are listed separately.",
+      "profiles": [
+        "engineering",
+        "full"
+      ]
+    },
+    {
+      "id": "EXT-01",
+      "title": "另一台笔记本LAN摄像头",
+      "status": "NOT_RUN",
+      "reason": "Camera, stage, and profile-specific hardware evidence is not attached.",
+      "profiles": [
+        "optional"
+      ]
+    },
+    {
+      "id": "EXT-02",
+      "title": "第二种Web或Electron形态",
+      "status": "NOT_RUN",
+      "reason": "Full case evidence is not attached. Component checks are listed separately.",
+      "profiles": [
+        "optional"
+      ]
+    }
+  ],
+  "component_evidence": [
+    {
+      "file": "application-checks.actual.json",
+      "sha256": "47f73430b99d07ce3b70a34151edcb74de7779cd1d1ccf0115772c9bd02cd111",
+      "status": "PASS",
+      "at": "2026-09-29T10:13:04.1251717Z",
+      "evidence_mode": "automated"
+    },
+    {
+      "file": "environment.actual.json",
+      "sha256": "0ada3d62702b855766abef428133dba595c368f6ad72ffbfe30d4ec10999ca01",
+      "status": null,
+      "at": "2026-09-29T10:04:42.671900+00:00",
+      "evidence_mode": null
+    },
+    {
+      "file": "model-smoke.actual.json",
+      "sha256": "b9328d688119e4884555415560039f59a79d17a0610fd85ad856753c1031a83a",
+      "status": "PASS",
+      "at": "2026-09-29T10:01:24.756703+00:00",
+      "evidence_mode": "synthetic"
+    },
+    {
+      "file": "models-lock.actual.json",
+      "sha256": "316890c1a9e0d470e2f7b6935153d96e02422119829e5dd37aadf328581641db",
+      "status": null,
+      "at": null,
+      "evidence_mode": null
+    },
+    {
+      "file": "policy-tests.actual.json",
+      "sha256": "3589e4bd6dd2ab189055fc4b6cbf902a967ab2dd61a626112f91b23676b3e9db",
+      "status": null,
+      "at": null,
+      "evidence_mode": null
+    },
+    {
+      "file": "service-integration.actual.json",
+      "sha256": "c5620247b8fcaca64573b1ab6c9e769d78be0530ff8d93dfae1a0c22bd99bc0b",
+      "status": "PASS",
+      "at": "2026-09-29T10:08:08.057519+00:00",
+      "evidence_mode": "synthetic"
+    },
+    {
+      "file": "unit-tests.actual.json",
+      "sha256": "a81ca1b888870b0b5068d3e70b98dfa7cef62b6b32625dbcfa05f564010373f8",
+      "status": "PASS",
+      "at": "2026-09-29T10:08:04.492300+00:00",
+      "evidence_mode": "unit"
+    }
+  ],
+  "note": "Unit tests and synthetic model smoke are separate reports, not full acceptance."
+}

@@ -1,0 +1,59 @@
+{
+  "at": "2026-10-01T09:21:46.643973+00:00",
+  "status": "PASS",
+  "evidence_mode": "saved-aligned-crops-and-public-examples",
+  "models": {
+    "sface": {
+      "median_ms": 6.286300005740486,
+      "p95_ms": 6.775284980540164,
+      "genuine_pairs": 3,
+      "genuine_min": 0.8320876359939575,
+      "genuine_median": 0.8912984132766724,
+      "different_pairs": 0,
+      "different_max": null,
+      "public_same_person": 0.6651986837387085,
+      "public_different_person_max": 0.20910394191741943,
+      "public_to_local_max": 0.18463194370269775
+    },
+    "edgeface-xs": {
+      "median_ms": 2.2222000116016716,
+      "p95_ms": 2.2509399976115674,
+      "genuine_pairs": 3,
+      "genuine_min": 0.8428008556365967,
+      "genuine_median": 0.8927304744720459,
+      "different_pairs": 0,
+      "different_max": null,
+      "public_same_person": 0.5650689601898193,
+      "public_different_person_max": 0.06376233696937561,
+      "public_to_local_max": 0.2023712694644928
+    },
+    "edgeface-s": {
+      "median_ms": 3.256000010878779,
+      "p95_ms": 3.4134549932787195,
+      "genuine_pairs": 3,
+      "genuine_min": 0.8982489705085754,
+      "genuine_median": 0.9197853803634644,
+      "different_pairs": 0,
+      "different_max": null,
+      "public_same_person": 0.5560332536697388,
+      "public_different_person_max": 0.13846147060394287,
+      "public_to_local_max": 0.14104551076889038
+    }
+  },
+  "crops": 3,
+  "public_sources": [
+    {
+      "url": "https://raw.githubusercontent.com/yakhyo/edgeface-onnx/main/assets/samples/einstein1_aligned.jpg",
+      "sha256": "116641128d7c463b82e4c9265eed623aa11738f763c2ad7bcaac71b3f7665276"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/yakhyo/edgeface-onnx/main/assets/samples/einstein2_aligned.jpg",
+      "sha256": "e96f5f781d909757c42fba7f3c9f2afd4b00cb1c2a3ef153f8a093cdc2ff19b2"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/yakhyo/edgeface-onnx/main/assets/samples/curie_aligned.jpg",
+      "sha256": "9795183e2aa22d0fc898003f8178d3684a30a201b38b44d62d2b600fc9efdde6"
+    }
+  ],
+  "note": "No images or identities exported. Stored crops prove neither live accuracy nor unknown-person rejection."
+}

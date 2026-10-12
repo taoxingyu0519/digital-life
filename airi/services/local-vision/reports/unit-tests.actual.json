@@ -1,0 +1,198 @@
+{
+  "at": "2026-10-01T12:55:02.641277+00:00",
+  "status": "PASS",
+  "exit_code": 0,
+  "tests_run": 47,
+  "evidence_mode": "unit",
+  "command": "scripts/vision.ps1 test",
+  "tests": [
+    {
+      "id": "testidentity.IdentityTests.test_a_confirmed_track_after_a_long_gap_requires_fresh_confirmation",
+      "status": "PASS"
+    },
+    {
+      "id": "testidentity.IdentityTests.test_camera_change_requires_new_calibration",
+      "status": "PASS"
+    },
+    {
+      "id": "testidentity.IdentityTests.test_confirmation_needs_spaced_evidence_and_revocation_cannot_restore_name",
+      "status": "PASS"
+    },
+    {
+      "id": "testidentity.IdentityTests.test_confirmed_track_tolerates_small_score_dips_but_rejects_a_different_face",
+      "status": "PASS"
+    },
+    {
+      "id": "testidentity.IdentityTests.test_gallery_change_invalidates_calibration",
+      "status": "PASS"
+    },
+    {
+      "id": "testidentity.IdentityTests.test_minimum_samples",
+      "status": "PASS"
+    },
+    {
+      "id": "testidentity.IdentityTests.test_reintroduction_of_the_same_face_updates_one_profile_without_ambiguous_duplicates",
+      "status": "PASS"
+    },
+    {
+      "id": "testidentity.IdentityTests.test_templates_are_encrypted_and_social_matching_needs_no_manual_calibration",
+      "status": "PASS"
+    },
+    {
+      "id": "testidentity.IdentityTests.test_the_same_name_with_a_different_face_keeps_separate_profiles",
+      "status": "PASS"
+    },
+    {
+      "id": "testidentity.IdentityTests.test_unknown_face_is_rejected",
+      "status": "PASS"
+    },
+    {
+      "id": "testmodel.ContinuousIdentityTests.test_a_brief_detection_miss_preserves_tracking_without_inventing_an_actor",
+      "status": "PASS"
+    },
+    {
+      "id": "testmodel.ContinuousIdentityTests.test_brief_blur_keeps_confirmed_identity_but_persistent_blur_expires",
+      "status": "PASS"
+    },
+    {
+      "id": "testmodel.ContinuousIdentityTests.test_edge_recognition_keeps_natural_enrollment_in_the_original_face_space",
+      "status": "PASS"
+    },
+    {
+      "id": "testmodel.ContinuousIdentityTests.test_multiple_faces_revoke_the_name_without_waiting_for_blur_grace",
+      "status": "PASS"
+    },
+    {
+      "id": "testmodel.ContinuousIdentityTests.test_recognition_only_frames_cannot_enroll_or_update_the_gallery",
+      "status": "PASS"
+    },
+    {
+      "id": "testmodel.ContinuousIdentityTests.test_the_real_face_sampling_path_keeps_checks_running_while_reducing_features",
+      "status": "PASS"
+    },
+    {
+      "id": "testmodel.ContinuousIdentityTests.test_visible_face_position_does_not_require_a_known_name_or_clear_enrollment_sample",
+      "status": "PASS"
+    },
+    {
+      "id": "testprotocol.ProtocolTests.test_header_limits_and_unknown_fields",
+      "status": "PASS"
+    },
+    {
+      "id": "testprotocol.ProtocolTests.test_jpeg_size_mismatch",
+      "status": "PASS"
+    },
+    {
+      "id": "testprotocol.ProtocolTests.test_rejects_each_ownership_dimension",
+      "status": "PASS"
+    },
+    {
+      "id": "testprotocol.ProtocolTests.test_stale_sequence",
+      "status": "PASS"
+    },
+    {
+      "id": "testprotocol.ProtocolTests.test_static_open_palm_never_becomes_wave",
+      "status": "PASS"
+    },
+    {
+      "id": "testprotocol.ProtocolTests.test_thumb_requires_dwell",
+      "status": "PASS"
+    },
+    {
+      "id": "testprotocol.ProtocolTests.test_valid_frame",
+      "status": "PASS"
+    },
+    {
+      "id": "testprotocol.ProtocolTests.test_wave_requires_reversals_and_has_cooldown",
+      "status": "PASS"
+    },
+    {
+      "id": "testrecognition.RecognitionTests.test_confirmed_face_reduces_embeddings_but_changes_and_learning_restore_them",
+      "status": "PASS"
+    },
+    {
+      "id": "testrecognition.RecognitionTests.test_expired_fusion_cannot_restore_old_high_scores",
+      "status": "PASS"
+    },
+    {
+      "id": "testrecognition.RecognitionTests.test_lost_tracks_release_retained_images_and_scores",
+      "status": "PASS"
+    },
+    {
+      "id": "testrecognition.RecognitionTests.test_model_specific_gallery_keeps_profiles_and_encrypts_new_features",
+      "status": "PASS"
+    },
+    {
+      "id": "testrecognition.RecognitionTests.test_weighted_evidence_does_not_hide_a_stranger_or_a_different_person",
+      "status": "PASS"
+    },
+    {
+      "id": "testservice.ServiceSecurityTests.test_health_requires_the_local_gateway_credential",
+      "status": "PASS"
+    },
+    {
+      "id": "testservice.ServiceSecurityTests.test_host_rebinding_is_denied_even_with_the_credential",
+      "status": "PASS"
+    },
+    {
+      "id": "testservice.ServiceSecurityTests.test_no_arbitrary_media_urls_or_paths",
+      "status": "PASS"
+    },
+    {
+      "id": "testservice.ServiceSecurityTests.test_unpaired_websocket_cannot_connect",
+      "status": "PASS"
+    },
+    {
+      "id": "testservice.SocialServiceTests.test_camera_revocation_before_worker_execution_rejects_a_queued_turn",
+      "status": "PASS"
+    },
+    {
+      "id": "testservice.SocialServiceTests.test_multiple_people_cannot_bind_a_conversation_to_one_profile",
+      "status": "PASS"
+    },
+    {
+      "id": "testservice.SocialServiceTests.test_name_correction_never_reuses_the_previous_matching_persons_memories",
+      "status": "PASS"
+    },
+    {
+      "id": "testservice.SocialServiceTests.test_real_conversation_starts_learning_without_an_enrollment_command",
+      "status": "PASS"
+    },
+    {
+      "id": "testservice.SocialServiceTests.test_stale_frames_and_missing_face_evidence_cannot_own_words",
+      "status": "PASS"
+    },
+    {
+      "id": "testsocial.SocialTests.test_a_brief_detector_miss_keeps_an_introduction_but_another_person_cancels_it",
+      "status": "PASS"
+    },
+    {
+      "id": "testsocial.SocialTests.test_introduction_saves_profile_without_manual_registration_and_adds_angles",
+      "status": "PASS"
+    },
+    {
+      "id": "testsocial.SocialTests.test_known_person_can_revoke_memory_in_conversation",
+      "status": "PASS"
+    },
+    {
+      "id": "testsocial.SocialTests.test_memories_are_deduplicated_and_scoped_to_person_and_character",
+      "status": "PASS"
+    },
+    {
+      "id": "testsocial.SocialTests.test_multiple_people_or_track_change_cancel_pending_learning",
+      "status": "PASS"
+    },
+    {
+      "id": "testsocial.SocialTests.test_names_come_from_introductions_not_questions_or_general_chat",
+      "status": "PASS"
+    },
+    {
+      "id": "testsocial.SocialTests.test_refusal_discards_pending_photos_and_deletion_removes_all_profile_data",
+      "status": "PASS"
+    },
+    {
+      "id": "testsocial.SocialTests.test_saved_name_photos_and_memories_survive_camera_and_service_restart",
+      "status": "PASS"
+    }
+  ]
+}

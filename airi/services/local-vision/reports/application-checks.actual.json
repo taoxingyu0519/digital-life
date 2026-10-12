@@ -1,0 +1,57 @@
+{
+  "status": "PASS",
+  "at": "2026-09-29T10:13:04.1251717Z",
+  "checks": [
+    {
+      "log": ".runtime/vision-root-types.log",
+      "status": "PASS",
+      "completedAt": "2026-09-29T10:09:54.9827884Z",
+      "command": "pnpm typecheck",
+      "sha256": "824f078e3f400de37730d0dea903e66f197082e3b59104e0dd8cd7f4d9cd6053"
+    },
+    {
+      "log": ".runtime/vision-build-web.log",
+      "status": "PASS",
+      "completedAt": "2026-09-29T10:10:06.2128664Z",
+      "command": "pnpm build:web",
+      "sha256": "cbabd6f8e76ca897af6d25e6001b4276f8a81c2f5edc9e28209d129d884609a0"
+    },
+    {
+      "log": ".runtime/vision-lint.log",
+      "status": "PASS",
+      "completedAt": "2026-09-29T10:11:41.6066733Z",
+      "command": "pnpm lint",
+      "sha256": "4e21b6e6ce47a8f8007229a2f42827ddb76f4903f390bf3ec247ccff1257b888"
+    },
+    {
+      "log": ".runtime/vision-chat-tests.log",
+      "status": "PASS",
+      "completedAt": "2026-09-29T10:00:13.3203381Z",
+      "command": "stage-ui node tests",
+      "sha256": "5fc7909f06bb0d8161a26421e3ed73735af8c8ce39d98872a53cd9464981b417"
+    },
+    {
+      "log": ".runtime/vision-capture-tests.log",
+      "status": "PASS",
+      "completedAt": "2026-09-29T10:03:28.9576408Z",
+      "command": "camera lifecycle browser tests",
+      "sha256": "1b85fff76f6a5993323fb8604e38086ff81561e60100d4e25fb655c3126c9fb1"
+    },
+    {
+      "log": ".runtime/vision-baseline.log",
+      "status": "PASS",
+      "completedAt": "2026-09-29T10:06:35.6016604Z",
+      "command": "guest and voice browser regression",
+      "sha256": "ad111aef3aec9d85b5290fc403f3a09118bb638eb4df2ccf9997abedbbcd5281"
+    },
+    {
+      "log": ".runtime/vision-speech-tests.log",
+      "status": "PASS",
+      "completedAt": "2026-09-29T10:09:06.8955479Z",
+      "command": "speech pipeline tests",
+      "sha256": "553778b8b04fb50e6d6633c91318285fb445d2a789bdd2f39b48c1e0b77594a7"
+    }
+  ],
+  "evidence_mode": "automated",
+  "note": "These checks do not establish full camera, identity, provider or performance acceptance."
+}

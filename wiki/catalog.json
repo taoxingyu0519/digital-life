@@ -1,0 +1,1261 @@
+{
+  "version": 1,
+  "pages": [
+    {
+      "id": "home",
+      "path": "wiki/README.md",
+      "title": "项目管理 Wiki 首页",
+      "summary": "按问题逐层读取项目知识、开发定位与成长记忆。",
+      "tags": [
+        "项目",
+        "wiki",
+        "目录",
+        "入口",
+        "token"
+      ],
+      "sources": [
+        "AGENTS.md",
+        "scripts/project-wiki.mjs"
+      ]
+    },
+    {
+      "id": "project-state",
+      "path": "wiki/overview/project-state.md",
+      "title": "项目现状与能力边界",
+      "summary": "区分当前实现、未配置服务、待验收和调研候选。",
+      "tags": [
+        "现状",
+        "完成",
+        "待办",
+        "配置",
+        "自我",
+        "自身",
+        "能力",
+        "验收"
+      ],
+      "sources": [
+        "开发文档/01-system-architecture.md",
+        "项目管理/tasks.json",
+        "airi/apps/stage-web/src/App.vue",
+        "airi/packages/memory-pgvector/src/index.ts"
+      ]
+    },
+    {
+      "id": "change-routing",
+      "path": "wiki/overview/change-routing.md",
+      "title": "开发问题与修改入口",
+      "summary": "把开发需求和故障路由到首要源码、联动位置和测试。",
+      "tags": [
+        "修改",
+        "定位",
+        "开发",
+        "故障",
+        "测试",
+        "哪里"
+      ],
+      "sources": [
+        "开发文档/04-development-guide.md",
+        "airi/AGENTS.md"
+      ]
+    },
+    {
+      "id": "chat",
+      "path": "wiki/modules/chat.md",
+      "title": "对话生成与上下文算法",
+      "summary": "会话队列、角色提示、来源桶、流式工具与每请求身份。",
+      "tags": [
+        "对话",
+        "回答",
+        "提示词",
+        "上下文",
+        "意识",
+        "工具",
+        "token",
+        "算法",
+        "流转",
+        "会话风格",
+        "暂停",
+        "继续",
+        "AIRI-023"
+      ],
+      "sources": [
+        "airi/packages/stage-ui/src/stores/chat.ts",
+        "airi/packages/core-agent/src/runtime/chat-orchestrator-runtime.ts",
+        "airi/packages/core-agent/src/runtime/context-registry.ts",
+        "airi/packages/stage-ui/src/stores/chat/context-providers/user-account.ts",
+        "airi/packages/provider-inference/src/generation.ts",
+        "airi/packages/stage-ui/src/composables/use-chat-input.ts",
+        "airi/packages/stage-ui/src/stores/modules/realtime-brain.browser.test.ts",
+        "airi/packages/stage-ui/src/stores/ai/chat-llm/tool-resolver.ts",
+        "airi/packages/stage-ui/src/tools/web-search.ts",
+        "airi/docs/ai/reports/2026-10-03-firecrawl-search.md",
+        "airi/docs/ai/reports/2026-10-03-firecrawl-403-fix.md",
+        "airi/packages/stage-ui/src/tools/web-search-gateway.ts",
+        "airi/packages/stage-ui/src/tools/web-search-contract.ts",
+        "airi/packages/realtime-voice/src/conversation.ts",
+        "airi/docs/ai/reports/2026-10-04-fast-conversation-policy.md",
+        "airi/packages/stage-ui/src/stores/stage-identity.ts",
+        "airi/packages/stage-ui/src/services/chat-archive.ts",
+        "airi/packages/stage-ui/src/stores/chat-archive.ts",
+        "airi/packages/stage-ui/src/libs/chat-archive-events.ts"
+      ]
+    },
+    {
+      "id": "local-vision",
+      "path": "wiki/algorithms/local-vision.md",
+      "title": "本地视觉与持续身份算法",
+      "summary": "质量分级、EdgeFace独立索引、多帧证据、稳定降频与自然建档。",
+      "tags": [
+        "算法",
+        "人脸",
+        "识别",
+        "跳名",
+        "误认",
+        "阈值",
+        "SFace",
+        "YuNet",
+        "YOLOX",
+        "ByteTrack",
+        "MediaPipe",
+        "认识",
+        "建档",
+        "多帧",
+        "向量",
+        "EdgeFace",
+        "降频",
+        "算力",
+        "科研"
+      ],
+      "sources": [
+        "airi/services/local-vision/model.py",
+        "airi/services/local-vision/identity.py",
+        "airi/services/local-vision/social.py",
+        "airi/services/local-vision/temporal.py",
+        "开发文档/07-local-vision.md",
+        "airi/services/local-vision/recognition.py",
+        "airi/services/local-vision/tests/testrecognition.py",
+        "airi/services/local-vision/reports/validation.adaptive-recognition.md",
+        "airi/packages/local-vision/src/gaze.ts",
+        "airi/services/local-vision/adaptation.py",
+        "airi/services/local-vision/tests/testadaptation.py"
+      ]
+    },
+    {
+      "id": "visual-social",
+      "path": "wiki/flows/visual-social.md",
+      "title": "视觉社交数据流",
+      "summary": "视觉观察、姓名确认、舞台人脸账户、历史隔离和每请求人物记忆。",
+      "tags": [
+        "数据流",
+        "流转",
+        "摄像头",
+        "视觉",
+        "权限",
+        "过期",
+        "LV01",
+        "图片",
+        "回答",
+        "账户",
+        "登录",
+        "退出",
+        "换人",
+        "右上角"
+      ],
+      "sources": [
+        "airi/apps/stage-web/src/components/local-vision-runtime.vue",
+        "airi/packages/local-vision/src/client.ts",
+        "airi/packages/local-vision/src/contracts.ts",
+        "airi/packages/local-vision/src/vite.ts",
+        "airi/packages/local-vision/src/policy.ts",
+        "airi/services/local-vision/protocol.py",
+        "airi/packages/stage-ui/src/stores/local-vision.ts",
+        "airi/packages/stage-ui/src/services/local-vision-context.ts",
+        "airi/services/local-vision/model.py",
+        "airi/packages/local-vision/src/gaze.ts",
+        "airi/packages/stage-ui/src/composables/vision/use-face-gaze.ts",
+        "airi/services/local-vision/social.py",
+        "airi/services/local-vision/developer.py",
+        "airi/packages/stage-ui/src/stores/stage-identity.ts",
+        "airi/packages/stage-ui/src/stores/stage-identity.browser.test.ts"
+      ]
+    },
+    {
+      "id": "companion",
+      "path": "wiki/modules/companion.md",
+      "title": "主动问候与记忆闲聊",
+      "summary": "稳定在场、忙碌和冷却规则，以及生成、取消和现有发声接线。",
+      "tags": [
+        "主动",
+        "问候",
+        "闲聊",
+        "抢话",
+        "不说话",
+        "成长",
+        "冷却"
+      ],
+      "sources": [
+        "airi/packages/local-vision/src/policy.ts",
+        "airi/packages/stage-ui/src/stores/companion.ts",
+        "airi/packages/stage-ui/src/stores/companion.browser.test.ts",
+        "airi/docs/ai/adr/2026-09-30-active-social-companion.md",
+        "airi/packages/stage-ui/src/services/local-vision-context.ts",
+        "airi/packages/stage-ui/src/stores/local-vision.ts",
+        "airi/packages/stage-ui/src/stores/stage-identity.ts"
+      ]
+    },
+    {
+      "id": "voice",
+      "path": "wiki/modules/voice.md",
+      "title": "语音链路与音频算法",
+      "summary": "普通ASR/TTS与豆包全双工、PCM重采样、最终转写和设备清理。",
+      "tags": [
+        "语音",
+        "豆包",
+        "音频",
+        "PCM",
+        "ASR",
+        "转写",
+        "麦克风",
+        "口型",
+        "打断",
+        "重采样",
+        "会话风格",
+        "暂停",
+        "继续",
+        "AIRI-023"
+      ],
+      "sources": [
+        "airi/packages/stage-ui/src/stores/modules/hearing.ts",
+        "airi/packages/stage-ui/src/stores/modules/speech.ts",
+        "airi/packages/realtime-voice/src/pcm.ts",
+        "airi/packages/realtime-voice/src/doubao.ts",
+        "airi/packages/realtime-voice/src/gateway.ts",
+        "airi/packages/stage-ui/src/stores/modules/realtime-voice.ts",
+        "airi/packages/realtime-voice/src/audio.ts",
+        "airi/packages/realtime-voice/src/contracts.ts",
+        "airi/docs/ai/reports/2026-10-03-voice-delivery-fix.md",
+        "airi/packages/realtime-voice/src/conversation.ts",
+        "airi/docs/ai/reports/2026-10-04-fast-conversation-policy.md",
+        "airi/packages/stage-ui/src/services/local-vision-context.ts",
+        "airi/packages/stage-ui/src/stores/local-vision.ts",
+        "airi/packages/stage-ui/src/stores/stage-identity.ts",
+        "airi/packages/stage-ui/src/services/chat-archive.ts",
+        "airi/packages/stage-ui/src/stores/chat-archive.ts",
+        "airi/packages/stage-ui/src/libs/chat-archive-events.ts"
+      ]
+    },
+    {
+      "id": "storage-memory",
+      "path": "wiki/modules/storage-memory.md",
+      "title": "数据存储与三种记忆",
+      "summary": "开发知识、聊天历史、DPAPI人物记忆，以及隔离、引用与删除。",
+      "tags": [
+        "记忆",
+        "存储",
+        "删除",
+        "隐私",
+        "数据库",
+        "历史",
+        "DPAPI",
+        "SQLite",
+        "pgvector",
+        "训练",
+        "向量",
+        "成长",
+        "数据"
+      ],
+      "sources": [
+        "airi/packages/stage-ui/src/database/storage.ts",
+        "airi/packages/stage-ui/src/database/repos/chat-sessions.repo.ts",
+        "airi/packages/stage-ui/src/stores/chat/session-store.ts",
+        "airi/packages/stage-ui/src/stores/providers/config.ts",
+        "airi/services/local-vision/identity.py",
+        "airi/packages/memory-pgvector/src/index.ts",
+        "airi/services/local-vision/recognition.py",
+        "airi/services/local-vision/developer.py",
+        "airi/packages/stage-ui/src/stores/developer-access.ts",
+        "airi/packages/stage-ui/src/components/scenarios/developer-gate.vue",
+        "airi/packages/stage-ui/src/components/scenarios/memory-manager.vue",
+        "airi/services/local-vision/tests/testdeveloper.py",
+        "airi/services/local-vision/tests/testsocial.py",
+        "airi/services/local-vision/adaptation.py",
+        "airi/packages/stage-ui/src/stores/stage-identity.ts",
+        "airi/packages/stage-ui/src/components/scenarios/chat/components/sessions-drawer.vue",
+        "airi/packages/stage-ui/src/services/chat-archive.ts",
+        "airi/packages/stage-ui/src/stores/chat-archive.ts",
+        "airi/packages/stage-ui/src/libs/chat-archive-events.ts"
+      ]
+    },
+    {
+      "id": "clients",
+      "path": "wiki/modules/clients.md",
+      "title": "客户端角色与扩展入口",
+      "summary": "Web/Electron/Pocket、角色渲染、人脸目光与头部跟随、模型服务和扩展。",
+      "tags": [
+        "角色",
+        "外观",
+        "页面",
+        "客户端",
+        "桌面",
+        "移动",
+        "扩展",
+        "模型服务",
+        "渲染",
+        "Live2D",
+        "VRM",
+        "目光",
+        "头部",
+        "跟随",
+        "注视",
+        "会话风格",
+        "暂停",
+        "继续",
+        "AIRI-023"
+      ],
+      "sources": [
+        "airi/apps/stage-web/src/App.vue",
+        "airi/packages/stage-ui/src/components/scenes/Stage.vue",
+        "airi/packages/stage-ui/src/stores/modules/airi-card.ts",
+        "airi/packages/provider-inference/src/providers/index.ts",
+        "airi/packages/stage-layouts/src/layouts/settings.vue",
+        "airi/apps/stage-tamagotchi/src/main/index.ts",
+        "airi/packages/stage-ui-live2d/src/components/scenes/Live2D.vue",
+        "airi/packages/stage-ui-three/src/components/Model/VRMModel.vue",
+        "airi/packages/stage-ui-three/src/composables/vrm/head-gaze.ts",
+        "airi/packages/stage-ui/src/composables/vision/use-face-gaze.ts",
+        "airi/apps/stage-web/src/pages/index.vue",
+        "airi/packages/stage-ui/src/components/scenarios/realtime-voice-controls.vue",
+        "airi/packages/stage-pages/src/pages/settings/modules/realtime-voice.vue",
+        "airi/docs/ai/reports/2026-10-03-voice-delivery-fix.md",
+        "airi/packages/realtime-voice/src/conversation.ts",
+        "airi/docs/ai/reports/2026-10-04-fast-conversation-policy.md",
+        "airi/packages/stage-ui/src/components/scenarios/memory-manager.vue",
+        "airi/packages/stage-ui/src/components/scenarios/developer-gate.vue",
+        "airi/packages/stage-ui/src/stores/stage-identity.ts",
+        "airi/packages/stage-layouts/src/components/Layouts/HeaderAvatar.vue",
+        "airi/packages/stage-ui/src/services/chat-archive.ts",
+        "airi/packages/stage-ui/src/stores/chat-archive.ts",
+        "airi/packages/stage-ui/src/libs/chat-archive-events.ts"
+      ]
+    },
+    {
+      "id": "local-runtime",
+      "path": "wiki/modules/local-runtime.md",
+      "title": "本地运行与服务排查",
+      "summary": "本机与LAN/UU服务、SSH地址漂移、设备归属与Wiki入口。",
+      "tags": [
+        "启动",
+        "运行",
+        "局域网",
+        "LAN",
+        "UU",
+        "SSH",
+        "远程",
+        "HTTPS",
+        "端口",
+        "设备",
+        "ready",
+        "摄像头",
+        "重启"
+      ],
+      "sources": [
+        "scripts/airi-env.ps1",
+        "scripts/start-airi.ps1",
+        "scripts/start-airi-background.ps1",
+        "scripts/start-airi-lan.ps1",
+        "scripts/vision.ps1",
+        "scripts/lan-gateway.mjs",
+        "scripts/project-manager.mjs",
+        "scripts/project-wiki.mjs",
+        "scripts/stop-airi.ps1"
+      ]
+    },
+    {
+      "id": "memory",
+      "path": "wiki/memory/README.md",
+      "title": "项目成长与开发记忆",
+      "summary": "按演进、设计决策、经验和开发记录读取长期工程记忆。",
+      "tags": [
+        "成长",
+        "进化",
+        "开发记忆",
+        "收获",
+        "自身",
+        "自我",
+        "经验"
+      ],
+      "sources": [
+        "wiki/memory/evolution.md",
+        "wiki/memory/decisions.md",
+        "wiki/memory/lessons.md",
+        "wiki/maintenance.md",
+        "wiki/memory/sessions/2026-10-01-adaptive-recognition.md",
+        "wiki/memory/sessions/2026-10-01-camera-face-gaze.md",
+        "wiki/memory/sessions/2026-10-03-firecrawl-403-fix.md",
+        "wiki/memory/sessions/2026-10-03-voice-delivery-fix.md",
+        "wiki/memory/sessions/2026-10-09-face-stage-accounts.md"
+      ]
+    },
+    {
+      "id": "evolution",
+      "path": "wiki/memory/evolution.md",
+      "title": "项目能力演进时间线",
+      "summary": "从陌生人入口、本机语音到主动社交的成长与未验收边界。",
+      "tags": [
+        "成长",
+        "进化",
+        "演进",
+        "时间线",
+        "历史",
+        "为什么",
+        "收获"
+      ],
+      "sources": [
+        "项目管理/tasks.json",
+        "开发文档/02-installation.md",
+        "airi/docs/ai/adr/2026-09-29-local-social-vision.md",
+        "airi/docs/ai/adr/2026-09-30-active-social-companion.md",
+        "airi/docs/ai/adr/2026-10-01-adaptive-face-recognition.md",
+        "airi/docs/ai/adr/2026-10-01-camera-face-gaze.md"
+      ]
+    },
+    {
+      "id": "decisions",
+      "path": "wiki/memory/decisions.md",
+      "title": "项目设计决策索引",
+      "summary": "当前设计的采用理由、代价、替代关系与调研状态。",
+      "tags": [
+        "决策",
+        "设计",
+        "为什么",
+        "原因",
+        "替代",
+        "ADR"
+      ],
+      "sources": [
+        "airi/docs/ai/adr/2026-09-29-local-social-vision.md",
+        "airi/docs/ai/adr/2026-09-30-active-social-companion.md",
+        "wiki/maintenance.md",
+        "开发文档/07-local-vision.md",
+        "airi/docs/ai/adr/2026-10-01-adaptive-face-recognition.md",
+        "airi/docs/ai/adr/2026-10-01-camera-face-gaze.md",
+        "airi/docs/ai/adr/2026-10-02-fast-slow-brain.md",
+        "airi/docs/ai/reports/2026-10-03-voice-delivery-fix.md",
+        "airi/docs/ai/adr/2026-10-05-name-confirmation-memory.md",
+        "airi/docs/ai/adr/2026-10-09-face-stage-accounts.md"
+      ]
+    },
+    {
+      "id": "lessons",
+      "path": "wiki/memory/lessons.md",
+      "title": "开发经验与可复用知识",
+      "summary": "现场排查、异步取消、ASR语义、持续识别和验证边界的经验。",
+      "tags": [
+        "经验",
+        "知识",
+        "收获",
+        "排查",
+        "故障",
+        "原因",
+        "ASR",
+        "ready"
+      ],
+      "sources": [
+        "airi/docs/ai/adr/2026-09-30-active-social-companion.md",
+        "airi/packages/realtime-voice/src/doubao.ts",
+        "airi/services/local-vision/social.py",
+        "airi/services/local-vision/identity.py",
+        "开发文档/08-lan-testing.md",
+        "wiki/maintenance.md",
+        "airi/packages/local-vision/src/gaze.ts",
+        "airi/packages/stage-ui-three/src/composables/vrm/head-gaze.ts",
+        "airi/docs/ai/reports/2026-10-03-firecrawl-search.md",
+        "airi/docs/ai/reports/2026-10-03-firecrawl-403-fix.md",
+        "airi/docs/ai/reports/2026-10-03-voice-delivery-fix.md",
+        "airi/docs/ai/reports/2026-10-09-face-stage-accounts.md"
+      ]
+    },
+    {
+      "id": "maintenance",
+      "path": "wiki/maintenance.md",
+      "title": "Wiki读取与维护流程",
+      "summary": "新对话读取、开发写回、显式复核、问题回答与记录模板。",
+      "tags": [
+        "维护",
+        "跨对话",
+        "wiki",
+        "流程",
+        "检索",
+        "过期",
+        "复核",
+        "记录",
+        "token"
+      ],
+      "sources": [
+        "AGENTS.md",
+        "scripts/project-wiki.mjs",
+        "scripts/workspace-source-files.mjs",
+        "scripts/generate-project-index.mjs",
+        "scripts/project-manager.mjs"
+      ]
+    },
+    {
+      "id": "topic-template",
+      "path": "wiki/templates/topic.md",
+      "title": "专题模板",
+      "summary": "新模块、算法或流程文章的结构和证据要求。",
+      "tags": [
+        "模板",
+        "专题",
+        "新增知识"
+      ],
+      "sources": [
+        "wiki/maintenance.md"
+      ]
+    },
+    {
+      "id": "session-template",
+      "path": "wiki/templates/session.md",
+      "title": "开发记录模板",
+      "summary": "单轮开发的目标、决策、实际验证、经验与交接。",
+      "tags": [
+        "模板",
+        "记录",
+        "交接"
+      ],
+      "sources": [
+        "wiki/maintenance.md"
+      ]
+    },
+    {
+      "id": "session-wiki",
+      "path": "wiki/memory/sessions/2026-10-01-project-wiki.md",
+      "title": "管理Wiki建立记录",
+      "summary": "AIRI-013的目标、设计、实际检查和后续开发入口。",
+      "tags": [
+        "AIRI-013",
+        "建立",
+        "wiki",
+        "记录",
+        "收获"
+      ],
+      "sources": [
+        "scripts/project-wiki.mjs",
+        "scripts/project-manager.mjs",
+        "scripts/project-manager-ui/app.js",
+        "scripts/project-manager-ui/index.html",
+        "scripts/project-manager-ui/wiki.css"
+      ]
+    },
+    {
+      "id": "session-recognition",
+      "path": "wiki/memory/sessions/2026-10-01-adaptive-recognition.md",
+      "title": "科研连续识别优化记录",
+      "summary": "AIRI-014的模型对比、索引隔离、降频部署与现场验证限制。",
+      "tags": [
+        "AIRI-014",
+        "EdgeFace",
+        "科研",
+        "降频",
+        "记录",
+        "识别",
+        "耗电"
+      ],
+      "sources": [
+        "airi/services/local-vision/recognition.py",
+        "airi/services/local-vision/model.py",
+        "airi/services/local-vision/reports/recognition-benchmark.actual.json",
+        "airi/services/local-vision/reports/recognition-probe.actual.json",
+        "airi/services/local-vision/reports/validation.adaptive-recognition.md"
+      ]
+    },
+    {
+      "id": "session-face-gaze",
+      "path": "wiki/memory/sessions/2026-10-01-camera-face-gaze.md",
+      "title": "摄像头人脸注视开发记录",
+      "summary": "AIRI-015的位置契约、平滑与失效、Live2D/VRM头部、验证和笔记本交接。",
+      "tags": [
+        "AIRI-015",
+        "目光",
+        "头部",
+        "人脸",
+        "跟随",
+        "注视",
+        "平滑",
+        "记录"
+      ],
+      "sources": [
+        "airi/docs/ai/adr/2026-10-01-camera-face-gaze.md",
+        "airi/services/local-vision/reports/validation.face-gaze.md",
+        "airi/packages/local-vision/src/gaze.ts",
+        "airi/packages/stage-ui-three/src/composables/vrm/head-gaze.ts"
+      ]
+    },
+    {
+      "id": "fast-slow-brain",
+      "path": "wiki/modules/fast-slow-brain.md",
+      "title": "快慢脑协作与文字入口",
+      "summary": "豆包前台、代码调度、已有模型后台；确认事实、任务版本、真实文字边界和空隙投递。",
+      "tags": [
+        "快慢脑",
+        "豆包",
+        "Seeduplex",
+        "Qwen",
+        "文字",
+        "工具",
+        "数据库",
+        "任务",
+        "版本",
+        "No active chat provider",
+        "联网",
+        "搜索",
+        "DeepSeek",
+        "Tavily",
+        "Firecrawl",
+        "免费",
+        "额度",
+        "会话风格",
+        "暂停",
+        "继续",
+        "AIRI-023"
+      ],
+      "sources": [
+        "airi/packages/realtime-voice/src/brain.ts",
+        "airi/packages/realtime-voice/src/contracts.ts",
+        "airi/packages/realtime-voice/src/gateway.ts",
+        "airi/packages/realtime-voice/src/gateway.test.ts",
+        "airi/packages/realtime-voice/src/doubao.ts",
+        "airi/packages/stage-ui/src/stores/modules/slow-brain.ts",
+        "airi/packages/stage-ui/src/stores/modules/realtime-voice.ts",
+        "airi/packages/stage-ui/src/composables/use-chat-input.ts",
+        "airi/packages/stage-ui/src/stores/modules/realtime-brain.browser.test.ts",
+        "开发文档/06-realtime-voice.md",
+        "airi/packages/stage-ui/src/stores/modules/web-search.ts",
+        "airi/packages/stage-ui/src/stores/ai/chat-llm/tool-resolver.ts",
+        "airi/packages/provider-inference/src/providers/cloud/deepseek/index.ts",
+        "airi/docs/ai/reports/2026-10-03-search-capability.md",
+        "airi/docs/ai/reports/2026-10-03-firecrawl-search.md",
+        "airi/packages/stage-ui/src/tools/web-search.ts",
+        "airi/packages/stage-ui/src/components/modules/WebSearch.vue",
+        "airi/docs/ai/reports/2026-10-03-firecrawl-403-fix.md",
+        "airi/packages/stage-ui/src/tools/web-search-gateway.ts",
+        "airi/packages/stage-ui/src/tools/web-search-contract.ts",
+        "airi/packages/stage-ui/src/components/scenarios/realtime-voice-controls.vue",
+        "airi/docs/ai/reports/2026-10-03-voice-slow-brain-link.md",
+        "airi/docs/ai/reports/2026-10-03-voice-delivery-fix.md",
+        "airi/packages/realtime-voice/src/conversation.ts",
+        "airi/docs/ai/reports/2026-10-04-fast-conversation-policy.md",
+        "airi/docs/ai/reports/2026-10-06-chatty-preparation-and-persona.md",
+        "airi/packages/stage-ui/src/services/local-vision-context.ts",
+        "airi/packages/stage-ui/src/stores/local-vision.ts",
+        "airi/packages/realtime-voice/src/prompts.ts",
+        "airi/packages/stage-ui/src/stores/stage-identity.ts",
+        "airi/packages/stage-ui/src/services/chat-archive.ts",
+        "airi/packages/stage-ui/src/stores/chat-archive.ts",
+        "airi/packages/stage-ui/src/libs/chat-archive-events.ts"
+      ]
+    },
+    {
+      "id": "session-search-capability",
+      "path": "wiki/memory/sessions/2026-10-03-search-capability.md",
+      "title": "快慢脑联网能力调查记录",
+      "summary": "AIRI-017核对豆包原生搜索开关、DeepSeek协议、Tavily工具条件与实际验收边界。",
+      "tags": [
+        "AIRI-017",
+        "联网",
+        "搜索",
+        "DeepSeek",
+        "豆包",
+        "Tavily",
+        "API"
+      ],
+      "sources": [
+        "airi/docs/ai/reports/2026-10-03-search-capability.md",
+        "airi/packages/realtime-voice/src/doubao.ts",
+        "airi/packages/stage-ui/src/stores/modules/slow-brain.ts"
+      ]
+    },
+    {
+      "id": "session-firecrawl",
+      "path": "wiki/memory/sessions/2026-10-03-firecrawl-search.md",
+      "title": "Firecrawl免费搜索接入记录",
+      "summary": "AIRI-018安装官方skills、免费CLI和慢脑真实搜索；来源回执、匿名与账户额度及实际验收边界。",
+      "tags": [
+        "AIRI-018",
+        "Firecrawl",
+        "搜索",
+        "免费",
+        "skill",
+        "额度",
+        "来源"
+      ],
+      "sources": [
+        "airi/docs/ai/reports/2026-10-03-firecrawl-search.md",
+        "airi/packages/stage-ui/src/tools/web-search.ts",
+        "airi/packages/stage-ui/src/stores/modules/web-search.ts",
+        "airi/packages/stage-ui/src/stores/modules/slow-brain.ts",
+        "airi/packages/stage-ui/src/stores/ai/chat-llm/tool-resolver.ts",
+        "airi/packages/stage-ui/src/components/modules/WebSearch.vue",
+        "airi/packages/stage-ui/src/tools/firecrawl-search.browser.test.ts",
+        "airi/packages/stage-ui/src/stores/modules/web-search.browser.test.ts",
+        "scripts/firecrawl.ps1",
+        "scripts/airi-env.ps1"
+      ]
+    },
+    {
+      "id": "session-fast-slow",
+      "path": "wiki/memory/sessions/2026-10-02-fast-slow-brain.md",
+      "title": "豆包快慢脑与文字入口开发记录",
+      "summary": "AIRI-016的任务、事实、播放确认、实际接口文字限制、前端和验证交接。",
+      "tags": [
+        "AIRI-016",
+        "快慢脑",
+        "豆包",
+        "记录",
+        "文字",
+        "协议"
+      ],
+      "sources": [
+        "airi/docs/ai/adr/2026-10-02-fast-slow-brain.md",
+        "airi/docs/ai/reports/2026-10-02-fast-slow-brain.md"
+      ]
+    },
+    {
+      "id": "session-firecrawl-fix",
+      "path": "wiki/memory/sessions/2026-10-03-firecrawl-403-fix.md",
+      "title": "Firecrawl 403与免费账户入口修复记录",
+      "summary": "AIRI-020：官方CLI同源宿主、账户Key、注册与真实余额、错误诊断及实际验证边界。",
+      "tags": [
+        "Firecrawl",
+        "403",
+        "注册",
+        "免费",
+        "Key",
+        "余额",
+        "联网",
+        "AIRI-020"
+      ],
+      "sources": [
+        "airi/docs/ai/reports/2026-10-03-firecrawl-403-fix.md",
+        "airi/packages/stage-ui/src/tools/web-search-gateway.ts",
+        "airi/packages/stage-ui/src/tools/web-search-contract.ts",
+        "airi/apps/stage-web/vite.config.ts",
+        "airi/packages/stage-ui/src/tools/web-search-gateway.test.ts",
+        "airi/packages/stage-ui/src/tools/firecrawl-search.browser.test.ts",
+        "airi/packages/stage-ui/src/stores/modules/web-search.ts",
+        "airi/packages/stage-ui/src/stores/modules/web-search.browser.test.ts",
+        "airi/packages/stage-ui/src/components/modules/WebSearch.vue",
+        "airi/packages/stage-ui/src/stores/ai/chat-llm/tool-resolver.ts",
+        "airi/packages/i18n/src/locales/zh-Hans/settings.yaml"
+      ]
+    },
+    {
+      "id": "session-voice-slow-link",
+      "path": "wiki/memory/sessions/2026-10-03-voice-slow-brain-link.md",
+      "title": "语音快慢脑联网联动修复记录",
+      "summary": "AIRI-021：真实后台能力投影、活动会话工具更新、首页状态与语音搜索播放闭环回归。",
+      "tags": [
+        "语音",
+        "快慢脑",
+        "联网",
+        "南宁",
+        "工具",
+        "AIRI-021"
+      ],
+      "sources": [
+        "airi/docs/ai/reports/2026-10-03-voice-slow-brain-link.md",
+        "airi/packages/realtime-voice/src/brain.ts",
+        "airi/packages/realtime-voice/src/contracts.ts",
+        "airi/packages/realtime-voice/src/doubao.ts",
+        "airi/packages/realtime-voice/src/gateway.ts",
+        "airi/packages/realtime-voice/src/gateway.test.ts",
+        "airi/packages/stage-ui/src/stores/modules/slow-brain.ts",
+        "airi/packages/stage-ui/src/stores/modules/realtime-voice.ts",
+        "airi/packages/stage-ui/src/stores/modules/realtime-brain.browser.test.ts",
+        "airi/packages/stage-ui/src/components/scenarios/realtime-voice-controls.vue"
+      ]
+    },
+    {
+      "id": "session-voice-delivery",
+      "path": "wiki/memory/sessions/2026-10-03-voice-delivery-fix.md",
+      "title": "后台过渡语、主动播报与舞台布局修复记录",
+      "summary": "AIRI-022：真实受理后随机确认、唯一结果朗读、音频编号与有界队列、桌面窄屏位置及真实豆包短句验证。",
+      "tags": [
+        "AIRI-022",
+        "过渡语",
+        "冷场",
+        "主动播报",
+        "重复回答",
+        "音频",
+        "队列",
+        "布局",
+        "快慢脑"
+      ],
+      "sources": [
+        "airi/docs/ai/reports/2026-10-03-voice-delivery-fix.md",
+        "airi/packages/realtime-voice/src/contracts.ts",
+        "airi/packages/realtime-voice/src/doubao.ts",
+        "airi/packages/realtime-voice/src/audio.ts",
+        "airi/packages/realtime-voice/src/brain.ts",
+        "airi/packages/realtime-voice/src/gateway.test.ts",
+        "airi/packages/stage-ui/src/stores/modules/realtime-voice.ts",
+        "airi/packages/stage-ui/src/stores/modules/realtime-brain.browser.test.ts",
+        "airi/packages/stage-ui/src/stores/modules/realtime-audio.browser.test.ts",
+        "airi/packages/stage-ui/src/components/scenarios/realtime-voice-controls.vue",
+        "airi/apps/stage-web/src/pages/index.vue"
+      ]
+    },
+    {
+      "id": "session-fast-conversation-policy",
+      "path": "wiki/memory/sessions/2026-10-04-fast-conversation-policy.md",
+      "title": "快脑会话策略增量改进记录",
+      "summary": "AIRI-023：真实模型请求风格、有限真实进度、独立暂停/继续及权威摘要原样分段，区分真人未验收。",
+      "tags": [
+        "AIRI-023",
+        "会话风格",
+        "快慢脑",
+        "计划",
+        "情绪",
+        "等待",
+        "暂停",
+        "继续",
+        "摘要",
+        "打断"
+      ],
+      "sources": [
+        "airi/docs/ai/reports/2026-10-04-fast-conversation-policy.md",
+        "airi/packages/realtime-voice/src/conversation.ts",
+        "airi/packages/realtime-voice/src/conversation.test.ts",
+        "airi/packages/realtime-voice/src/brain.ts",
+        "airi/packages/stage-ui/src/stores/modules/slow-brain.ts",
+        "airi/packages/stage-ui/src/stores/modules/realtime-voice.ts",
+        "airi/packages/stage-ui/src/stores/modules/realtime-brain.browser.test.ts",
+        "airi/packages/stage-ui/src/components/scenarios/realtime-voice-controls.vue",
+        "airi/packages/stage-pages/src/pages/settings/modules/realtime-voice.vue",
+        "开发文档/06-realtime-voice.md"
+      ]
+    },
+    {
+      "id": "chatty-conversation",
+      "path": "wiki/modules/chatty-conversation.md",
+      "title": "活泼话痨与自动续聊",
+      "summary": "AIRI-024：当前角色的高表达低回应索取风格，应用事件短片段、任务优先、播放确认、暂停及有界请求。",
+      "tags": [
+        "话痨",
+        "话唠",
+        "活泼",
+        "会话风格",
+        "主动",
+        "续聊",
+        "暂停",
+        "低压力",
+        "AIRI-024"
+      ],
+      "sources": [
+        "airi/packages/realtime-voice/src/conversation.ts",
+        "airi/packages/realtime-voice/src/brain.ts",
+        "airi/packages/stage-ui/src/stores/modules/slow-brain.ts",
+        "airi/packages/stage-ui/src/stores/modules/realtime-voice.ts",
+        "airi/packages/stage-ui/src/stores/companion.ts",
+        "airi/packages/stage-ui/src/stores/modules/realtime-brain.browser.test.ts",
+        "airi/packages/stage-ui/src/components/scenarios/realtime-voice-controls.vue",
+        "airi/packages/stage-pages/src/pages/settings/modules/realtime-voice.vue",
+        "airi/packages/i18n/src/locales/zh-Hans/settings.yaml",
+        "开发文档/06-realtime-voice.md",
+        "airi/docs/ai/reports/2026-10-06-chatty-preparation-and-persona.md",
+        "airi/packages/stage-ui/src/services/local-vision-context.ts",
+        "airi/packages/stage-ui/src/stores/local-vision.ts",
+        "airi/packages/realtime-voice/src/prompts.ts"
+      ]
+    },
+    {
+      "id": "session-chatty-conversation",
+      "path": "wiki/memory/sessions/2026-10-04-chatty-conversation.md",
+      "title": "活泼话痨模式开发记录",
+      "summary": "AIRI-024：话痨风格和真实应用续聊调度，确认事实、正式任务优先、预算和取消，区分真实模型未验收。",
+      "tags": [
+        "AIRI-024",
+        "话痨",
+        "会话风格",
+        "主动续聊",
+        "应用事件",
+        "确认事实",
+        "验证"
+      ],
+      "sources": [
+        "airi/docs/ai/reports/2026-10-04-chatty-conversation.md",
+        "wiki/modules/chatty-conversation.md",
+        "airi/packages/stage-ui/src/stores/modules/slow-brain.ts",
+        "airi/packages/stage-ui/src/stores/modules/realtime-voice.ts",
+        "airi/packages/stage-ui/src/stores/modules/realtime-brain.browser.test.ts"
+      ]
+    },
+    {
+      "id": "session-memory-management",
+      "path": "wiki/memory/sessions/2026-10-05-memory-management.md",
+      "title": "姓名确认与开发者记忆管理记录",
+      "summary": "AIRI-025：行为规则、确认后原人物改名、已有记忆数据库管理、本机开发者权限与后续语义建设。",
+      "tags": [
+        "AIRI-025",
+        "记忆",
+        "数据库",
+        "权限",
+        "姓名",
+        "确认",
+        "错字",
+        "开发者"
+      ],
+      "sources": [
+        "airi/docs/ai/reports/2026-10-05-memory-management.md",
+        "airi/docs/ai/adr/2026-10-05-name-confirmation-memory.md",
+        "wiki/modules/storage-memory.md"
+      ]
+    },
+    {
+      "id": "session-chatty-preparation-persona",
+      "path": "wiki/memory/sessions/2026-10-06-chatty-preparation-and-persona.md",
+      "title": "续聊故障与人设接线记录",
+      "summary": "AIRI-026：续聊口语输出、独立思考设置、45秒等待、真实错误分类与快脑人物受理语。",
+      "tags": [
+        "AIRI-026",
+        "话痨",
+        "续聊",
+        "系统提示词",
+        "人设",
+        "HTTP",
+        "超时",
+        "验证"
+      ],
+      "sources": [
+        "airi/docs/ai/reports/2026-10-06-chatty-preparation-and-persona.md",
+        "airi/packages/realtime-voice/src/conversation.ts",
+        "airi/packages/realtime-voice/src/brain.ts",
+        "airi/packages/stage-ui/src/stores/modules/slow-brain.ts",
+        "airi/packages/stage-ui/src/stores/modules/realtime-voice.ts",
+        "airi/packages/stage-ui/src/stores/modules/consciousness.ts",
+        "airi/packages/stage-pages/src/pages/settings/modules/realtime-voice.vue"
+      ]
+    },
+    {
+      "id": "session-chatty-idle-reflection",
+      "path": "wiki/memory/sessions/2026-10-06-chatty-idle-and-reflection.md",
+      "title": "自动找话题等待与无回应反思记录",
+      "summary": "AIRI-027复现动态观察取消续聊，区分授权范围、可调5/10秒等待及模型有限试探后换话题，保留真实服务验收边界。",
+      "tags": [
+        "话痨",
+        "续聊",
+        "自动找话题",
+        "5秒",
+        "10秒",
+        "等待",
+        "反思",
+        "无回应",
+        "换话题"
+      ],
+      "sources": [
+        "airi/packages/realtime-voice/src/conversation.ts",
+        "airi/packages/stage-ui/src/stores/modules/slow-brain.ts",
+        "airi/packages/stage-ui/src/stores/modules/realtime-voice.ts",
+        "airi/packages/stage-ui/src/services/local-vision-context.ts",
+        "airi/packages/stage-ui/src/stores/local-vision.ts",
+        "airi/packages/stage-ui/src/stores/modules/realtime-brain.browser.test.ts",
+        "airi/packages/stage-pages/src/pages/settings/modules/realtime-voice.vue",
+        "airi/docs/ai/reports/2026-10-06-chatty-idle-and-reflection.md"
+      ]
+    },
+    {
+      "id": "face-adaptation",
+      "path": "wiki/algorithms/face-adaptation.md",
+      "title": "人脸轨迹复核与可撤销扩展",
+      "summary": "基础身份锚点、连续候选、前后审核、扩展隔离与撤销，保留真实验收边界。",
+      "tags": [
+        "人脸",
+        "鲁棒性",
+        "光照",
+        "角度",
+        "轨迹",
+        "补采",
+        "扩展",
+        "撤销",
+        "换人"
+      ],
+      "sources": [
+        "airi/services/local-vision/adaptation.py",
+        "airi/services/local-vision/model.py",
+        "airi/services/local-vision/identity.py",
+        "airi/services/local-vision/recognition.py",
+        "airi/services/local-vision/tests/testadaptation.py",
+        "airi/docs/ai/adr/2026-10-06-trajectory-face-adaptation.md"
+      ]
+    },
+    {
+      "id": "session-active-greeting-recognition",
+      "path": "wiki/memory/sessions/2026-10-06-active-greeting-and-recognition.md",
+      "title": "主动问候与计时排查记录",
+      "summary": "首次问候、未捕获上下文的空闲等待和慢采样身份窗口的因果修复。",
+      "tags": [
+        "问候",
+        "倒计时",
+        "陌生人",
+        "采样"
+      ],
+      "sources": [
+        "airi/packages/stage-ui/src/stores/companion.ts",
+        "airi/packages/stage-ui/src/stores/modules/realtime-voice.ts",
+        "airi/services/local-vision/identity.py",
+        "airi/docs/ai/reports/2026-10-06-active-greeting-and-recognition.md"
+      ]
+    },
+    {
+      "id": "session-trajectory-face-adaptation",
+      "path": "wiki/memory/sessions/2026-10-06-trajectory-face-adaptation.md",
+      "title": "连续轨迹补采记录",
+      "summary": "保留现有模型，增加基础审核和可撤销扩展，区分构造增益与真人泛化。",
+      "tags": [
+        "人脸",
+        "轨迹",
+        "补采",
+        "验证",
+        "选型"
+      ],
+      "sources": [
+        "airi/services/local-vision/adaptation.py",
+        "airi/services/local-vision/adaptation_probe.py",
+        "airi/docs/ai/reports/2026-10-06-trajectory-face-adaptation.md"
+      ]
+    },
+    {
+      "id": "session-active-mode-voice",
+      "path": "wiki/memory/sessions/2026-10-08-active-mode-voice.md",
+      "title": "主动模式语音联动排查记录",
+      "summary": "AIRI-032：普通麦克风开关阻塞自动实时通话的对照复现、门控修复与真实豆包音频返回，保留笔记本设备现场验收边界。",
+      "tags": [
+        "AIRI-032",
+        "主动模式",
+        "语音",
+        "麦克风",
+        "只有文字",
+        "自动通话"
+      ],
+      "sources": [
+        "airi/packages/stage-ui/src/stores/companion.ts",
+        "airi/packages/stage-ui/src/stores/modules/realtime-brain.browser.test.ts",
+        "airi/apps/stage-web/src/pages/index.vue",
+        "airi/docs/ai/reports/2026-10-08-active-mode-voice.md"
+      ]
+    },
+    {
+      "id": "brain-prompts",
+      "path": "wiki/modules/brain-prompts.md",
+      "title": "快慢脑系统提示词编辑",
+      "summary": "前端查看修改、中文默认、原子保存、真实请求接入与版本隔离。",
+      "tags": [
+        "提示词",
+        "系统提示词",
+        "修改",
+        "前端",
+        "快脑",
+        "慢脑",
+        "人设",
+        "续聊",
+        "AIRI-033"
+      ],
+      "sources": [
+        "airi/packages/realtime-voice/src/prompts.ts",
+        "airi/packages/stage-ui/src/stores/modules/brain-prompts.ts",
+        "airi/packages/stage-ui/src/components/scenarios/brain-prompt-editor.vue",
+        "airi/packages/stage-ui/src/stores/modules/slow-brain.ts",
+        "airi/packages/stage-ui/src/stores/modules/realtime-voice.ts",
+        "airi/docs/ai/reports/2026-10-08-brain-prompt-editor.md",
+        "airi/packages/stage-ui/src/stores/stage-identity.ts"
+      ]
+    },
+    {
+      "id": "session-brain-prompt-editor",
+      "path": "wiki/memory/sessions/2026-10-08-brain-prompt-editor.md",
+      "title": "快慢脑提示词前端编辑记录",
+      "summary": "AIRI-033：可编辑行为与运行时协议分离，验证保存、模型请求和迟到稿。",
+      "tags": [
+        "AIRI-033",
+        "提示词",
+        "编辑",
+        "中文",
+        "验证"
+      ],
+      "sources": [
+        "airi/packages/realtime-voice/src/prompts.ts",
+        "airi/packages/stage-ui/src/stores/modules/brain-prompts.ts",
+        "airi/packages/stage-ui/src/stores/modules/realtime-brain.browser.test.ts",
+        "airi/docs/ai/reports/2026-10-08-brain-prompt-editor.md"
+      ]
+    },
+    {
+      "id": "session-face-stage-accounts",
+      "path": "wiki/memory/sessions/2026-10-09-face-stage-accounts.md",
+      "title": "人脸舞台账户开发记录",
+      "summary": "AIRI-034：单人确认后本地登录，离开与换人切换历史和语音，云认证独立。",
+      "tags": [
+        "AIRI-034",
+        "人脸",
+        "账户",
+        "登录",
+        "退出",
+        "换人",
+        "历史",
+        "陌生人"
+      ],
+      "sources": [
+        "airi/packages/stage-ui/src/stores/stage-identity.ts",
+        "airi/packages/stage-ui/src/stores/local-vision.ts",
+        "airi/packages/stage-ui/src/stores/chat/session-store.ts",
+        "airi/packages/stage-ui/src/stores/stage-identity.browser.test.ts",
+        "airi/docs/ai/adr/2026-10-09-face-stage-accounts.md",
+        "airi/docs/ai/reports/2026-10-09-face-stage-accounts.md"
+      ]
+    },
+    {
+      "id": "chat-archive",
+      "path": "wiki/modules/chat-archive.md",
+      "title": "按人物和智能体的聊天档案",
+      "summary": "AIRI-035：跨会话原文、搜索、收藏、备注、摘要、导出删除及当前关系模型工具。",
+      "tags": [
+        "聊天记录",
+        "档案",
+        "长期记忆",
+        "原文",
+        "搜索",
+        "人物",
+        "摘要",
+        "AIRI-035"
+      ],
+      "sources": [
+        "airi/packages/stage-ui/src/services/chat-archive.ts",
+        "airi/packages/stage-ui/src/stores/chat-archive.ts",
+        "airi/packages/stage-ui/src/libs/chat-archive-events.ts",
+        "airi/packages/stage-ui/src/components/scenarios/chat-archive.vue",
+        "airi/packages/stage-pages/src/pages/settings/modules/memory-long-term.vue",
+        "airi/packages/stage-ui/src/stores/chat/session-store.ts",
+        "airi/packages/stage-ui/src/database/repos/chat-sessions.repo.ts",
+        "airi/packages/stage-ui/src/stores/chat-archive.browser.test.ts",
+        "airi/packages/stage-ui/src/stores/modules/realtime-brain.browser.test.ts",
+        "airi/docs/ai/reports/2026-10-09-chat-archive.md"
+      ]
+    },
+    {
+      "id": "session-chat-archive",
+      "path": "wiki/memory/sessions/2026-10-09-chat-archive.md",
+      "title": "轻量聊天档案开发记录",
+      "summary": "AIRI-035：页面与智能体共用原文，权限、来源、删除及真实请求边界验证。",
+      "tags": [
+        "AIRI-035",
+        "聊天档案",
+        "开发记录",
+        "验证",
+        "记忆"
+      ],
+      "sources": [
+        "airi/packages/stage-ui/src/services/chat-archive.ts",
+        "airi/packages/stage-ui/src/stores/chat-archive.ts",
+        "airi/packages/stage-ui/src/libs/chat-archive-events.ts",
+        "airi/packages/stage-ui/src/components/scenarios/chat-archive.vue",
+        "airi/packages/stage-pages/src/pages/settings/modules/memory-long-term.vue",
+        "airi/packages/stage-ui/src/stores/chat/session-store.ts",
+        "airi/packages/stage-ui/src/database/repos/chat-sessions.repo.ts",
+        "airi/packages/stage-ui/src/stores/chat-archive.browser.test.ts",
+        "airi/packages/stage-ui/src/stores/modules/realtime-brain.browser.test.ts",
+        "airi/docs/ai/reports/2026-10-09-chat-archive.md",
+        "airi/docs/ai/adr/2026-10-09-chat-archive.md"
+      ]
+    },
+    {
+      "id": "session-voice-settings-regression",
+      "path": "wiki/memory/sessions/2026-10-11-voice-and-settings-regression.md",
+      "title": "实时语音与设置入口回归记录",
+      "summary": "AIRI-036：同会话快照误挂断、人物会话激活、档案读取隔离、网关恢复提示与独立设置入口。",
+      "tags": [
+        "实时语音",
+        "断音",
+        "网关不可用",
+        "设置",
+        "长期记忆",
+        "AIRI-036"
+      ],
+      "sources": [
+        "airi/packages/stage-layouts/src/components/Layouts/HeaderAvatar.vue",
+        "airi/packages/stage-ui/src/stores/modules/realtime-voice.ts",
+        "airi/packages/stage-ui/src/stores/modules/realtime-brain.browser.test.ts",
+        "airi/packages/stage-ui/src/stores/stage-identity.browser.test.ts",
+        "airi/packages/realtime-voice/src/gateway.test.ts",
+        "airi/docs/ai/reports/2026-10-11-voice-and-settings-regression.md"
+      ]
+    },
+    {
+      "id": "stage-runtime",
+      "path": "wiki/modules/stage-runtime.md",
+      "title": "舞台统一启停与交付回归",
+      "summary": "启动自检、资源休眠、多窗口与迟到结果隔离、固定旧功能门禁和真实设备边界。",
+      "tags": [
+        "启动",
+        "关闭",
+        "休眠",
+        "自检",
+        "网关",
+        "回归",
+        "交付",
+        "AIRI-037"
+      ],
+      "sources": [
+        "airi/packages/stage-ui/src/stores/stage-runtime.ts",
+        "airi/packages/stage-ui/src/stores/stage-runtime.browser.test.ts",
+        "airi/packages/stage-ui/src/components/scenarios/stage-runtime-controls.vue",
+        "airi/apps/stage-web/src/stage-runtime-gateway.ts",
+        "airi/apps/stage-web/src/components/local-vision-runtime.vue",
+        "airi/services/local-vision/service.py",
+        "airi/services/local-vision/tests/testservice.py",
+        "airi/packages/stage-ui/src/stores/chat.ts",
+        "airi/packages/stage-ui/src/stores/settings/audio-device.ts",
+        "airi/packages/stage-ui/src/stores/modules/realtime-voice.ts",
+        "airi/packages/stage-layouts/src/composables/theme-color.ts",
+        "airi/apps/stage-web/src/composables/theme-color.browser.test.ts",
+        "scripts/vision.ps1",
+        "scripts/test-airi-delivery.ps1",
+        "scripts/check-airi-gateways.mjs",
+        "开发文档/04-development-guide.md",
+        "airi/docs/ai/reports/2026-10-11-stage-runtime-and-delivery.md"
+      ]
+    },
+    {
+      "id": "session-stage-runtime-delivery",
+      "path": "wiki/memory/sessions/2026-10-11-stage-runtime-and-delivery.md",
+      "title": "舞台统一启停与交付回归记录",
+      "summary": "AIRI-037：启停与资源释放，回归发现多窗口旧状态、空颜色及历史重试边界，实际UI验收。",
+      "tags": [
+        "开发记录",
+        "启停",
+        "休眠",
+        "测试",
+        "旧功能",
+        "AIRI-037"
+      ],
+      "sources": [
+        "airi/packages/stage-ui/src/stores/stage-runtime.ts",
+        "airi/packages/stage-ui/src/stores/stage-runtime.browser.test.ts",
+        "airi/packages/stage-ui/src/components/scenarios/stage-runtime-controls.vue",
+        "airi/apps/stage-web/src/stage-runtime-gateway.ts",
+        "airi/apps/stage-web/src/components/local-vision-runtime.vue",
+        "airi/services/local-vision/service.py",
+        "airi/services/local-vision/tests/testservice.py",
+        "airi/packages/stage-ui/src/stores/chat.ts",
+        "airi/packages/stage-ui/src/stores/settings/audio-device.ts",
+        "airi/packages/stage-ui/src/stores/modules/realtime-voice.ts",
+        "airi/packages/stage-layouts/src/composables/theme-color.ts",
+        "airi/apps/stage-web/src/composables/theme-color.browser.test.ts",
+        "scripts/vision.ps1",
+        "scripts/test-airi-delivery.ps1",
+        "scripts/check-airi-gateways.mjs",
+        "开发文档/04-development-guide.md",
+        "airi/docs/ai/reports/2026-10-11-stage-runtime-and-delivery.md"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,477 @@
+# 当前源码改动
+
+基准提交：`2e0e963670e5435a2909149fff1f83b93f8ffd11`。由目录同步工具生成；功能说明请维护变更记录与架构文档。
+
+```text
+ M .github/CONTRIBUTING.md
+ M .gitignore
+ M README.md
+ D apps/stage-pocket/src/assets/icons/modules/games/factorio.png
+ M apps/stage-web/package.json
+ M apps/stage-web/src/App.vue
+ D apps/stage-web/src/assets/icons/modules/games/factorio.png
+ M apps/stage-web/src/pages/devtools/model-driver-mediapipe.vue
+ M apps/stage-web/src/pages/index.vue
+ M apps/stage-web/uno.config.ts
+ M apps/stage-web/vite.config.ts
+ M docs/README.zh-CN.md
+ D integrations/discord-bot/.env
+ D integrations/discord-bot/README.md
+ D integrations/discord-bot/package.json
+ D integrations/discord-bot/src/adapters/airi-adapter.ts
+ D integrations/discord-bot/src/bots/discord/commands/index.ts
+ D integrations/discord-bot/src/bots/discord/commands/ping.ts
+ D integrations/discord-bot/src/bots/discord/commands/summon.ts
+ D integrations/discord-bot/src/constants/audio.ts
+ D integrations/discord-bot/src/index.ts
+ D integrations/discord-bot/src/pipelines/tts.ts
+ D integrations/discord-bot/src/utils/audio-monitor.ts
+ D integrations/discord-bot/src/utils/audio.ts
+ D integrations/discord-bot/src/utils/opus.ts
+ D integrations/discord-bot/tsconfig.json
+ D integrations/minecraft/.env
+ D integrations/minecraft/.gitignore
+ D integrations/minecraft/.vscode/launch.json
+ D integrations/minecraft/README.md
+ D integrations/minecraft/codex-skills/minecraft-debug-mcp/SKILL.md
+ D integrations/minecraft/codex-skills/minecraft-debug-mcp/agents/openai.yaml
+ D integrations/minecraft/codex-skills/minecraft-debug-mcp/references/mcp-surface.md
+ D integrations/minecraft/docs/preview.avif
+ D integrations/minecraft/package.json
+ D integrations/minecraft/src/airi/airi-bridge.test.ts
+ D integrations/minecraft/src/airi/airi-bridge.ts
+ D integrations/minecraft/src/airi/minecraft-context-service.test.ts
+ D integrations/minecraft/src/airi/minecraft-context-service.ts
+ D integrations/minecraft/src/airi/start-background-client.ts
+ D integrations/minecraft/src/cognitive/action/action-registry.ts
+ D integrations/minecraft/src/cognitive/action/llm-actions.test.ts
+ D integrations/minecraft/src/cognitive/action/llm-actions.ts
+ D integrations/minecraft/src/cognitive/action/task-executor.ts
+ D integrations/minecraft/src/cognitive/action/types.ts
+ D integrations/minecraft/src/cognitive/action/types/index.ts
+ D integrations/minecraft/src/cognitive/conscious/brain.test.ts
+ D integrations/minecraft/src/cognitive/conscious/brain.ts
+ D integrations/minecraft/src/cognitive/conscious/context-view.ts
+ D integrations/minecraft/src/cognitive/conscious/history-query.ts
+ D integrations/minecraft/src/cognitive/conscious/js-planner-sandbox-protocol.ts
+ D integrations/minecraft/src/cognitive/conscious/js-planner-sandbox-runner.ts
+ D integrations/minecraft/src/cognitive/conscious/js-planner-worker.ts
+ D integrations/minecraft/src/cognitive/conscious/js-planner.test.ts
+ D integrations/minecraft/src/cognitive/conscious/js-planner.ts
+ D integrations/minecraft/src/cognitive/conscious/llm-agent.ts
+ D integrations/minecraft/src/cognitive/conscious/llm-log.test.ts
+ D integrations/minecraft/src/cognitive/conscious/llm-log.ts
+ D integrations/minecraft/src/cognitive/conscious/llmlogic.ts
+ D integrations/minecraft/src/cognitive/conscious/map-renderer.test.ts
+ D integrations/minecraft/src/cognitive/conscious/map-renderer.ts
+ D integrations/minecraft/src/cognitive/conscious/patterns/catalog.ts
+ D integrations/minecraft/src/cognitive/conscious/patterns/runtime.test.ts
+ D integrations/minecraft/src/cognitive/conscious/patterns/runtime.ts
+ D integrations/minecraft/src/cognitive/conscious/patterns/types.ts
+ D integrations/minecraft/src/cognitive/conscious/prompts/brain-prompt.md
+ D integrations/minecraft/src/cognitive/conscious/prompts/brain-prompt.test.ts
+ D integrations/minecraft/src/cognitive/conscious/prompts/brain-prompt.ts
+ D integrations/minecraft/src/cognitive/conscious/query-dsl.test.ts
+ D integrations/minecraft/src/cognitive/conscious/query-dsl.ts
+ D integrations/minecraft/src/cognitive/conscious/repl-code-normalizer.test.ts
+ D integrations/minecraft/src/cognitive/conscious/repl-code-normalizer.ts
+ D integrations/minecraft/src/cognitive/conscious/task-state.ts
+ D integrations/minecraft/src/cognitive/container.ts
+ D integrations/minecraft/src/cognitive/event-bus.test.ts
+ D integrations/minecraft/src/cognitive/event-bus.ts
+ D integrations/minecraft/src/cognitive/index.ts
+ D integrations/minecraft/src/cognitive/perception/events/definitions/arm-swing.ts
+ D integrations/minecraft/src/cognitive/perception/events/definitions/attacker-tracker.test.ts
+ D integrations/minecraft/src/cognitive/perception/events/definitions/attacker-tracker.ts
+ D integrations/minecraft/src/cognitive/perception/events/definitions/damage-taken.ts
+ D integrations/minecraft/src/cognitive/perception/events/definitions/entity-moved.ts
+ D integrations/minecraft/src/cognitive/perception/events/definitions/fall-tracker.test.ts
+ D integrations/minecraft/src/cognitive/perception/events/definitions/fall-tracker.ts
+ D integrations/minecraft/src/cognitive/perception/events/definitions/index.ts
+ D integrations/minecraft/src/cognitive/perception/events/definitions/low-health.test.ts
+ D integrations/minecraft/src/cognitive/perception/events/definitions/low-health.ts
+ D integrations/minecraft/src/cognitive/perception/events/definitions/sneak-toggle.ts
+ D integrations/minecraft/src/cognitive/perception/events/definitions/system-message.ts
+ D integrations/minecraft/src/cognitive/perception/events/index.ts
+ D integrations/minecraft/src/cognitive/perception/events/types.ts
+ D integrations/minecraft/src/cognitive/perception/gaze.test.ts
+ D integrations/minecraft/src/cognitive/perception/gaze.ts
+ D integrations/minecraft/src/cognitive/perception/pipeline.ts
+ D integrations/minecraft/src/cognitive/perception/rules/attention/movement.yaml
+ D integrations/minecraft/src/cognitive/perception/rules/attention/punch.yaml
+ D integrations/minecraft/src/cognitive/perception/rules/danger/damage.yaml
+ D integrations/minecraft/src/cognitive/perception/rules/danger/low-health.yaml
+ D integrations/minecraft/src/cognitive/perception/rules/engine.ts
+ D integrations/minecraft/src/cognitive/perception/rules/index.ts
+ D integrations/minecraft/src/cognitive/perception/rules/loader.ts
+ D integrations/minecraft/src/cognitive/perception/rules/matcher.ts
+ D integrations/minecraft/src/cognitive/perception/rules/rules.test.ts
+ D integrations/minecraft/src/cognitive/perception/rules/social/teabag.yaml
+ D integrations/minecraft/src/cognitive/perception/rules/system-message.yaml
+ D integrations/minecraft/src/cognitive/perception/rules/temporal-detector.ts
+ D integrations/minecraft/src/cognitive/perception/rules/types.ts
+ D integrations/minecraft/src/cognitive/perception/types/raw-events.ts
+ D integrations/minecraft/src/cognitive/perception/types/signals.ts
+ D integrations/minecraft/src/cognitive/reflex/behaviors/auto-eat.test.ts
+ D integrations/minecraft/src/cognitive/reflex/behaviors/auto-eat.ts
+ D integrations/minecraft/src/cognitive/reflex/behaviors/defend.test.ts
+ D integrations/minecraft/src/cognitive/reflex/behaviors/defend.ts
+ D integrations/minecraft/src/cognitive/reflex/behaviors/escape-hazard.test.ts
+ D integrations/minecraft/src/cognitive/reflex/behaviors/escape-hazard.ts
+ D integrations/minecraft/src/cognitive/reflex/behaviors/idle-gaze.ts
+ D integrations/minecraft/src/cognitive/reflex/context.ts
+ D integrations/minecraft/src/cognitive/reflex/modes.ts
+ D integrations/minecraft/src/cognitive/reflex/reflex-manager.test.ts
+ D integrations/minecraft/src/cognitive/reflex/reflex-manager.ts
+ D integrations/minecraft/src/cognitive/reflex/runtime.test.ts
+ D integrations/minecraft/src/cognitive/reflex/runtime.ts
+ D integrations/minecraft/src/cognitive/reflex/types/behavior.ts
+ D integrations/minecraft/src/cognitive/types.ts
+ D integrations/minecraft/src/cognitive/types/index.ts
+ D integrations/minecraft/src/composables/bot.ts
+ D integrations/minecraft/src/composables/config.ts
+ D integrations/minecraft/src/composables/runtime-config.ts
+ D integrations/minecraft/src/debug/debug-service.ts
+ D integrations/minecraft/src/debug/index.ts
+ D integrations/minecraft/src/debug/mcp-repl-server.test.ts
+ D integrations/minecraft/src/debug/mcp-repl-server.ts
+ D integrations/minecraft/src/debug/mineflayer-viewer.ts
+ D integrations/minecraft/src/debug/server.ts
+ D integrations/minecraft/src/debug/tool-executor.ts
+ D integrations/minecraft/src/debug/types.ts
+ D integrations/minecraft/src/debug/web/app.js
+ D integrations/minecraft/src/debug/web/conversation.css
+ D integrations/minecraft/src/debug/web/index.html
+ D integrations/minecraft/src/debug/web/styles.css
+ D integrations/minecraft/src/debug/web/tools.css
+ D integrations/minecraft/src/libs/mineflayer/action.ts
+ D integrations/minecraft/src/libs/mineflayer/base-agent.ts
+ D integrations/minecraft/src/libs/mineflayer/command.ts
+ D integrations/minecraft/src/libs/mineflayer/components.ts
+ D integrations/minecraft/src/libs/mineflayer/connection-supervisor.ts
+ D integrations/minecraft/src/libs/mineflayer/core.ts
+ D integrations/minecraft/src/libs/mineflayer/foods.test.ts
+ D integrations/minecraft/src/libs/mineflayer/foods.ts
+ D integrations/minecraft/src/libs/mineflayer/health.ts
+ D integrations/minecraft/src/libs/mineflayer/index.ts
+ D integrations/minecraft/src/libs/mineflayer/memory.ts
+ D integrations/minecraft/src/libs/mineflayer/message.ts
+ D integrations/minecraft/src/libs/mineflayer/plugin-runtime.ts
+ D integrations/minecraft/src/libs/mineflayer/plugin.ts
+ D integrations/minecraft/src/libs/mineflayer/status.ts
+ D integrations/minecraft/src/libs/mineflayer/ticker.ts
+ D integrations/minecraft/src/libs/mineflayer/types.ts
+ D integrations/minecraft/src/main.ts
+ D integrations/minecraft/src/minecraft-bot-runtime.ts
+ D integrations/minecraft/src/plugins/echo.ts
+ D integrations/minecraft/src/plugins/follow.ts
+ D integrations/minecraft/src/plugins/pathfinder.ts
+ D integrations/minecraft/src/plugins/status.ts
+ D integrations/minecraft/src/skills/actions/block-type-normalizer.test.ts
+ D integrations/minecraft/src/skills/actions/block-type-normalizer.ts
+ D integrations/minecraft/src/skills/actions/collect-block.ts
+ D integrations/minecraft/src/skills/actions/ensure.ts
+ D integrations/minecraft/src/skills/actions/gather-wood.ts
+ D integrations/minecraft/src/skills/actions/inventory.ts
+ D integrations/minecraft/src/skills/actions/world-interactions.ts
+ D integrations/minecraft/src/skills/base.ts
+ D integrations/minecraft/src/skills/blocks.ts
+ D integrations/minecraft/src/skills/combat.test.ts
+ D integrations/minecraft/src/skills/combat.ts
+ D integrations/minecraft/src/skills/containers.ts
+ D integrations/minecraft/src/skills/crafting.test.ts
+ D integrations/minecraft/src/skills/crafting.ts
+ D integrations/minecraft/src/skills/index.ts
+ D integrations/minecraft/src/skills/inventory.ts
+ D integrations/minecraft/src/skills/movement.test.ts
+ D integrations/minecraft/src/skills/movement.ts
+ D integrations/minecraft/src/skills/patched-goto.test.ts
+ D integrations/minecraft/src/skills/patched-goto.ts
+ D integrations/minecraft/src/skills/world.ts
+ D integrations/minecraft/src/utils/error-message.ts
+ D integrations/minecraft/src/utils/errors.ts
+ D integrations/minecraft/src/utils/logger.ts
+ D integrations/minecraft/src/utils/mcdata.ts
+ D integrations/minecraft/src/utils/recipe-planner.ts
+ D integrations/minecraft/tsconfig.json
+ D integrations/minecraft/vitest.config.ts
+ D integrations/twitter-services/.env.example
+ D integrations/twitter-services/docs/architecture-20250304.md
+ D integrations/twitter-services/package.json
+ D integrations/twitter-services/src/adapters/adapter.ts
+ D integrations/twitter-services/src/adapters/airi-adapter.ts
+ D integrations/twitter-services/src/adapters/mcp-adapter.ts
+ D integrations/twitter-services/src/config/index.ts
+ D integrations/twitter-services/src/config/types.ts
+ D integrations/twitter-services/src/constants.ts
+ D integrations/twitter-services/src/core/browser/context.ts
+ D integrations/twitter-services/src/core/services/auth.ts
+ D integrations/twitter-services/src/core/services/timeline.ts
+ D integrations/twitter-services/src/core/services/tweet.ts
+ D integrations/twitter-services/src/core/services/user.ts
+ D integrations/twitter-services/src/core/utils/scroll-helper.ts
+ D integrations/twitter-services/src/main.ts
+ D integrations/twitter-services/src/parsers/command-parser.test.ts
+ D integrations/twitter-services/src/parsers/command-parser.ts
+ D integrations/twitter-services/src/parsers/profile-parser.ts
+ D integrations/twitter-services/src/parsers/selectors.ts
+ D integrations/twitter-services/src/parsers/tweet-parser.ts
+ D integrations/twitter-services/src/types/browser.ts
+ D integrations/twitter-services/src/types/services.ts
+ D integrations/twitter-services/src/types/twitter.ts
+ D integrations/twitter-services/src/utils/error.ts
+ D integrations/twitter-services/src/utils/logger.ts
+ D integrations/twitter-services/tsconfig.json
+ M integrations/vscode/vscode-airi/package.json
+ M package.json
+ M packages/core-agent/src/types/chat.ts
+ M packages/i18n/src/locales/en/base.yaml
+ M packages/i18n/src/locales/en/settings.yaml
+ M packages/i18n/src/locales/en/stage.yaml
+ M packages/i18n/src/locales/zh-Hans/base.yaml
+ M packages/i18n/src/locales/zh-Hans/settings.yaml
+ M packages/i18n/src/locales/zh-Hans/stage.yaml
+ M packages/stage-layouts/src/components/Layouts/HeaderAvatar.vue
+ M packages/stage-layouts/src/components/Layouts/InteractiveArea.vue
+ M packages/stage-layouts/src/components/Layouts/MobileInteractiveArea.vue
+ M packages/stage-layouts/src/components/Layouts/mobile-settings-drawer.vue
+ M packages/stage-layouts/src/composables/theme-color.ts
+ M packages/stage-pages/README.md
+ M packages/stage-pages/package.json
+ M packages/stage-pages/src/pages/settings/data/index.vue
+ M packages/stage-pages/src/pages/settings/memory/index.vue
+ D packages/stage-pages/src/pages/settings/modules/gaming-factorio.vue
+ D packages/stage-pages/src/pages/settings/modules/gaming-minecraft.vue
+ M packages/stage-pages/src/pages/settings/modules/memory-long-term.vue
+ M packages/stage-pages/src/pages/settings/modules/memory-short-term.vue
+ D packages/stage-pages/src/pages/settings/modules/messaging-discord.vue
+ M packages/stage-pages/src/pages/settings/modules/vision.vue
+ D packages/stage-pages/src/pages/settings/modules/x.vue
+ M packages/stage-ui-live2d/src/components/scenes/Live2D.vue
+ M packages/stage-ui-three/README.md
+ M packages/stage-ui-three/src/components/Model/VRMModel.vue
+ M packages/stage-ui-three/src/components/ThreeScene.vue
+ M packages/stage-ui/README.md
+ M packages/stage-ui/package.json
+ D packages/stage-ui/src/assets/factorio-simple.png
+ D packages/stage-ui/src/components/modules/GamingFactorio.vue
+ D packages/stage-ui/src/components/modules/GamingMinecraft.vue
+ D packages/stage-ui/src/components/modules/GamingModuleSettings.vue
+ D packages/stage-ui/src/components/modules/MessagingDiscord.vue
+ M packages/stage-ui/src/components/modules/WebSearch.vue
+ D packages/stage-ui/src/components/modules/X.vue
+ M packages/stage-ui/src/components/modules/index.ts
+ M packages/stage-ui/src/components/scenarios/chat/components/sessions-drawer.vue
+ M packages/stage-ui/src/components/scenarios/dialogs/onboarding/onboarding.browser.test.ts
+ M packages/stage-ui/src/components/scenarios/dialogs/onboarding/onboarding.vue
+ M packages/stage-ui/src/components/scenarios/dialogs/onboarding/step-welcome.browser.test.ts
+ M packages/stage-ui/src/components/scenarios/dialogs/onboarding/step-welcome.vue
+ M packages/stage-ui/src/components/scenarios/hologram/promo-banner.ts
+ M packages/stage-ui/src/components/scenes/Stage.vue
+ M packages/stage-ui/src/composables/use-data-maintenance.browser.test.ts
+ M packages/stage-ui/src/composables/use-data-maintenance.ts
+ M packages/stage-ui/src/composables/use-modules-list.ts
+ M packages/stage-ui/src/composables/vision/use-vision-inference.test.ts
+ M packages/stage-ui/src/composables/vision/use-vision-inference.ts
+ M packages/stage-ui/src/database/repos/chat-sessions.repo.ts
+ M packages/stage-ui/src/libs/chat-sync/wire-message.test.ts
+ M packages/stage-ui/src/libs/chat-sync/wire-message.ts
+ M packages/stage-ui/src/stores/ai/chat-llm/llm.ts
+ M packages/stage-ui/src/stores/ai/chat-llm/tool-resolver.test.ts
+ M packages/stage-ui/src/stores/ai/chat-llm/tool-resolver.ts
+ M packages/stage-ui/src/stores/chat.contract.test.ts
+ M packages/stage-ui/src/stores/chat.ts
+ M packages/stage-ui/src/stores/chat/context-providers/index.ts
+ D packages/stage-ui/src/stores/chat/context-providers/minecraft.ts
+ M packages/stage-ui/src/stores/chat/context-providers/user-account.browser.test.ts
+ M packages/stage-ui/src/stores/chat/context-providers/user-account.ts
+ M packages/stage-ui/src/stores/chat/session-store.browser.test.ts
+ M packages/stage-ui/src/stores/chat/session-store.test.ts
+ M packages/stage-ui/src/stores/chat/session-store.ts
+ M packages/stage-ui/src/stores/modules/consciousness.ts
+ D packages/stage-ui/src/stores/modules/discord.ts
+ D packages/stage-ui/src/stores/modules/gaming-factorio.ts
+ D packages/stage-ui/src/stores/modules/gaming-minecraft.ts
+ M packages/stage-ui/src/stores/modules/hearing.ts
+ M packages/stage-ui/src/stores/modules/index.ts
+ D packages/stage-ui/src/stores/modules/twitter.ts
+ M packages/stage-ui/src/stores/modules/web-search.ts
+ M packages/stage-ui/src/stores/settings/audio-device.ts
+ D packages/stage-ui/src/tools/web-search.test.ts
+ M packages/stage-ui/src/tools/web-search.ts
+ M packages/stage-ui/src/types/chat-session.ts
+ M packages/stage-ui/vitest.config.ts
+ D patches/mineflayer-pathfinder.patch
+ M pnpm-lock.yaml
+ M pnpm-workspace.yaml
+ M services/computer-use-mcp/README.md
+ M services/computer-use-mcp/package.json
+ D services/computer-use-mcp/src/bin/e2e-airi-discord-agentic.ts
+ D services/computer-use-mcp/src/bin/e2e-airi-discord-observable.ts
+ M vitest.config.ts
+?? apps/stage-web/src/components/local-vision-runtime.vue
+?? apps/stage-web/src/composables/theme-color.browser.test.ts
+?? apps/stage-web/src/stage-runtime-gateway.ts
+?? docs/ai/adr/2026-09-29-local-social-vision.md
+?? docs/ai/adr/2026-09-30-active-social-companion.md
+?? docs/ai/adr/2026-10-01-adaptive-face-recognition.md
+?? docs/ai/adr/2026-10-01-camera-face-gaze.md
+?? docs/ai/adr/2026-10-02-fast-slow-brain.md
+?? docs/ai/adr/2026-10-05-name-confirmation-memory.md
+?? docs/ai/adr/2026-10-06-trajectory-face-adaptation.md
+?? docs/ai/adr/2026-10-08-brain-prompt-editor.md
+?? docs/ai/adr/2026-10-09-chat-archive.md
+?? docs/ai/adr/2026-10-09-face-stage-accounts.md
+?? docs/ai/reports/2026-10-02-fast-slow-brain.md
+?? docs/ai/reports/2026-10-03-firecrawl-403-fix.md
+?? docs/ai/reports/2026-10-03-firecrawl-search.md
+?? docs/ai/reports/2026-10-03-search-capability.md
+?? docs/ai/reports/2026-10-03-voice-delivery-fix.md
+?? docs/ai/reports/2026-10-03-voice-slow-brain-link.md
+?? docs/ai/reports/2026-10-04-chatty-conversation.md
+?? docs/ai/reports/2026-10-04-fast-conversation-policy.md
+?? docs/ai/reports/2026-10-05-memory-management.md
+?? docs/ai/reports/2026-10-06-active-greeting-and-recognition.md
+?? docs/ai/reports/2026-10-06-chatty-idle-and-reflection.md
+?? docs/ai/reports/2026-10-06-chatty-preparation-and-persona.md
+?? docs/ai/reports/2026-10-06-trajectory-face-adaptation.md
+?? docs/ai/reports/2026-10-06-vision-diagnostics.png
+?? docs/ai/reports/2026-10-08-active-mode-voice.md
+?? docs/ai/reports/2026-10-08-brain-prompt-editor.md
+?? docs/ai/reports/2026-10-08-brain-prompt-editor.png
+?? docs/ai/reports/2026-10-09-chat-archive.md
+?? docs/ai/reports/2026-10-09-face-stage-accounts.md
+?? docs/ai/reports/2026-10-11-stage-runtime-and-delivery.md
+?? docs/ai/reports/2026-10-11-voice-and-settings-regression.md
+?? packages/local-vision/README.md
+?? packages/local-vision/package.json
+?? packages/local-vision/src/camera-lease.ts
+?? packages/local-vision/src/client.ts
+?? packages/local-vision/src/contracts.ts
+?? packages/local-vision/src/gaze.test.ts
+?? packages/local-vision/src/gaze.ts
+?? packages/local-vision/src/policy.test.ts
+?? packages/local-vision/src/policy.ts
+?? packages/local-vision/src/vite.ts
+?? packages/local-vision/tsconfig.json
+?? packages/local-vision/tsdown.config.ts
+?? packages/local-vision/vitest.config.ts
+?? packages/realtime-voice/README.md
+?? packages/realtime-voice/package.json
+?? packages/realtime-voice/src/audio.ts
+?? packages/realtime-voice/src/brain.test.ts
+?? packages/realtime-voice/src/brain.ts
+?? packages/realtime-voice/src/capture.worklet.ts
+?? packages/realtime-voice/src/client.ts
+?? packages/realtime-voice/src/contracts.ts
+?? packages/realtime-voice/src/conversation.test.ts
+?? packages/realtime-voice/src/conversation.ts
+?? packages/realtime-voice/src/doubao.ts
+?? packages/realtime-voice/src/gateway.test.ts
+?? packages/realtime-voice/src/gateway.ts
+?? packages/realtime-voice/src/pcm.test.ts
+?? packages/realtime-voice/src/pcm.ts
+?? packages/realtime-voice/src/prompts.ts
+?? packages/realtime-voice/src/vite.test.ts
+?? packages/realtime-voice/src/vite.ts
+?? packages/realtime-voice/tsconfig.json
+?? packages/realtime-voice/tsdown.config.ts
+?? packages/realtime-voice/vitest.config.ts
+?? packages/stage-pages/src/pages/settings/modules/realtime-voice.vue
+?? packages/stage-ui-live2d/README.md
+?? packages/stage-ui-three/src/composables/vrm/head-gaze.test.ts
+?? packages/stage-ui-three/src/composables/vrm/head-gaze.ts
+?? packages/stage-ui/src/components/scenarios/brain-prompt-editor.vue
+?? packages/stage-ui/src/components/scenarios/chat-archive.vue
+?? packages/stage-ui/src/components/scenarios/developer-gate.browser.test.ts
+?? packages/stage-ui/src/components/scenarios/developer-gate.vue
+?? packages/stage-ui/src/components/scenarios/local-vision-panel.vue
+?? packages/stage-ui/src/components/scenarios/memory-manager.browser.test.ts
+?? packages/stage-ui/src/components/scenarios/memory-manager.vue
+?? packages/stage-ui/src/components/scenarios/realtime-voice-controls.vue
+?? packages/stage-ui/src/components/scenarios/stage-runtime-controls.vue
+?? packages/stage-ui/src/composables/use-chat-input.ts
+?? packages/stage-ui/src/composables/vision/local-vision-capture.browser.test.ts
+?? packages/stage-ui/src/composables/vision/use-face-gaze.ts
+?? packages/stage-ui/src/libs/chat-archive-events.ts
+?? packages/stage-ui/src/services/chat-archive.ts
+?? packages/stage-ui/src/services/local-vision-context.ts
+?? packages/stage-ui/src/stores/chat-archive.browser.test.ts
+?? packages/stage-ui/src/stores/chat-archive.ts
+?? packages/stage-ui/src/stores/chat/voice-transcript.browser.test.ts
+?? packages/stage-ui/src/stores/companion.browser.test.ts
+?? packages/stage-ui/src/stores/companion.ts
+?? packages/stage-ui/src/stores/developer-access.ts
+?? packages/stage-ui/src/stores/local-vision.browser.test.ts
+?? packages/stage-ui/src/stores/local-vision.ts
+?? packages/stage-ui/src/stores/modules/brain-prompts.ts
+?? packages/stage-ui/src/stores/modules/realtime-audio.browser.test.ts
+?? packages/stage-ui/src/stores/modules/realtime-brain.browser.test.ts
+?? packages/stage-ui/src/stores/modules/realtime-voice.ts
+?? packages/stage-ui/src/stores/modules/slow-brain.ts
+?? packages/stage-ui/src/stores/modules/web-search.browser.test.ts
+?? packages/stage-ui/src/stores/stage-identity.browser.test.ts
+?? packages/stage-ui/src/stores/stage-identity.ts
+?? packages/stage-ui/src/stores/stage-runtime.browser.test.ts
+?? packages/stage-ui/src/stores/stage-runtime.ts
+?? packages/stage-ui/src/stores/voice-activity.ts
+?? packages/stage-ui/src/tools/firecrawl-search.browser.test.ts
+?? packages/stage-ui/src/tools/web-search-contract.ts
+?? packages/stage-ui/src/tools/web-search-gateway.test.ts
+?? packages/stage-ui/src/tools/web-search-gateway.ts
+?? packages/stage-ui/src/tools/web-search.browser.test.ts
+?? packages/stage-ui/src/types/chat-archive.ts
+?? packages/stage-ui/test/chat-service.ts
+?? packages/stage-ui/test/local-vision-service.ts
+?? services/local-vision/.gitignore
+?? services/local-vision/README.md
+?? services/local-vision/adaptation.py
+?? services/local-vision/adaptation_probe.py
+?? services/local-vision/cli.py
+?? services/local-vision/developer.py
+?? services/local-vision/frame-header.schema.json
+?? services/local-vision/grounding.py
+?? services/local-vision/identity.py
+?? services/local-vision/integration.py
+?? services/local-vision/model.py
+?? services/local-vision/protocol.py
+?? services/local-vision/recognition.py
+?? services/local-vision/registry.py
+?? services/local-vision/reports/acceptance.actual.json
+?? services/local-vision/reports/acceptance.html
+?? services/local-vision/reports/active-companion-settings.png
+?? services/local-vision/reports/adaptation-probe.actual.json
+?? services/local-vision/reports/application-checks.actual.json
+?? services/local-vision/reports/baseline-changes.txt
+?? services/local-vision/reports/environment.actual.json
+?? services/local-vision/reports/integration-map.actual.md
+?? services/local-vision/reports/model-smoke.actual.json
+?? services/local-vision/reports/models-lock.actual.json
+?? services/local-vision/reports/policy-tests.actual.json
+?? services/local-vision/reports/recognition-benchmark.actual.json
+?? services/local-vision/reports/recognition-probe.actual.json
+?? services/local-vision/reports/service-integration.actual.json
+?? services/local-vision/reports/unit-tests.actual.json
+?? services/local-vision/reports/validation.active-companion.md
+?? services/local-vision/reports/validation.actual.md
+?? services/local-vision/reports/validation.adaptive-recognition.md
+?? services/local-vision/reports/validation.face-gaze.md
+?? services/local-vision/reports/vision-settings.png
+?? services/local-vision/requirements-cuda.txt
+?? services/local-vision/requirements-grounding.txt
+?? services/local-vision/requirements.txt
+?? services/local-vision/requirements.windows.lock.txt
+?? services/local-vision/service.py
+?? services/local-vision/social.py
+?? services/local-vision/temporal.py
+?? services/local-vision/test-matrix.json
+?? services/local-vision/tests/testadaptation.py
+?? services/local-vision/tests/testdeveloper.py
+?? services/local-vision/tests/testidentity.py
+?? services/local-vision/tests/testmodel.py
+?? services/local-vision/tests/testprotocol.py
+?? services/local-vision/tests/testrecognition.py
+?? services/local-vision/tests/testservice.py
+?? services/local-vision/tests/testsocial.py
+?? services/local-vision/vision-event.schema.json
+```

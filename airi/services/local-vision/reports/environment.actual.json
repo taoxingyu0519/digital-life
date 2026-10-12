@@ -1,0 +1,22 @@
+{
+  "at": "2026-09-29T10:04:42.671900+00:00",
+  "os": "Windows-10-10.0.19045-SP0",
+  "python": "3.12.14 (main, Aug 25 2026, 14:01:42) [MSC v.1944 64 bit (AMD64)]",
+  "gpu": "NVIDIA GeForce RTX 4090, 560.94, 24564 MiB",
+  "packages": {
+    "opencv-contrib-python": "4.11.0.86",
+    "onnxruntime-gpu": "1.22.0",
+    "mediapipe": "0.10.21",
+    "supervision": "0.25.1",
+    "fastapi": "0.115.12",
+    "pydantic": "2.11.4"
+  },
+  "models": {
+    "yolox": true,
+    "yunet": true,
+    "sface": true,
+    "face": true,
+    "gesture": true
+  },
+  "note": "Device inventory is not proof of GPU inference."
+}

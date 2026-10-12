@@ -1,0 +1,1709 @@
+{
+  "spec_version": "2.0-airi-independent",
+  "tests": [
+    {
+      "id": "AIR-01",
+      "title": "真实fork与版本",
+      "task": "A00",
+      "layer": "integration",
+      "profiles": [
+        "engineering",
+        "full"
+      ],
+      "initial_status": "NOT_RUN",
+      "steps": "只读扫描实际仓库并对照接入表",
+      "pass_criteria": "记录remote/HEAD/主应用/入口；缺失不伪造",
+      "required_evidence": [
+        "执行命令与时间",
+        "实际版本／配置hash",
+        "脱敏结果与分母",
+        "证据文件sha256"
+      ],
+      "requires_real_provider": false,
+      "requires_target_hardware": false
+    },
+    {
+      "id": "AIR-02",
+      "title": "不承接旧平台",
+      "task": "A01",
+      "layer": "contract",
+      "profiles": [
+        "engineering",
+        "full"
+      ],
+      "initial_status": "NOT_RUN",
+      "steps": "检查新增契约、配置和依赖图",
+      "pass_criteria": "运行协议与新增代码不依赖旧life_id/body_id/旧API",
+      "required_evidence": [
+        "执行命令与时间",
+        "实际版本／配置hash",
+        "脱敏结果与分母",
+        "证据文件sha256"
+      ],
+      "requires_real_provider": false,
+      "requires_target_hardware": false
+    },
+    {
+      "id": "AIR-03",
+      "title": "原聊天和角色基线",
+      "task": "A01",
+      "layer": "e2e",
+      "profiles": [
+        "engineering",
+        "full"
+      ],
+      "initial_status": "NOT_RUN",
+      "steps": "关闭视觉运行原聊天、角色、声音、会话测试",
+      "pass_criteria": "真实原功能有基线，不能用新demo代替",
+      "required_evidence": [
+        "执行命令与时间",
+        "实际版本／配置hash",
+        "脱敏结果与分母",
+        "证据文件sha256"
+      ],
+      "requires_real_provider": false,
+      "requires_target_hardware": false
+    },
+    {
+      "id": "AIR-04",
+      "title": "实际主应用正式接入",
+      "task": "A12",
+      "layer": "e2e",
+      "profiles": [
+        "engineering",
+        "full"
+      ],
+      "initial_status": "NOT_RUN",
+      "steps": "在原应用完成完整用户流程",
+      "pass_criteria": "退出视觉设置到聊天舞台仍运行；不局限Devtools",
+      "required_evidence": [
+        "执行命令与时间",
+        "实际版本／配置hash",
+        "脱敏结果与分母",
+        "证据文件sha256"
+      ],
+      "requires_real_provider": false,
+      "requires_target_hardware": false
+    },
+    {
+      "id": "AIR-05",
+      "title": "视觉关闭回归",
+      "task": "A13",
+      "layer": "e2e",
+      "profiles": [
+        "engineering",
+        "full"
+      ],
+      "initial_status": "NOT_RUN",
+      "steps": "关闭flag并执行原测试及主要工作流",
+      "pass_criteria": "原流式聊天、手动图片、API设置和角色功能不退化",
+      "required_evidence": [
+        "执行命令与时间",
+        "实际版本／配置hash",
+        "脱敏结果与分母",
+        "证据文件sha256"
+      ],
+      "requires_real_provider": false,
+      "requires_target_hardware": false
+    },
+    {
+      "id": "AIR-06",
+      "title": "无API仍本地运行",
+      "task": "A08",
+      "layer": "hardware",
+      "profiles": [
+        "engineering",
+        "full"
+      ],
+      "initial_status": "NOT_RUN",
+      "steps": "清空API选择后运行本地视觉",
+      "pass_criteria": "不配置视觉或聊天API也能产生本地有效状态",
+      "required_evidence": [
+        "执行命令与时间",
+        "实际版本／配置hash",
+        "脱敏结果与分母",
+        "证据文件sha256"
+      ],
+      "requires_real_provider": false,
+      "requires_target_hardware": true
+    },
+    {
+      "id": "AIR-07",
+      "title": "现有角色声音不被替换",
+      "task": "A09",
+      "layer": "e2e",
+      "profiles": [
+        "engineering",
+        "full"
+      ],
+      "initial_status": "NOT_RUN",
+      "steps": "用原输出模式完成模板问候并静音／取消",
+      "pass_criteria": "沿用当前角色和已配置TTS，无第二路播放器",
+      "required_evidence": [
+        "执行命令与时间",
+        "实际版本／配置hash",
+        "脱敏结果与分母",
+        "证据文件sha256"
+      ],
+      "requires_real_provider": false,
+      "requires_target_hardware": false
+    },
+    {
+      "id": "AIR-08",
+      "title": "构建与规范",
+      "task": "A16",
+      "layer": "integration",
+      "profiles": [
+        "engineering",
+        "full"
+      ],
+      "initial_status": "NOT_RUN",
+      "steps": "运行实际仓库规定命令，原有失败单列",
+      "pass_criteria": "受影响工作区typecheck/test/lint/build有真实结果，无新失败",
+      "required_evidence": [
+        "执行命令与时间",
+        "实际版本／配置hash",
+        "脱敏结果与分母",
+        "证据文件sha256"
+      ],
+      "requires_real_provider": false,
+      "requires_target_hardware": false
+    },
+    {
+      "id": "ENV-01",
+      "title": "模型锁真实",
+      "task": "A03",
+      "layer": "integration",
+      "profiles": [
+        "engineering",
+        "full"
+      ],
+      "initial_status": "NOT_RUN",
+      "steps": "获取并离线核验模型，不填猜测hash",
+      "pass_criteria": "权重hash/revision/许可证和依赖锁完整",
+      "required_evidence": [
+        "执行命令与时间",
+        "实际版本／配置hash",
+        "脱敏结果与分母",
+        "证据文件sha256"
+      ],
+      "requires_real_provider": false,
+      "requires_target_hardware": false
+    },
+    {
+      "id": "ENV-02",
+      "title": "4090真推理",
+      "task": "A03",
+      "layer": "hardware",
+      "profiles": [
+        "engineering",
+        "full"
+      ],
+      "initial_status": "NOT_RUN",
+      "steps": "记录实际provider/device/profile与显存",
+      "pass_criteria": "YOLOX CUDA及DINO GPU完成真实输入输出",
+      "required_evidence": [
+        "执行命令与时间",
+        "实际版本／配置hash",
+        "脱敏结果与分母",
+        "证据文件sha256"
+      ],
+      "requires_real_provider": false,
+      "requires_target_hardware": true
+    },
+    {
+      "id": "ENV-03",
+      "title": "缺权重不假就绪",
+      "task": "A03",
+      "layer": "integration",
+      "profiles": [
+        "engineering",
+        "full"
+      ],
+      "initial_status": "NOT_RUN",
+      "steps": "移走一份模型后启动对应模块",
+      "pass_criteria": "显示缺失，健康状态不能误报READY",
+      "required_evidence": [
+        "执行命令与时间",
+        "实际版本／配置hash",
+        "脱敏结果与分母",
+        "证据文件sha256"
+      ],
+      "requires_real_provider": false,
+      "requires_target_hardware": false
+    },
+    {
+      "id": "ENV-04",
+      "title": "完全离线本地感知",
+      "task": "A13",
+      "layer": "hardware",
+      "profiles": [
+        "engineering",
+        "full"
+      ],
+      "initial_status": "NOT_RUN",
+      "steps": "准备好资产后阻断外网，执行实拍流程",
+      "pass_criteria": "本地检测/人脸/动作/找物不需外网或CDN",
+      "required_evidence": [
+        "执行命令与时间",
+        "实际版本／配置hash",
+        "脱敏结果与分母",
+        "证据文件sha256"
+      ],
+      "requires_real_provider": false,
+      "requires_target_hardware": true
+    },
+    {
+      "id": "CAP-01",
+      "title": "真实摄像头与来源",
+      "task": "A04",
+      "layer": "hardware",
+      "profiles": [
+        "engineering",
+        "full"
+      ],
+      "initial_status": "NOT_RUN",
+      "steps": "用户在摄像头前执行随机动作",
+      "pass_criteria": "非预录，显示实际来源并生成新鲜状态",
+      "required_evidence": [
+        "执行命令与时间",
+        "实际版本／配置hash",
+        "脱敏结果与分母",
+        "证据文件sha256"
+      ],
+      "requires_real_provider": false,
+      "requires_target_hardware": true
+    },
+    {
+      "id": "CAP-02",
+      "title": "唯一采集所有者",
+      "task": "A04",
+      "layer": "e2e",
+      "profiles": [
+        "engineering",
+        "full"
+      ],
+      "initial_status": "NOT_RUN",
+      "steps": "启用设置、舞台、第二窗口并观察设备计数",
+      "pass_criteria": "两页面／窗口／Workshop不重复打开同一设备",
+      "required_evidence": [
+        "执行命令与时间",
+        "实际版本／配置hash",
+        "脱敏结果与分母",
+        "证据文件sha256"
+      ],
+      "requires_real_provider": false,
+      "requires_target_hardware": false
+    },
+    {
+      "id": "CAP-03",
+      "title": "关闭一秒内停止",
+      "task": "A04",
+      "layer": "hardware",
+      "profiles": [
+        "engineering",
+        "full"
+      ],
+      "initial_status": "NOT_RUN",
+      "steps": "关闭时保持推理和API在途",
+      "pass_criteria": "≤1秒停止新帧／调度，缓冲清空，旧回调无效",
+      "required_evidence": [
+        "执行命令与时间",
+        "实际版本／配置hash",
+        "脱敏结果与分母",
+        "证据文件sha256"
+      ],
+      "requires_real_provider": false,
+      "requires_target_hardware": true
+    },
+    {
+      "id": "CAP-04",
+      "title": "epoch与乱序",
+      "task": "A02",
+      "layer": "contract",
+      "profiles": [
+        "engineering",
+        "full"
+      ],
+      "initial_status": "NOT_RUN",
+      "steps": "构造换源和重连乱序回放",
+      "pass_criteria": "旧代／重复／乱序结果不写当前状态",
+      "required_evidence": [
+        "执行命令与时间",
+        "实际版本／配置hash",
+        "脱敏结果与分母",
+        "证据文件sha256"
+      ],
+      "requires_real_provider": false,
+      "requires_target_hardware": false
+    },
+    {
+      "id": "CAP-05",
+      "title": "有界背压",
+      "task": "A02",
+      "layer": "integration",
+      "profiles": [
+        "engineering",
+        "full"
+      ],
+      "initial_status": "NOT_RUN",
+      "steps": "输入过载和慢worker，检查内存及序列",
+      "pass_criteria": "队列≤2，旧帧丢弃，有drop计数",
+      "required_evidence": [
+        "执行命令与时间",
+        "实际版本／配置hash",
+        "脱敏结果与分母",
+        "证据文件sha256"
+      ],
+      "requires_real_provider": false,
+      "requires_target_hardware": false
+    },
+    {
+      "id": "CAP-06",
+      "title": "坐标还原",
+      "task": "A04",
+      "layer": "unit",
+      "profiles": [
+        "engineering",
+        "full"
+      ],
+      "initial_status": "NOT_RUN",
+      "steps": "对合成几何图做正反坐标映射",
+      "pass_criteria": "镜像/缩放/letterbox后覆盖框准确且原始坐标不混",
+      "required_evidence": [
+        "执行命令与时间",
+        "实际版本／配置hash",
+        "脱敏结果与分母",
+        "证据文件sha256"
+      ],
+      "requires_real_provider": false,
+      "requires_target_hardware": false
+    },
+    {
+      "id": "CAP-07",
+      "title": "应用退出释放",
+      "task": "A04",
+      "layer": "hardware",
+      "profiles": [
+        "engineering",
+        "full"
+      ],
+      "initial_status": "NOT_RUN",
+      "steps": "退出主应用并检查摄像头占用",
+      "pass_criteria": "设备流释放，无残留本项目采集进程",
+      "required_evidence": [
+        "执行命令与时间",
+        "实际版本／配置hash",
+        "脱敏结果与分母",
+        "证据文件sha256"
+      ],
+      "requires_real_provider": false,
+      "requires_target_hardware": true
+    },
+    {
+      "id": "CAP-08",
+      "title": "权限拒绝与设备占用",
+      "task": "A04",
+      "layer": "e2e",
+      "profiles": [
+        "engineering",
+        "full"
+      ],
+      "initial_status": "NOT_RUN",
+      "steps": "拒绝权限或用其他程序占用设备",
+      "pass_criteria": "准确错误，不自动切到另一来源",
+      "required_evidence": [
+        "执行命令与时间",
+        "实际版本／配置hash",
+        "脱敏结果与分母",
+        "证据文件sha256"
+      ],
+      "requires_real_provider": false,
+      "requires_target_hardware": false
+    },
+    {
+      "id": "DET-01",
+      "title": "人员检测质量",
+      "task": "A14",
+      "layer": "replay",
+      "profiles": [
+        "full"
+      ],
+      "initial_status": "NOT_RUN",
+      "steps": "对冻结标注运行真实检测",
+      "pass_criteria": "≥300帧，IoU≥0.5下precision/recall均≥95%",
+      "required_evidence": [
+        "执行命令与时间",
+        "实际版本／配置hash",
+        "脱敏结果与分母",
+        "证据文件sha256"
+      ],
+      "requires_real_provider": false,
+      "requires_target_hardware": false
+    },
+    {
+      "id": "DET-02",
+      "title": "常见物体质量",
+      "task": "A14",
+      "layer": "replay",
+      "profiles": [
+        "full"
+      ],
+      "initial_status": "NOT_RUN",
+      "steps": "冻结标签和正负图后评估",
+      "pass_criteria": "10类，macro precision≥90%、recall≥85%",
+      "required_evidence": [
+        "执行命令与时间",
+        "实际版本／配置hash",
+        "脱敏结果与分母",
+        "证据文件sha256"
+      ],
+      "requires_real_provider": false,
+      "requires_target_hardware": false
+    },
+    {
+      "id": "TRK-01",
+      "title": "track不等于person",
+      "task": "A05",
+      "layer": "unit",
+      "profiles": [
+        "engineering",
+        "full"
+      ],
+      "initial_status": "NOT_RUN",
+      "steps": "换代、交错和ID复用序列",
+      "pass_criteria": "轨迹复用不恢复人物身份",
+      "required_evidence": [
+        "执行命令与时间",
+        "实际版本／配置hash",
+        "脱敏结果与分母",
+        "证据文件sha256"
+      ],
+      "requires_real_provider": false,
+      "requires_target_hardware": false
+    },
+    {
+      "id": "TRK-02",
+      "title": "多人交错保守识别",
+      "task": "A14",
+      "layer": "replay",
+      "profiles": [
+        "full"
+      ],
+      "initial_status": "NOT_RUN",
+      "steps": "两三人遮挡／换位真实片段",
+      "pass_criteria": "60片段中错误指名归属=0，允许匿名",
+      "required_evidence": [
+        "执行命令与时间",
+        "实际版本／配置hash",
+        "脱敏结果与分母",
+        "证据文件sha256"
+      ],
+      "requires_real_provider": false,
+      "requires_target_hardware": false
+    },
+    {
+      "id": "FAC-01",
+      "title": "授权登记与质量拒绝",
+      "task": "A06",
+      "layer": "hardware",
+      "profiles": [
+        "engineering",
+        "full"
+      ],
+      "initial_status": "NOT_RUN",
+      "steps": "实拍单人、多人、暗光、模糊分别登记",
+      "pass_criteria": "无授权不匹配；坏图／多人拒绝；合格登记成功",
+      "required_evidence": [
+        "执行命令与时间",
+        "实际版本／配置hash",
+        "脱敏结果与分母",
+        "证据文件sha256"
+      ],
+      "requires_real_provider": false,
+      "requires_target_hardware": true
+    },
+    {
+      "id": "FAC-02",
+      "title": "无校准禁止叫名",
+      "task": "A06",
+      "layer": "unit",
+      "profiles": [
+        "engineering",
+        "full"
+      ],
+      "initial_status": "NOT_RUN",
+      "steps": "清空及篡改calibration.lock",
+      "pass_criteria": "阈值为空／版本变化时不自动确认或叫名",
+      "required_evidence": [
+        "执行命令与时间",
+        "实际版本／配置hash",
+        "脱敏结果与分母",
+        "证据文件sha256"
+      ],
+      "requires_real_provider": false,
+      "requires_target_hardware": false
+    },
+    {
+      "id": "FAC-03",
+      "title": "校准与测试不泄漏",
+      "task": "A14",
+      "layer": "replay",
+      "profiles": [
+        "full"
+      ],
+      "initial_status": "NOT_RUN",
+      "steps": "审计manifest与样本hash后运行",
+      "pass_criteria": "分会话分人，模型／模板版本冻结可追踪",
+      "required_evidence": [
+        "执行命令与时间",
+        "实际版本／配置hash",
+        "脱敏结果与分母",
+        "证据文件sha256"
+      ],
+      "requires_real_provider": false,
+      "requires_target_hardware": false
+    },
+    {
+      "id": "FAC-04",
+      "title": "常规已知200次",
+      "task": "A14",
+      "layer": "replay",
+      "profiles": [
+        "full"
+      ],
+      "initial_status": "NOT_RUN",
+      "steps": "留出集真实推理与片段级统计",
+      "pass_criteria": "正确确认≥95%；错误确认他人=0；拒识计失败",
+      "required_evidence": [
+        "执行命令与时间",
+        "实际版本／配置hash",
+        "脱敏结果与分母",
+        "证据文件sha256"
+      ],
+      "requires_real_provider": false,
+      "requires_target_hardware": false
+    },
+    {
+      "id": "FAC-05",
+      "title": "未知300次",
+      "task": "A14",
+      "layer": "replay",
+      "profiles": [
+        "full"
+      ],
+      "initial_status": "NOT_RUN",
+      "steps": "未知测试人员未加入图库",
+      "pass_criteria": "误确认=0，报告0/300及分组限制",
+      "required_evidence": [
+        "执行命令与时间",
+        "实际版本／配置hash",
+        "脱敏结果与分母",
+        "证据文件sha256"
+      ],
+      "requires_real_provider": false,
+      "requires_target_hardware": false
+    },
+    {
+      "id": "FAC-06",
+      "title": "困难已知100次",
+      "task": "A14",
+      "layer": "replay",
+      "profiles": [
+        "full"
+      ],
+      "initial_status": "NOT_RUN",
+      "steps": "侧脸／逆光／遮挡留出片段",
+      "pass_criteria": "错误叫名=0；分条件报告，不强行认出",
+      "required_evidence": [
+        "执行命令与时间",
+        "实际版本／配置hash",
+        "脱敏结果与分母",
+        "证据文件sha256"
+      ],
+      "requires_real_provider": false,
+      "requires_target_hardware": false
+    },
+    {
+      "id": "FAC-07",
+      "title": "纠错不污染模板",
+      "task": "A06",
+      "layer": "integration",
+      "profiles": [
+        "engineering",
+        "full"
+      ],
+      "initial_status": "NOT_RUN",
+      "steps": "匹配后点击不是此人并送迟到结果",
+      "pass_criteria": "纠错后不沿用姓名，不自动改他人模板",
+      "required_evidence": [
+        "执行命令与时间",
+        "实际版本／配置hash",
+        "脱敏结果与分母",
+        "证据文件sha256"
+      ],
+      "requires_real_provider": false,
+      "requires_target_hardware": false
+    },
+    {
+      "id": "FAC-08",
+      "title": "删除与撤销生效",
+      "task": "A13",
+      "layer": "security",
+      "profiles": [
+        "engineering",
+        "full"
+      ],
+      "initial_status": "NOT_RUN",
+      "steps": "删除后重放旧结果并恢复受管备份",
+      "pass_criteria": "索引／缓存／在途清理，旧epoch不得复活",
+      "required_evidence": [
+        "执行命令与时间",
+        "实际版本／配置hash",
+        "脱敏结果与分母",
+        "证据文件sha256"
+      ],
+      "requires_real_provider": false,
+      "requires_target_hardware": false
+    },
+    {
+      "id": "FAC-09",
+      "title": "模板加密与接口最小化",
+      "task": "A06",
+      "layer": "security",
+      "profiles": [
+        "engineering",
+        "full"
+      ],
+      "initial_status": "NOT_RUN",
+      "steps": "检查存储、备份、GET响应和日志",
+      "pass_criteria": "数据库模板加密，接口不返回向量和原图",
+      "required_evidence": [
+        "执行命令与时间",
+        "实际版本／配置hash",
+        "脱敏结果与分母",
+        "证据文件sha256"
+      ],
+      "requires_real_provider": false,
+      "requires_target_hardware": false
+    },
+    {
+      "id": "FAC-10",
+      "title": "照片重放不认证",
+      "task": "A13",
+      "layer": "security",
+      "profiles": [
+        "engineering",
+        "full"
+      ],
+      "initial_status": "NOT_RUN",
+      "steps": "用获授权照片测试便利识别与权限隔离",
+      "pass_criteria": "明确无活体保证；不能开启敏感权限",
+      "required_evidence": [
+        "执行命令与时间",
+        "实际版本／配置hash",
+        "脱敏结果与分母",
+        "证据文件sha256"
+      ],
+      "requires_real_provider": false,
+      "requires_target_hardware": false
+    },
+    {
+      "id": "ACT-01",
+      "title": "点头事件质量",
+      "task": "A14",
+      "layer": "replay",
+      "profiles": [
+        "full"
+      ],
+      "initial_status": "NOT_RUN",
+      "steps": "冻结实际动作标注按一对一事件评价",
+      "pass_criteria": "每类50正例与负片段；precision≥95%、recall≥90%；重复算FP",
+      "required_evidence": [
+        "执行命令与时间",
+        "实际版本／配置hash",
+        "脱敏结果与分母",
+        "证据文件sha256"
+      ],
+      "requires_real_provider": false,
+      "requires_target_hardware": false
+    },
+    {
+      "id": "ACT-02",
+      "title": "摇头事件质量",
+      "task": "A14",
+      "layer": "replay",
+      "profiles": [
+        "full"
+      ],
+      "initial_status": "NOT_RUN",
+      "steps": "冻结实际动作标注按一对一事件评价",
+      "pass_criteria": "每类50正例与负片段；precision≥95%、recall≥90%；重复算FP",
+      "required_evidence": [
+        "执行命令与时间",
+        "实际版本／配置hash",
+        "脱敏结果与分母",
+        "证据文件sha256"
+      ],
+      "requires_real_provider": false,
+      "requires_target_hardware": false
+    },
+    {
+      "id": "ACT-03",
+      "title": "动态挥手事件质量",
+      "task": "A14",
+      "layer": "replay",
+      "profiles": [
+        "full"
+      ],
+      "initial_status": "NOT_RUN",
+      "steps": "冻结实际动作标注按一对一事件评价",
+      "pass_criteria": "每类50正例与负片段；precision≥95%、recall≥90%；重复算FP",
+      "required_evidence": [
+        "执行命令与时间",
+        "实际版本／配置hash",
+        "脱敏结果与分母",
+        "证据文件sha256"
+      ],
+      "requires_real_provider": false,
+      "requires_target_hardware": false
+    },
+    {
+      "id": "ACT-04",
+      "title": "点赞事件质量",
+      "task": "A14",
+      "layer": "replay",
+      "profiles": [
+        "full"
+      ],
+      "initial_status": "NOT_RUN",
+      "steps": "冻结实际动作标注按一对一事件评价",
+      "pass_criteria": "每类50正例与负片段；precision≥95%、recall≥90%；重复算FP",
+      "required_evidence": [
+        "执行命令与时间",
+        "实际版本／配置hash",
+        "脱敏结果与分母",
+        "证据文件sha256"
+      ],
+      "requires_real_provider": false,
+      "requires_target_hardware": false
+    },
+    {
+      "id": "ACT-05",
+      "title": "静态摊手不是挥手",
+      "task": "A07",
+      "layer": "unit",
+      "profiles": [
+        "engineering",
+        "full"
+      ],
+      "initial_status": "NOT_RUN",
+      "steps": "固定关键点、举手一次和打字负例",
+      "pass_criteria": "无横向动态证据不输出wave",
+      "required_evidence": [
+        "执行命令与时间",
+        "实际版本／配置hash",
+        "脱敏结果与分母",
+        "证据文件sha256"
+      ],
+      "requires_real_provider": false,
+      "requires_target_hardware": false
+    },
+    {
+      "id": "ACT-06",
+      "title": "主要对象与匿名归属",
+      "task": "A07",
+      "layer": "integration",
+      "profiles": [
+        "engineering",
+        "full"
+      ],
+      "initial_status": "NOT_RUN",
+      "steps": "两人手部交叉和主要对象切换",
+      "pass_criteria": "无法确认的手势actor=null，不指名",
+      "required_evidence": [
+        "执行命令与时间",
+        "实际版本／配置hash",
+        "脱敏结果与分母",
+        "证据文件sha256"
+      ],
+      "requires_real_provider": false,
+      "requires_target_hardware": false
+    },
+    {
+      "id": "ACT-07",
+      "title": "事实不当心理判断",
+      "task": "A08",
+      "layer": "integration",
+      "profiles": [
+        "engineering",
+        "full"
+      ],
+      "initial_status": "NOT_RUN",
+      "steps": "回放皱眉、微笑与相反语言情境",
+      "pass_criteria": "无情绪／动机／诚实度确定断言",
+      "required_evidence": [
+        "执行命令与时间",
+        "实际版本／配置hash",
+        "脱敏结果与分母",
+        "证据文件sha256"
+      ],
+      "requires_real_provider": false,
+      "requires_target_hardware": false
+    },
+    {
+      "id": "CTX-01",
+      "title": "每请求新鲜投影",
+      "task": "A08",
+      "layer": "unit",
+      "profiles": [
+        "engineering",
+        "full"
+      ],
+      "initial_status": "NOT_RUN",
+      "steps": "冻结时钟检查有效和过期snapshot",
+      "pass_criteria": "仅当前binding/epoch且TTL有效的事实进入请求",
+      "required_evidence": [
+        "执行命令与时间",
+        "实际版本／配置hash",
+        "脱敏结果与分母",
+        "证据文件sha256"
+      ],
+      "requires_real_provider": false,
+      "requires_target_hardware": false
+    },
+    {
+      "id": "CTX-02",
+      "title": "不破坏其他context",
+      "task": "A08",
+      "layer": "integration",
+      "profiles": [
+        "engineering",
+        "full"
+      ],
+      "initial_status": "NOT_RUN",
+      "steps": "已有多个非视觉来源后开关视觉",
+      "pass_criteria": "关闭视觉不清除其他bucket，不调用全局reset",
+      "required_evidence": [
+        "执行命令与时间",
+        "实际版本／配置hash",
+        "脱敏结果与分母",
+        "证据文件sha256"
+      ],
+      "requires_real_provider": false,
+      "requires_target_hardware": false
+    },
+    {
+      "id": "CTX-03",
+      "title": "不无限增加上下文",
+      "task": "A08",
+      "layer": "integration",
+      "profiles": [
+        "engineering",
+        "full"
+      ],
+      "initial_status": "NOT_RUN",
+      "steps": "长时间运行并检查实际prompt投影",
+      "pass_criteria": "固定预算、无每帧append、无原图base64",
+      "required_evidence": [
+        "执行命令与时间",
+        "实际版本／配置hash",
+        "脱敏结果与分母",
+        "证据文件sha256"
+      ],
+      "requires_real_provider": false,
+      "requires_target_hardware": false
+    },
+    {
+      "id": "CTX-04",
+      "title": "角色会话切换",
+      "task": "A08",
+      "layer": "e2e",
+      "profiles": [
+        "engineering",
+        "full"
+      ],
+      "initial_status": "NOT_RUN",
+      "steps": "在途时切角色和新建聊天",
+      "pass_criteria": "旧图／身份／API回填不进入新会话",
+      "required_evidence": [
+        "执行命令与时间",
+        "实际版本／配置hash",
+        "脱敏结果与分母",
+        "证据文件sha256"
+      ],
+      "requires_real_provider": false,
+      "requires_target_hardware": false
+    },
+    {
+      "id": "CTX-05",
+      "title": "来源分桶不冲突",
+      "task": "A08",
+      "layer": "contract",
+      "profiles": [
+        "engineering",
+        "full"
+      ],
+      "initial_status": "NOT_RUN",
+      "steps": "检查实际适配与collision用例",
+      "pass_criteria": "不把contextId等同source key；视觉与其他来源独立",
+      "required_evidence": [
+        "执行命令与时间",
+        "实际版本／配置hash",
+        "脱敏结果与分母",
+        "证据文件sha256"
+      ],
+      "requires_real_provider": false,
+      "requires_target_hardware": false
+    },
+    {
+      "id": "SOC-01",
+      "title": "问候质量",
+      "task": "A14",
+      "layer": "hardware",
+      "profiles": [
+        "full"
+      ],
+      "initial_status": "NOT_RUN",
+      "steps": "实拍进入、短离开、在场及忙时场景",
+      "pass_criteria": "100有效进入成功≥95%；200干扰中错名／重复／打断=0",
+      "required_evidence": [
+        "执行命令与时间",
+        "实际版本／配置hash",
+        "脱敏结果与分母",
+        "证据文件sha256"
+      ],
+      "requires_real_provider": false,
+      "requires_target_hardware": true
+    },
+    {
+      "id": "SOC-02",
+      "title": "无伪造用户消息",
+      "task": "A09",
+      "layer": "integration",
+      "profiles": [
+        "engineering",
+        "full"
+      ],
+      "initial_status": "NOT_RUN",
+      "steps": "检查AIRI历史、事件trace与provider输入",
+      "pass_criteria": "环境事件带origin，不写成用户发言",
+      "required_evidence": [
+        "执行命令与时间",
+        "实际版本／配置hash",
+        "脱敏结果与分母",
+        "证据文件sha256"
+      ],
+      "requires_real_provider": false,
+      "requires_target_hardware": false
+    },
+    {
+      "id": "SOC-03",
+      "title": "冷却与取消提交",
+      "task": "A09",
+      "layer": "unit",
+      "profiles": [
+        "engineering",
+        "full"
+      ],
+      "initial_status": "NOT_RUN",
+      "steps": "冻结时钟与中断序列",
+      "pass_criteria": "同人300秒，全局60秒；取消未播报不错误消耗冷却",
+      "required_evidence": [
+        "执行命令与时间",
+        "实际版本／配置hash",
+        "脱敏结果与分母",
+        "证据文件sha256"
+      ],
+      "requires_real_provider": false,
+      "requires_target_hardware": false
+    },
+    {
+      "id": "SOC-04",
+      "title": "用户讲话与TTS忙时抑制",
+      "task": "A09",
+      "layer": "integration",
+      "profiles": [
+        "engineering",
+        "full"
+      ],
+      "initial_status": "NOT_RUN",
+      "steps": "结合实际VAD/ASR/TTS状态及故障桩",
+      "pass_criteria": "发送／转写／播放时不插话，过期候选丢弃",
+      "required_evidence": [
+        "执行命令与时间",
+        "实际版本／配置hash",
+        "脱敏结果与分母",
+        "证据文件sha256"
+      ],
+      "requires_real_provider": false,
+      "requires_target_hardware": false
+    },
+    {
+      "id": "SOC-05",
+      "title": "静音停止统一生效",
+      "task": "A09",
+      "layer": "e2e",
+      "profiles": [
+        "engineering",
+        "full"
+      ],
+      "initial_status": "NOT_RUN",
+      "steps": "模板与可选LLM问候播放中操作原控制",
+      "pass_criteria": "现有静音与停止能中断问候，无孤立音频",
+      "required_evidence": [
+        "执行命令与时间",
+        "实际版本／配置hash",
+        "脱敏结果与分母",
+        "证据文件sha256"
+      ],
+      "requires_real_provider": false,
+      "requires_target_hardware": false
+    },
+    {
+      "id": "SOC-06",
+      "title": "双窗口与leader更换",
+      "task": "A09",
+      "layer": "integration",
+      "profiles": [
+        "engineering",
+        "full"
+      ],
+      "initial_status": "NOT_RUN",
+      "steps": "双窗口竞争与owner切换",
+      "pass_criteria": "同event仅一次输出；旧owner回调无效",
+      "required_evidence": [
+        "执行命令与时间",
+        "实际版本／配置hash",
+        "脱敏结果与分母",
+        "证据文件sha256"
+      ],
+      "requires_real_provider": false,
+      "requires_target_hardware": false
+    },
+    {
+      "id": "SOC-07",
+      "title": "私有昵称不经历史旁路外发",
+      "task": "A13",
+      "layer": "security",
+      "profiles": [
+        "engineering",
+        "full"
+      ],
+      "initial_status": "NOT_RUN",
+      "steps": "本地叫名后发下一轮聊天并审计全部出口",
+      "pass_criteria": "昵称未获云许可时不在后续prompt/云同步/遥测出现",
+      "required_evidence": [
+        "执行命令与时间",
+        "实际版本／配置hash",
+        "脱敏结果与分母",
+        "证据文件sha256"
+      ],
+      "requires_real_provider": false,
+      "requires_target_hardware": false
+    },
+    {
+      "id": "API-01",
+      "title": "复用原provider与能力检查",
+      "task": "A10",
+      "layer": "integration",
+      "profiles": [
+        "engineering",
+        "full"
+      ],
+      "initial_status": "NOT_RUN",
+      "steps": "使用实际配置机制和能力探测",
+      "pass_criteria": "无重复密钥库；图像/多图能力分别标记",
+      "required_evidence": [
+        "执行命令与时间",
+        "实际版本／配置hash",
+        "脱敏结果与分母",
+        "证据文件sha256"
+      ],
+      "requires_real_provider": false,
+      "requires_target_hardware": false
+    },
+    {
+      "id": "API-02",
+      "title": "真实单图看图",
+      "task": "A10",
+      "layer": "provider",
+      "profiles": [
+        "full"
+      ],
+      "initial_status": "NOT_RUN",
+      "steps": "选定provider用非敏感实际图验证",
+      "pass_criteria": "真实脱敏请求与对应图像回答，不是mock",
+      "required_evidence": [
+        "执行命令与时间",
+        "实际版本／配置hash",
+        "脱敏结果与分母",
+        "证据文件sha256"
+      ],
+      "requires_real_provider": true,
+      "requires_target_hardware": false
+    },
+    {
+      "id": "API-03",
+      "title": "真实有序多图",
+      "task": "A10",
+      "layer": "provider",
+      "profiles": [
+        "full"
+      ],
+      "initial_status": "NOT_RUN",
+      "steps": "真实API回答动作或前后变化",
+      "pass_criteria": "2—6图有序和时间可核对，不用拼图代替多图",
+      "required_evidence": [
+        "执行命令与时间",
+        "实际版本／配置hash",
+        "脱敏结果与分母",
+        "证据文件sha256"
+      ],
+      "requires_real_provider": true,
+      "requires_target_hardware": false
+    },
+    {
+      "id": "API-04",
+      "title": "50题人工质量",
+      "task": "A14",
+      "layer": "provider",
+      "profiles": [
+        "full"
+      ],
+      "initial_status": "NOT_RUN",
+      "steps": "用冻结问题与真实回答评分",
+      "pass_criteria": "双人盲评有依据正确≥90%，记录分母和原答",
+      "required_evidence": [
+        "执行命令与时间",
+        "实际版本／配置hash",
+        "脱敏结果与分母",
+        "证据文件sha256"
+      ],
+      "requires_real_provider": true,
+      "requires_target_hardware": false
+    },
+    {
+      "id": "API-05",
+      "title": "超时与401/429",
+      "task": "A10",
+      "layer": "integration",
+      "profiles": [
+        "engineering",
+        "full"
+      ],
+      "initial_status": "NOT_RUN",
+      "steps": "注入不同供应商错误和延迟",
+      "pass_criteria": "20s超时后1s内反馈；401不盲重试；429受控退避",
+      "required_evidence": [
+        "执行命令与时间",
+        "实际版本／配置hash",
+        "脱敏结果与分母",
+        "证据文件sha256"
+      ],
+      "requires_real_provider": false,
+      "requires_target_hardware": false
+    },
+    {
+      "id": "API-06",
+      "title": "不启动每帧云推理",
+      "task": "A10",
+      "layer": "security",
+      "profiles": [
+        "engineering",
+        "full"
+      ],
+      "initial_status": "NOT_RUN",
+      "steps": "开启本地视觉抓全部网络请求",
+      "pass_criteria": "本地运行不调用原ticker的自动上传路径",
+      "required_evidence": [
+        "执行命令与时间",
+        "实际版本／配置hash",
+        "脱敏结果与分母",
+        "证据文件sha256"
+      ],
+      "requires_real_provider": false,
+      "requires_target_hardware": false
+    },
+    {
+      "id": "API-07",
+      "title": "迟到回答与撤销",
+      "task": "A10",
+      "layer": "integration",
+      "profiles": [
+        "engineering",
+        "full"
+      ],
+      "initial_status": "NOT_RUN",
+      "steps": "API在途时执行各撤销操作",
+      "pass_criteria": "换源／会话／许可代际不同则丢弃返回",
+      "required_evidence": [
+        "执行命令与时间",
+        "实际版本／配置hash",
+        "脱敏结果与分母",
+        "证据文件sha256"
+      ],
+      "requires_real_provider": false,
+      "requires_target_hardware": false
+    },
+    {
+      "id": "API-08",
+      "title": "云成本与队列",
+      "task": "A10",
+      "layer": "unit",
+      "profiles": [
+        "engineering",
+        "full"
+      ],
+      "initial_status": "NOT_RUN",
+      "steps": "模拟并发、预算和缺usage",
+      "pass_criteria": "默认背景关闭；开启后限频30s且在途1；费用未知不写0",
+      "required_evidence": [
+        "执行命令与时间",
+        "实际版本／配置hash",
+        "脱敏结果与分母",
+        "证据文件sha256"
+      ],
+      "requires_real_provider": false,
+      "requires_target_hardware": false
+    },
+    {
+      "id": "LOC-01",
+      "title": "本地找物质量",
+      "task": "A14",
+      "layer": "replay",
+      "profiles": [
+        "full"
+      ],
+      "initial_status": "NOT_RUN",
+      "steps": "冻结非默认标签并真实GPU推理",
+      "pass_criteria": "10类100正例命中≥80%，100负查询误报≤5%",
+      "required_evidence": [
+        "执行命令与时间",
+        "实际版本／配置hash",
+        "脱敏结果与分母",
+        "证据文件sha256"
+      ],
+      "requires_real_provider": false,
+      "requires_target_hardware": false
+    },
+    {
+      "id": "LOC-02",
+      "title": "中文词典与全本地",
+      "task": "A11",
+      "layer": "integration",
+      "profiles": [
+        "engineering",
+        "full"
+      ],
+      "initial_status": "NOT_RUN",
+      "steps": "断网输入中文已支持词／未知词／英文",
+      "pass_criteria": "离线固定词典可用，不请求云翻译；未知能力如实显示",
+      "required_evidence": [
+        "执行命令与时间",
+        "实际版本／配置hash",
+        "脱敏结果与分母",
+        "证据文件sha256"
+      ],
+      "requires_real_provider": false,
+      "requires_target_hardware": false
+    },
+    {
+      "id": "SEC-01",
+      "title": "分层许可与总出口",
+      "task": "A13",
+      "layer": "security",
+      "profiles": [
+        "engineering",
+        "full"
+      ],
+      "initial_status": "NOT_RUN",
+      "steps": "覆盖前端、context、历史、诊断和同步",
+      "pass_criteria": "未授权帧／模板／事实／昵称外发分别为0",
+      "required_evidence": [
+        "执行命令与时间",
+        "实际版本／配置hash",
+        "脱敏结果与分母",
+        "证据文件sha256"
+      ],
+      "requires_real_provider": false,
+      "requires_target_hardware": false
+    },
+    {
+      "id": "SEC-02",
+      "title": "本机鉴权与Origin",
+      "task": "A02",
+      "layer": "security",
+      "profiles": [
+        "engineering",
+        "full"
+      ],
+      "initial_status": "NOT_RUN",
+      "steps": "合法/非法Origin、过期票据、跨source操作",
+      "pass_criteria": "恶意网页及未配对客户端不可读取或控制",
+      "required_evidence": [
+        "执行命令与时间",
+        "实际版本／配置hash",
+        "脱敏结果与分母",
+        "证据文件sha256"
+      ],
+      "requires_real_provider": false,
+      "requires_target_hardware": false
+    },
+    {
+      "id": "SEC-03",
+      "title": "媒体输入限额",
+      "task": "A02",
+      "layer": "security",
+      "profiles": [
+        "engineering",
+        "full"
+      ],
+      "initial_status": "NOT_RUN",
+      "steps": "畸形和过大二进制输入",
+      "pass_criteria": "超字节／像素／非法类型拒绝，服务仍健康",
+      "required_evidence": [
+        "执行命令与时间",
+        "实际版本／配置hash",
+        "脱敏结果与分母",
+        "证据文件sha256"
+      ],
+      "requires_real_provider": false,
+      "requires_target_hardware": false
+    },
+    {
+      "id": "SEC-04",
+      "title": "不可信图文提示注入",
+      "task": "A13",
+      "layer": "security",
+      "profiles": [
+        "engineering",
+        "full"
+      ],
+      "initial_status": "NOT_RUN",
+      "steps": "带恶意指令的测试图片与模型输出",
+      "pass_criteria": "不改变权限、执行命令或泄密",
+      "required_evidence": [
+        "执行命令与时间",
+        "实际版本／配置hash",
+        "脱敏结果与分母",
+        "证据文件sha256"
+      ],
+      "requires_real_provider": false,
+      "requires_target_hardware": false
+    },
+    {
+      "id": "SEC-05",
+      "title": "密钥和敏感数据扫描",
+      "task": "A16",
+      "layer": "security",
+      "profiles": [
+        "engineering",
+        "full"
+      ],
+      "initial_status": "NOT_RUN",
+      "steps": "自动扫描及人工抽检工件",
+      "pass_criteria": "发布包／Git／日志无实际Key、脸图、向量",
+      "required_evidence": [
+        "执行命令与时间",
+        "实际版本／配置hash",
+        "脱敏结果与分母",
+        "证据文件sha256"
+      ],
+      "requires_real_provider": false,
+      "requires_target_hardware": false
+    },
+    {
+      "id": "UI-01",
+      "title": "不改源码的完整流程",
+      "task": "A12",
+      "layer": "e2e",
+      "profiles": [
+        "engineering",
+        "full"
+      ],
+      "initial_status": "NOT_RUN",
+      "steps": "在真实AIRI主应用操作并录制批准演示",
+      "pass_criteria": "授权→登记→问候→找物→看图→删除→关闭全可用",
+      "required_evidence": [
+        "执行命令与时间",
+        "实际版本／配置hash",
+        "脱敏结果与分母",
+        "证据文件sha256"
+      ],
+      "requires_real_provider": false,
+      "requires_target_hardware": false
+    },
+    {
+      "id": "UI-02",
+      "title": "中文英文与错误状态",
+      "task": "A12",
+      "layer": "e2e",
+      "profiles": [
+        "engineering",
+        "full"
+      ],
+      "initial_status": "NOT_RUN",
+      "steps": "两种语言与各错误态截图检查",
+      "pass_criteria": "原主题一致，加载/拒识/断流/API失败均有准确提示",
+      "required_evidence": [
+        "执行命令与时间",
+        "实际版本／配置hash",
+        "脱敏结果与分母",
+        "证据文件sha256"
+      ],
+      "requires_real_provider": false,
+      "requires_target_hardware": false
+    },
+    {
+      "id": "PERF-01",
+      "title": "15分钟本地时延与吞吐",
+      "task": "A15",
+      "layer": "hardware",
+      "profiles": [
+        "engineering",
+        "full"
+      ],
+      "initial_status": "NOT_RUN",
+      "steps": "真实主应用共负载预热60s后测900s",
+      "pass_criteria": "P95≤350ms，检测≥12FPS，drop≤20%，主对象关键点≥10Hz",
+      "required_evidence": [
+        "执行命令与时间",
+        "实际版本／配置hash",
+        "脱敏结果与分母",
+        "证据文件sha256"
+      ],
+      "requires_real_provider": false,
+      "requires_target_hardware": true
+    },
+    {
+      "id": "PERF-02",
+      "title": "找物并发与显存",
+      "task": "A15",
+      "layer": "hardware",
+      "profiles": [
+        "engineering",
+        "full"
+      ],
+      "initial_status": "NOT_RUN",
+      "steps": "≤8标签，在途1，整机显存压力",
+      "pass_criteria": "找物P95≤3s，基础P95≤500ms，预算及限流生效",
+      "required_evidence": [
+        "执行命令与时间",
+        "实际版本／配置hash",
+        "脱敏结果与分母",
+        "证据文件sha256"
+      ],
+      "requires_real_provider": false,
+      "requires_target_hardware": true
+    },
+    {
+      "id": "PERF-03",
+      "title": "身份与问候延迟",
+      "task": "A15",
+      "layer": "hardware",
+      "profiles": [
+        "engineering",
+        "full"
+      ],
+      "initial_status": "NOT_RUN",
+      "steps": "记录真实起点／终点，音频时间单列",
+      "pass_criteria": "身份P95≤1.5s，模板文字问候P95≤2.5s",
+      "required_evidence": [
+        "执行命令与时间",
+        "实际版本／配置hash",
+        "脱敏结果与分母",
+        "证据文件sha256"
+      ],
+      "requires_real_provider": false,
+      "requires_target_hardware": true
+    },
+    {
+      "id": "PERF-04",
+      "title": "角色渲染回归",
+      "task": "A15",
+      "layer": "hardware",
+      "profiles": [
+        "engineering",
+        "full"
+      ],
+      "initial_status": "NOT_RUN",
+      "steps": "同角色同画面同设置对照",
+      "pass_criteria": "平均FPS相对下降≤10%；原≥30时开启后仍≥30",
+      "required_evidence": [
+        "执行命令与时间",
+        "实际版本／配置hash",
+        "脱敏结果与分母",
+        "证据文件sha256"
+      ],
+      "requires_real_provider": false,
+      "requires_target_hardware": true
+    },
+    {
+      "id": "PERF-05",
+      "title": "8小时稳定",
+      "task": "A15",
+      "layer": "hardware",
+      "profiles": [
+        "engineering",
+        "full"
+      ],
+      "initial_status": "NOT_RUN",
+      "steps": "28800s共负载回放与间歇真实摄像头",
+      "pass_criteria": "无崩溃/死锁/OOM，RSS增量达标，显存无持续增长",
+      "required_evidence": [
+        "执行命令与时间",
+        "实际版本／配置hash",
+        "脱敏结果与分母",
+        "证据文件sha256"
+      ],
+      "requires_real_provider": false,
+      "requires_target_hardware": true
+    },
+    {
+      "id": "PERF-06",
+      "title": "时钟指标不造假",
+      "task": "A15",
+      "layer": "contract",
+      "profiles": [
+        "engineering",
+        "full"
+      ],
+      "initial_status": "NOT_RUN",
+      "steps": "用已知时间序列校验统计函数",
+      "pass_criteria": "分母完整，不跨clock相减，API本地分开",
+      "required_evidence": [
+        "执行命令与时间",
+        "实际版本／配置hash",
+        "脱敏结果与分母",
+        "证据文件sha256"
+      ],
+      "requires_real_provider": false,
+      "requires_target_hardware": false
+    },
+    {
+      "id": "REC-01",
+      "title": "断流与worker故障恢复",
+      "task": "A15",
+      "layer": "hardware",
+      "profiles": [
+        "engineering",
+        "full"
+      ],
+      "initial_status": "NOT_RUN",
+      "steps": "断开摄像头连接、终止本项目worker",
+      "pass_criteria": "≤5s恢复有效状态；原AIRI聊天可用；无旧身份",
+      "required_evidence": [
+        "执行命令与时间",
+        "实际版本／配置hash",
+        "脱敏结果与分母",
+        "证据文件sha256"
+      ],
+      "requires_real_provider": false,
+      "requires_target_hardware": true
+    },
+    {
+      "id": "DEP-01",
+      "title": "干净环境安装",
+      "task": "A16",
+      "layer": "hardware",
+      "profiles": [
+        "engineering",
+        "full"
+      ],
+      "initial_status": "NOT_RUN",
+      "steps": "新隔离环境完整复现",
+      "pass_criteria": "依手册完成，不靠隐式全局依赖；实际主应用可用",
+      "required_evidence": [
+        "执行命令与时间",
+        "实际版本／配置hash",
+        "脱敏结果与分母",
+        "证据文件sha256"
+      ],
+      "requires_real_provider": false,
+      "requires_target_hardware": true
+    },
+    {
+      "id": "DEP-02",
+      "title": "启动停止与回滚",
+      "task": "A16",
+      "layer": "integration",
+      "profiles": [
+        "engineering",
+        "full"
+      ],
+      "initial_status": "NOT_RUN",
+      "steps": "重复启动停止和feature flag回滚",
+      "pass_criteria": "仅管理本项目进程，不覆盖用户其他更改",
+      "required_evidence": [
+        "执行命令与时间",
+        "实际版本／配置hash",
+        "脱敏结果与分母",
+        "证据文件sha256"
+      ],
+      "requires_real_provider": false,
+      "requires_target_hardware": false
+    },
+    {
+      "id": "DEP-03",
+      "title": "验收拒绝虚假通过",
+      "task": "A16",
+      "layer": "unit",
+      "profiles": [
+        "engineering",
+        "full"
+      ],
+      "initial_status": "NOT_RUN",
+      "steps": "门禁负例矩阵",
+      "pass_criteria": "NOT_RUN/BLOCKED/FAIL/样本不足/mock替代真证据均不通过full",
+      "required_evidence": [
+        "执行命令与时间",
+        "实际版本／配置hash",
+        "脱敏结果与分母",
+        "证据文件sha256"
+      ],
+      "requires_real_provider": false,
+      "requires_target_hardware": false
+    },
+    {
+      "id": "EXT-01",
+      "title": "另一台笔记本LAN摄像头",
+      "task": "A16",
+      "layer": "hardware",
+      "profiles": [
+        "optional"
+      ],
+      "initial_status": "NOT_RUN",
+      "steps": "仅用户实际需要LAN扩展时实施验证",
+      "pass_criteria": "HTTPS/WSS且来源正确，推理在4090，单独报告",
+      "required_evidence": [
+        "执行命令与时间",
+        "实际版本／配置hash",
+        "脱敏结果与分母",
+        "证据文件sha256"
+      ],
+      "requires_real_provider": false,
+      "requires_target_hardware": true
+    },
+    {
+      "id": "EXT-02",
+      "title": "第二种Web或Electron形态",
+      "task": "A16",
+      "layer": "e2e",
+      "profiles": [
+        "optional"
+      ],
+      "initial_status": "NOT_RUN",
+      "steps": "只在交付声明支持该形态时执行",
+      "pass_criteria": "真实第二形态用户流程通过，不据主应用结果外推",
+      "required_evidence": [
+        "执行命令与时间",
+        "实际版本／配置hash",
+        "脱敏结果与分母",
+        "证据文件sha256"
+      ],
+      "requires_real_provider": false,
+      "requires_target_hardware": false
+    }
+  ]
+}

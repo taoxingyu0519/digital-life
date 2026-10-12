@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AIRI · 本地项目管理</title>
+  <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="/wiki.css">
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <header><div><span class="eyebrow">AIRI / DEVELOPMENT</span><h1>数字生命 · 项目工作台</h1><p>把想法、改动和源码结构放在一起。</p></div><a class="button" href="http://127.0.0.1:5173" target="_blank" rel="noopener">打开 AIRI ↗</a></header>
+  <main>
+    <section class="sync"><div><strong id="sync-title">正在连接本地项目…</strong><p id="sync-detail">源码目录每 5 秒检查一次，变动后自动更新。</p></div><button id="sync-button">立即同步目录</button></section>
+    <div class="toolbar"><h2>任务看板 <span id="task-count"></span></h2><div><label class="sr-only" for="search">搜索任务</label><input id="search" type="search" placeholder="搜索任务编号或内容"><button id="add-button" class="primary">＋ 新建任务</button></div></div>
+    <p id="message" role="status" aria-live="polite"></p>
+    <section id="board" class="board" aria-label="任务看板"></section>
+    <section class="wiki-section" aria-labelledby="wiki-heading">
+      <div class="toolbar"><h2 id="wiki-heading">项目管理 Wiki</h2><a href="#wiki/home">阅读入口</a></div>
+      <p class="muted">按问题查找模块、算法、数据流和开发记忆，再进入专题与源码证据。</p>
+      <form id="wiki-search-form" class="wiki-search"><label class="sr-only" for="wiki-search">搜索 Wiki</label><input id="wiki-search" type="search" placeholder="例如：为什么认识的人会跳名"><button type="submit">查找专题</button><button type="button" id="wiki-all">全部目录</button></form>
+      <p id="wiki-message" role="status" aria-live="polite"></p>
+      <div class="wiki-layout"><nav id="wiki-topics" aria-label="Wiki 专题"></nav><article id="wiki-article" aria-label="Wiki 正文"><h3>从一个问题开始</h3><p>选择专题，查看当前实现、相关源码和验证边界。</p></article></div>
+    </section>
+    <div class="resources"><section><h2>开发文档</h2><div id="documents" class="document-list"></div><p class="muted">目录、包索引和文件状态自动更新。架构职责和设计决策随开发人工维护。</p></section><section><h2>最近变更</h2><ol id="events"></ol></section></div>
+    <footer>数据仅保存在本机 · 项目管理/tasks.json · 修改前自动保留上一个版本</footer>
+  </main>
+  <dialog id="editor"><form id="task-form"><div class="dialog-head"><h2 id="editor-title">新建任务</h2><button type="button" id="cancel-button" aria-label="关闭">✕</button></div><label>任务标题<input id="title" maxlength="160" required></label><label>说明与验收条件<textarea id="detail" maxlength="3000" rows="4" required></textarea></label><label id="status-label">状态<select id="status"><option value="todo">待办</option><option value="doing">进行中</option><option value="done">已完成</option><option value="blocked">待处理</option></select></label><label id="note-label">本次变更说明<textarea id="note" maxlength="3000" rows="3" placeholder="记录修改内容、验证结果或需要处理的问题"></textarea></label><p id="form-error" role="alert"></p><button class="primary" type="submit" id="save-button">保存任务</button></form></dialog>
+</body>
+</html>

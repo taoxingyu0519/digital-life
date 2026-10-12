@@ -1,0 +1,3344 @@
+{
+  "commit": "2e0e963670e5435a2909149fff1f83b93f8ffd11",
+  "trackedFileCount": 5645,
+  "sourceFileCount": 5582,
+  "packages": [
+    {
+      "path": "apps/component-calling",
+      "name": "@proj-airi/component-calling",
+      "description": "Realtime audio",
+      "scripts": {
+        "dev": "vite",
+        "build": "vite build",
+        "preview": "vite preview",
+        "typecheck": "vue-tsc --noEmit"
+      },
+      "dependencies": {
+        "@proj-airi/ui": "workspace:^",
+        "@vueuse/core": "catalog:",
+        "@xsai/generate-text": "catalog:",
+        "@xsai/shared-chat": "catalog:",
+        "@xsai/stream-text": "catalog:",
+        "valibot": "catalog:",
+        "vue": "catalog:",
+        "xsschema": "catalog:"
+      },
+      "devDependencies": {
+        "@iconify-json/solar": "catalog:",
+        "@iconify-json/svg-spinners": "catalog:",
+        "@types/xast": "catalog:",
+        "@unocss/reset": "catalog:",
+        "@vitejs/plugin-vue": "catalog:",
+        "vite": "catalog:",
+        "vue-router": "catalog:",
+        "vue-tsc": "catalog:"
+      },
+      "workspaceDependencies": [
+        "@proj-airi/ui"
+      ]
+    },
+    {
+      "path": "apps/stage-pocket",
+      "name": "@proj-airi/stage-pocket",
+      "description": "LLM powered virtual character",
+      "scripts": {
+        "build": "vite build",
+        "lint": "eslint .",
+        "lint:swift": "swiftlint ios",
+        "preview": "vite preview",
+        "typecheck": "vue-tsc --noEmit",
+        "dev:web": "vite",
+        "dev:ios": "cap-vite -- ios",
+        "dev:android": "cap-vite -- android"
+      },
+      "dependencies": {
+        "@capacitor/android": "catalog:",
+        "@capacitor/app": "catalog:",
+        "@capacitor/barcode-scanner": "catalog:",
+        "@capacitor/core": "catalog:",
+        "@capacitor/ios": "catalog:",
+        "@capacitor/keyboard": "catalog:",
+        "@capacitor/local-notifications": "catalog:",
+        "@date-fns/utc": "catalog:",
+        "@fontsource-variable/nunito": "catalog:",
+        "@formkit/auto-animate": "catalog:",
+        "@huggingface/transformers": "catalog:",
+        "@moeru/eventa": "catalog:",
+        "@moeru/std": "catalog:",
+        "@proj-airi/audio": "workspace:^",
+        "@proj-airi/ccc": "workspace:^",
+        "@proj-airi/drizzle-duckdb-wasm": "catalog:",
+        "@proj-airi/font-chillroundm": "workspace:^",
+        "@proj-airi/font-cjkfonts-allseto": "workspace:^",
+        "@proj-airi/font-xiaolai": "workspace:^",
+        "@proj-airi/i18n": "workspace:^",
+        "@proj-airi/pipelines-audio": "workspace:^",
+        "@proj-airi/server-sdk": "workspace:^",
+        "@proj-airi/stage-layouts": "workspace:^",
+        "@proj-airi/stage-pages": "workspace:^",
+        "@proj-airi/stage-shared": "workspace:^",
+        "@proj-airi/stage-ui": "workspace:^",
+        "@proj-airi/stage-ui-live2d": "workspace:^",
+        "@proj-airi/stage-ui-three": "workspace:^",
+        "@proj-airi/stream-kit": "workspace:^",
+        "@proj-airi/ui": "workspace:^",
+        "@proj-airi/ui-transitions": "workspace:^",
+        "@tresjs/cientos": "catalog:",
+        "@tresjs/core": "catalog:",
+        "@valibot/to-json-schema": "catalog:",
+        "@vueuse/core": "catalog:",
+        "@vueuse/shared": "catalog:",
+        "@xsai-ext/providers": "catalog:",
+        "@xsai-transformers/embed": "catalog:",
+        "@xsai/generate-speech": "catalog:",
+        "@xsai/generate-text": "catalog:",
+        "@xsai/model": "catalog:",
+        "@xsai/shared": "catalog:",
+        "@xsai/shared-chat": "catalog:",
+        "@xsai/stream-text": "catalog:",
+        "@xsai/stream-transcription": "catalog:",
+        "@xsai/utils-chat": "catalog:",
+        "animejs": "catalog:",
+        "capacitor-native-settings": "catalog:",
+        "colorjs.io": "catalog:",
+        "culori": "catalog:",
+        "d3": "catalog:",
+        "date-fns": "catalog:",
+        "dompurify": "catalog:",
+        "driver.js": "catalog:",
+        "drizzle-orm": "catalog:",
+        "embla-carousel-vue": "catalog:",
+        "gpuu": "catalog:",
+        "html2canvas": "catalog:",
+        "jszip": "catalog:",
+        "localforage": "catalog:",
+        "mediabunny": "catalog:",
+        "nanoid": "catalog:",
+        "node-vibrant": "catalog:",
+        "nprogress": "catalog:",
+        "onnxruntime-web": "catalog:",
+        "pinia": "catalog:",
+        "rehype-stringify": "catalog:",
+        "reka-ui": "catalog:",
+        "remark-parse": "catalog:",
+        "remark-rehype": "catalog:",
+        "shiki": "catalog:",
+        "splitpanes": "catalog:",
+        "three": "catalog:",
+        "unified": "catalog:",
+        "unspeech": "catalog:xsai",
+        "uuid": "catalog:",
+        "valibot": "catalog:",
+        "vaul-vue": "catalog:",
+        "vue": "catalog:",
+        "vue-demi": "catalog:",
+        "vue-i18n": "catalog:",
+        "vue-router": "catalog:",
+        "vue-sonner": "catalog:",
+        "web-haptics": "catalog:",
+        "workbox-window": "catalog:",
+        "xsschema": "catalog:",
+        "yauzl": "catalog:",
+        "zod": "catalog:"
+      },
+      "devDependencies": {
+        "@capacitor/cli": "catalog:",
+        "@iconify-json/carbon": "catalog:",
+        "@iconify-json/eos-icons": "catalog:",
+        "@iconify-json/lucide": "catalog:",
+        "@iconify-json/mingcute": "catalog:",
+        "@iconify-json/ph": "catalog:",
+        "@iconify-json/simple-icons": "catalog:",
+        "@iconify-json/solar": "catalog:",
+        "@iconify-json/svg-spinners": "catalog:",
+        "@iconify-json/vscode-icons": "catalog:",
+        "@intlify/unplugin-vue-i18n": "catalog:",
+        "@proj-airi/cap-vite": "workspace:*",
+        "@proj-airi/iconify-meteocons": "catalog:",
+        "@proj-airi/lobe-icons": "catalog:",
+        "@proj-airi/provider-inference": "workspace:^",
+        "@proj-airi/unplugin-fetch": "catalog:",
+        "@proj-airi/unplugin-live2d-sdk": "catalog:",
+        "@proj-airi/vite-plugin-sherpaw": "workspace:^",
+        "@shikijs/markdown-it": "catalog:",
+        "@types/audioworklet": "catalog:",
+        "@types/culori": "catalog:",
+        "@types/nprogress": "catalog:",
+        "@types/splitpanes": "catalog:",
+        "@types/three": "catalog:",
+        "@types/yauzl": "catalog:",
+        "@unocss/reset": "catalog:",
+        "@vitejs/plugin-vue": "catalog:",
+        "@vue-macros/volar": "catalog:",
+        "@vueuse/motion": "catalog:",
+        "csstype": "catalog:",
+        "hfup": "catalog:",
+        "less": "catalog:",
+        "unplugin-info": "catalog:",
+        "unplugin-yaml": "catalog:",
+        "vite": "catalog:",
+        "vite-bundle-visualizer": "catalog:",
+        "vite-plugin-mkcert": "catalog:",
+        "vite-plugin-pwa": "catalog:",
+        "vite-plugin-vue-devtools": "catalog:",
+        "vite-plugin-vue-layouts": "catalog:",
+        "vue-macros": "catalog:",
+        "vue-tsc": "catalog:"
+      },
+      "workspaceDependencies": [
+        "@proj-airi/audio",
+        "@proj-airi/cap-vite",
+        "@proj-airi/ccc",
+        "@proj-airi/font-chillroundm",
+        "@proj-airi/font-cjkfonts-allseto",
+        "@proj-airi/font-xiaolai",
+        "@proj-airi/i18n",
+        "@proj-airi/pipelines-audio",
+        "@proj-airi/provider-inference",
+        "@proj-airi/server-sdk",
+        "@proj-airi/stage-layouts",
+        "@proj-airi/stage-pages",
+        "@proj-airi/stage-shared",
+        "@proj-airi/stage-ui",
+        "@proj-airi/stage-ui-live2d",
+        "@proj-airi/stage-ui-three",
+        "@proj-airi/stream-kit",
+        "@proj-airi/ui",
+        "@proj-airi/ui-transitions",
+        "@proj-airi/vite-plugin-sherpaw"
+      ]
+    },
+    {
+      "path": "apps/stage-tamagotchi",
+      "name": "@proj-airi/stage-tamagotchi",
+      "description": "LLM powered virtual character",
+      "version": "0.12.0-beta.5",
+      "scripts": {
+        "lint": "eslint --cache .",
+        "typecheck": "vue-tsc --noEmit",
+        "app:dev": "pnpm run dev",
+        "app:build": "pnpm run build",
+        "start": "install-electron && electron-vite preview",
+        "start:xwayland": "install-electron && electron-vite preview -- --ozone-platform=x11",
+        "dev": "install-electron && electron-vite dev",
+        "dev:xwayland": "install-electron && electron-vite dev -- --ozone-platform=x11",
+        "build": "electron-vite build",
+        "postinstall": "electron-builder install-app-deps",
+        "build:unpack": "pnpm run build && electron-builder --dir",
+        "build:flatpak": "pnpm run build:unpack && flatpak-builder --user --install-deps-from=flathub ./flatpak ai.moeru.airi.flatpak.yml --force-clean",
+        "build:win": "pnpm run build && electron-builder --win",
+        "build:mac": "pnpm run build && electron-builder --mac",
+        "build:linux": "pnpm run build && electron-builder --linux",
+        "rename-artifacts": "mkdir -p bundle && tsx scripts/rename-artifacts.ts",
+        "merge-latest-mac": "tsx scripts/merge-latest-mac.ts",
+        "regenerate-windows-latest": "tsx scripts/regenerate-windows-latest.ts",
+        "artifacts-metadata": "tsx scripts/artifacts-metadata.ts",
+        "smoke:desktop-overlay-live-window": "NODE_OPTIONS='--experimental-websocket' tsx scripts/desktop-overlay-live-window-smoke.ts",
+        "update-test:generate": "tsx scripts/update-test/generate-manifest.ts",
+        "update-test:server": "tsx scripts/update-test/start-server.ts",
+        "update-test:matrix": "bash scripts/update-test/run-matrix.sh"
+      },
+      "dependencies": {
+        "@auv-js/cli": "catalog:",
+        "@auv-js/sdk": "catalog:",
+        "@date-fns/utc": "catalog:",
+        "@fontsource-variable/comfortaa": "catalog:",
+        "@fontsource-variable/dm-sans": "catalog:",
+        "@fontsource-variable/jura": "catalog:",
+        "@fontsource-variable/nunito": "catalog:",
+        "@fontsource-variable/quicksand": "catalog:",
+        "@fontsource-variable/urbanist": "catalog:",
+        "@fontsource/dm-mono": "catalog:",
+        "@fontsource/dm-serif-display": "catalog:",
+        "@fontsource/gugi": "catalog:",
+        "@fontsource/kiwi-maru": "catalog:",
+        "@fontsource/m-plus-rounded-1c": "catalog:",
+        "@formkit/auto-animate": "catalog:",
+        "@guiiai/logg": "catalog:",
+        "@huggingface/transformers": "catalog:",
+        "@intlify/core": "catalog:",
+        "@moeru/eventa": "catalog:",
+        "@moeru/std": "catalog:",
+        "@pinia/colada": "catalog:",
+        "@proj-airi/audio": "workspace:^",
+        "@proj-airi/ccc": "workspace:^",
+        "@proj-airi/drizzle-duckdb-wasm": "catalog:",
+        "@proj-airi/font-chillroundm": "workspace:^",
+        "@proj-airi/font-cjkfonts-allseto": "workspace:^",
+        "@proj-airi/font-xiaolai": "workspace:^",
+        "@proj-airi/i18n": "workspace:^",
+        "@proj-airi/input-gamepad-vueuse": "workspace:^",
+        "@proj-airi/model-driver-lipsync": "workspace:^",
+        "@proj-airi/pipelines-audio": "workspace:^",
+        "@proj-airi/plugin-sdk-tamagotchi": "workspace:^",
+        "@proj-airi/provider-inference": "workspace:^",
+        "@proj-airi/server-sdk": "workspace:*",
+        "@proj-airi/stage-layouts": "workspace:^",
+        "@proj-airi/stage-pages": "workspace:^",
+        "@proj-airi/stage-ui": "workspace:^",
+        "@proj-airi/stage-ui-live2d": "workspace:^",
+        "@proj-airi/stage-ui-mmd": "workspace:^",
+        "@proj-airi/stage-ui-spine": "workspace:^",
+        "@proj-airi/stage-ui-three": "workspace:^",
+        "@proj-airi/ui": "workspace:^",
+        "@shikijs/markdown-it": "catalog:",
+        "@tresjs/cientos": "catalog:",
+        "@tresjs/core": "catalog:",
+        "@unocss/reset": "catalog:",
+        "@vueuse/core": "catalog:",
+        "@vueuse/motion": "catalog:",
+        "@vueuse/shared": "catalog:",
+        "@xsai-apple-speech/transcription": "catalog:",
+        "@xsai-apple-speech/transcription-electron-plugin": "catalog:",
+        "@xsai-apple-speech/transcription-native": "catalog:",
+        "@xsai-ext/providers": "catalog:",
+        "@xsai-transformers/embed": "catalog:",
+        "@xsai-transformers/transcription": "catalog:",
+        "@xsai/generate-speech": "catalog:",
+        "@xsai/generate-text": "catalog:",
+        "@xsai/model": "catalog:",
+        "@xsai/shared": "catalog:",
+        "@xsai/shared-chat": "catalog:",
+        "@xsai/stream-text": "catalog:",
+        "@xsai/stream-transcription": "catalog:",
+        "@xsai/tool": "catalog:",
+        "@xsai/utils-chat": "catalog:",
+        "alien-signals": "catalog:",
+        "animejs": "catalog:",
+        "async-mutex": "catalog:",
+        "chess.js": "catalog:",
+        "colorjs.io": "catalog:",
+        "culori": "catalog:",
+        "date-fns": "catalog:",
+        "defu": "catalog:",
+        "destr": "catalog:",
+        "dompurify": "catalog:",
+        "electron-click-drag-plugin": "catalog:",
+        "embla-carousel-vue": "catalog:",
+        "es-toolkit": "catalog:",
+        "injeca": "catalog:",
+        "jszip": "catalog:",
+        "localforage": "catalog:",
+        "mediabunny": "catalog:",
+        "node-vibrant": "catalog:",
+        "nprogress": "catalog:",
+        "onnxruntime-web": "catalog:",
+        "pinia": "catalog:",
+        "popmotion": "catalog:",
+        "rehype-stringify": "catalog:",
+        "reka-ui": "catalog:",
+        "remark-parse": "catalog:",
+        "remark-rehype": "catalog:",
+        "replicate": "catalog:",
+        "semver": "catalog:",
+        "shiki": "catalog:",
+        "splitpanes": "catalog:",
+        "three": "catalog:",
+        "uiohook-napi": "catalog:",
+        "unified": "catalog:",
+        "unspeech": "catalog:xsai",
+        "uqr": "catalog:",
+        "uuid": "catalog:",
+        "valibot": "catalog:",
+        "vaul-vue": "catalog:",
+        "vue": "catalog:",
+        "vue-demi": "catalog:",
+        "vue-i18n": "catalog:",
+        "vue-router": "catalog:",
+        "vue-sonner": "catalog:",
+        "web-haptics": "catalog:",
+        "whatwg-mimetype": "catalog:",
+        "xsschema": "catalog:",
+        "zod": "catalog:"
+      },
+      "devDependencies": {
+        "@electron-toolkit/preload": "catalog:",
+        "@electron-toolkit/tsconfig": "catalog:",
+        "@electron-toolkit/utils": "catalog:",
+        "@electron/notarize": "catalog:",
+        "@iconify-json/carbon": "catalog:",
+        "@iconify-json/eos-icons": "catalog:",
+        "@iconify-json/lucide": "catalog:",
+        "@iconify-json/mingcute": "catalog:",
+        "@iconify-json/ph": "catalog:",
+        "@iconify-json/simple-icons": "catalog:",
+        "@iconify-json/solar": "catalog:",
+        "@iconify-json/svg-spinners": "catalog:",
+        "@iconify-json/vscode-icons": "catalog:",
+        "@iconify/utils": "catalog:",
+        "@intlify/unplugin-vue-i18n": "catalog:",
+        "@modelcontextprotocol/sdk": "catalog:",
+        "@pnpm/find-workspace-dir": "catalog:",
+        "@proj-airi/electron-eventa": "workspace:^",
+        "@proj-airi/electron-screen-capture": "workspace:^",
+        "@proj-airi/electron-vueuse": "workspace:^",
+        "@proj-airi/iconify-meteocons": "catalog:",
+        "@proj-airi/lobe-icons": "catalog:",
+        "@proj-airi/plugin-sdk": "workspace:^",
+        "@proj-airi/server-runtime": "workspace:^",
+        "@proj-airi/stage-shared": "workspace:^",
+        "@proj-airi/ui-transitions": "workspace:^",
+        "@proj-airi/unplugin-fetch": "catalog:",
+        "@proj-airi/unplugin-live2d-sdk": "catalog:",
+        "@proj-airi/vite-plugin-sherpaw": "workspace:^",
+        "@types/audioworklet": "catalog:",
+        "@types/culori": "catalog:",
+        "@types/nprogress": "catalog:",
+        "@types/semver": "catalog:",
+        "@types/splitpanes": "catalog:",
+        "@types/three": "catalog:",
+        "@types/whatwg-mimetype": "catalog:",
+        "@types/yauzl": "catalog:",
+        "@vitejs/plugin-vue": "catalog:",
+        "@vue-macros/volar": "catalog:",
+        "builder-util-runtime": "catalog:",
+        "cac": "catalog:",
+        "crossws": "catalog:",
+        "csstype": "catalog:",
+        "drizzle-orm": "catalog:",
+        "electron": "catalog:",
+        "electron-builder": "catalog:",
+        "electron-updater": "catalog:",
+        "electron-vite": "catalog:",
+        "get-port-please": "catalog:",
+        "h3": "catalog:",
+        "less": "catalog:",
+        "mkcert": "catalog:",
+        "std-env": "catalog:",
+        "superjson": "catalog:",
+        "unocss-preset-scrollbar": "catalog:",
+        "unplugin-info": "catalog:",
+        "unplugin-yaml": "catalog:",
+        "vite": "catalog:",
+        "vite-bundle-visualizer": "catalog:",
+        "vite-plugin-mkcert": "catalog:",
+        "vite-plugin-vue-devtools": "catalog:",
+        "vite-plugin-vue-layouts": "catalog:",
+        "vue-macros": "catalog:",
+        "vue-tsc": "catalog:",
+        "yaml": "catalog:",
+        "yauzl": "catalog:"
+      },
+      "workspaceDependencies": [
+        "@proj-airi/audio",
+        "@proj-airi/ccc",
+        "@proj-airi/electron-eventa",
+        "@proj-airi/electron-screen-capture",
+        "@proj-airi/electron-vueuse",
+        "@proj-airi/font-chillroundm",
+        "@proj-airi/font-cjkfonts-allseto",
+        "@proj-airi/font-xiaolai",
+        "@proj-airi/i18n",
+        "@proj-airi/input-gamepad-vueuse",
+        "@proj-airi/model-driver-lipsync",
+        "@proj-airi/pipelines-audio",
+        "@proj-airi/plugin-sdk",
+        "@proj-airi/plugin-sdk-tamagotchi",
+        "@proj-airi/provider-inference",
+        "@proj-airi/server-runtime",
+        "@proj-airi/server-sdk",
+        "@proj-airi/stage-layouts",
+        "@proj-airi/stage-pages",
+        "@proj-airi/stage-shared",
+        "@proj-airi/stage-ui",
+        "@proj-airi/stage-ui-live2d",
+        "@proj-airi/stage-ui-mmd",
+        "@proj-airi/stage-ui-spine",
+        "@proj-airi/stage-ui-three",
+        "@proj-airi/ui",
+        "@proj-airi/ui-transitions",
+        "@proj-airi/vite-plugin-sherpaw"
+      ]
+    },
+    {
+      "path": "apps/stage-web",
+      "name": "@proj-airi/stage-web",
+      "description": "LLM powered virtual character",
+      "scripts": {
+        "build": "vite build",
+        "dev": "vite --host",
+        "dev:https": "vite --host -- --mkcert",
+        "lint": "eslint .",
+        "preview": "vite preview",
+        "test": "vitest",
+        "test:run": "vitest run",
+        "typecheck": "vue-tsc --noEmit"
+      },
+      "dependencies": {
+        "@date-fns/utc": "catalog:",
+        "@fontsource-variable/nunito": "catalog:",
+        "@formkit/auto-animate": "catalog:",
+        "@huggingface/transformers": "catalog:",
+        "@moeru/eventa": "catalog:",
+        "@moeru/std": "catalog:",
+        "@pinia/colada": "catalog:",
+        "@proj-airi/audio": "workspace:^",
+        "@proj-airi/ccc": "workspace:^",
+        "@proj-airi/drizzle-duckdb-wasm": "catalog:",
+        "@proj-airi/font-chillroundm": "workspace:^",
+        "@proj-airi/font-cjkfonts-allseto": "workspace:^",
+        "@proj-airi/font-xiaolai": "workspace:^",
+        "@proj-airi/i18n": "workspace:^",
+        "@proj-airi/local-vision": "workspace:^",
+        "@proj-airi/model-driver-mediapipe": "workspace:^",
+        "@proj-airi/pipelines-audio": "workspace:^",
+        "@proj-airi/provider-inference": "workspace:^",
+        "@proj-airi/realtime-voice": "workspace:^",
+        "@proj-airi/server-sdk": "workspace:^",
+        "@proj-airi/stage-layouts": "workspace:^",
+        "@proj-airi/stage-pages": "workspace:^",
+        "@proj-airi/stage-shared": "workspace:^",
+        "@proj-airi/stage-ui": "workspace:^",
+        "@proj-airi/stage-ui-live2d": "workspace:^",
+        "@proj-airi/stage-ui-three": "workspace:^",
+        "@proj-airi/stream-kit": "workspace:^",
+        "@proj-airi/ui": "workspace:^",
+        "@proj-airi/ui-transitions": "workspace:^",
+        "@tresjs/cientos": "catalog:",
+        "@tresjs/core": "catalog:",
+        "@valibot/to-json-schema": "catalog:",
+        "@vueuse/core": "catalog:",
+        "@vueuse/shared": "catalog:",
+        "@xsai-ext/providers": "catalog:",
+        "@xsai-transformers/embed": "catalog:",
+        "@xsai/generate-speech": "catalog:",
+        "@xsai/generate-text": "catalog:",
+        "@xsai/model": "catalog:",
+        "@xsai/shared": "catalog:",
+        "@xsai/shared-chat": "catalog:",
+        "@xsai/stream-text": "catalog:",
+        "@xsai/stream-transcription": "catalog:",
+        "@xsai/utils-chat": "catalog:",
+        "animejs": "catalog:",
+        "better-auth": "catalog:",
+        "colorjs.io": "catalog:",
+        "culori": "catalog:",
+        "d3": "catalog:",
+        "date-fns": "catalog:",
+        "dompurify": "catalog:",
+        "driver.js": "catalog:",
+        "drizzle-orm": "catalog:",
+        "embla-carousel-vue": "catalog:",
+        "es-toolkit": "catalog:",
+        "gpuu": "catalog:",
+        "hono": "catalog:",
+        "html2canvas": "catalog:",
+        "jszip": "catalog:",
+        "localforage": "catalog:",
+        "mediabunny": "catalog:",
+        "nanoid": "catalog:",
+        "node-vibrant": "catalog:",
+        "nprogress": "catalog:",
+        "onnxruntime-web": "catalog:",
+        "pinia": "catalog:",
+        "rehype-stringify": "catalog:",
+        "reka-ui": "catalog:",
+        "remark-parse": "catalog:",
+        "remark-rehype": "catalog:",
+        "shiki": "catalog:",
+        "splitpanes": "catalog:",
+        "three": "catalog:",
+        "unified": "catalog:",
+        "unspeech": "catalog:xsai",
+        "uuid": "catalog:",
+        "valibot": "catalog:",
+        "vaul-vue": "catalog:",
+        "vue": "catalog:",
+        "vue-demi": "catalog:",
+        "vue-i18n": "catalog:",
+        "vue-router": "catalog:",
+        "vue-sonner": "catalog:",
+        "web-haptics": "catalog:",
+        "workbox-window": "catalog:",
+        "xsschema": "catalog:",
+        "yauzl": "catalog:",
+        "zod": "catalog:"
+      },
+      "devDependencies": {
+        "@iconify-json/carbon": "catalog:",
+        "@iconify-json/eos-icons": "catalog:",
+        "@iconify-json/logos": "catalog:",
+        "@iconify-json/lucide": "catalog:",
+        "@iconify-json/mingcute": "catalog:",
+        "@iconify-json/ph": "catalog:",
+        "@iconify-json/simple-icons": "catalog:",
+        "@iconify-json/solar": "catalog:",
+        "@iconify-json/svg-spinners": "catalog:",
+        "@iconify-json/tabler": "catalog:",
+        "@iconify-json/vscode-icons": "catalog:",
+        "@intlify/unplugin-vue-i18n": "catalog:",
+        "@proj-airi/iconify-meteocons": "catalog:",
+        "@proj-airi/lobe-icons": "catalog:",
+        "@proj-airi/unplugin-fetch": "catalog:",
+        "@proj-airi/unplugin-live2d-sdk": "catalog:",
+        "@proj-airi/vite-plugin-sherpaw": "workspace:^",
+        "@shikijs/markdown-it": "catalog:",
+        "@types/audioworklet": "catalog:",
+        "@types/culori": "catalog:",
+        "@types/nprogress": "catalog:",
+        "@types/splitpanes": "catalog:",
+        "@types/three": "catalog:",
+        "@types/yauzl": "catalog:",
+        "@unocss/reset": "catalog:",
+        "@vitejs/plugin-vue": "catalog:",
+        "@vue-macros/volar": "catalog:",
+        "@vueuse/motion": "catalog:",
+        "csstype": "catalog:",
+        "hfup": "catalog:",
+        "less": "catalog:",
+        "unplugin-basemove": "catalog:",
+        "unplugin-info": "catalog:",
+        "unplugin-yaml": "catalog:",
+        "vite": "catalog:",
+        "vite-bundle-visualizer": "catalog:",
+        "vite-plugin-mkcert": "catalog:",
+        "vite-plugin-pwa": "catalog:",
+        "vite-plugin-vue-devtools": "catalog:",
+        "vite-plugin-vue-layouts": "catalog:",
+        "vue-macros": "catalog:",
+        "vue-tsc": "catalog:"
+      },
+      "workspaceDependencies": [
+        "@proj-airi/audio",
+        "@proj-airi/ccc",
+        "@proj-airi/font-chillroundm",
+        "@proj-airi/font-cjkfonts-allseto",
+        "@proj-airi/font-xiaolai",
+        "@proj-airi/i18n",
+        "@proj-airi/local-vision",
+        "@proj-airi/model-driver-mediapipe",
+        "@proj-airi/pipelines-audio",
+        "@proj-airi/provider-inference",
+        "@proj-airi/realtime-voice",
+        "@proj-airi/server-sdk",
+        "@proj-airi/stage-layouts",
+        "@proj-airi/stage-pages",
+        "@proj-airi/stage-shared",
+        "@proj-airi/stage-ui",
+        "@proj-airi/stage-ui-live2d",
+        "@proj-airi/stage-ui-three",
+        "@proj-airi/stream-kit",
+        "@proj-airi/ui",
+        "@proj-airi/ui-transitions",
+        "@proj-airi/vite-plugin-sherpaw"
+      ]
+    },
+    {
+      "path": "apps/ui-server-auth",
+      "name": "@proj-airi/ui-server-auth",
+      "description": "Auth UI for Project AIRI",
+      "scripts": {
+        "build": "vite build",
+        "dev": "vite --host",
+        "lint": "eslint .",
+        "preview": "vite preview",
+        "typecheck": "vue-tsc --noEmit"
+      },
+      "dependencies": {
+        "@date-fns/utc": "catalog:",
+        "@fontsource-variable/nunito": "catalog:",
+        "@formkit/auto-animate": "catalog:",
+        "@moeru/eventa": "catalog:",
+        "@moeru/std": "catalog:",
+        "@openpanel/web": "catalog:",
+        "@proj-airi/font-chillroundm": "workspace:^",
+        "@proj-airi/font-cjkfonts-allseto": "workspace:^",
+        "@proj-airi/font-xiaolai": "workspace:^",
+        "@proj-airi/i18n": "workspace:^",
+        "@proj-airi/stage-layouts": "workspace:^",
+        "@proj-airi/stage-shared": "workspace:^",
+        "@proj-airi/stage-ui": "workspace:^",
+        "@proj-airi/ui": "workspace:^",
+        "@vueuse/core": "catalog:",
+        "@vueuse/shared": "catalog:",
+        "animejs": "catalog:",
+        "better-auth": "catalog:",
+        "colorjs.io": "catalog:",
+        "culori": "catalog:",
+        "date-fns": "catalog:",
+        "nanoid": "catalog:",
+        "nprogress": "catalog:",
+        "pinia": "catalog:",
+        "uuid": "catalog:",
+        "vaul-vue": "catalog:",
+        "vue": "catalog:",
+        "vue-i18n": "catalog:",
+        "vue-router": "catalog:",
+        "vue-sonner": "catalog:"
+      },
+      "devDependencies": {
+        "@iconify-json/carbon": "catalog:",
+        "@iconify-json/eos-icons": "catalog:",
+        "@iconify-json/logos": "catalog:",
+        "@iconify-json/lucide": "catalog:",
+        "@iconify-json/mingcute": "catalog:",
+        "@iconify-json/ph": "catalog:",
+        "@iconify-json/simple-icons": "catalog:",
+        "@iconify-json/solar": "catalog:",
+        "@iconify-json/svg-spinners": "catalog:",
+        "@iconify-json/tabler": "catalog:",
+        "@iconify-json/vscode-icons": "catalog:",
+        "@intlify/unplugin-vue-i18n": "catalog:",
+        "@proj-airi/iconify-meteocons": "catalog:",
+        "@proj-airi/lobe-icons": "catalog:",
+        "@shikijs/markdown-it": "catalog:",
+        "@types/culori": "catalog:",
+        "@types/nprogress": "catalog:",
+        "@types/splitpanes": "catalog:",
+        "@unocss/reset": "catalog:",
+        "@vitejs/plugin-vue": "catalog:",
+        "@vue-macros/volar": "catalog:",
+        "@vueuse/motion": "catalog:",
+        "unplugin-info": "catalog:",
+        "unplugin-yaml": "catalog:",
+        "vite": "catalog:",
+        "vite-plugin-vue-devtools": "catalog:",
+        "vite-plugin-vue-layouts": "catalog:",
+        "vue-macros": "catalog:",
+        "vue-tsc": "catalog:"
+      },
+      "workspaceDependencies": [
+        "@proj-airi/font-chillroundm",
+        "@proj-airi/font-cjkfonts-allseto",
+        "@proj-airi/font-xiaolai",
+        "@proj-airi/i18n",
+        "@proj-airi/stage-layouts",
+        "@proj-airi/stage-shared",
+        "@proj-airi/stage-ui",
+        "@proj-airi/ui"
+      ]
+    },
+    {
+      "path": "docs",
+      "name": "@proj-airi/docs",
+      "description": "",
+      "version": "0.12.0-beta.5",
+      "scripts": {
+        "build": "vitepress build",
+        "build:base": "BASE_URL=/docs/ vitepress build",
+        "dev": "vitepress dev",
+        "preview": "vitepress preview",
+        "typecheck": "vue-tsc --noEmit",
+        "contributors": "tsx scripts/update-contributors.ts"
+      },
+      "dependencies": {
+        "@fontsource-variable/comfortaa": "catalog:",
+        "@fontsource-variable/dm-sans": "catalog:",
+        "@fontsource-variable/quicksand": "catalog:",
+        "@fontsource/dm-mono": "catalog:",
+        "@fontsource/dm-serif-display": "catalog:",
+        "@moeru/std": "catalog:",
+        "@openpanel/web": "catalog:",
+        "@proj-airi/chromatic": "catalog:",
+        "@proj-airi/i18n": "workspace:^",
+        "@proj-airi/stage-shared": "workspace:^",
+        "@vueuse/core": "catalog:",
+        "colorjs.io": "catalog:",
+        "date-fns": "catalog:",
+        "embla-carousel-vue": "catalog:",
+        "mark.js": "catalog:",
+        "motion-v": "catalog:",
+        "pathe": "catalog:",
+        "reka-ui": "catalog:",
+        "vue": "catalog:",
+        "vue-i18n": "catalog:",
+        "vue-sonner": "catalog:"
+      },
+      "devDependencies": {
+        "@iconify-json/lucide": "catalog:",
+        "@iconify-json/mingcute": "catalog:",
+        "@iconify-json/twemoji": "catalog:",
+        "@iconify/vue": "catalog:",
+        "@intlify/unplugin-vue-i18n": "catalog:",
+        "@mdit/plugin-footnote": "catalog:",
+        "@mdit/plugin-tasklist": "catalog:",
+        "@napi-rs/image": "catalog:",
+        "@proj-airi/stage-ui": "workspace:^",
+        "@radix-ui/colors": "catalog:",
+        "@takumi-rs/image-response": "catalog:",
+        "@types/hast": "catalog:",
+        "@types/markdown-it": "catalog:",
+        "@unocss/reset": "catalog:",
+        "@vue/tsconfig": "catalog:",
+        "animejs": "catalog:",
+        "gray-matter": "catalog:",
+        "markdown-it": "catalog:",
+        "markdown-it-anchor": "catalog:",
+        "minisearch": "catalog:",
+        "postcss": "catalog:",
+        "shiki": "catalog:",
+        "tinyglobby": "catalog:",
+        "tsx": "catalog:",
+        "uncrypto": "catalog:",
+        "unplugin-yaml": "catalog:",
+        "vitepress": "catalog:",
+        "vue-tsc": "catalog:"
+      },
+      "workspaceDependencies": [
+        "@proj-airi/i18n",
+        "@proj-airi/stage-shared",
+        "@proj-airi/stage-ui"
+      ]
+    },
+    {
+      "path": "engines/stage-tamagotchi-godot",
+      "name": "@proj-airi/stage-tamagotchi-godot",
+      "description": "Godot-native desktop stage runtime workspace engine for stage-tamagotchi",
+      "version": "0.12.0-beta.5",
+      "scripts": {
+        "build": "dotnet build ./stage-tamagotchi-godot.slnx",
+        "typecheck": "dotnet build ./stage-tamagotchi-godot.slnx",
+        "test": "dotnet run --project ./tests/stage-tamagotchi-godot.tests/stage-tamagotchi-godot.tests.csproj",
+        "dump:render-stages": "node ./tools/dumpRenderStages.mjs --dump-render-stages ./artifacts/render-stages",
+        "dump:render-stages:upper-body": "node ./tools/dumpRenderStages.mjs --dump-render-stages ./artifacts/render-stages-upper-body --view-preset upper-body"
+      },
+      "dependencies": {},
+      "devDependencies": {},
+      "workspaceDependencies": []
+    },
+    {
+      "path": "integrations/satori-bot",
+      "name": "@proj-airi/satori-bot",
+      "description": "Satori protocol adapter for AIRI - Connect to multiple chat platforms via Satori",
+      "scripts": {
+        "start": "tsx --env-file=.env --env-file-if-exists=.env.local src/index.ts",
+        "dev": "tsx watch --env-file=.env --env-file-if-exists=.env.local src/index.ts",
+        "typecheck": "tsc --noEmit",
+        "db:generate": "drizzle-kit generate",
+        "db:push": "drizzle-kit push"
+      },
+      "dependencies": {
+        "@electric-sql/pglite": "catalog:",
+        "@guiiai/logg": "catalog:",
+        "@moeru/std": "catalog:",
+        "@velin-dev/core": "catalog:",
+        "@xsai/generate-text": "catalog:",
+        "@xsai/shared-chat": "catalog:",
+        "@xsai/utils-chat": "catalog:",
+        "best-effort-json-parser": "catalog:",
+        "drizzle-orm": "catalog:",
+        "es-toolkit": "catalog:",
+        "nanoid": "catalog:",
+        "valibot": "catalog:",
+        "ws": "catalog:"
+      },
+      "devDependencies": {
+        "@types/ws": "catalog:",
+        "drizzle-kit": "catalog:"
+      },
+      "workspaceDependencies": []
+    },
+    {
+      "path": "integrations/telegram-bot",
+      "name": "@proj-airi/telegram-bot",
+      "description": "Telegram bot for AIRI",
+      "scripts": {
+        "start": "tsx --env-file=.env --env-file-if-exists=.env.local --max-old-space-size=8192 src/index.ts",
+        "db:generate": "drizzle-kit generate",
+        "db:push": "dotenvx run -f .env -f .env.local --overload --ignore=MISSING_ENV_FILE -- drizzle-kit push",
+        "script:embed-chat": "tsx --env-file=.env --env-file-if-exists=.env.local scripts/embed-all-chat-messages.ts",
+        "typecheck": "tsc --noEmit"
+      },
+      "dependencies": {
+        "@dotenvx/dotenvx": "catalog:",
+        "@ffmpeg-installer/ffmpeg": "catalog:",
+        "@grammyjs/files": "catalog:",
+        "@guiiai/logg": "catalog:",
+        "@moeru/std": "catalog:",
+        "@napi-rs/image": "catalog:",
+        "@opentelemetry/api": "catalog:",
+        "@opentelemetry/auto-instrumentations-node": "catalog:",
+        "@opentelemetry/exporter-metrics-otlp-proto": "catalog:",
+        "@opentelemetry/exporter-trace-otlp-proto": "catalog:",
+        "@opentelemetry/instrumentation-pg": "catalog:",
+        "@opentelemetry/resources": "catalog:",
+        "@opentelemetry/sdk-metrics": "catalog:",
+        "@opentelemetry/sdk-node": "catalog:",
+        "@opentelemetry/sdk-trace-node": "catalog:",
+        "@opentelemetry/semantic-conventions": "catalog:",
+        "@velin-dev/core": "catalog:",
+        "@xsai/embed": "catalog:",
+        "@xsai/generate-text": "catalog:",
+        "@xsai/shared-chat": "catalog:",
+        "@xsai/tool": "catalog:",
+        "@xsai/utils-chat": "catalog:",
+        "best-effort-json-parser": "catalog:",
+        "drizzle-orm": "catalog:",
+        "es-toolkit": "catalog:",
+        "fluent-ffmpeg": "catalog:",
+        "grammy": "catalog:",
+        "nanoid": "catalog:",
+        "p-limit": "catalog:",
+        "pg": "catalog:",
+        "telegram": "catalog:",
+        "uuid": "catalog:",
+        "valibot": "catalog:"
+      },
+      "devDependencies": {
+        "@types/pg": "catalog:",
+        "drizzle-kit": "catalog:",
+        "tsx": "catalog:"
+      },
+      "workspaceDependencies": []
+    },
+    {
+      "path": "integrations/vscode/airi-plugin-vscode",
+      "name": "@proj-airi/airi-plugin-vscode",
+      "description": "AIRI host plugin that bridges VS Code context and UI",
+      "version": "0.12.0-beta.5",
+      "scripts": {
+        "dev": "pnpm run build",
+        "build": "tsdown",
+        "typecheck": "tsc --noEmit"
+      },
+      "exports": {
+        ".": {
+          "types": "./dist/index.d.mts",
+          "default": "./dist/index.mjs"
+        }
+      },
+      "dependencies": {},
+      "devDependencies": {
+        "@proj-airi/plugin-sdk": "workspace:*"
+      },
+      "workspaceDependencies": [
+        "@proj-airi/plugin-sdk"
+      ]
+    },
+    {
+      "path": "integrations/vscode/vscode-airi",
+      "name": "vscode-airi",
+      "description": "Adapter that connects VSCode into Project AIRI",
+      "version": "0.12.0-beta.5",
+      "scripts": {
+        "prepare": "pnpm run update",
+        "update": "tsx ./scripts/vscode-ext-gen.ts",
+        "dev": "tsdown --watch",
+        "build": "tsdown",
+        "publish": "tsx ./scripts/publish.ts",
+        "typecheck": "tsc --noEmit"
+      },
+      "dependencies": {},
+      "devDependencies": {
+        "@guiiai/logg": "catalog:",
+        "@moeru/std": "catalog:",
+        "@proj-airi/server-sdk": "workspace:*",
+        "@types/vscode": "catalog:",
+        "es-toolkit": "catalog:",
+        "injeca": "catalog:",
+        "nanoid": "catalog:",
+        "tinyexec": "catalog:",
+        "vscode-ext-gen": "catalog:"
+      },
+      "workspaceDependencies": [
+        "@proj-airi/server-sdk"
+      ]
+    },
+    {
+      "path": "packages/audio",
+      "name": "@proj-airi/audio",
+      "description": "Audio processing utilities for Project AIRI",
+      "scripts": {
+        "dev": "pnpm run build",
+        "build": "tsdown",
+        "typecheck": "tsc --noEmit",
+        "test:run": "vitest run"
+      },
+      "exports": {
+        ".": {
+          "types": "./dist/index.d.mts",
+          "default": "./dist/index.mjs"
+        },
+        "./audio-context": {
+          "types": "./dist/audio-context/index.d.mts",
+          "default": "./dist/audio-context/index.mjs"
+        },
+        "./audio-context/processor.worklet": {
+          "types": "./dist/audio-context/processor.worklet.d.mts",
+          "default": "./dist/audio-context/processor.worklet.mjs"
+        },
+        "./encoding": {
+          "types": "./dist/encoding/index.d.mts",
+          "default": "./dist/encoding/index.mjs"
+        }
+      },
+      "dependencies": {
+        "@alexanderolsen/libsamplerate-js": "catalog:",
+        "@moeru/std": "catalog:"
+      },
+      "devDependencies": {
+        "@types/audioworklet": "catalog:",
+        "vue": "catalog:"
+      },
+      "workspaceDependencies": []
+    },
+    {
+      "path": "packages/better-ws",
+      "name": "@proj-airi/better-ws",
+      "description": "Transport-agnostic reliable WebSocket runtime primitives",
+      "version": "0.12.0-beta.5",
+      "scripts": {
+        "build": "tsdown",
+        "dev": "pnpm run build",
+        "test": "vitest",
+        "typecheck": "tsc --noEmit"
+      },
+      "exports": {
+        ".": {
+          "types": "./dist/index.d.mts",
+          "default": "./dist/index.mjs"
+        },
+        "./server": {
+          "types": "./dist/server.d.mts",
+          "default": "./dist/server.mjs"
+        },
+        "./client/crossws": {
+          "types": "./dist/client/crossws.d.mts",
+          "default": "./dist/client/crossws.mjs"
+        },
+        "./server/h3": {
+          "types": "./dist/server/h3.d.mts",
+          "default": "./dist/server/h3.mjs"
+        }
+      },
+      "dependencies": {
+        "@moeru/eventa": "catalog:",
+        "crossws": "catalog:",
+        "h3": "catalog:",
+        "srvx": "catalog:"
+      },
+      "devDependencies": {},
+      "workspaceDependencies": []
+    },
+    {
+      "path": "packages/cap-vite",
+      "name": "@proj-airi/cap-vite",
+      "description": "CLI that starts a Vite dev server and runs Capacitor live reload",
+      "version": "0.12.0-beta.5",
+      "scripts": {
+        "build": "tsdown",
+        "test": "vitest run",
+        "typecheck": "tsc --noEmit"
+      },
+      "exports": {
+        ".": {
+          "types": "./dist/index.d.mts",
+          "default": "./dist/index.mjs"
+        }
+      },
+      "dependencies": {
+        "@moeru/std": "catalog:",
+        "cac": "catalog:",
+        "tinyexec": "catalog:"
+      },
+      "devDependencies": {},
+      "workspaceDependencies": []
+    },
+    {
+      "path": "packages/ccc",
+      "name": "@proj-airi/ccc",
+      "description": "",
+      "scripts": {
+        "test": "vitest run",
+        "test:watch": "vitest",
+        "lint": "eslint .",
+        "lint:fix": "eslint --fix .",
+        "typecheck": "tsc --noEmit"
+      },
+      "exports": "./src/index.ts",
+      "dependencies": {
+        "meta-png": "catalog:",
+        "valibot": "catalog:"
+      },
+      "devDependencies": {},
+      "workspaceDependencies": []
+    },
+    {
+      "path": "packages/core-agent",
+      "name": "@proj-airi/core-agent",
+      "description": "Core agent runtime orchestration for AIRI",
+      "version": "0.12.0-beta.5",
+      "scripts": {
+        "build": "tsdown",
+        "eval:run": "vieval run --config ./vieval.config.ts",
+        "typecheck": "tsc --noEmit"
+      },
+      "exports": {
+        ".": {
+          "types": "./dist/index.d.mts",
+          "default": "./dist/index.mjs"
+        },
+        "./agents/spark-notify": {
+          "types": "./dist/agents/spark-notify/index.d.mts",
+          "default": "./dist/agents/spark-notify/index.mjs"
+        },
+        "./agents/spark-command": {
+          "types": "./dist/agents/spark-command/index.d.mts",
+          "default": "./dist/agents/spark-command/index.mjs"
+        }
+      },
+      "dependencies": {
+        "@moeru/std": "catalog:",
+        "@proj-airi/pipelines-audio": "workspace:^",
+        "@proj-airi/plugin-protocol": "workspace:^",
+        "@proj-airi/provider-inference": "workspace:^",
+        "@proj-airi/server-sdk": "workspace:^",
+        "@proj-airi/server-shared": "workspace:^",
+        "@proj-airi/stream-kit": "workspace:^",
+        "@xsai-ext/providers": "catalog:",
+        "@xsai-ext/responses": "catalog:",
+        "@xsai/generate-speech": "catalog:",
+        "@xsai/generate-text": "catalog:",
+        "@xsai/model": "catalog:",
+        "@xsai/shared": "catalog:",
+        "@xsai/shared-chat": "catalog:",
+        "@xsai/stream-text": "catalog:",
+        "@xsai/tool": "catalog:",
+        "nanoid": "catalog:",
+        "rehype-parse": "catalog:",
+        "rehype-stringify": "catalog:",
+        "unified": "catalog:",
+        "unist-util-visit": "catalog:",
+        "vieval": "catalog:",
+        "xsschema": "catalog:",
+        "zod": "catalog:"
+      },
+      "devDependencies": {
+        "@types/hast": "catalog:",
+        "@types/node": "catalog:",
+        "@types/unist": "catalog:",
+        "tsdown": "catalog:",
+        "typescript": "catalog:"
+      },
+      "workspaceDependencies": [
+        "@proj-airi/pipelines-audio",
+        "@proj-airi/plugin-protocol",
+        "@proj-airi/provider-inference",
+        "@proj-airi/server-sdk",
+        "@proj-airi/server-shared",
+        "@proj-airi/stream-kit"
+      ]
+    },
+    {
+      "path": "packages/core-character",
+      "name": "@proj-airi/core-character",
+      "description": "Core character pipeline orchestration for AIRI (segmentation, emotion, delay, optional TTS)",
+      "version": "0.12.0-beta.5",
+      "scripts": {
+        "build": "tsdown",
+        "typecheck": "tsc --noEmit"
+      },
+      "exports": {
+        ".": {
+          "types": "./dist/index.d.mts",
+          "default": "./dist/index.mjs"
+        }
+      },
+      "dependencies": {
+        "@moeru/std": "catalog:",
+        "@proj-airi/stream-kit": "workspace:^",
+        "clustr": "catalog:"
+      },
+      "devDependencies": {},
+      "workspaceDependencies": [
+        "@proj-airi/stream-kit"
+      ]
+    },
+    {
+      "path": "packages/electron-eventa",
+      "name": "@proj-airi/electron-eventa",
+      "description": "Shared Eventa contracts for Electron IPC",
+      "version": "0.12.0-beta.5",
+      "scripts": {
+        "dev": "pnpm run build",
+        "build": "tsdown",
+        "typecheck": "tsc --noEmit"
+      },
+      "exports": {
+        ".": "./dist/index.mjs",
+        "./electron": "./dist/electron/index.mjs",
+        "./electron-updater": "./dist/electron-updater/index.mjs",
+        "./package.json": "./package.json"
+      },
+      "dependencies": {
+        "@moeru/eventa": "catalog:",
+        "builder-util-runtime": "catalog:"
+      },
+      "devDependencies": {},
+      "workspaceDependencies": []
+    },
+    {
+      "path": "packages/electron-screen-capture",
+      "name": "@proj-airi/electron-screen-capture",
+      "description": "Screen capture",
+      "version": "0.12.0-beta.5",
+      "scripts": {
+        "dev": "pnpm run build",
+        "build": "tsdown",
+        "typecheck": "tsc --noEmit"
+      },
+      "exports": {
+        ".": "./dist/index.js",
+        "./main": "./dist/main.mjs",
+        "./renderer": "./dist/renderer.js",
+        "./vue": "./dist/vue.js",
+        "./package.json": "./package.json"
+      },
+      "dependencies": {
+        "std-env": "catalog:"
+      },
+      "devDependencies": {
+        "@electron-toolkit/preload": "catalog:",
+        "@moeru/eventa": "catalog:",
+        "@moeru/std": "catalog:",
+        "async-mutex": "catalog:",
+        "nanoid": "catalog:",
+        "vite": "catalog:",
+        "vue": "catalog:"
+      },
+      "workspaceDependencies": []
+    },
+    {
+      "path": "packages/electron-vueuse",
+      "name": "@proj-airi/electron-vueuse",
+      "description": "VueUse-like composables and helpers for Electron apps",
+      "version": "0.12.0-beta.5",
+      "scripts": {
+        "dev": "pnpm run build",
+        "build": "tsdown",
+        "typecheck": "tsc --noEmit"
+      },
+      "exports": {
+        ".": "./dist/index.mjs",
+        "./main": "./dist/main/index.mjs",
+        "./package.json": "./package.json"
+      },
+      "dependencies": {
+        "@moeru/eventa": "catalog:",
+        "@moeru/std": "catalog:",
+        "@vueuse/core": "catalog:",
+        "es-toolkit": "catalog:",
+        "std-env": "catalog:"
+      },
+      "devDependencies": {
+        "@proj-airi/electron-eventa": "workspace:^",
+        "vue": "catalog:"
+      },
+      "workspaceDependencies": [
+        "@proj-airi/electron-eventa"
+      ]
+    },
+    {
+      "path": "packages/font-chillroundm",
+      "name": "@proj-airi/font-chillroundm",
+      "description": "Essential CSS for font, ChillRoundM (a.k.a. 寒蝉半圆体), used by Project AIRI",
+      "version": "0.12.0-beta.5",
+      "scripts": {
+        "dev": "pnpm run build",
+        "build": "tsdown"
+      },
+      "exports": {
+        ".": {
+          "default": "./dist/index.css"
+        },
+        "./index.css": {
+          "default": "./dist/index.css"
+        },
+        "./files/*": {
+          "default": "./dist/files/*"
+        },
+        "./files/*.ttf": {
+          "default": "./dist/files/*.ttf"
+        },
+        "./files/*.otf": {
+          "default": "./dist/files/*.otf"
+        },
+        "./*": {
+          "default": "./*.css"
+        }
+      },
+      "dependencies": {},
+      "devDependencies": {},
+      "workspaceDependencies": []
+    },
+    {
+      "path": "packages/font-cjkfonts-allseto",
+      "name": "@proj-airi/font-cjkfonts-allseto",
+      "description": "Essential CSS for font, cjkfonts 全瀨體, used by Project AIRI",
+      "version": "0.12.0-beta.5",
+      "scripts": {
+        "dev": "pnpm run build",
+        "build": "tsdown"
+      },
+      "exports": {
+        ".": {
+          "default": "./dist/index.css"
+        },
+        "./index.css": {
+          "default": "./dist/index.css"
+        },
+        "./files/*": {
+          "default": "./dist/files/*"
+        },
+        "./files/*.ttf": {
+          "default": "./dist/files/*.ttf"
+        },
+        "./*": {
+          "default": "./*.css"
+        }
+      },
+      "dependencies": {},
+      "devDependencies": {},
+      "workspaceDependencies": []
+    },
+    {
+      "path": "packages/font-departure-mono",
+      "name": "@proj-airi/font-departure-mono",
+      "description": "Essential CSS for font, Departure Mono, used by Project AIRI",
+      "version": "0.12.0-beta.5",
+      "scripts": {
+        "dev": "pnpm run build",
+        "build": "tsdown"
+      },
+      "exports": {
+        ".": {
+          "default": "./dist/index.css"
+        },
+        "./index.css": {
+          "default": "./dist/index.css"
+        },
+        "./files/*": {
+          "default": "./dist/files/*"
+        },
+        "./files/*.ttf": {
+          "default": "./dist/files/*.ttf"
+        },
+        "./files/*.otf": {
+          "default": "./dist/files/*.otf"
+        },
+        "./files/*.woff": {
+          "default": "./dist/files/*.woff"
+        },
+        "./files/*.woff2": {
+          "default": "./dist/files/*.woff2"
+        },
+        "./*": {
+          "default": "./*.css"
+        }
+      },
+      "dependencies": {},
+      "devDependencies": {},
+      "workspaceDependencies": []
+    },
+    {
+      "path": "packages/font-xiaolai",
+      "name": "@proj-airi/font-xiaolai",
+      "description": "Essential CSS for font, Xiaolai (小赖字体 / 小賴字體 / シャオライ / Xiaolai Font), used by Project AIRI",
+      "version": "0.12.0-beta.5",
+      "scripts": {
+        "dev": "pnpm run build",
+        "build": "tsdown"
+      },
+      "exports": {
+        ".": {
+          "default": "./dist/index.css"
+        },
+        "./index.css": {
+          "default": "./dist/index.css"
+        },
+        "./files/*": {
+          "default": "./dist/files/*"
+        },
+        "./files/*.ttf": {
+          "default": "./dist/files/*.ttf"
+        },
+        "./*": {
+          "default": "./*.css"
+        }
+      },
+      "dependencies": {},
+      "devDependencies": {},
+      "workspaceDependencies": []
+    },
+    {
+      "path": "packages/i18n",
+      "name": "@proj-airi/i18n",
+      "description": "Internationalization (i18n) locales and utilities for Project AIRI",
+      "scripts": {
+        "dev": "pnpm run build",
+        "build": "tsdown",
+        "glossary:build": "tsx glossary/build-tbx.ts",
+        "test": "vitest run",
+        "test:watch": "vitest",
+        "typecheck": "tsc --noEmit"
+      },
+      "exports": {
+        ".": {
+          "types": "./dist/index.d.mts",
+          "default": "./dist/index.mjs"
+        },
+        "./locales": {
+          "types": "./dist/locales/index.d.mts",
+          "default": "./dist/locales/index.mjs"
+        },
+        "./locales/en": {
+          "types": "./dist/locales/en/index.d.mts",
+          "default": "./dist/locales/en/index.mjs"
+        },
+        "./locales/zh-Hans": {
+          "types": "./dist/locales/zh-Hans/index.d.mts",
+          "default": "./dist/locales/zh-Hans/index.mjs"
+        },
+        "./locales/es": {
+          "types": "./dist/locales/es/index.d.mts",
+          "default": "./dist/locales/es/index.mjs"
+        },
+        "./locales/ru": {
+          "types": "./dist/locales/ru/index.d.mts",
+          "default": "./dist/locales/ru/index.mjs"
+        },
+        "./locales/fr": {
+          "types": "./dist/locales/fr/index.d.mts",
+          "default": "./dist/locales/fr/index.mjs"
+        },
+        "./locales/vi": {
+          "types": "./dist/locales/vi/index.d.mts",
+          "default": "./dist/locales/vi/index.mjs"
+        },
+        "./locales/*.yaml": {
+          "default": "./dist/locales/*.yaml"
+        }
+      },
+      "dependencies": {},
+      "devDependencies": {
+        "unplugin-yaml": "catalog:",
+        "valibot": "catalog:",
+        "xast-util-to-xml": "catalog:",
+        "xastscript": "catalog:",
+        "yaml": "catalog:"
+      },
+      "workspaceDependencies": []
+    },
+    {
+      "path": "packages/input-gamepad",
+      "name": "@proj-airi/input-gamepad",
+      "description": "Standard Gamepad API input for AIRI",
+      "version": "0.12.0-beta.5",
+      "scripts": {
+        "build": "tsdown",
+        "test": "vitest run",
+        "typecheck": "tsc --noEmit"
+      },
+      "exports": {
+        ".": {
+          "types": "./dist/index.d.ts",
+          "default": "./dist/index.js"
+        }
+      },
+      "dependencies": {},
+      "devDependencies": {},
+      "workspaceDependencies": []
+    },
+    {
+      "path": "packages/input-gamepad-vueuse",
+      "name": "@proj-airi/input-gamepad-vueuse",
+      "description": "Vue composables for AIRI gamepad input",
+      "version": "0.12.0-beta.5",
+      "scripts": {
+        "build": "tsdown",
+        "test": "vitest run",
+        "typecheck": "tsc --noEmit"
+      },
+      "exports": {
+        ".": {
+          "types": "./dist/index.d.ts",
+          "default": "./dist/index.js"
+        }
+      },
+      "dependencies": {
+        "@proj-airi/input-gamepad": "workspace:^",
+        "@vueuse/core": "catalog:"
+      },
+      "devDependencies": {
+        "vue": "catalog:"
+      },
+      "workspaceDependencies": [
+        "@proj-airi/input-gamepad"
+      ]
+    },
+    {
+      "path": "packages/input-playstation-dualsense-5",
+      "name": "@proj-airi/input-playstation-dualsense-5",
+      "description": "WebHID input and output support for the PlayStation 5 DualSense controller",
+      "version": "0.12.0-beta.5",
+      "scripts": {
+        "build": "tsdown",
+        "test": "vitest run",
+        "typecheck": "tsc --noEmit"
+      },
+      "exports": {
+        ".": {
+          "types": "./dist/index.d.ts",
+          "default": "./dist/index.js"
+        }
+      },
+      "dependencies": {
+        "@types/w3c-web-hid": "catalog:"
+      },
+      "devDependencies": {},
+      "workspaceDependencies": []
+    },
+    {
+      "path": "packages/local-vision",
+      "name": "@proj-airi/local-vision",
+      "description": "Local camera service boundary and ephemeral vision policies",
+      "scripts": {
+        "build": "tsdown",
+        "typecheck": "tsc --noEmit",
+        "test:run": "vitest run"
+      },
+      "exports": {
+        "./contracts": "./src/contracts.ts",
+        "./client": "./src/client.ts",
+        "./camera-lease": "./src/camera-lease.ts",
+        "./policy": "./src/policy.ts",
+        "./gaze": "./src/gaze.ts",
+        "./vite": "./dist/vite.mjs"
+      },
+      "dependencies": {
+        "valibot": "catalog:"
+      },
+      "devDependencies": {
+        "vite": "catalog:"
+      },
+      "workspaceDependencies": []
+    },
+    {
+      "path": "packages/memory-pgvector",
+      "name": "@proj-airi/memory-pgvector",
+      "description": "",
+      "version": "0.12.0-beta.5",
+      "scripts": {
+        "dev": "tsx src/index.ts"
+      },
+      "dependencies": {
+        "@guiiai/logg": "catalog:",
+        "@proj-airi/server-sdk": "workspace:^",
+        "drizzle-orm": "catalog:",
+        "postgres": "catalog:"
+      },
+      "devDependencies": {
+        "tsx": "catalog:"
+      },
+      "workspaceDependencies": [
+        "@proj-airi/server-sdk"
+      ]
+    },
+    {
+      "path": "packages/model-driver-lipsync",
+      "name": "@proj-airi/model-driver-lipsync",
+      "description": "",
+      "version": "0.12.0-beta.5",
+      "scripts": {
+        "test": "vitest run",
+        "typecheck": "tsc --noEmit"
+      },
+      "exports": {
+        ".": "./src/index.ts",
+        "./live2d": "./src/live2d/index.ts",
+        "./runtime/wlipsync": "./src/runtime/wlipsync/index.ts",
+        "./shared/wlipsync": "./src/shared/wlipsync/index.ts",
+        "./shared/wlipsync/profile.json": "./src/shared/wlipsync/profile.json"
+      },
+      "dependencies": {
+        "wlipsync": "catalog:"
+      },
+      "devDependencies": {
+        "vitest": "catalog:vitest"
+      },
+      "workspaceDependencies": []
+    },
+    {
+      "path": "packages/model-driver-magic-live2d",
+      "name": "@proj-airi/model-driver-magic-live2d",
+      "description": "Live2D model driver for MAGIC motion",
+      "version": "0.12.0-beta.5",
+      "scripts": {
+        "build": "tsdown",
+        "test": "vitest run",
+        "typecheck": "tsc --noEmit"
+      },
+      "exports": {
+        ".": {
+          "types": "./dist/index.d.ts",
+          "default": "./dist/index.js"
+        }
+      },
+      "dependencies": {
+        "@proj-airi/motion-driver-magic": "workspace:^",
+        "es-toolkit": "catalog:"
+      },
+      "devDependencies": {},
+      "workspaceDependencies": [
+        "@proj-airi/motion-driver-magic"
+      ]
+    },
+    {
+      "path": "packages/model-driver-mediapipe",
+      "name": "@proj-airi/model-driver-mediapipe",
+      "description": "MediaPipe motion capture workshop (experimental) for Project AIRI",
+      "scripts": {
+        "typecheck": "tsc --noEmit",
+        "postinstall": "tsx ./tasks/prepare-tasks.ts"
+      },
+      "exports": {
+        ".": "./src/index.ts",
+        "./types": "./src/types.ts"
+      },
+      "dependencies": {
+        "@mediapipe/tasks-vision": "catalog:",
+        "@moeru/std": "catalog:",
+        "@pixiv/three-vrm": "catalog:",
+        "es-toolkit": "catalog:",
+        "three": "catalog:"
+      },
+      "devDependencies": {
+        "@types/three": "catalog:",
+        "ofetch": "catalog:",
+        "tsx": "catalog:"
+      },
+      "workspaceDependencies": []
+    },
+    {
+      "path": "packages/motion-driver-magic",
+      "name": "@proj-airi/motion-driver-magic",
+      "description": "Markovian Animation Generator with Illusory Conditioning for Project AIRI",
+      "version": "0.12.0-beta.5",
+      "scripts": {
+        "build": "tsdown",
+        "test": "vitest run",
+        "typecheck": "tsc --noEmit"
+      },
+      "exports": {
+        ".": {
+          "types": "./dist/index.d.ts",
+          "default": "./dist/index.js"
+        }
+      },
+      "dependencies": {
+        "es-toolkit": "catalog:"
+      },
+      "devDependencies": {},
+      "workspaceDependencies": []
+    },
+    {
+      "path": "packages/pipelines-audio",
+      "name": "@proj-airi/pipelines-audio",
+      "description": "Audio pipeline orchestration for AIRI (capture, VAD, encode, stream)",
+      "version": "0.12.0-beta.5",
+      "scripts": {
+        "build": "tsdown",
+        "typecheck": "tsc --noEmit",
+        "test": "vitest",
+        "test:run": "vitest run --config vitest.config.ts"
+      },
+      "exports": {
+        ".": {
+          "types": "./dist/index.d.mts",
+          "default": "./dist/index.mjs"
+        }
+      },
+      "dependencies": {
+        "@moeru/eventa": "catalog:",
+        "@moeru/std": "catalog:",
+        "clustr": "catalog:"
+      },
+      "devDependencies": {},
+      "workspaceDependencies": []
+    },
+    {
+      "path": "packages/plugin-protocol",
+      "name": "@proj-airi/plugin-protocol",
+      "description": "Plugin protocol event definitions and shared websocket types for Project AIRI",
+      "version": "0.12.0-beta.5",
+      "scripts": {
+        "dev": "pnpm run build",
+        "build": "tsdown",
+        "typecheck": "tsc --noEmit"
+      },
+      "exports": {
+        "./types": {
+          "types": "./dist/types/index.d.mts",
+          "default": "./dist/types/index.mjs"
+        }
+      },
+      "dependencies": {
+        "@moeru/eventa": "catalog:",
+        "@xsai/shared-chat": "catalog:"
+      },
+      "devDependencies": {},
+      "workspaceDependencies": []
+    },
+    {
+      "path": "packages/plugin-sdk",
+      "name": "@proj-airi/plugin-sdk",
+      "description": "Plugin SDK for Project AIRI",
+      "version": "0.12.0-beta.5",
+      "scripts": {
+        "build": "tsdown",
+        "dev": "pnpm run build",
+        "test": "vitest",
+        "typecheck": "tsc --noEmit"
+      },
+      "exports": {
+        ".": {
+          "types": "./dist/index.d.mts",
+          "default": "./dist/index.mjs"
+        },
+        "./plugin-host": {
+          "types": "./dist/plugin-host/index.d.mts",
+          "node": "./dist/plugin-host/runtimes/node/index.mjs",
+          "default": "./dist/plugin-host/runtimes/web/index.mjs"
+        }
+      },
+      "dependencies": {
+        "@moeru/eventa": "catalog:",
+        "@moeru/std": "catalog:",
+        "@proj-airi/plugin-protocol": "workspace:*",
+        "nanoid": "catalog:",
+        "semver": "catalog:",
+        "valibot": "catalog:"
+      },
+      "devDependencies": {
+        "@types/semver": "catalog:",
+        "es-toolkit": "catalog:"
+      },
+      "workspaceDependencies": [
+        "@proj-airi/plugin-protocol"
+      ]
+    },
+    {
+      "path": "packages/plugin-sdk-tamagotchi",
+      "name": "@proj-airi/plugin-sdk-tamagotchi",
+      "description": "Tamagotchi-specific DX helpers for Project AIRI plugins",
+      "version": "0.12.0-beta.5",
+      "scripts": {
+        "test": "vitest",
+        "typecheck": "tsc --noEmit",
+        "build": "tsdown"
+      },
+      "exports": {
+        ".": {
+          "types": "./dist/index.d.mts",
+          "default": "./dist/index.mjs"
+        },
+        "./widgets": {
+          "types": "./dist/widgets/index.d.mts",
+          "default": "./dist/widgets/index.mjs"
+        },
+        "./gamelet": {
+          "types": "./dist/gamelet/index.d.mts",
+          "default": "./dist/gamelet/index.mjs"
+        },
+        "./kits/gamelet": {
+          "types": "./dist/kits/gamelet/index.d.mts",
+          "default": "./dist/kits/gamelet/index.mjs"
+        },
+        "./kits/tool": {
+          "types": "./dist/kits/tool/index.d.mts",
+          "default": "./dist/kits/tool/index.mjs"
+        },
+        "./tools": {
+          "types": "./dist/tools/index.d.mts",
+          "default": "./dist/tools/index.mjs"
+        }
+      },
+      "dependencies": {
+        "@moeru/eventa": "catalog:",
+        "@proj-airi/plugin-sdk": "workspace:*",
+        "nanoid": "catalog:",
+        "valibot": "catalog:",
+        "xsschema": "catalog:"
+      },
+      "devDependencies": {},
+      "workspaceDependencies": [
+        "@proj-airi/plugin-sdk"
+      ]
+    },
+    {
+      "path": "packages/provider-inference",
+      "name": "@proj-airi/provider-inference",
+      "description": "Runtime-neutral provider definitions for AIRI inference",
+      "version": "0.12.0-beta.5",
+      "scripts": {
+        "dev": "pnpm run build",
+        "build": "tsdown",
+        "typecheck": "tsc --noEmit",
+        "test:run": "vitest run",
+        "test:node": "vitest run --project node",
+        "test:browser": "vitest run --project browser"
+      },
+      "exports": {
+        ".": {
+          "types": "./dist/index.d.mts",
+          "default": "./dist/index.mjs"
+        },
+        "./sherpaw-transcription/models": {
+          "types": "./dist/providers/local/sherpaw-transcription/models.d.mts",
+          "default": "./dist/providers/local/sherpaw-transcription/models.mjs"
+        }
+      },
+      "dependencies": {
+        "@moeru/std": "catalog:",
+        "@proj-airi/audio": "workspace:^",
+        "@sherpaw/asr": "0.2.1",
+        "@sherpaw/xsai-transcription": "catalog:",
+        "@xsai-ext/providers": "catalog:",
+        "@xsai-ext/responses": "catalog:",
+        "@xsai-transformers/shared": "catalog:",
+        "@xsai/generate-text": "catalog:",
+        "@xsai/model": "catalog:",
+        "@xsai/stream-transcription": "catalog:",
+        "@xsai/utils-chat": "catalog:",
+        "clustr": "catalog:",
+        "es-toolkit": "catalog:",
+        "is-network-error": "catalog:",
+        "model-bank": "catalog:",
+        "unspeech": "catalog:xsai",
+        "xsschema": "catalog:",
+        "zod": "catalog:"
+      },
+      "devDependencies": {
+        "@types/node": "catalog:",
+        "@vitest/browser-playwright": "catalog:vitest",
+        "@xsai/generate-speech": "catalog:",
+        "playwright": "catalog:",
+        "tsdown": "catalog:",
+        "typescript": "catalog:",
+        "vitest": "catalog:vitest"
+      },
+      "workspaceDependencies": [
+        "@proj-airi/audio"
+      ]
+    },
+    {
+      "path": "packages/realtime-voice",
+      "name": "@proj-airi/realtime-voice",
+      "description": "Local Doubao full duplex voice gateway and browser audio",
+      "scripts": {
+        "build": "tsdown",
+        "typecheck": "tsc --noEmit",
+        "test:run": "vitest run"
+      },
+      "exports": {
+        "./brain": "./src/brain.ts",
+        "./prompts": "./src/prompts.ts",
+        "./conversation": "./src/conversation.ts",
+        "./contracts": "./src/contracts.ts",
+        "./client": "./src/client.ts",
+        "./audio": "./src/audio.ts",
+        "./vite": "./dist/vite.mjs",
+        "./capture.worklet": "./src/capture.worklet.ts"
+      },
+      "dependencies": {
+        "@moeru/eventa": "catalog:",
+        "@moeru/std": "catalog:",
+        "valibot": "catalog:",
+        "ws": "catalog:"
+      },
+      "devDependencies": {
+        "@types/audioworklet": "catalog:",
+        "@types/ws": "catalog:",
+        "vite": "catalog:"
+      },
+      "workspaceDependencies": []
+    },
+    {
+      "path": "packages/scenarios-stage-tamagotchi-browser",
+      "name": "@proj-airi/scenarios-stage-tamagotchi-browser",
+      "description": "Vite/Vue scene app for stage tamagotchi browser captures",
+      "version": "0.12.0-beta.5",
+      "scripts": {
+        "capture": "tsx scripts/capture.ts",
+        "scenario:build": "vite build",
+        "scenario:dev": "vite",
+        "typecheck": "vue-tsc --noEmit"
+      },
+      "dependencies": {
+        "@moeru/std": "catalog:",
+        "@napi-rs/image": "catalog:",
+        "@vishot/mockup-desktop-vue": "catalog:",
+        "@vishot/renderer-browser": "catalog:",
+        "@vueuse/core": "catalog:",
+        "date-fns": "catalog:",
+        "reka-ui": "catalog:",
+        "vue": "catalog:",
+        "vue-router": "catalog:"
+      },
+      "devDependencies": {
+        "@iconify-json/line-md": "catalog:",
+        "@iconify-json/material-symbols": "catalog:",
+        "@iconify-json/mdi": "catalog:",
+        "@iconify-json/ph": "catalog:",
+        "@unocss/reset": "catalog:",
+        "@vitejs/plugin-vue": "catalog:",
+        "unplugin-vue-router": "catalog:",
+        "vue-tsc": "catalog:"
+      },
+      "workspaceDependencies": []
+    },
+    {
+      "path": "packages/scenarios-stage-tamagotchi-electron",
+      "name": "@proj-airi/scenarios-stage-tamagotchi-electron",
+      "description": "Product-owned Electron scenarios for stage-tamagotchi raw screenshot capture",
+      "version": "0.12.0-beta.5",
+      "scripts": {
+        "test:run": "vitest run",
+        "typecheck": "tsc --noEmit"
+      },
+      "exports": "./src/index.ts",
+      "dependencies": {
+        "@moeru/std": "catalog:",
+        "@vishot/source-electron": "catalog:",
+        "playwright": "catalog:"
+      },
+      "devDependencies": {},
+      "workspaceDependencies": []
+    },
+    {
+      "path": "packages/server-runtime",
+      "name": "@proj-airi/server-runtime",
+      "description": "Server runtime implementation for AIRI running in different environments",
+      "version": "0.12.0-beta.5",
+      "scripts": {
+        "dev": "tsx ./src/bin/run.js",
+        "start": "tsx ./src/bin/run.js",
+        "build": "tsdown",
+        "typecheck": "tsc --noEmit"
+      },
+      "exports": {
+        ".": {
+          "types": "./dist/index.d.mts",
+          "default": "./dist/index.mjs"
+        },
+        "./server": {
+          "types": "./dist/server.d.mts",
+          "default": "./dist/server.mjs"
+        }
+      },
+      "dependencies": {
+        "@guiiai/logg": "catalog:",
+        "@moeru/std": "catalog:",
+        "@proj-airi/better-ws": "workspace:^",
+        "@proj-airi/server-shared": "workspace:^",
+        "crossws": "catalog:",
+        "h3": "catalog:",
+        "nanoid": "catalog:",
+        "srvx": "catalog:",
+        "superjson": "catalog:",
+        "valibot": "catalog:"
+      },
+      "devDependencies": {},
+      "workspaceDependencies": [
+        "@proj-airi/better-ws",
+        "@proj-airi/server-shared"
+      ]
+    },
+    {
+      "path": "packages/server-sdk",
+      "name": "@proj-airi/server-sdk",
+      "description": "Client-side SDK implementation for connecting to AIRI server components and runtimes",
+      "version": "0.12.0-beta.5",
+      "scripts": {
+        "dev": "pnpm run build",
+        "build": "tsdown",
+        "typecheck": "tsc --noEmit"
+      },
+      "exports": {
+        ".": {
+          "types": "./dist/index.d.mts",
+          "default": "./dist/index.mjs"
+        },
+        "./utils/node": {
+          "types": "./dist/utils/node/index.d.mts",
+          "default": "./dist/utils/node/index.mjs"
+        }
+      },
+      "dependencies": {
+        "@moeru/std": "catalog:",
+        "@proj-airi/better-ws": "workspace:^",
+        "@proj-airi/server-shared": "workspace:^",
+        "superjson": "catalog:",
+        "valibot": "catalog:"
+      },
+      "devDependencies": {},
+      "workspaceDependencies": [
+        "@proj-airi/better-ws",
+        "@proj-airi/server-shared"
+      ]
+    },
+    {
+      "path": "packages/server-shared",
+      "name": "@proj-airi/server-shared",
+      "description": "Server shared types, utilities for AIRI server components and runtimes",
+      "version": "0.12.0-beta.5",
+      "scripts": {
+        "dev": "pnpm run build",
+        "build": "tsdown",
+        "typecheck": "tsc --noEmit"
+      },
+      "exports": {
+        ".": {
+          "types": "./dist/index.d.mts",
+          "default": "./dist/index.mjs"
+        },
+        "./types": {
+          "types": "./dist/types/index.d.mts",
+          "default": "./dist/types/index.mjs"
+        }
+      },
+      "dependencies": {
+        "@proj-airi/plugin-protocol": "workspace:*"
+      },
+      "devDependencies": {},
+      "workspaceDependencies": [
+        "@proj-airi/plugin-protocol"
+      ]
+    },
+    {
+      "path": "packages/stage-layouts",
+      "name": "@proj-airi/stage-layouts",
+      "description": "Shared Layouts",
+      "scripts": {
+        "typecheck": "vue-tsc --noEmit"
+      },
+      "exports": {
+        ".": "./src/index.ts",
+        "./browser/adaptive-input": "./src/browser/adaptive-input.ts",
+        "./layouts/*": "./src/layouts/*.vue",
+        "./components/AdaptiveInput": "./src/components/AdaptiveInput/index.ts",
+        "./components/Layouts/*": "./src/components/Layouts/*.vue",
+        "./components/Layouts/InteractiveArea/Actions/*": "./src/components/Layouts/InteractiveArea/Actions/*.vue",
+        "./components/Layouts/ViewControls/*": "./src/components/Layouts/ViewControls/*.vue",
+        "./components/Widgets/*": "./src/components/Widgets/*.vue",
+        "./components/Backgrounds/*": "./src/components/Backgrounds/*",
+        "./composables/*": "./src/composables/*.ts",
+        "./stores/*": "./src/stores/*.ts"
+      },
+      "dependencies": {
+        "@moeru/eventa": "catalog:",
+        "@moeru/std": "catalog:",
+        "@proj-airi/ccc": "workspace:*",
+        "@proj-airi/i18n": "workspace:*",
+        "@proj-airi/server-sdk": "workspace:*",
+        "@proj-airi/stage-ui": "workspace:*",
+        "@proj-airi/stage-ui-three": "workspace:*",
+        "@proj-airi/ui": "workspace:*",
+        "@vueuse/core": "catalog:",
+        "@vueuse/shared": "catalog:",
+        "@xsai-ext/providers": "catalog:",
+        "@xsai/generate-speech": "catalog:",
+        "@xsai/stream-transcription": "catalog:",
+        "animejs": "catalog:",
+        "colorjs.io": "catalog:",
+        "dompurify": "catalog:",
+        "localforage": "catalog:",
+        "nanoid": "catalog:",
+        "node-vibrant": "catalog:",
+        "pinia": "catalog:",
+        "reka-ui": "catalog:",
+        "unspeech": "catalog:xsai",
+        "vue": "catalog:",
+        "vue-i18n": "catalog:",
+        "vue-router": "catalog:",
+        "vue-sonner": "catalog:"
+      },
+      "devDependencies": {
+        "@nekopaw/tempora": "catalog:",
+        "@proj-airi/stage-shared": "workspace:^",
+        "@types/audioworklet": "catalog:",
+        "@types/three": "catalog:",
+        "@vue/test-utils": "catalog:",
+        "jsdom": "catalog:",
+        "unplugin-info": "catalog:",
+        "vitest": "catalog:vitest",
+        "vue-tsc": "catalog:"
+      },
+      "workspaceDependencies": [
+        "@proj-airi/ccc",
+        "@proj-airi/i18n",
+        "@proj-airi/server-sdk",
+        "@proj-airi/stage-shared",
+        "@proj-airi/stage-ui",
+        "@proj-airi/stage-ui-three",
+        "@proj-airi/ui"
+      ]
+    },
+    {
+      "path": "packages/stage-pages",
+      "name": "@proj-airi/stage-pages",
+      "description": "Shared Pages",
+      "scripts": {
+        "test:run": "vitest run",
+        "typecheck": "vue-tsc --noEmit"
+      },
+      "exports": {
+        "./*.vue": "./src/*.vue",
+        "./*": "./src/*.ts"
+      },
+      "dependencies": {
+        "@moeru/eventa": "catalog:",
+        "@moeru/std": "catalog:",
+        "@proj-airi/audio": "workspace:^",
+        "@proj-airi/ccc": "workspace:*",
+        "@proj-airi/i18n": "workspace:*",
+        "@proj-airi/provider-inference": "workspace:^",
+        "@proj-airi/realtime-voice": "workspace:*",
+        "@proj-airi/server-sdk": "workspace:*",
+        "@proj-airi/stage-ui": "workspace:*",
+        "@proj-airi/stage-ui-live2d": "workspace:*",
+        "@proj-airi/stage-ui-mmd": "workspace:*",
+        "@proj-airi/stage-ui-spine": "workspace:*",
+        "@proj-airi/stage-ui-three": "workspace:*",
+        "@proj-airi/ui": "workspace:*",
+        "@shopify/draggable": "catalog:",
+        "@vueuse/core": "catalog:",
+        "@vueuse/shared": "catalog:",
+        "@xsai-ext/providers": "catalog:",
+        "@xsai/generate-speech": "catalog:",
+        "@xsai/stream-transcription": "catalog:",
+        "animejs": "catalog:",
+        "d3": "catalog:",
+        "dompurify": "catalog:",
+        "es-toolkit": "catalog:",
+        "nanoid": "catalog:",
+        "node-vibrant": "catalog:",
+        "pinia": "catalog:",
+        "reka-ui": "catalog:",
+        "splitpanes": "catalog:",
+        "unspeech": "catalog:xsai",
+        "vue": "catalog:",
+        "vue-i18n": "catalog:",
+        "vue-router": "catalog:",
+        "vue-sonner": "catalog:",
+        "xsai-chromium-prompt": "catalog:",
+        "xsschema": "catalog:",
+        "zod": "catalog:"
+      },
+      "devDependencies": {
+        "@nekopaw/tempora": "catalog:",
+        "@pinia/colada": "catalog:",
+        "@proj-airi/stage-shared": "workspace:^",
+        "@types/audioworklet": "catalog:",
+        "@types/splitpanes": "catalog:",
+        "@types/three": "catalog:",
+        "@vitejs/plugin-vue": "catalog:",
+        "@vitest/browser-playwright": "catalog:vitest",
+        "unocss": "catalog:",
+        "unplugin-info": "catalog:",
+        "vitest": "catalog:vitest",
+        "vitest-browser-vue": "catalog:",
+        "vue-tsc": "catalog:"
+      },
+      "workspaceDependencies": [
+        "@proj-airi/audio",
+        "@proj-airi/ccc",
+        "@proj-airi/i18n",
+        "@proj-airi/provider-inference",
+        "@proj-airi/realtime-voice",
+        "@proj-airi/server-sdk",
+        "@proj-airi/stage-shared",
+        "@proj-airi/stage-ui",
+        "@proj-airi/stage-ui-live2d",
+        "@proj-airi/stage-ui-mmd",
+        "@proj-airi/stage-ui-spine",
+        "@proj-airi/stage-ui-three",
+        "@proj-airi/ui"
+      ]
+    },
+    {
+      "path": "packages/stage-shared",
+      "name": "@proj-airi/stage-shared",
+      "description": "Shared",
+      "scripts": {
+        "typecheck": "tsc --noEmit"
+      },
+      "exports": {
+        ".": "./src/index.ts",
+        "./auth": "./src/auth/index.ts",
+        "./analytics/openpanel": "./src/analytics/openpanel.ts",
+        "./beat-sync": "./src/beat-sync/index.ts",
+        "./global-shortcut": "./src/global-shortcut/index.ts",
+        "./godot-stage": "./src/godot-stage/index.ts",
+        "./perf/io-trace": "./src/perf/io-trace.ts",
+        "./plugin-host": "./src/plugin-host.ts",
+        "./screen-ambient-light": "./src/screen-ambient-light/index.ts",
+        "./server-channel-qr": "./src/server-channel-qr.ts",
+        "./stores/screen-ambient-light": "./src/stores/screen-ambient-light.ts",
+        "./types/io-trace": "./src/types/io-trace.ts",
+        "./types/pinia-action-event": "./src/types/pinia-action-event.ts",
+        "./electron-renderer": "./src/electron-renderer.d.ts",
+        "./composables": "./src/composables/index.ts",
+        "./webgpu": "./src/webgpu/index.ts"
+      },
+      "dependencies": {
+        "@moeru/std": "catalog:",
+        "@vueuse/core": "catalog:",
+        "gpuu": "catalog:",
+        "pinia": "catalog:",
+        "valibot": "catalog:",
+        "vue": "catalog:"
+      },
+      "devDependencies": {
+        "@electron-toolkit/preload": "catalog:",
+        "@moeru/eventa": "catalog:",
+        "@nekopaw/tempora": "catalog:",
+        "@proj-airi/electron-screen-capture": "workspace:^",
+        "@types/audioworklet": "catalog:"
+      },
+      "workspaceDependencies": [
+        "@proj-airi/electron-screen-capture"
+      ]
+    },
+    {
+      "path": "packages/stage-ui",
+      "name": "@proj-airi/stage-ui",
+      "description": "Shared core for stage",
+      "version": "0.12.0-beta.5",
+      "scripts": {
+        "typecheck": "vue-tsc --noEmit",
+        "story:dev": "histoire dev",
+        "story:build": "histoire build",
+        "story:build-base": "histoire build --base /ui",
+        "story:preview": "histoire preview",
+        "build": "echo \"No build step required\"",
+        "test": "vitest",
+        "test:run": "vitest run"
+      },
+      "exports": {
+        "./components/scenarios/realtime-voice-controls.vue": "./src/components/scenarios/realtime-voice-controls.vue",
+        "./components/scenarios/brain-prompt-editor.vue": "./src/components/scenarios/brain-prompt-editor.vue",
+        ".": "./src/components/index.ts",
+        "./components/scenarios/chat": "./src/components/scenarios/chat/index.ts",
+        "./components/scenarios/settings/model-settings": "./src/components/scenarios/settings/model-settings/index.ts",
+        "./components/scenes": "./src/components/scenes/index.ts",
+        "./components/*": "./src/components/*.ts",
+        "./components": "./src/components/index.ts",
+        "./composables/*": "./src/composables/*.ts",
+        "./composables": "./src/composables/index.ts",
+        "./constants/*": "./src/constants/*.ts",
+        "./constants": "./src/constants/index.ts",
+        "./directives/*": "./src/directives/*.ts",
+        "./features/devtools/motion/live2d": "./src/features/devtools/motion/live2d/index.ts",
+        "./features/motions/live2d": "./src/features/motions/live2d/index.ts",
+        "./libs/inference/adapters/*": "./src/libs/inference/adapters/*.ts",
+        "./libs/inference": "./src/libs/inference/index.ts",
+        "./libs/product-signals": "./src/libs/product-signals/index.ts",
+        "./libs/product-signals/*": "./src/libs/product-signals/*.ts",
+        "./libs/pinia": "./src/libs/pinia/index.ts",
+        "./libs/providers/stream-transcription": "./src/libs/providers/stream-transcription/index.ts",
+        "./libs/providers/providers/aliyun-nls": "./src/libs/providers/providers/aliyun-nls/index.ts",
+        "./libs/providers/providers/official": "./src/libs/providers/providers/official/index.ts",
+        "./libs/*": "./src/libs/*.ts",
+        "./libs": "./src/libs/index.ts",
+        "./models/*": "./src/models/*.ts",
+        "./services/*": "./src/services/*.ts",
+        "./tools/mcp": "./src/tools/mcp.ts",
+        "./stores/character": "./src/stores/character/index.ts",
+        "./stores/settings/analytics": "./src/stores/settings/analytics.ts",
+        "./stores/settings/stage-model": "./src/stores/settings/stage-model.ts",
+        "./stores/settings": "./src/stores/settings/index.ts",
+        "./stores/modules/vision": "./src/stores/modules/vision/index.ts",
+        "./stores/mcp-tool-bridge": "./src/stores/mcp-tool-bridge.ts",
+        "./stores/ai/chat-llm/*": "./src/stores/ai/chat-llm/*.ts",
+        "./stores/*": "./src/stores/*.ts",
+        "./stores": "./src/stores/index.ts",
+        "./workers/vad": "./src/workers/vad/index.ts",
+        "./workers/*": "./src/workers/*.ts",
+        "./workers": "./src/workers/index.ts",
+        "./utils": "./src/utils/index.ts",
+        "./utils/tts": "./src/utils/tts.ts",
+        "./types/*": "./src/types/*.ts",
+        "./types": "./src/types/index.ts",
+        "./components/scenarios/local-vision-panel.vue": "./src/components/scenarios/local-vision-panel.vue",
+        "./components/scenarios/developer-gate.vue": "./src/components/scenarios/developer-gate.vue",
+        "./components/scenarios/memory-manager.vue": "./src/components/scenarios/memory-manager.vue"
+      },
+      "dependencies": {
+        "@better-fetch/fetch": "catalog:",
+        "@date-fns/utc": "catalog:",
+        "@formkit/auto-animate": "catalog:",
+        "@huggingface/transformers": "catalog:",
+        "@moeru/eventa": "catalog:",
+        "@moeru/std": "catalog:",
+        "@openpanel/web": "catalog:",
+        "@opentelemetry/api": "catalog:",
+        "@opentelemetry/core": "catalog:",
+        "@opentelemetry/sdk-trace-base": "catalog:",
+        "@pinia/colada": "catalog:",
+        "@proj-airi/audio": "workspace:^",
+        "@proj-airi/ccc": "workspace:^",
+        "@proj-airi/chromatic": "catalog:",
+        "@proj-airi/core-agent": "workspace:^",
+        "@proj-airi/core-character": "workspace:^",
+        "@proj-airi/drizzle-duckdb-wasm": "catalog:",
+        "@proj-airi/font-chillroundm": "workspace:^",
+        "@proj-airi/font-cjkfonts-allseto": "workspace:^",
+        "@proj-airi/font-xiaolai": "workspace:^",
+        "@proj-airi/i18n": "workspace:^",
+        "@proj-airi/input-gamepad": "workspace:^",
+        "@proj-airi/local-vision": "workspace:^",
+        "@proj-airi/model-driver-lipsync": "workspace:^",
+        "@proj-airi/model-driver-magic-live2d": "workspace:^",
+        "@proj-airi/motion-driver-magic": "workspace:^",
+        "@proj-airi/pipelines-audio": "workspace:^",
+        "@proj-airi/provider-inference": "workspace:^",
+        "@proj-airi/realtime-voice": "workspace:^",
+        "@proj-airi/server-sdk": "workspace:^",
+        "@proj-airi/server-sdk-shared": "workspace:^",
+        "@proj-airi/stage-shared": "workspace:^",
+        "@proj-airi/stage-ui-live2d": "workspace:^",
+        "@proj-airi/stage-ui-mmd": "workspace:^",
+        "@proj-airi/stage-ui-spine": "workspace:^",
+        "@proj-airi/stage-ui-tachie": "workspace:^",
+        "@proj-airi/stage-ui-three": "workspace:^",
+        "@proj-airi/ui": "workspace:^",
+        "@proj-airi/vite-plugin-sherpaw": "workspace:^",
+        "@ricky0123/vad-web": "catalog:",
+        "@sherpaw/xsai-transcription": "catalog:",
+        "@shikijs/rehype": "catalog:",
+        "@shopify/draggable": "catalog:",
+        "@vueuse/core": "catalog:",
+        "@vueuse/motion": "catalog:",
+        "@vueuse/shared": "catalog:",
+        "@xsai-apple-speech/transcription": "catalog:",
+        "@xsai-apple-speech/transcription-electron-plugin": "catalog:",
+        "@xsai-ext/providers": "catalog:",
+        "@xsai-transformers/embed": "catalog:",
+        "@xsai-transformers/shared": "catalog:",
+        "@xsai/embed": "catalog:",
+        "@xsai/generate-speech": "catalog:",
+        "@xsai/generate-text": "catalog:",
+        "@xsai/generate-transcription": "catalog:",
+        "@xsai/model": "catalog:",
+        "@xsai/shared": "catalog:",
+        "@xsai/shared-chat": "catalog:",
+        "@xsai/stream-text": "catalog:",
+        "@xsai/stream-transcription": "catalog:",
+        "@xsai/tool": "catalog:",
+        "@xsai/utils-chat": "catalog:",
+        "animejs": "catalog:",
+        "async-mutex": "catalog:",
+        "better-auth": "catalog:",
+        "culori": "catalog:",
+        "d3": "catalog:",
+        "date-fns": "catalog:",
+        "dockview-vue": "catalog:",
+        "dompurify": "catalog:",
+        "embla-carousel-autoplay": "catalog:",
+        "embla-carousel-vue": "catalog:",
+        "es-toolkit": "catalog:",
+        "gpuu": "catalog:",
+        "hono": "catalog:",
+        "html2canvas": "catalog:",
+        "idb-keyval": "catalog:",
+        "jszip": "catalog:",
+        "kokoro-js": "catalog:",
+        "localforage": "catalog:",
+        "mediabunny": "catalog:",
+        "nanoid": "catalog:",
+        "node-vibrant": "catalog:",
+        "ofetch": "catalog:",
+        "pinia": "catalog:",
+        "pinia-plugin-synced": "catalog:",
+        "rehype-katex": "catalog:",
+        "rehype-parse": "catalog:",
+        "rehype-stringify": "catalog:",
+        "reka-ui": "catalog:",
+        "remark-math": "catalog:",
+        "remark-parse": "catalog:",
+        "remark-rehype": "catalog:",
+        "shiki": "catalog:",
+        "splitpanes": "catalog:",
+        "unified": "catalog:",
+        "unist-builder": "catalog:",
+        "unist-util-visit": "catalog:",
+        "unspeech": "catalog:xsai",
+        "unstorage": "catalog:",
+        "uuid": "catalog:",
+        "valibot": "catalog:",
+        "vaul-vue": "catalog:",
+        "virtua": "catalog:",
+        "vue-i18n": "catalog:",
+        "vue-router": "catalog:",
+        "vue-sonner": "catalog:",
+        "web-haptics": "catalog:",
+        "wheel-gestures": "catalog:",
+        "xast-util-to-xml": "catalog:",
+        "xastscript": "catalog:",
+        "xsai-chromium-prompt": "catalog:",
+        "xsschema": "catalog:",
+        "zod": "catalog:"
+      },
+      "devDependencies": {
+        "@fontsource-variable/comfortaa": "catalog:",
+        "@fontsource-variable/dm-sans": "catalog:",
+        "@fontsource-variable/jura": "catalog:",
+        "@fontsource-variable/nunito": "catalog:",
+        "@fontsource-variable/quicksand": "catalog:",
+        "@fontsource-variable/urbanist": "catalog:",
+        "@fontsource/dm-mono": "catalog:",
+        "@fontsource/dm-serif-display": "catalog:",
+        "@fontsource/gugi": "catalog:",
+        "@fontsource/kiwi-maru": "catalog:",
+        "@fontsource/m-plus-rounded-1c": "catalog:",
+        "@histoire/plugin-vue": "catalog:",
+        "@iconify-json/carbon": "catalog:",
+        "@iconify-json/eos-icons": "catalog:",
+        "@iconify-json/lucide": "catalog:",
+        "@iconify-json/mingcute": "catalog:",
+        "@iconify-json/ph": "catalog:",
+        "@iconify-json/simple-icons": "catalog:",
+        "@iconify-json/solar": "catalog:",
+        "@iconify-json/svg-spinners": "catalog:",
+        "@iconify-json/vscode-icons": "catalog:",
+        "@moeru/std": "catalog:",
+        "@pinia/testing": "catalog:",
+        "@proj-airi/api-server": "workspace:*",
+        "@proj-airi/lobe-icons": "catalog:",
+        "@proj-airi/stream-kit": "workspace:*",
+        "@types/audioworklet": "catalog:",
+        "@types/culori": "catalog:",
+        "@types/d3": "catalog:",
+        "@types/hast": "catalog:",
+        "@types/mdast": "catalog:",
+        "@types/splitpanes": "catalog:",
+        "@types/unist": "catalog:",
+        "@types/ws": "catalog:",
+        "@unocss/reset": "catalog:",
+        "@vitejs/plugin-vue": "catalog:",
+        "clustr": "catalog:",
+        "csstype": "catalog:",
+        "histoire": "catalog:",
+        "is-network-error": "catalog:",
+        "unocss": "catalog:",
+        "unplugin-basemove": "catalog:",
+        "unplugin-info": "catalog:",
+        "unplugin-yaml": "catalog:",
+        "vite": "catalog:",
+        "vitest-browser-vue": "catalog:",
+        "vue": "catalog:",
+        "vue-tsc": "catalog:",
+        "ws": "catalog:"
+      },
+      "workspaceDependencies": [
+        "@proj-airi/api-server",
+        "@proj-airi/audio",
+        "@proj-airi/ccc",
+        "@proj-airi/core-agent",
+        "@proj-airi/core-character",
+        "@proj-airi/font-chillroundm",
+        "@proj-airi/font-cjkfonts-allseto",
+        "@proj-airi/font-xiaolai",
+        "@proj-airi/i18n",
+        "@proj-airi/input-gamepad",
+        "@proj-airi/local-vision",
+        "@proj-airi/model-driver-lipsync",
+        "@proj-airi/model-driver-magic-live2d",
+        "@proj-airi/motion-driver-magic",
+        "@proj-airi/pipelines-audio",
+        "@proj-airi/provider-inference",
+        "@proj-airi/realtime-voice",
+        "@proj-airi/server-sdk",
+        "@proj-airi/server-sdk-shared",
+        "@proj-airi/stage-shared",
+        "@proj-airi/stage-ui-live2d",
+        "@proj-airi/stage-ui-mmd",
+        "@proj-airi/stage-ui-spine",
+        "@proj-airi/stage-ui-tachie",
+        "@proj-airi/stage-ui-three",
+        "@proj-airi/stream-kit",
+        "@proj-airi/ui",
+        "@proj-airi/vite-plugin-sherpaw"
+      ]
+    },
+    {
+      "path": "packages/stage-ui-live2d",
+      "name": "@proj-airi/stage-ui-live2d",
+      "description": "Live2D scene components and stores for Project AIRI",
+      "scripts": {
+        "typecheck": "vue-tsc --noEmit"
+      },
+      "exports": {
+        ".": "./src/index.ts",
+        "./components": "./src/components/index.ts",
+        "./components/diagnostics/screen-ambient-light-preview.vue": "./src/components/diagnostics/screen-ambient-light-preview.vue",
+        "./components/scenes": "./src/components/scenes/index.ts",
+        "./components/scenes/Live2D.vue": "./src/components/scenes/Live2D.vue",
+        "./components/scenes/live2d": "./src/components/scenes/live2d/index.ts",
+        "./composables/live2d": "./src/composables/live2d/index.ts",
+        "./constants/emotions": "./src/constants/emotions.ts",
+        "./filters/screen-ambient-light": "./src/filters/screen-ambient-light.ts",
+        "./stores": "./src/stores/index.ts",
+        "./stores/model-parameters": "./src/stores/model-parameters.ts",
+        "./stores/expression-store": "./src/stores/expression-store.ts",
+        "./tools/expression-tools": "./src/tools/expression-tools.ts",
+        "./utils/ambient-light-test-card": "./src/utils/ambient-light-test-card.ts",
+        "./utils/eye-motions": "./src/utils/eye-motions.ts",
+        "./utils/live2d-preview": "./src/utils/live2d-preview.ts",
+        "./utils/live2d-zip-loader": "./src/utils/live2d-zip-loader.ts",
+        "./utils/live2d-opfs-registration": "./src/utils/live2d-opfs-registration.ts",
+        "./utils/opfs-loader": "./src/utils/opfs-loader.ts"
+      },
+      "dependencies": {
+        "@lemonneko/crop-empty-pixels": "catalog:",
+        "@moeru/std": "catalog:",
+        "@pixi/app": "catalog:",
+        "@pixi/constants": "catalog:",
+        "@pixi/core": "catalog:",
+        "@pixi/display": "catalog:",
+        "@pixi/extensions": "catalog:",
+        "@pixi/interaction": "catalog:",
+        "@pixi/loaders": "catalog:",
+        "@pixi/math": "catalog:",
+        "@pixi/runner": "catalog:",
+        "@pixi/settings": "catalog:",
+        "@pixi/sprite": "catalog:",
+        "@pixi/ticker": "catalog:",
+        "@pixi/utils": "catalog:",
+        "@proj-airi/model-driver-magic-live2d": "workspace:^",
+        "@proj-airi/stage-shared": "workspace:^",
+        "@proj-airi/ui": "workspace:^",
+        "@vueuse/core": "catalog:",
+        "@xsai/tool": "catalog:",
+        "animejs": "catalog:",
+        "culori": "catalog:",
+        "es-toolkit": "catalog:",
+        "jszip": "catalog:",
+        "pinia": "catalog:",
+        "pixi-filters": "catalog:",
+        "pixi-live2d-display": "catalog:",
+        "three": "catalog:",
+        "vue": "catalog:",
+        "zod": "catalog:"
+      },
+      "devDependencies": {
+        "@types/culori": "catalog:",
+        "@types/three": "catalog:",
+        "@vitest/browser-playwright": "catalog:vitest",
+        "vitest": "catalog:vitest",
+        "vue-tsc": "catalog:"
+      },
+      "workspaceDependencies": [
+        "@proj-airi/model-driver-magic-live2d",
+        "@proj-airi/stage-shared",
+        "@proj-airi/ui"
+      ]
+    },
+    {
+      "path": "packages/stage-ui-mmd",
+      "name": "@proj-airi/stage-ui-mmd",
+      "description": "MMD (MikuMikuDance) scene components and stores for Project AIRI",
+      "scripts": {
+        "typecheck": "vue-tsc --noEmit"
+      },
+      "exports": {
+        ".": "./src/index.ts",
+        "./components": "./src/components/index.ts",
+        "./components/scenes": "./src/components/scenes/index.ts",
+        "./components/scenes/MMD.vue": "./src/components/scenes/MMD.vue",
+        "./composables/mmd": "./src/composables/mmd/index.ts",
+        "./constants/emotions": "./src/constants/emotions.ts",
+        "./stores": "./src/stores/index.ts",
+        "./stores/mmd": "./src/stores/mmd.ts",
+        "./utils/mmd-loader": "./src/utils/mmd-loader.ts",
+        "./utils/mmd-preview": "./src/utils/mmd-preview.ts",
+        "./utils/mmd-validator": "./src/utils/mmd-validator.ts",
+        "./utils/mmd-zip-loader": "./src/utils/mmd-zip-loader.ts",
+        "./utils/opfs-loader": "./src/utils/opfs-loader.ts"
+      },
+      "dependencies": {
+        "@moeru/std": "catalog:",
+        "@moeru/three-mmd": "catalog:",
+        "@moeru/three-mmd-physics-ammo": "catalog:",
+        "@proj-airi/model-driver-lipsync": "workspace:^",
+        "@proj-airi/stage-shared": "workspace:^",
+        "@proj-airi/ui": "workspace:^",
+        "@vueuse/core": "catalog:",
+        "@xsai/tool": "catalog:",
+        "culori": "catalog:",
+        "es-toolkit": "catalog:",
+        "jszip": "catalog:",
+        "localforage": "catalog:",
+        "pinia": "catalog:",
+        "three": "catalog:",
+        "three-stdlib": "catalog:",
+        "vue": "catalog:"
+      },
+      "devDependencies": {
+        "@types/culori": "catalog:",
+        "@types/three": "catalog:",
+        "@vitest/browser-playwright": "catalog:vitest",
+        "vitest": "catalog:vitest",
+        "vue-tsc": "catalog:"
+      },
+      "workspaceDependencies": [
+        "@proj-airi/model-driver-lipsync",
+        "@proj-airi/stage-shared",
+        "@proj-airi/ui"
+      ]
+    },
+    {
+      "path": "packages/stage-ui-spine",
+      "name": "@proj-airi/stage-ui-spine",
+      "description": "Spine 2D scene components and stores for Project AIRI",
+      "scripts": {
+        "typecheck": "vue-tsc --noEmit"
+      },
+      "exports": {
+        ".": "./src/index.ts",
+        "./components": "./src/components/index.ts",
+        "./components/scenes": "./src/components/scenes/index.ts",
+        "./components/scenes/Spine.vue": "./src/components/scenes/Spine.vue",
+        "./components/scenes/spine": "./src/components/scenes/spine/index.ts",
+        "./composables/spine": "./src/composables/spine/index.ts",
+        "./constants/emotions": "./src/constants/emotions.ts",
+        "./stores": "./src/stores/index.ts",
+        "./stores/spine": "./src/stores/spine.ts",
+        "./tools/animation-tools": "./src/tools/animation-tools.ts",
+        "./utils/spine-preview": "./src/utils/spine-preview.ts",
+        "./utils/spine-validator": "./src/utils/spine-validator.ts",
+        "./utils/spine-zip-loader": "./src/utils/spine-zip-loader.ts"
+      },
+      "dependencies": {
+        "@esotericsoftware/spine-webgl": "catalog:",
+        "@esotericsoftware/spine-webgl-4-0": "catalog:",
+        "@esotericsoftware/spine-webgl-4-1": "catalog:",
+        "@moeru/std": "catalog:",
+        "@proj-airi/stage-shared": "workspace:^",
+        "@proj-airi/ui": "workspace:^",
+        "@vueuse/core": "catalog:",
+        "@xsai/tool": "catalog:",
+        "es-toolkit": "catalog:",
+        "jszip": "catalog:",
+        "pinia": "catalog:",
+        "vue": "catalog:",
+        "zod": "catalog:"
+      },
+      "devDependencies": {
+        "vue-tsc": "catalog:"
+      },
+      "workspaceDependencies": [
+        "@proj-airi/stage-shared",
+        "@proj-airi/ui"
+      ]
+    },
+    {
+      "path": "packages/stage-ui-tachie",
+      "name": "@proj-airi/stage-ui-tachie",
+      "description": "Tachie static image scene components and stores for Project AIRI",
+      "scripts": {
+        "typecheck": "vue-tsc --noEmit"
+      },
+      "exports": {
+        ".": "./src/index.ts",
+        "./components": "./src/components/index.ts",
+        "./components/scenes": "./src/components/scenes/index.ts",
+        "./components/scenes/Tachie.vue": "./src/components/scenes/tachie.vue",
+        "./components/scenes/tachie": "./src/components/scenes/tachie/index.ts",
+        "./constants/emotions": "./src/constants/emotions.ts",
+        "./stores": "./src/stores/index.ts",
+        "./stores/tachie": "./src/stores/tachie.ts",
+        "./utils/tachie-archive": "./src/utils/tachie-archive.ts",
+        "./utils/tachie-preview": "./src/utils/tachie-preview.ts"
+      },
+      "dependencies": {
+        "@moeru/std": "catalog:",
+        "@pixi/app": "catalog:",
+        "@pixi/core": "catalog:",
+        "@pixi/extensions": "catalog:",
+        "@pixi/sprite": "catalog:",
+        "@proj-airi/stage-shared": "workspace:^",
+        "@proj-airi/ui": "workspace:^",
+        "culori": "catalog:",
+        "fflate": "catalog:",
+        "pinia": "catalog:",
+        "pixi-filters": "catalog:",
+        "vue": "catalog:"
+      },
+      "devDependencies": {
+        "@types/culori": "catalog:",
+        "vitest": "catalog:vitest",
+        "vue-tsc": "catalog:"
+      },
+      "workspaceDependencies": [
+        "@proj-airi/stage-shared",
+        "@proj-airi/ui"
+      ]
+    },
+    {
+      "path": "packages/stage-ui-three",
+      "name": "@proj-airi/stage-ui-three",
+      "description": "A collection of 3D scene components that used by Project AIRI",
+      "scripts": {
+        "typecheck": "vue-tsc --noEmit"
+      },
+      "exports": {
+        "./assets/vrm": "./src/assets/vrm/index.ts",
+        "./composables/vrm": "./src/composables/vrm/index.ts",
+        "./trace": "./src/trace/index.ts",
+        "./utils/vrm-preview": "./src/utils/vrm-preview.ts",
+        ".": "./src/index.ts"
+      },
+      "dependencies": {
+        "@moeru/eventa": "catalog:",
+        "@pixiv/three-vrm": "catalog:",
+        "@pixiv/three-vrm-animation": "catalog:",
+        "@pixiv/three-vrm-core": "catalog:",
+        "@proj-airi/model-driver-lipsync": "workspace:*",
+        "@proj-airi/stage-shared": "workspace:*",
+        "@proj-airi/ui": "workspace:*",
+        "@tresjs/cientos": "catalog:",
+        "@tresjs/core": "catalog:",
+        "@tresjs/post-processing": "catalog:",
+        "@vueuse/core": "catalog:",
+        "culori": "catalog:",
+        "es-toolkit": "catalog:",
+        "pinia": "catalog:",
+        "postprocessing": "catalog:",
+        "three": "catalog:",
+        "vue": "catalog:"
+      },
+      "devDependencies": {
+        "@types/culori": "catalog:",
+        "@types/three": "catalog:",
+        "vitest": "catalog:vitest",
+        "vue-tsc": "catalog:"
+      },
+      "workspaceDependencies": [
+        "@proj-airi/model-driver-lipsync",
+        "@proj-airi/stage-shared",
+        "@proj-airi/ui"
+      ]
+    },
+    {
+      "path": "packages/stream-kit",
+      "name": "@proj-airi/stream-kit",
+      "description": "Stream utilities for AIRI (queues, streams)",
+      "version": "0.12.0-beta.5",
+      "scripts": {
+        "build": "tsdown",
+        "typecheck": "tsc --noEmit"
+      },
+      "exports": {
+        ".": {
+          "types": "./dist/index.d.mts",
+          "default": "./dist/index.mjs"
+        }
+      },
+      "dependencies": {},
+      "devDependencies": {},
+      "workspaceDependencies": []
+    },
+    {
+      "path": "packages/testing-audio",
+      "name": "@proj-airi/testing-audio",
+      "description": "AIRI Web and Electron audio pipeline tests",
+      "version": "0.12.0-beta.5",
+      "scripts": {
+        "build:targets": "pnpm -F @proj-airi/stage-web build && pnpm -F @proj-airi/stage-tamagotchi build",
+        "test": "vitest",
+        "test:run": "pnpm run build:targets && vitest run",
+        "test:existing-builds": "vitest run",
+        "typecheck": "tsc --noEmit"
+      },
+      "exports": "./src/index.ts",
+      "dependencies": {
+        "@moeru/std": "catalog:",
+        "@pnpm/find-workspace-dir": "catalog:",
+        "@proj-airi/provider-inference": "workspace:^",
+        "@proj-airi/stage-shared": "workspace:^",
+        "@proj-airi/stage-ui": "workspace:^",
+        "@proj-airi/vitest-plugin-fakemic": "workspace:^",
+        "playwright": "catalog:",
+        "vite": "catalog:",
+        "vitest": "catalog:vitest"
+      },
+      "devDependencies": {
+        "@types/node": "catalog:"
+      },
+      "workspaceDependencies": [
+        "@proj-airi/provider-inference",
+        "@proj-airi/stage-shared",
+        "@proj-airi/stage-ui",
+        "@proj-airi/vitest-plugin-fakemic"
+      ]
+    },
+    {
+      "path": "packages/ui",
+      "name": "@proj-airi/ui",
+      "description": "A collection of UI components that used by Project AIRI",
+      "version": "0.12.0-beta.5",
+      "scripts": {
+        "typecheck": "vue-tsc --noEmit"
+      },
+      "exports": {
+        ".": "./src/index.ts",
+        "./main.css": "./src/main.css",
+        "./components/animations": "./src/components/animations/index.ts",
+        "./components/form": "./src/components/form/index.ts",
+        "./components/layouts": "./src/components/layouts/index.ts",
+        "./*": "./*"
+      },
+      "dependencies": {
+        "@moeru/std": "catalog:",
+        "@vueuse/core": "catalog:",
+        "floating-vue": "catalog:",
+        "reka-ui": "catalog:",
+        "vaul-vue": "catalog:",
+        "vue": "catalog:"
+      },
+      "devDependencies": {
+        "@vue-macros/volar": "catalog:",
+        "vue-tsc": "catalog:"
+      },
+      "workspaceDependencies": []
+    },
+    {
+      "path": "packages/ui-loading-screens",
+      "name": "@proj-airi/ui-loading-screens",
+      "description": "A collection of loading screens that used by Project AIRI",
+      "scripts": {
+        "play:dev": "vite",
+        "play:build": "vite build",
+        "play:preview": "vite preview",
+        "build": "echo \"No build step required\"",
+        "typecheck": "vue-tsc --noEmit"
+      },
+      "exports": {
+        ".": "./src/index.ts",
+        "./components": "./src/components/index.ts",
+        "./*": "./*"
+      },
+      "dependencies": {
+        "@moeru/std": "catalog:",
+        "@proj-airi/font-departure-mono": "workspace:^",
+        "@rive-app/canvas-lite": "catalog:",
+        "@vueuse/core": "catalog:",
+        "@vueuse/motion": "catalog:",
+        "vue": "catalog:"
+      },
+      "devDependencies": {
+        "@proj-airi/ui": "workspace:^",
+        "@unocss/reset": "catalog:",
+        "@vitejs/plugin-vue": "catalog:",
+        "vite": "catalog:",
+        "vite-plugin-vue-devtools": "catalog:",
+        "vue-router": "catalog:",
+        "vue-tsc": "catalog:"
+      },
+      "workspaceDependencies": [
+        "@proj-airi/font-departure-mono",
+        "@proj-airi/ui"
+      ]
+    },
+    {
+      "path": "packages/ui-transitions",
+      "name": "@proj-airi/ui-transitions",
+      "description": "A collection of transition animations that used by Project AIRI",
+      "scripts": {
+        "play:dev": "vite",
+        "play:build": "vite build",
+        "play:preview": "vite preview",
+        "build": "echo \"No build step required\"",
+        "typecheck": "vue-tsc --noEmit"
+      },
+      "exports": {
+        ".": "./src/index.ts",
+        "./components": "./src/components/index.ts",
+        "./*": "./*"
+      },
+      "dependencies": {
+        "@vueuse/core": "catalog:",
+        "@vueuse/motion": "catalog:",
+        "vue": "catalog:"
+      },
+      "devDependencies": {
+        "@unocss/reset": "catalog:",
+        "@vitejs/plugin-vue": "catalog:",
+        "vite": "catalog:",
+        "vite-plugin-vue-devtools": "catalog:",
+        "vue-router": "catalog:",
+        "vue-tsc": "catalog:"
+      },
+      "workspaceDependencies": []
+    },
+    {
+      "path": "packages/unocss-preset-fonts",
+      "name": "@proj-airi/unocss-preset-fonts",
+      "description": "Fonts that are not included by Google Fonts, FontSource but open-source used by Project AIRI",
+      "version": "0.12.0-beta.5",
+      "scripts": {
+        "dev": "pnpm run build",
+        "build": "tsdown"
+      },
+      "exports": {
+        ".": {
+          "types": "./dist/index.d.mts",
+          "default": "./dist/index.mjs"
+        }
+      },
+      "dependencies": {
+        "@proj-airi/font-cjkfonts-allseto": "workspace:^",
+        "@proj-airi/font-departure-mono": "workspace:^",
+        "@proj-airi/font-xiaolai": "workspace:^"
+      },
+      "devDependencies": {},
+      "workspaceDependencies": [
+        "@proj-airi/font-cjkfonts-allseto",
+        "@proj-airi/font-departure-mono",
+        "@proj-airi/font-xiaolai"
+      ]
+    },
+    {
+      "path": "packages/vite-plugin-sherpaw",
+      "name": "@proj-airi/vite-plugin-sherpaw",
+      "description": "Expose remote and bundled Sherpaw speech models to Vite applications",
+      "scripts": {
+        "build": "tsdown",
+        "test": "vitest run",
+        "typecheck": "tsc --noEmit"
+      },
+      "exports": {
+        ".": {
+          "types": "./dist/index.d.mts",
+          "default": "./dist/index.mjs"
+        },
+        "./assets": {
+          "types": "./dist/assets.d.mts",
+          "default": "./dist/assets.mjs"
+        }
+      },
+      "dependencies": {
+        "@proj-airi/provider-inference": "workspace:^",
+        "@proj-airi/unplugin-fetch": "catalog:"
+      },
+      "devDependencies": {
+        "@types/node": "catalog:",
+        "tsdown": "catalog:",
+        "typescript": "catalog:",
+        "unplugin-basemove": "catalog:",
+        "vite": "catalog:",
+        "vitest": "catalog:vitest"
+      },
+      "workspaceDependencies": [
+        "@proj-airi/provider-inference"
+      ]
+    },
+    {
+      "path": "packages/vitest-plugin-fakemic",
+      "name": "@proj-airi/vitest-plugin-fakemic",
+      "description": "Fake microphone test runtime and Vitest integration",
+      "version": "0.12.0-beta.5",
+      "scripts": {
+        "test": "vitest run",
+        "typecheck": "tsc --noEmit"
+      },
+      "exports": "./src/index.ts",
+      "dependencies": {
+        "playwright": "catalog:",
+        "vite": "catalog:",
+        "vitest": "catalog:vitest"
+      },
+      "devDependencies": {
+        "@types/node": "catalog:"
+      },
+      "workspaceDependencies": []
+    },
+    {
+      "path": "plugins/airi-plugin-bilibili-laplace",
+      "name": "@proj-airi/airi-plugin-bilibili-laplace",
+      "description": "Live stream chat plugin, a bridge to forward Bilibili live chat via LAPLACE Event Bridge into AIRI server channel",
+      "version": "0.12.0-beta.5",
+      "scripts": {
+        "build": "tsdown",
+        "typecheck": "tsc --noEmit"
+      },
+      "dependencies": {
+        "@guiiai/logg": "catalog:",
+        "@laplace.live/event-bridge-sdk": "catalog:",
+        "@laplace.live/event-types": "catalog:",
+        "@proj-airi/server-sdk": "workspace:*"
+      },
+      "devDependencies": {},
+      "workspaceDependencies": [
+        "@proj-airi/server-sdk"
+      ]
+    },
+    {
+      "path": "plugins/airi-plugin-claude-code",
+      "name": "@proj-airi/airi-plugin-claude-code",
+      "description": "manifest.json description",
+      "version": "0.12.0-beta.5",
+      "scripts": {
+        "build": "tsdown",
+        "dev": "tsx ./src/run.ts",
+        "typecheck": "tsc --noEmit"
+      },
+      "dependencies": {
+        "@guiiai/logg": "catalog:",
+        "@proj-airi/server-sdk": "workspace:*",
+        "cac": "catalog:",
+        "debug": "catalog:",
+        "destr": "catalog:",
+        "vue": "catalog:"
+      },
+      "devDependencies": {
+        "@anthropic-ai/claude-code": "catalog:",
+        "tsx": "catalog:",
+        "vue-tsc": "catalog:"
+      },
+      "workspaceDependencies": [
+        "@proj-airi/server-sdk"
+      ]
+    },
+    {
+      "path": "plugins/airi-plugin-game-chess",
+      "name": "@proj-airi/airi-plugin-game-chess",
+      "description": "Chess plugin for AIRI gamelet/widget runtime",
+      "version": "0.12.0-beta.5",
+      "scripts": {
+        "dev:ui": "vite --host 127.0.0.1 --port 5174",
+        "test": "vitest run --root . --config vitest.config.ts",
+        "eval:run": "vieval run --root . --config ./vieval.config.ts",
+        "typecheck": "vue-tsc --noEmit -p tsconfig.json",
+        "build": "vite build && tsdown"
+      },
+      "dependencies": {
+        "@moeru/eventa": "catalog:",
+        "@moeru/std": "catalog:",
+        "@proj-airi/plugin-protocol": "workspace:*",
+        "@proj-airi/plugin-sdk": "workspace:*",
+        "@proj-airi/plugin-sdk-tamagotchi": "workspace:*",
+        "@proj-airi/ui": "workspace:^",
+        "animejs": "catalog:",
+        "chess.js": "catalog:",
+        "reka-ui": "catalog:",
+        "stockfish": "catalog:",
+        "valibot": "catalog:",
+        "vue": "catalog:"
+      },
+      "devDependencies": {
+        "@ax-llm/ax": "catalog:",
+        "@proj-airi/core-agent": "workspace:^",
+        "@proj-airi/stage-ui": "workspace:^",
+        "@proj-airi/unocss-preset-chromatic": "catalog:",
+        "@unocss/reset": "catalog:",
+        "@vitejs/plugin-vue": "catalog:",
+        "@xsai-ext/providers": "catalog:",
+        "@xsai/generate-text": "catalog:",
+        "@xsai/shared-chat": "catalog:",
+        "@xsai/stream-text": "catalog:",
+        "pinia": "catalog:",
+        "unocss": "catalog:",
+        "vieval": "catalog:",
+        "xsschema": "catalog:"
+      },
+      "workspaceDependencies": [
+        "@proj-airi/core-agent",
+        "@proj-airi/plugin-protocol",
+        "@proj-airi/plugin-sdk",
+        "@proj-airi/plugin-sdk-tamagotchi",
+        "@proj-airi/stage-ui",
+        "@proj-airi/ui"
+      ]
+    },
+    {
+      "path": "plugins/airi-plugin-homeassistant",
+      "name": "@proj-airi/airi-plugin-homeassistant",
+      "description": "Home Assistant integration plugin for AIRI server",
+      "version": "0.12.0-beta.5",
+      "scripts": {
+        "build": "tsdown",
+        "typecheck": "tsc --noEmit"
+      },
+      "dependencies": {
+        "@guiiai/logg": "catalog:",
+        "@proj-airi/server-sdk": "workspace:*"
+      },
+      "devDependencies": {},
+      "workspaceDependencies": [
+        "@proj-airi/server-sdk"
+      ]
+    },
+    {
+      "path": "plugins/airi-plugin-web-extension",
+      "name": "@proj-airi/airi-plugin-web-extension",
+      "description": "manifest.json description",
+      "version": "0.12.0-beta.5",
+      "scripts": {
+        "dev": "wxt",
+        "dev:firefox": "wxt -b firefox",
+        "build": "wxt build",
+        "build:firefox": "wxt build -b firefox",
+        "zip": "wxt zip",
+        "zip:firefox": "wxt zip -b firefox",
+        "compile": "vue-tsc --noEmit",
+        "postinstall": "wxt prepare"
+      },
+      "dependencies": {},
+      "devDependencies": {
+        "@iconify-json/solar": "catalog:",
+        "@iconify-json/svg-spinners": "catalog:",
+        "@moeru/eventa": "catalog:",
+        "@moeru/std": "catalog:",
+        "@proj-airi/server-sdk": "workspace:^",
+        "@proj-airi/ui": "workspace:^",
+        "@unocss/reset": "catalog:",
+        "@vueuse/core": "catalog:",
+        "@wxt-dev/module-vue": "catalog:",
+        "nanoid": "catalog:",
+        "vue": "catalog:",
+        "vue-tsc": "catalog:",
+        "wxt": "catalog:"
+      },
+      "workspaceDependencies": [
+        "@proj-airi/server-sdk",
+        "@proj-airi/ui"
+      ]
+    },
+    {
+      "path": "server/apps/api",
+      "name": "@proj-airi/api-server",
+      "description": "",
+      "version": "0.12.0-beta.5",
+      "scripts": {
+        "apply:env": "dotenvx run -f .env.local --overload --ignore=MISSING_ENV_FILE",
+        "dev": "pnpm run apply:env -- tsx --import ./instrumentation.ts --watch src/main.ts",
+        "start": "pnpm run apply:env -- tsx --import ./instrumentation.ts src/main.ts",
+        "build": "tsc -b",
+        "typecheck": "tsc --noEmit",
+        "db:generate": "drizzle-kit generate",
+        "db:push": "pnpm run apply:env -- drizzle-kit push"
+      },
+      "exports": {
+        "./app-type": "./src/app-type.ts"
+      },
+      "dependencies": {
+        "@apple/app-store-server-library": "catalog:",
+        "@aws-sdk/client-s3": "catalog:",
+        "@aws-sdk/s3-request-presigner": "catalog:",
+        "@dotenvx/dotenvx": "catalog:",
+        "@electric-sql/pglite": "catalog:",
+        "@electric-sql/pglite-pgvector": "catalog:",
+        "@guiiai/logg": "catalog:",
+        "@hono/node-server": "catalog:",
+        "@hono/node-ws": "catalog:",
+        "@hono/otel": "catalog:",
+        "@langfuse/otel": "catalog:",
+        "@langfuse/tracing": "catalog:",
+        "@moeru/eventa": "catalog:",
+        "@moeru/std": "catalog:",
+        "@openpanel/sdk": "catalog:",
+        "@opentelemetry/api": "catalog:",
+        "@opentelemetry/api-logs": "catalog:",
+        "@opentelemetry/exporter-logs-otlp-proto": "catalog:",
+        "@opentelemetry/exporter-metrics-otlp-proto": "catalog:",
+        "@opentelemetry/exporter-trace-otlp-proto": "catalog:",
+        "@opentelemetry/instrumentation": "catalog:",
+        "@opentelemetry/instrumentation-http": "catalog:",
+        "@opentelemetry/instrumentation-ioredis": "catalog:",
+        "@opentelemetry/instrumentation-pg": "catalog:",
+        "@opentelemetry/instrumentation-runtime-node": "catalog:",
+        "@opentelemetry/instrumentation-undici": "catalog:",
+        "@opentelemetry/resources": "catalog:",
+        "@opentelemetry/sdk-logs": "catalog:",
+        "@opentelemetry/sdk-metrics": "catalog:",
+        "@opentelemetry/sdk-node": "catalog:",
+        "@opentelemetry/sdk-trace-node": "catalog:",
+        "@opentelemetry/semantic-conventions": "catalog:",
+        "@proj-airi/auth-shared": "workspace:*",
+        "@proj-airi/server-sdk-shared": "workspace:*",
+        "@xsai/shared-stream": "catalog:",
+        "drizzle-orm": "catalog:",
+        "drizzle-valibot": "catalog:",
+        "es-toolkit": "catalog:",
+        "hono": "catalog:",
+        "hono-rate-limiter": "catalog:",
+        "injeca": "catalog:",
+        "ioredis": "catalog:",
+        "jose": "catalog:",
+        "model-bank": "catalog:",
+        "nanoid": "catalog:",
+        "ofetch": "catalog:",
+        "pg": "catalog:",
+        "stripe": "catalog:",
+        "unspeech": "catalog:xsai",
+        "valibot": "catalog:",
+        "ws": "catalog:",
+        "zod": "catalog:"
+      },
+      "devDependencies": {
+        "@types/ioredis-mock": "catalog:",
+        "@types/pg": "catalog:",
+        "@types/ws": "catalog:",
+        "drizzle-kit": "catalog:",
+        "ioredis-mock": "catalog:"
+      },
+      "workspaceDependencies": [
+        "@proj-airi/auth-shared",
+        "@proj-airi/server-sdk-shared"
+      ]
+    },
+    {
+      "path": "server/apps/auth",
+      "name": "@proj-airi/auth-server",
+      "description": "",
+      "version": "0.12.0-beta.5",
+      "scripts": {
+        "apply:env": "dotenvx run -f .env.local --overload --ignore=MISSING_ENV_FILE",
+        "auth:generate": "pnpm run apply:env -- better-auth generate --config src/tooling/auth-config.ts --output ../../packages/auth-shared/src/schema.ts -y",
+        "dev": "pnpm run apply:env -- tsx --import ./instrumentation.ts --watch src/main.ts",
+        "start": "pnpm run apply:env -- tsx --import ./instrumentation.ts src/main.ts",
+        "build": "tsc -b",
+        "typecheck": "tsc --noEmit"
+      },
+      "dependencies": {
+        "@better-auth/drizzle-adapter": "catalog:",
+        "@better-auth/oauth-provider": "catalog:",
+        "@dotenvx/dotenvx": "catalog:",
+        "@guiiai/logg": "catalog:",
+        "@hono/node-server": "catalog:",
+        "@moeru/std": "catalog:",
+        "@opentelemetry/api": "catalog:",
+        "@opentelemetry/api-logs": "catalog:",
+        "@opentelemetry/exporter-logs-otlp-proto": "catalog:",
+        "@opentelemetry/exporter-metrics-otlp-proto": "catalog:",
+        "@opentelemetry/exporter-trace-otlp-proto": "catalog:",
+        "@opentelemetry/instrumentation-http": "catalog:",
+        "@opentelemetry/instrumentation-ioredis": "catalog:",
+        "@opentelemetry/instrumentation-pg": "catalog:",
+        "@opentelemetry/instrumentation-runtime-node": "catalog:",
+        "@opentelemetry/instrumentation-undici": "catalog:",
+        "@opentelemetry/resources": "catalog:",
+        "@opentelemetry/sdk-logs": "catalog:",
+        "@opentelemetry/sdk-metrics": "catalog:",
+        "@opentelemetry/sdk-node": "catalog:",
+        "@opentelemetry/sdk-trace-node": "catalog:",
+        "@opentelemetry/semantic-conventions": "catalog:",
+        "@proj-airi/auth-shared": "workspace:*",
+        "better-auth": "catalog:",
+        "drizzle-orm": "catalog:",
+        "hono": "catalog:",
+        "hono-rate-limiter": "catalog:",
+        "injeca": "catalog:",
+        "ioredis": "catalog:",
+        "jose": "catalog:",
+        "ofetch": "catalog:",
+        "pg": "catalog:",
+        "resend": "catalog:",
+        "tsx": "catalog:",
+        "valibot": "catalog:",
+        "zod": "catalog:"
+      },
+      "devDependencies": {
+        "@better-auth/cli": "catalog:",
+        "@electric-sql/pglite": "catalog:",
+        "@types/pg": "catalog:",
+        "drizzle-kit": "catalog:",
+        "kysely": "catalog:",
+        "typescript": "catalog:"
+      },
+      "workspaceDependencies": [
+        "@proj-airi/auth-shared"
+      ]
+    },
+    {
+      "path": "server/packages/auth-shared",
+      "name": "@proj-airi/auth-shared",
+      "description": "Shared authentication schema and principal contracts for AIRI services",
+      "version": "0.12.0-beta.5",
+      "scripts": {
+        "typecheck": "tsc --noEmit"
+      },
+      "exports": "./src/index.ts",
+      "dependencies": {
+        "drizzle-orm": "catalog:"
+      },
+      "devDependencies": {},
+      "workspaceDependencies": []
+    },
+    {
+      "path": "server/packages/server-sdk-shared",
+      "name": "@proj-airi/server-sdk-shared",
+      "description": "Eventa contracts for the hosted chat WebSocket",
+      "version": "0.12.0-beta.5",
+      "scripts": {
+        "dev": "pnpm run build",
+        "build": "tsdown",
+        "typecheck": "tsc --noEmit"
+      },
+      "exports": {
+        ".": {
+          "types": "./dist/index.d.mts",
+          "default": "./dist/index.mjs"
+        },
+        "./v2": {
+          "types": "./dist/v2.d.mts",
+          "default": "./dist/v2.mjs"
+        }
+      },
+      "dependencies": {
+        "@moeru/eventa": "catalog:",
+        "valibot": "catalog:"
+      },
+      "devDependencies": {},
+      "workspaceDependencies": []
+    },
+    {
+      "path": "services/computer-use-mcp",
+      "name": "@proj-airi/computer-use-mcp",
+      "description": "AIRI-specific macOS desktop orchestration MCP service",
+      "version": "0.12.0-beta.5",
+      "scripts": {
+        "dev": "tsx ./src/bin/run.ts",
+        "start": "tsx ./src/bin/run.ts",
+        "e2e:airi-chat": "tsx ./src/bin/e2e-airi-chat-observable.ts",
+        "e2e:airi-chat-terminal-self-acquire": "tsx ./src/bin/e2e-airi-chat-terminal-self-acquire.ts",
+        "demo:terminal-self-acquire": "tsx ./src/bin/e2e-airi-chat-terminal-self-acquire.ts",
+        "e2e:developer-workflow": "tsx ./src/bin/e2e-developer-workflow.ts",
+        "e2e:browser-reroute": "tsx ./src/bin/e2e-browser-reroute.ts",
+        "e2e:terminal-exec": "tsx ./src/bin/e2e-terminal-exec.ts",
+        "e2e:terminal-pty": "tsx ./src/bin/e2e-terminal-pty.ts",
+        "e2e:terminal-self-acquire": "tsx ./src/bin/e2e-terminal-self-acquire.ts",
+        "bootstrap:remote": "tsx ./src/bin/bootstrap-remote.ts",
+        "smoke:remote": "tsx ./src/bin/smoke-remote.ts",
+        "smoke:stdio": "tsx ./src/bin/smoke-stdio.ts",
+        "smoke:macos": "tsx ./src/bin/smoke-macos.ts",
+        "smoke:desktop-v3": "tsx ./src/bin/smoke-chrome-grounding.ts",
+        "smoke:workflow": "tsx ./src/bin/smoke-workflow.ts",
+        "mcp:inspector": "pnpx @modelcontextprotocol/inspector pnpm -F @proj-airi/computer-use-mcp start",
+        "build": "tsdown",
+        "typecheck": "tsc --noEmit",
+        "test": "vitest run --config ./vitest.config.ts"
+      },
+      "exports": {
+        ".": {
+          "types": "./dist/index.d.mts",
+          "default": "./dist/index.mjs"
+        }
+      },
+      "dependencies": {
+        "@modelcontextprotocol/sdk": "catalog:",
+        "@moeru/std": "catalog:",
+        "node-pty": "catalog:",
+        "ws": "catalog:",
+        "zod": "catalog:"
+      },
+      "devDependencies": {
+        "@types/ws": "catalog:"
+      },
+      "workspaceDependencies": []
+    }
+  ]
+}

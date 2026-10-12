@@ -1,0 +1,827 @@
+{
+  "version": 1,
+  "pages": {
+    "home": {
+      "at": "2026-10-11T04:58:49.195Z",
+      "task": "AIRI-037",
+      "note": "人工核对本轮启停/休眠执行门控、固定回归及对应来源；历史验证数字保留，实际设备和模型边界明确。",
+      "fingerprints": {
+        "catalog": "5f0b18ea3da442978c2df07422e12451a86ab12a6b0fd7497897c9654b7b11a7",
+        "wiki/README.md": "3e98f07792954421767782224c956a332aa96289c01c8e71b7a70436aeeccb83",
+        "AGENTS.md": "5d19133b2ccd143412862e84265cd1ab6be3ba5e36493108917d92e1bf9561f7",
+        "scripts/project-wiki.mjs": "25ee16945acfd438b72e96266bb81349186d08c7befc52862a76bddc1d8a98a7"
+      }
+    },
+    "project-state": {
+      "at": "2026-10-12T03:45:45.733Z",
+      "task": "AIRI-038",
+      "note": "复核任务新增的准备检查结果，当前仍待授权和推送。",
+      "fingerprints": {
+        "catalog": "e73c2e5cdec344c77aba172d4bebc40d21270736367bb2638c46a1ea85074d70",
+        "wiki/overview/project-state.md": "7f54d08dfabd18c6bf2ea4739dbedee1f24e241eaeddfde790826eebea96f6fc",
+        "开发文档/01-system-architecture.md": "43d87ad659935e195019300afd959dbba4379cb0a534d5d52cf04f54f23bfeee",
+        "项目管理/tasks.json": "9bfcaa5f4a21a99d46ced3673a42c34de32470b2af0128b3b70919fdadf842dd",
+        "airi/apps/stage-web/src/App.vue": "d805d255ef618e8547c70e9159689973e5d0b046727a87295807ef85d3a772db",
+        "airi/packages/memory-pgvector/src/index.ts": "5d97984288d18607ca47cb7b81ec3a4727844a91c20c3c0f676f1b760e163f79"
+      }
+    },
+    "change-routing": {
+      "at": "2026-10-11T04:58:51.394Z",
+      "task": "AIRI-037",
+      "note": "人工核对本轮启停/休眠执行门控、固定回归及对应来源；历史验证数字保留，实际设备和模型边界明确。",
+      "fingerprints": {
+        "catalog": "5d7cce9f7b7047f08cb3ae221b2bb04f0d6212d4916b40502475bc33970f90d8",
+        "wiki/overview/change-routing.md": "a29c9b0698b499275f6746e30222bc585781088b1b5dbb168ac6cc0ab7d0fdd0",
+        "开发文档/04-development-guide.md": "76d14eb8258f8ed45e8a8cc1fde6f19e66865f487148cba8d7fc02822103b176",
+        "airi/AGENTS.md": "698794f95325b8a2f60e9d672a5749d729f77d3b6b59e515aba97aad02a372f9"
+      }
+    },
+    "chat": {
+      "at": "2026-10-11T04:58:52.568Z",
+      "task": "AIRI-037",
+      "note": "人工核对本轮启停/休眠执行门控、固定回归及对应来源；历史验证数字保留，实际设备和模型边界明确。",
+      "fingerprints": {
+        "catalog": "6e846705bffa1b399c5c7db3741a26d8a2ae2e2b493cbd28b3ecbb7f4d89e808",
+        "wiki/modules/chat.md": "4e43d8ba20afddbb7ef4f5f3b57dd5bbc1d1d33257cff2e1ed8922dde6334c18",
+        "airi/packages/stage-ui/src/stores/chat.ts": "1ba970c472d3c391d23fe3c3f0437db5e2509b812f090f55d67e3c4973162518",
+        "airi/packages/core-agent/src/runtime/chat-orchestrator-runtime.ts": "02ba361a554e5818a256bbb13533c8e68ab0901591016f46be5585140a36e79b",
+        "airi/packages/core-agent/src/runtime/context-registry.ts": "fe746b3578215e079dfc590f7a750552fe6f5609de8a777854fb81dcc7d44b81",
+        "airi/packages/stage-ui/src/stores/chat/context-providers/user-account.ts": "6a42b78d68ce2cbdf36852a5720ac863d3c94f546a0eb8fa9fb346c6959e846f",
+        "airi/packages/provider-inference/src/generation.ts": "4e6e25e50088edca6bc1680480f72b7603170e8aa3d7d0d10bac00a1d0af5808",
+        "airi/packages/stage-ui/src/composables/use-chat-input.ts": "f7bebed0a4bd06b4553c70de0c8088551ce4f98155d3215f9a6af9218d82007a",
+        "airi/packages/stage-ui/src/stores/modules/realtime-brain.browser.test.ts": "ea402d42efc5938964c7a9922b3d34e78c0cd5279f105846f78a2ef44bbea9e6",
+        "airi/packages/stage-ui/src/stores/ai/chat-llm/tool-resolver.ts": "9b6a71a101027458189f05ea43db94381bd08e46710fdf6e4db98bc0740c3eeb",
+        "airi/packages/stage-ui/src/tools/web-search.ts": "ae6b8d296492c2477d4ad42292817785c88f80af275bd83afbf05f1f8711838f",
+        "airi/docs/ai/reports/2026-10-03-firecrawl-search.md": "fa34a424375b3ef0e93d9c3772d08aa287dbc4125a4fc4779fefe9bd037d2a5a",
+        "airi/docs/ai/reports/2026-10-03-firecrawl-403-fix.md": "ae24ece52fab1e073a24c054cd52049778ebbd84204626a4e16e5e2bef600d5d",
+        "airi/packages/stage-ui/src/tools/web-search-gateway.ts": "af65d97d5b432d486ec8d248edd0150a7f253fe24bbf4188ac3aa857b3a8bd51",
+        "airi/packages/stage-ui/src/tools/web-search-contract.ts": "31a6a4cff712c96e929dad0fa109ca43265767f024437acd68f00cf919fc3d79",
+        "airi/packages/realtime-voice/src/conversation.ts": "f03281e432509398016d8503253d0671ead8ade571750e47e4a615e2ae0f9539",
+        "airi/docs/ai/reports/2026-10-04-fast-conversation-policy.md": "bda6eca657a76f598da274d19f1930d5f561061f2cc4e31f7916ce4f04cae277",
+        "airi/packages/stage-ui/src/stores/stage-identity.ts": "0497f0bc349ee14110467b06e489266ea4554977e848e896aadf7b845cb783f3",
+        "airi/packages/stage-ui/src/services/chat-archive.ts": "87cfc73d71342b6498018284e5061ac0d86d33c00d56fb4d74893f851673e064",
+        "airi/packages/stage-ui/src/stores/chat-archive.ts": "edc7233c5f67175732c87ed49f64c8e52cd0c1febb4fe2e8b23e3aaf4eb31551",
+        "airi/packages/stage-ui/src/libs/chat-archive-events.ts": "78b6f9c2d9898a66c60a31b62f0ca90022f3516c9612f06d214f2aca637dcbde"
+      }
+    },
+    "local-vision": {
+      "at": "2026-10-06T14:18:13.247Z",
+      "task": "AIRI-029",
+      "note": "核对两秒确认、质量分类及已认识人物单帧补基础路径的替代",
+      "fingerprints": {
+        "catalog": "1fe1824b86f58bdf3afc57c1c2d862dc30748b1c1f4ef0fcbc7e06d923fcaa84",
+        "wiki/algorithms/local-vision.md": "69b91292595871ab0369f7b77dbe13404ced4f93e7b6fe705a65e7aac712cf50",
+        "airi/services/local-vision/model.py": "d247fdce431c1d2e32d39f0bdf39e2139856d9c69b28521b891740dd0f89043a",
+        "airi/services/local-vision/identity.py": "50b11e4ce0073b5c10eabf6c768dc9903a7212c7c977675a0ff6a908b6f3888f",
+        "airi/services/local-vision/social.py": "3520b8cfbe3a190816096e7bac731bbb5ed3b4f67117b8f89c146ddf4d68602e",
+        "airi/services/local-vision/temporal.py": "6395264047bf19d502f5e3fad7c77a1127e964ea8af92c55314c81c3075eda78",
+        "开发文档/07-local-vision.md": "41ef8e36efaf7cc1cc9fad95e3e078395957951c2a79a33721ff1f5d7c64c0a8",
+        "airi/services/local-vision/recognition.py": "2dd1c461c4152441731d266786b9047765ca3d8f0ba8715f6d1a4721332054fc",
+        "airi/services/local-vision/tests/testrecognition.py": "4547a834a5d0f2e9ae46ce5a8e5603843ff7da60b33d7d510a90b224c9f55e8c",
+        "airi/services/local-vision/reports/validation.adaptive-recognition.md": "2ded052112bdba1604013b3ed5324d0b8244fd38ff455ea9312dd46d93eec521",
+        "airi/packages/local-vision/src/gaze.ts": "8e8f110e8f82959a60c70f41ee80e47ac8cb4316279584d04b5112c1d8b9b16d",
+        "airi/services/local-vision/adaptation.py": "3c7ec8f4dddf936d1a070a9709e0ab8e0958fa6cc3480ffe640e3208c9a39415",
+        "airi/services/local-vision/tests/testadaptation.py": "7ea4179c6c7272dd602ebf056cc7f4130ee1388c1bbf4a3417a5bad559be9c1f"
+      }
+    },
+    "visual-social": {
+      "at": "2026-10-11T04:58:53.740Z",
+      "task": "AIRI-037",
+      "note": "人工核对本轮启停/休眠执行门控、固定回归及对应来源；历史验证数字保留，实际设备和模型边界明确。",
+      "fingerprints": {
+        "catalog": "b8c0b0481465e3ea53278d1576dd231804a4a50f1a8a7c39f9c7d0b7feb06f45",
+        "wiki/flows/visual-social.md": "90b6fede644f27665c288555f3fc087dd7f15c96fd2b485264782ff795b5e23a",
+        "airi/apps/stage-web/src/components/local-vision-runtime.vue": "c96fe0e860027e267caffb1f431be98404479bdf7537d50761482bf6e074a619",
+        "airi/packages/local-vision/src/client.ts": "4118c170fc3f76106c84a0e16bf76cb908e19de649010f744d0f488d938b0df5",
+        "airi/packages/local-vision/src/contracts.ts": "c9c59297a038cc86ba787d3a614f3e5dfcef9b3ddf7056b6186deec97df17a85",
+        "airi/packages/local-vision/src/vite.ts": "3a44e2ff4fe5100efdf982910cf6d2a901063668b1a1f7f2e72b9c6d0ca1ee83",
+        "airi/packages/local-vision/src/policy.ts": "dc3306eb92549067f4d4d30a204e147d10de6827afb617c89a843c8ee8cdfcac",
+        "airi/services/local-vision/protocol.py": "39cdaca6f0d07b3292c1856461efb561b8769c063c69ad601a9a258ded370d7a",
+        "airi/packages/stage-ui/src/stores/local-vision.ts": "23e9a3bdb82eba08c6b458317b0fb9c7c07eec2a9b430fe5f77bc77e849719d2",
+        "airi/packages/stage-ui/src/services/local-vision-context.ts": "115a1229b2ed27923764cf15809e3f85221322c588e723674cc2d1cfc951deda",
+        "airi/services/local-vision/model.py": "d247fdce431c1d2e32d39f0bdf39e2139856d9c69b28521b891740dd0f89043a",
+        "airi/packages/local-vision/src/gaze.ts": "8e8f110e8f82959a60c70f41ee80e47ac8cb4316279584d04b5112c1d8b9b16d",
+        "airi/packages/stage-ui/src/composables/vision/use-face-gaze.ts": "76dc398cf934b5a623aa11eafff8a332f2f65209815f68fd8eda1b6c6c4ee0dd",
+        "airi/services/local-vision/social.py": "3520b8cfbe3a190816096e7bac731bbb5ed3b4f67117b8f89c146ddf4d68602e",
+        "airi/services/local-vision/developer.py": "f9d74a3687c18298f0e92e6364a6bc8ad8557e16ae7f341a46c810281b089955",
+        "airi/packages/stage-ui/src/stores/stage-identity.ts": "0497f0bc349ee14110467b06e489266ea4554977e848e896aadf7b845cb783f3",
+        "airi/packages/stage-ui/src/stores/stage-identity.browser.test.ts": "955becb9407fc087f0ac64b70fb029074a4140226dade3b3fb31c55cae0391ba"
+      }
+    },
+    "companion": {
+      "at": "2026-10-11T04:58:54.850Z",
+      "task": "AIRI-037",
+      "note": "人工核对本轮启停/休眠执行门控、固定回归及对应来源；历史验证数字保留，实际设备和模型边界明确。",
+      "fingerprints": {
+        "catalog": "a0977b5b7cc33ae1de3313e2275ef795c407e913b39ef0337e72e566f4c5678c",
+        "wiki/modules/companion.md": "373fcbc83ffeeddb3af3f7a53497845347dca097189a06e492b9cbf366ef74d4",
+        "airi/packages/local-vision/src/policy.ts": "dc3306eb92549067f4d4d30a204e147d10de6827afb617c89a843c8ee8cdfcac",
+        "airi/packages/stage-ui/src/stores/companion.ts": "c7a00ee8075aa92537c8a176df60cb864e4be8ddfe70f915579b41a30b23c21c",
+        "airi/packages/stage-ui/src/stores/companion.browser.test.ts": "98817929e38dfabeb56d6de3bf5c8c7e8eae1c249c5585e2694f696e807cefc9",
+        "airi/docs/ai/adr/2026-09-30-active-social-companion.md": "3f5bf949f1322690b2bb3e103358f4ec31842295208f1c8d21a0f95cc35ac00b",
+        "airi/packages/stage-ui/src/services/local-vision-context.ts": "115a1229b2ed27923764cf15809e3f85221322c588e723674cc2d1cfc951deda",
+        "airi/packages/stage-ui/src/stores/local-vision.ts": "23e9a3bdb82eba08c6b458317b0fb9c7c07eec2a9b430fe5f77bc77e849719d2",
+        "airi/packages/stage-ui/src/stores/stage-identity.ts": "0497f0bc349ee14110467b06e489266ea4554977e848e896aadf7b845cb783f3"
+      }
+    },
+    "voice": {
+      "at": "2026-10-11T04:58:55.944Z",
+      "task": "AIRI-037",
+      "note": "人工核对本轮启停/休眠执行门控、固定回归及对应来源；历史验证数字保留，实际设备和模型边界明确。",
+      "fingerprints": {
+        "catalog": "269914b9ba6766bb3b1702ecbccf9661f6488bc970e076357846a378f0387fd8",
+        "wiki/modules/voice.md": "d4aff8421e43a7e6ffddfc4d47cc32d5102479cad1926f21948bf675c55ada44",
+        "airi/packages/stage-ui/src/stores/modules/hearing.ts": "7fb603fc6b9f413c7f3afc0b07b369aa5d590fe8ef7cdda8dce56b8a0141cf04",
+        "airi/packages/stage-ui/src/stores/modules/speech.ts": "0fff5e1e3560e8034318e34f8f0d3edf487f22ea0fc4ffac2ef56813546bbacb",
+        "airi/packages/realtime-voice/src/pcm.ts": "9688c2f952b043aa361edd7aa55743cb0f0d33ebeef889f33719c5d05067efd6",
+        "airi/packages/realtime-voice/src/doubao.ts": "bb9f4089c0815dda41a89e65f351eefd94bc191ba5f550c27a090cfeff9e335c",
+        "airi/packages/realtime-voice/src/gateway.ts": "ea979a337afede2a1d744759cdc9610b34b48ea8b98ae39007092275c05186d6",
+        "airi/packages/stage-ui/src/stores/modules/realtime-voice.ts": "03d8538bde27e200d81d0e7a53da9d377d596f6750cb386318a3c09309c56922",
+        "airi/packages/realtime-voice/src/audio.ts": "7eb221863f24fbff7811ed3328fcee4e3efea71a008876fe03464b5dceb53a6c",
+        "airi/packages/realtime-voice/src/contracts.ts": "c595e21c818b4944d8f476dabf2d6e657a7a9d720a24b2923df0d7b226530128",
+        "airi/docs/ai/reports/2026-10-03-voice-delivery-fix.md": "572e33a5dfce9f0a1ce3e1f7b528560293a2f1fcf41556c5ed20a1aa4c848090",
+        "airi/packages/realtime-voice/src/conversation.ts": "f03281e432509398016d8503253d0671ead8ade571750e47e4a615e2ae0f9539",
+        "airi/docs/ai/reports/2026-10-04-fast-conversation-policy.md": "bda6eca657a76f598da274d19f1930d5f561061f2cc4e31f7916ce4f04cae277",
+        "airi/packages/stage-ui/src/services/local-vision-context.ts": "115a1229b2ed27923764cf15809e3f85221322c588e723674cc2d1cfc951deda",
+        "airi/packages/stage-ui/src/stores/local-vision.ts": "23e9a3bdb82eba08c6b458317b0fb9c7c07eec2a9b430fe5f77bc77e849719d2",
+        "airi/packages/stage-ui/src/stores/stage-identity.ts": "0497f0bc349ee14110467b06e489266ea4554977e848e896aadf7b845cb783f3",
+        "airi/packages/stage-ui/src/services/chat-archive.ts": "87cfc73d71342b6498018284e5061ac0d86d33c00d56fb4d74893f851673e064",
+        "airi/packages/stage-ui/src/stores/chat-archive.ts": "edc7233c5f67175732c87ed49f64c8e52cd0c1febb4fe2e8b23e3aaf4eb31551",
+        "airi/packages/stage-ui/src/libs/chat-archive-events.ts": "78b6f9c2d9898a66c60a31b62f0ca90022f3516c9612f06d214f2aca637dcbde"
+      }
+    },
+    "storage-memory": {
+      "at": "2026-10-09T10:04:42.907Z",
+      "task": "AIRI-035",
+      "note": "核对IndexedDB原文与注解落点、账户/智能体范围、缺失时间、删除锁及所有入口级联清理。",
+      "fingerprints": {
+        "catalog": "ef13949f6e35eaaf1dace93d6a9c3951caf06d38d189c7893c97f62b4c25d950",
+        "wiki/modules/storage-memory.md": "4a25a01704b2660b5056c41f65b079b2ef8ea50083e4ed5beeb60866c220bd1e",
+        "airi/packages/stage-ui/src/database/storage.ts": "28fd2ff7620c7776ad92723836247ca3d815bd3f575d384987d313741ea504b6",
+        "airi/packages/stage-ui/src/database/repos/chat-sessions.repo.ts": "6ecd6f6419b8c6e4e178beab3b27a445a8e000e51cfd725152df8c11b34e5316",
+        "airi/packages/stage-ui/src/stores/chat/session-store.ts": "ccdaa7291a00365fa5af79450025337dc7d21db970f34883430f14aba4349068",
+        "airi/packages/stage-ui/src/stores/providers/config.ts": "2a30f2a07c49e5fcb366462ca7a2c7ca061ed6cbe21099e38a46d53d38da7f98",
+        "airi/services/local-vision/identity.py": "50b11e4ce0073b5c10eabf6c768dc9903a7212c7c977675a0ff6a908b6f3888f",
+        "airi/packages/memory-pgvector/src/index.ts": "5d97984288d18607ca47cb7b81ec3a4727844a91c20c3c0f676f1b760e163f79",
+        "airi/services/local-vision/recognition.py": "2dd1c461c4152441731d266786b9047765ca3d8f0ba8715f6d1a4721332054fc",
+        "airi/services/local-vision/developer.py": "f9d74a3687c18298f0e92e6364a6bc8ad8557e16ae7f341a46c810281b089955",
+        "airi/packages/stage-ui/src/stores/developer-access.ts": "73330f1439571b61ef223b786639b75adfaab28a7efcbe345c9bbc2e9f71d8b5",
+        "airi/packages/stage-ui/src/components/scenarios/developer-gate.vue": "c6bd55602f1532df722b3789e77a2ae993e59d476a0769e053a8a2deb62e1303",
+        "airi/packages/stage-ui/src/components/scenarios/memory-manager.vue": "9804ac1be59812285721a1b6a55561b4b12c45d925ff57b56b653db3cd25837c",
+        "airi/services/local-vision/tests/testdeveloper.py": "774ff5babcedabf2ff18a5d21bac4165cade56703937d0f71ee49d74db2440c1",
+        "airi/services/local-vision/tests/testsocial.py": "18b581a726bdf6c91b21a6f05424d96fcb04aa2decdc5d52f53eedb90a2db481",
+        "airi/services/local-vision/adaptation.py": "3c7ec8f4dddf936d1a070a9709e0ab8e0958fa6cc3480ffe640e3208c9a39415",
+        "airi/packages/stage-ui/src/stores/stage-identity.ts": "0497f0bc349ee14110467b06e489266ea4554977e848e896aadf7b845cb783f3",
+        "airi/packages/stage-ui/src/components/scenarios/chat/components/sessions-drawer.vue": "72c66b2e068fbd4051bc066ee753771c21827dd68f41264c2713e7408f9d2bc7",
+        "airi/packages/stage-ui/src/services/chat-archive.ts": "87cfc73d71342b6498018284e5061ac0d86d33c00d56fb4d74893f851673e064",
+        "airi/packages/stage-ui/src/stores/chat-archive.ts": "edc7233c5f67175732c87ed49f64c8e52cd0c1febb4fe2e8b23e3aaf4eb31551",
+        "airi/packages/stage-ui/src/libs/chat-archive-events.ts": "78b6f9c2d9898a66c60a31b62f0ca90022f3516c9612f06d214f2aca637dcbde"
+      }
+    },
+    "clients": {
+      "at": "2026-10-11T04:58:57.075Z",
+      "task": "AIRI-037",
+      "note": "人工核对本轮启停/休眠执行门控、固定回归及对应来源；历史验证数字保留，实际设备和模型边界明确。",
+      "fingerprints": {
+        "catalog": "74232b173342be8bb32937d3bad1f665200db1f940049691af1a15af37f74609",
+        "wiki/modules/clients.md": "cf6105edd670589805ae7aa8082f5ea364a4d81c716ebdc52a83d6f5a731d92b",
+        "airi/apps/stage-web/src/App.vue": "d805d255ef618e8547c70e9159689973e5d0b046727a87295807ef85d3a772db",
+        "airi/packages/stage-ui/src/components/scenes/Stage.vue": "cb9385d4cd5e99bf7686a860b2d0d0e6561b4d27895729778b35948561e3db42",
+        "airi/packages/stage-ui/src/stores/modules/airi-card.ts": "d3131a3b96fbe9505f52da3d929086d01163588ce0ffde687c41a5a3d20c43d9",
+        "airi/packages/provider-inference/src/providers/index.ts": "c3ac4f48c70f34070f54d855b5c7e2a0c390d87d879194d620b22f57ff1b71ef",
+        "airi/packages/stage-layouts/src/layouts/settings.vue": "0960ddfa97db8b61fbbf4d7af316eaf47669b1e955bbdce43ef36e13caac50cd",
+        "airi/apps/stage-tamagotchi/src/main/index.ts": "9e8efd97a1a6d0750b9a4eba7d04cac074a73a32fc4f1f30e52b6be9a772aafe",
+        "airi/packages/stage-ui-live2d/src/components/scenes/Live2D.vue": "95d4baed53a054e73da71673a4ede5cd357db4bd6cb369f356dd1244ab276d21",
+        "airi/packages/stage-ui-three/src/components/Model/VRMModel.vue": "8c76cd5b7a8383e4e193b0c07c0ffd6475217e2ddd746476fde4934df25558f1",
+        "airi/packages/stage-ui-three/src/composables/vrm/head-gaze.ts": "a2de8c07ea5c73f64667081d01e02846472df7b1f680610ab5111a358fba11c4",
+        "airi/packages/stage-ui/src/composables/vision/use-face-gaze.ts": "76dc398cf934b5a623aa11eafff8a332f2f65209815f68fd8eda1b6c6c4ee0dd",
+        "airi/apps/stage-web/src/pages/index.vue": "35aec7fe6cd2e480368cd7ad93e7852d598ab34776d023cd01c16f290a1dfc19",
+        "airi/packages/stage-ui/src/components/scenarios/realtime-voice-controls.vue": "61fca1c33c0aea018ceb8a1fb5e9f6d53e05be03d2ad9f23d788263e563416bc",
+        "airi/packages/stage-pages/src/pages/settings/modules/realtime-voice.vue": "2701d23df60ad8d1448ba91008b1fb885103064b93da5e544b77a65724cf8787",
+        "airi/docs/ai/reports/2026-10-03-voice-delivery-fix.md": "572e33a5dfce9f0a1ce3e1f7b528560293a2f1fcf41556c5ed20a1aa4c848090",
+        "airi/packages/realtime-voice/src/conversation.ts": "f03281e432509398016d8503253d0671ead8ade571750e47e4a615e2ae0f9539",
+        "airi/docs/ai/reports/2026-10-04-fast-conversation-policy.md": "bda6eca657a76f598da274d19f1930d5f561061f2cc4e31f7916ce4f04cae277",
+        "airi/packages/stage-ui/src/components/scenarios/memory-manager.vue": "9804ac1be59812285721a1b6a55561b4b12c45d925ff57b56b653db3cd25837c",
+        "airi/packages/stage-ui/src/components/scenarios/developer-gate.vue": "c6bd55602f1532df722b3789e77a2ae993e59d476a0769e053a8a2deb62e1303",
+        "airi/packages/stage-ui/src/stores/stage-identity.ts": "0497f0bc349ee14110467b06e489266ea4554977e848e896aadf7b845cb783f3",
+        "airi/packages/stage-layouts/src/components/Layouts/HeaderAvatar.vue": "9ba87155c7710e10cb548a8b770c85b70eec9817c055ff697d45ea22f2cf6611",
+        "airi/packages/stage-ui/src/services/chat-archive.ts": "87cfc73d71342b6498018284e5061ac0d86d33c00d56fb4d74893f851673e064",
+        "airi/packages/stage-ui/src/stores/chat-archive.ts": "edc7233c5f67175732c87ed49f64c8e52cd0c1febb4fe2e8b23e3aaf4eb31551",
+        "airi/packages/stage-ui/src/libs/chat-archive-events.ts": "78b6f9c2d9898a66c60a31b62f0ca90022f3516c9612f06d214f2aca637dcbde"
+      }
+    },
+    "local-runtime": {
+      "at": "2026-10-11T04:58:58.288Z",
+      "task": "AIRI-037",
+      "note": "人工核对本轮启停/休眠执行门控、固定回归及对应来源；历史验证数字保留，实际设备和模型边界明确。",
+      "fingerprints": {
+        "catalog": "858033f8a7742976fd5bbabd0669c11d76f48a3e829d63f326f79f624121a53d",
+        "wiki/modules/local-runtime.md": "a1649d7594f284157b837baef46b37290f02029e80e33e8b2d899f547af96b6f",
+        "scripts/airi-env.ps1": "af2f4405d15c50256ff226a8787b4ae02254a70c599d3b6dab677fd70b46da97",
+        "scripts/start-airi.ps1": "23eb4d83b7c35f78df3d6737ee58d201a75597c52dfa8171d9c470fb397dea1b",
+        "scripts/start-airi-background.ps1": "a531bdf76c1500448ea26b1ce780cba2d846d1af142f4875788cdb3b8bc6fa47",
+        "scripts/start-airi-lan.ps1": "d96491fbd7703cc44a6078a8c84aa56ff07a6fec901515d9a1caf6c80f267dc6",
+        "scripts/vision.ps1": "f58aca5f38f79fb64a4ff7b453ec7c5bd97058139ed91b379ef309f8e50d861d",
+        "scripts/lan-gateway.mjs": "c241f0c80de3b28dc0a1de5a9c32426d0200b23d579cb5e6936599b5f7995bf0",
+        "scripts/project-manager.mjs": "5079b0fde72f269ac54dde3c1e454a8cd24e0b22d5348b79d55d4463d05dfee4",
+        "scripts/project-wiki.mjs": "25ee16945acfd438b72e96266bb81349186d08c7befc52862a76bddc1d8a98a7",
+        "scripts/stop-airi.ps1": "cd51a6fa002fab26c33d69c75d5eb334cfb3629fb8b7de4847765b8a2a818e2f"
+      }
+    },
+    "memory": {
+      "at": "2026-10-12T03:45:44.056Z",
+      "task": "AIRI-038",
+      "note": "已阅读成长入口与变化后的演进时间线，核对其私有快照准备事实和未推送边界。",
+      "fingerprints": {
+        "catalog": "2a00e50ae268720d644918af958cbf70c66f1d013b97bdba9e51acf80d893504",
+        "wiki/memory/README.md": "b6f5491dbe80c410a1043b96a86f04cbaf96259b781a3f7d228c5cba2c839553",
+        "wiki/memory/evolution.md": "df676b58c3ede37bdc49b91070a7b33792963a128d0207b54409a11a18c466f4",
+        "wiki/memory/decisions.md": "729986b91b34171b63ac155936dcfa524ef1124aa7035691b8a3868797815522",
+        "wiki/memory/lessons.md": "ec078abe69b74bd444ca82ad64e8c6aa1e056ae9db77c37b322eadb90ef44a18",
+        "wiki/maintenance.md": "e8e3801a62a59ee2cd476008c083ecf0f3884b76806d1f3e8c0081eb9da1af77",
+        "wiki/memory/sessions/2026-10-01-adaptive-recognition.md": "c551b4c79047eddc74e9f1859a63bde47399b4a30a3922cac3a70330023e81b8",
+        "wiki/memory/sessions/2026-10-01-camera-face-gaze.md": "d2ba00086c098289907ca508b9093a391469a08c253ba67e84f499ce3965686b",
+        "wiki/memory/sessions/2026-10-03-firecrawl-403-fix.md": "30e35ec17107e9f1bc434cebdce6c5393cb5728cc4de7217aef2dde6f6ac7ea5",
+        "wiki/memory/sessions/2026-10-03-voice-delivery-fix.md": "6e8ea58f84b95a41e1da0f2a57c625da13179cc1211abbf4b30ee0a5e2b144e2",
+        "wiki/memory/sessions/2026-10-09-face-stage-accounts.md": "eb8247389553e3c0a5104f5bb416e37cf8acc43708c5219013715c81f74cc414"
+      }
+    },
+    "evolution": {
+      "at": "2026-10-12T03:45:46.841Z",
+      "task": "AIRI-038",
+      "note": "复核任务新增的准备检查结果与演进记录，当前仍待授权和推送。",
+      "fingerprints": {
+        "catalog": "ee11ff1552fb77e578438e5e8afa74fc86df463f2d737bb0622e675ab0f2086b",
+        "wiki/memory/evolution.md": "df676b58c3ede37bdc49b91070a7b33792963a128d0207b54409a11a18c466f4",
+        "项目管理/tasks.json": "9bfcaa5f4a21a99d46ced3673a42c34de32470b2af0128b3b70919fdadf842dd",
+        "开发文档/02-installation.md": "9c4960c2e2f51adaf614b3695b4ef708ad93b77acdd713909596216a8a843058",
+        "airi/docs/ai/adr/2026-09-29-local-social-vision.md": "95b8d81535f99c782621cca56bdd4d9e3283308743e804ef3538ee112040ede7",
+        "airi/docs/ai/adr/2026-09-30-active-social-companion.md": "3f5bf949f1322690b2bb3e103358f4ec31842295208f1c8d21a0f95cc35ac00b",
+        "airi/docs/ai/adr/2026-10-01-adaptive-face-recognition.md": "18168d2af76d5ff0684c54f2d2151a7af48be761ef38b16a77bbf49c13dcbd60",
+        "airi/docs/ai/adr/2026-10-01-camera-face-gaze.md": "d527104c0519ce1d82c5f6336b8b3d90257fa40e8c21b465d7471e7638502590"
+      }
+    },
+    "decisions": {
+      "at": "2026-10-11T04:59:01.601Z",
+      "task": "AIRI-037",
+      "note": "人工核对本轮启停/休眠执行门控、固定回归及对应来源；历史验证数字保留，实际设备和模型边界明确。",
+      "fingerprints": {
+        "catalog": "4838a05d6033f7a201c278fd1ca4f74160cf9b551dbcb6a32c25bca37d82108c",
+        "wiki/memory/decisions.md": "729986b91b34171b63ac155936dcfa524ef1124aa7035691b8a3868797815522",
+        "airi/docs/ai/adr/2026-09-29-local-social-vision.md": "95b8d81535f99c782621cca56bdd4d9e3283308743e804ef3538ee112040ede7",
+        "airi/docs/ai/adr/2026-09-30-active-social-companion.md": "3f5bf949f1322690b2bb3e103358f4ec31842295208f1c8d21a0f95cc35ac00b",
+        "wiki/maintenance.md": "e8e3801a62a59ee2cd476008c083ecf0f3884b76806d1f3e8c0081eb9da1af77",
+        "开发文档/07-local-vision.md": "41ef8e36efaf7cc1cc9fad95e3e078395957951c2a79a33721ff1f5d7c64c0a8",
+        "airi/docs/ai/adr/2026-10-01-adaptive-face-recognition.md": "18168d2af76d5ff0684c54f2d2151a7af48be761ef38b16a77bbf49c13dcbd60",
+        "airi/docs/ai/adr/2026-10-01-camera-face-gaze.md": "d527104c0519ce1d82c5f6336b8b3d90257fa40e8c21b465d7471e7638502590",
+        "airi/docs/ai/adr/2026-10-02-fast-slow-brain.md": "574fed2dc3d98f8ad469aa58d5ca7d8837d80a71c5c1267806f25cb148802d23",
+        "airi/docs/ai/reports/2026-10-03-voice-delivery-fix.md": "572e33a5dfce9f0a1ce3e1f7b528560293a2f1fcf41556c5ed20a1aa4c848090",
+        "airi/docs/ai/adr/2026-10-05-name-confirmation-memory.md": "9b824aea5eeff344f43bdb199d012fe14f3e51660c6d56a41f78aeb1c05114b0",
+        "airi/docs/ai/adr/2026-10-09-face-stage-accounts.md": "7c2e34ac8edeff220771e30a02bc35602d2367c199b6387b3c671044f9e75737"
+      }
+    },
+    "lessons": {
+      "at": "2026-10-11T04:59:02.821Z",
+      "task": "AIRI-037",
+      "note": "人工核对本轮启停/休眠执行门控、固定回归及对应来源；历史验证数字保留，实际设备和模型边界明确。",
+      "fingerprints": {
+        "catalog": "221ab635abb7fe05aeff5e858fb2efccd8f1b75cb07bbd64d8e171deff2cce18",
+        "wiki/memory/lessons.md": "ec078abe69b74bd444ca82ad64e8c6aa1e056ae9db77c37b322eadb90ef44a18",
+        "airi/docs/ai/adr/2026-09-30-active-social-companion.md": "3f5bf949f1322690b2bb3e103358f4ec31842295208f1c8d21a0f95cc35ac00b",
+        "airi/packages/realtime-voice/src/doubao.ts": "bb9f4089c0815dda41a89e65f351eefd94bc191ba5f550c27a090cfeff9e335c",
+        "airi/services/local-vision/social.py": "3520b8cfbe3a190816096e7bac731bbb5ed3b4f67117b8f89c146ddf4d68602e",
+        "airi/services/local-vision/identity.py": "50b11e4ce0073b5c10eabf6c768dc9903a7212c7c977675a0ff6a908b6f3888f",
+        "开发文档/08-lan-testing.md": "645439b66be42a66dc476760d89641fd52933b93f3193ba13d8e0c454ffefd68",
+        "wiki/maintenance.md": "e8e3801a62a59ee2cd476008c083ecf0f3884b76806d1f3e8c0081eb9da1af77",
+        "airi/packages/local-vision/src/gaze.ts": "8e8f110e8f82959a60c70f41ee80e47ac8cb4316279584d04b5112c1d8b9b16d",
+        "airi/packages/stage-ui-three/src/composables/vrm/head-gaze.ts": "a2de8c07ea5c73f64667081d01e02846472df7b1f680610ab5111a358fba11c4",
+        "airi/docs/ai/reports/2026-10-03-firecrawl-search.md": "fa34a424375b3ef0e93d9c3772d08aa287dbc4125a4fc4779fefe9bd037d2a5a",
+        "airi/docs/ai/reports/2026-10-03-firecrawl-403-fix.md": "ae24ece52fab1e073a24c054cd52049778ebbd84204626a4e16e5e2bef600d5d",
+        "airi/docs/ai/reports/2026-10-03-voice-delivery-fix.md": "572e33a5dfce9f0a1ce3e1f7b528560293a2f1fcf41556c5ed20a1aa4c848090",
+        "airi/docs/ai/reports/2026-10-09-face-stage-accounts.md": "d3011d018de18e787b6bbd5656cd38e724930eb7a127c8b595d55fccaa46ba52"
+      }
+    },
+    "maintenance": {
+      "at": "2026-10-11T04:59:03.957Z",
+      "task": "AIRI-037",
+      "note": "人工核对本轮启停/休眠执行门控、固定回归及对应来源；历史验证数字保留，实际设备和模型边界明确。",
+      "fingerprints": {
+        "catalog": "c70f49c793ace6eb53015af8630c294473fe8ad2ac19454af5f11c9579ac5a88",
+        "wiki/maintenance.md": "e8e3801a62a59ee2cd476008c083ecf0f3884b76806d1f3e8c0081eb9da1af77",
+        "AGENTS.md": "5d19133b2ccd143412862e84265cd1ab6be3ba5e36493108917d92e1bf9561f7",
+        "scripts/project-wiki.mjs": "25ee16945acfd438b72e96266bb81349186d08c7befc52862a76bddc1d8a98a7",
+        "scripts/workspace-source-files.mjs": "095fb30a77ecdfefba636b186b03c7777007ef593148f896253b22316f265ce2",
+        "scripts/generate-project-index.mjs": "2bc7663afe656b8792840f7c028e2e7f7ed266471fe49a54c09effc9f07fd559",
+        "scripts/project-manager.mjs": "5079b0fde72f269ac54dde3c1e454a8cd24e0b22d5348b79d55d4463d05dfee4"
+      }
+    },
+    "topic-template": {
+      "at": "2026-10-11T04:59:05.056Z",
+      "task": "AIRI-037",
+      "note": "人工核对本轮启停/休眠执行门控、固定回归及对应来源；历史验证数字保留，实际设备和模型边界明确。",
+      "fingerprints": {
+        "catalog": "b2a24d9c65a81508c59f83a466dcccb6af6b395573093aebb262e7bf735d6b58",
+        "wiki/templates/topic.md": "d29ffb2ee6987d4b13f76be440164917c55e0908e8da33b03d3af590f6ad7733",
+        "wiki/maintenance.md": "e8e3801a62a59ee2cd476008c083ecf0f3884b76806d1f3e8c0081eb9da1af77"
+      }
+    },
+    "session-template": {
+      "at": "2026-10-11T04:59:06.163Z",
+      "task": "AIRI-037",
+      "note": "人工核对本轮启停/休眠执行门控、固定回归及对应来源；历史验证数字保留，实际设备和模型边界明确。",
+      "fingerprints": {
+        "catalog": "af791680516a8ba940c2e36679d06cd45bb9b0cb93311c4c140006676a7f2d42",
+        "wiki/templates/session.md": "dcf83e3c5ba869806ebdd424dd267f91e3804fa5d88274fc9919da421c845b9f",
+        "wiki/maintenance.md": "e8e3801a62a59ee2cd476008c083ecf0f3884b76806d1f3e8c0081eb9da1af77"
+      }
+    },
+    "session-wiki": {
+      "at": "2026-10-01T08:54:21.780Z",
+      "task": "AIRI-013",
+      "note": "补入已执行检查：七项测试、十九篇API与指纹核对、lint、目录同步和浏览器结果。",
+      "fingerprints": {
+        "catalog": "39807ca23ad050c44b85b46a1373293f36e8153c8173250d0b7d13a2ff8ba794",
+        "wiki/memory/sessions/2026-10-01-project-wiki.md": "079ba298ee9ee8798d09702275b23dfbf3bf25f38ad9213b00b2f601bdc9ee79",
+        "scripts/project-wiki.mjs": "25ee16945acfd438b72e96266bb81349186d08c7befc52862a76bddc1d8a98a7",
+        "scripts/project-manager.mjs": "5079b0fde72f269ac54dde3c1e454a8cd24e0b22d5348b79d55d4463d05dfee4",
+        "scripts/project-manager-ui/app.js": "a27fdb84d40abecbafd65f876fb598cae25044f4ff9db6122210c876d5719758",
+        "scripts/project-manager-ui/index.html": "9cb14424bd0ede8a5e2352456c9e6a62af5c2d36cbb9dd679316cf6cefac7393",
+        "scripts/project-manager-ui/wiki.css": "4d724007809d5002fc34dae63c17d1141133c898380048366313f2b11ad5f1c2"
+      }
+    },
+    "session-recognition": {
+      "at": "2026-10-06T14:18:21.366Z",
+      "task": "AIRI-029",
+      "note": "核对历史46项证据保留，标注两秒窗口及扩展审核的新替代方案",
+      "fingerprints": {
+        "catalog": "f9bbe2b50e0496b9412e69884c60973972876bfa8003ad1a876bb4ed0065a6ac",
+        "wiki/memory/sessions/2026-10-01-adaptive-recognition.md": "c551b4c79047eddc74e9f1859a63bde47399b4a30a3922cac3a70330023e81b8",
+        "airi/services/local-vision/recognition.py": "2dd1c461c4152441731d266786b9047765ca3d8f0ba8715f6d1a4721332054fc",
+        "airi/services/local-vision/model.py": "d247fdce431c1d2e32d39f0bdf39e2139856d9c69b28521b891740dd0f89043a",
+        "airi/services/local-vision/reports/recognition-benchmark.actual.json": "823978b3e5e31be4f9b3df501978a50a35c136e92034ba4d3baa6b2fed0c27f1",
+        "airi/services/local-vision/reports/recognition-probe.actual.json": "ed9d59d87780385a75f9ab92fca2e24916b73370aa452c4e2dd996fc869f3390",
+        "airi/services/local-vision/reports/validation.adaptive-recognition.md": "2ded052112bdba1604013b3ed5324d0b8244fd38ff455ea9312dd46d93eec521"
+      }
+    },
+    "session-face-gaze": {
+      "at": "2026-10-01T13:29:31.175Z",
+      "task": "AIRI-015",
+      "note": "核对最终服务与索引记录，保持笔记本待验边界",
+      "fingerprints": {
+        "catalog": "a295946eca0472f004a627d6c20c98abd1b2fefda83f610a3cce756545fb9c10",
+        "wiki/memory/sessions/2026-10-01-camera-face-gaze.md": "d2ba00086c098289907ca508b9093a391469a08c253ba67e84f499ce3965686b",
+        "airi/docs/ai/adr/2026-10-01-camera-face-gaze.md": "d527104c0519ce1d82c5f6336b8b3d90257fa40e8c21b465d7471e7638502590",
+        "airi/services/local-vision/reports/validation.face-gaze.md": "37ff52e28bd7025fbf82e2944ab75b7cf1d0add59c7129deb82c06126afeef82",
+        "airi/packages/local-vision/src/gaze.ts": "8e8f110e8f82959a60c70f41ee80e47ac8cb4316279584d04b5112c1d8b9b16d",
+        "airi/packages/stage-ui-three/src/composables/vrm/head-gaze.ts": "a2de8c07ea5c73f64667081d01e02846472df7b1f680610ab5111a358fba11c4"
+      }
+    },
+    "fast-slow-brain": {
+      "at": "2026-10-11T04:59:07.309Z",
+      "task": "AIRI-037",
+      "note": "人工核对本轮启停/休眠执行门控、固定回归及对应来源；历史验证数字保留，实际设备和模型边界明确。",
+      "fingerprints": {
+        "catalog": "c3918fe9b30f7854af9af605d29392ed7ca128ba940c94a483ebae5f6ec4f658",
+        "wiki/modules/fast-slow-brain.md": "7420225318e76b1cc9a96b9868c955ea436f353716886ea032f14124edc50854",
+        "airi/packages/realtime-voice/src/brain.ts": "052430b4963294fc9498a0c836866e48cc873ed371249fa9791d1e80c8eea251",
+        "airi/packages/realtime-voice/src/contracts.ts": "c595e21c818b4944d8f476dabf2d6e657a7a9d720a24b2923df0d7b226530128",
+        "airi/packages/realtime-voice/src/gateway.ts": "ea979a337afede2a1d744759cdc9610b34b48ea8b98ae39007092275c05186d6",
+        "airi/packages/realtime-voice/src/gateway.test.ts": "bd1b15c56708be9b46d511853486819c6829ade4aea8d3c5b5054238a3ff2acb",
+        "airi/packages/realtime-voice/src/doubao.ts": "bb9f4089c0815dda41a89e65f351eefd94bc191ba5f550c27a090cfeff9e335c",
+        "airi/packages/stage-ui/src/stores/modules/slow-brain.ts": "90263f37d4faf5a611327333417bacf2b261b263a861367e517c99bce5d8b5df",
+        "airi/packages/stage-ui/src/stores/modules/realtime-voice.ts": "03d8538bde27e200d81d0e7a53da9d377d596f6750cb386318a3c09309c56922",
+        "airi/packages/stage-ui/src/composables/use-chat-input.ts": "f7bebed0a4bd06b4553c70de0c8088551ce4f98155d3215f9a6af9218d82007a",
+        "airi/packages/stage-ui/src/stores/modules/realtime-brain.browser.test.ts": "ea402d42efc5938964c7a9922b3d34e78c0cd5279f105846f78a2ef44bbea9e6",
+        "开发文档/06-realtime-voice.md": "00cf6689c89f5cb95ea05a878a32e7fe7180e47305a77e4d7c3257815b9f9cc3",
+        "airi/packages/stage-ui/src/stores/modules/web-search.ts": "2599e64301d756a8dbb6ab19e43a44852d8086af1d866ccb9f45fa54880e04d4",
+        "airi/packages/stage-ui/src/stores/ai/chat-llm/tool-resolver.ts": "9b6a71a101027458189f05ea43db94381bd08e46710fdf6e4db98bc0740c3eeb",
+        "airi/packages/provider-inference/src/providers/cloud/deepseek/index.ts": "eaa136ca0eeceb61aaabe8037fcb924854ae391e0873911b9102bf8ab72451ef",
+        "airi/docs/ai/reports/2026-10-03-search-capability.md": "ee37294ef9e658a4eb56a68b60f3446939a6e9bffbafb14ead460401c706af2b",
+        "airi/docs/ai/reports/2026-10-03-firecrawl-search.md": "fa34a424375b3ef0e93d9c3772d08aa287dbc4125a4fc4779fefe9bd037d2a5a",
+        "airi/packages/stage-ui/src/tools/web-search.ts": "ae6b8d296492c2477d4ad42292817785c88f80af275bd83afbf05f1f8711838f",
+        "airi/packages/stage-ui/src/components/modules/WebSearch.vue": "715a37a56ebe1bc943d7d7f89b40b1fbcf77db67a8def9e74efeb2a076294f36",
+        "airi/docs/ai/reports/2026-10-03-firecrawl-403-fix.md": "ae24ece52fab1e073a24c054cd52049778ebbd84204626a4e16e5e2bef600d5d",
+        "airi/packages/stage-ui/src/tools/web-search-gateway.ts": "af65d97d5b432d486ec8d248edd0150a7f253fe24bbf4188ac3aa857b3a8bd51",
+        "airi/packages/stage-ui/src/tools/web-search-contract.ts": "31a6a4cff712c96e929dad0fa109ca43265767f024437acd68f00cf919fc3d79",
+        "airi/packages/stage-ui/src/components/scenarios/realtime-voice-controls.vue": "61fca1c33c0aea018ceb8a1fb5e9f6d53e05be03d2ad9f23d788263e563416bc",
+        "airi/docs/ai/reports/2026-10-03-voice-slow-brain-link.md": "f9571c28d666ba2cc2a0ea26a2d3bc5d56b09e3b41258440c8ef02888d6b25ce",
+        "airi/docs/ai/reports/2026-10-03-voice-delivery-fix.md": "572e33a5dfce9f0a1ce3e1f7b528560293a2f1fcf41556c5ed20a1aa4c848090",
+        "airi/packages/realtime-voice/src/conversation.ts": "f03281e432509398016d8503253d0671ead8ade571750e47e4a615e2ae0f9539",
+        "airi/docs/ai/reports/2026-10-04-fast-conversation-policy.md": "bda6eca657a76f598da274d19f1930d5f561061f2cc4e31f7916ce4f04cae277",
+        "airi/docs/ai/reports/2026-10-06-chatty-preparation-and-persona.md": "8c1e5cf3cfc6f6a39cb356fa69faec1e8d8adde38d0fd5131e7e49e74332c580",
+        "airi/packages/stage-ui/src/services/local-vision-context.ts": "115a1229b2ed27923764cf15809e3f85221322c588e723674cc2d1cfc951deda",
+        "airi/packages/stage-ui/src/stores/local-vision.ts": "23e9a3bdb82eba08c6b458317b0fb9c7c07eec2a9b430fe5f77bc77e849719d2",
+        "airi/packages/realtime-voice/src/prompts.ts": "667129522c73a5295ce1eb79545ae3e614a10dfee739f637e3c3da73360bce31",
+        "airi/packages/stage-ui/src/stores/stage-identity.ts": "0497f0bc349ee14110467b06e489266ea4554977e848e896aadf7b845cb783f3",
+        "airi/packages/stage-ui/src/services/chat-archive.ts": "87cfc73d71342b6498018284e5061ac0d86d33c00d56fb4d74893f851673e064",
+        "airi/packages/stage-ui/src/stores/chat-archive.ts": "edc7233c5f67175732c87ed49f64c8e52cd0c1febb4fe2e8b23e3aaf4eb31551",
+        "airi/packages/stage-ui/src/libs/chat-archive-events.ts": "78b6f9c2d9898a66c60a31b62f0ca90022f3516c9612f06d214f2aca637dcbde"
+      }
+    },
+    "session-fast-slow": {
+      "at": "2026-10-02T14:40:24.714Z",
+      "task": "AIRI-016",
+      "note": "核对本轮用户目标、最终实施、实际命令结果与未配置服务交接",
+      "fingerprints": {
+        "catalog": "c87c5d226481b52ecba85ff2a5e9bbe723c2ed98133e2d11703450c899bf8a21",
+        "wiki/memory/sessions/2026-10-02-fast-slow-brain.md": "cfcfc76275683a6a63e1b5ac4bf9124b5a17cb99c260605e317d51f45149fa52",
+        "airi/docs/ai/adr/2026-10-02-fast-slow-brain.md": "574fed2dc3d98f8ad469aa58d5ca7d8837d80a71c5c1267806f25cb148802d23",
+        "airi/docs/ai/reports/2026-10-02-fast-slow-brain.md": "811c5123d9af5697f2a1550eff14f95e28219c51262793222593008d7784ff5e"
+      }
+    },
+    "session-search-capability": {
+      "at": "2026-10-09T10:04:49.885Z",
+      "task": "AIRI-035",
+      "note": "人工复核本页历史结论和本轮对应源码增量：新增当前关系档案引用/工具及测试时机等待，不改联网权限、唯一发声、工作规则或预算。历史测试统计保留，真实模型仍未重新验收；当前档案边界见AIRI-035专题。",
+      "fingerprints": {
+        "catalog": "9ce8c0c60dceaaffcaf205e13c0f64e576156c05d6a0f67e4a86f9d119a807af",
+        "wiki/memory/sessions/2026-10-03-search-capability.md": "585dbc9c2eab751cf632d12053b5ebee12d2dab99c53a44a6d5ba874a92038d0",
+        "airi/docs/ai/reports/2026-10-03-search-capability.md": "ee37294ef9e658a4eb56a68b60f3446939a6e9bffbafb14ead460401c706af2b",
+        "airi/packages/realtime-voice/src/doubao.ts": "bb9f4089c0815dda41a89e65f351eefd94bc191ba5f550c27a090cfeff9e335c",
+        "airi/packages/stage-ui/src/stores/modules/slow-brain.ts": "90263f37d4faf5a611327333417bacf2b261b263a861367e517c99bce5d8b5df"
+      }
+    },
+    "session-firecrawl": {
+      "at": "2026-10-09T10:04:50.868Z",
+      "task": "AIRI-035",
+      "note": "人工复核本页历史结论和本轮对应源码增量：新增当前关系档案引用/工具及测试时机等待，不改联网权限、唯一发声、工作规则或预算。历史测试统计保留，真实模型仍未重新验收；当前档案边界见AIRI-035专题。",
+      "fingerprints": {
+        "catalog": "23541ede2e2c77d4be39629103b0369d365c70b81c15ff80786bf6ee0d9bd8a1",
+        "wiki/memory/sessions/2026-10-03-firecrawl-search.md": "36787c7c728ef5f3594a4445437b6e5757ebdf757d7505c9a99f1cc3e55da60a",
+        "airi/docs/ai/reports/2026-10-03-firecrawl-search.md": "fa34a424375b3ef0e93d9c3772d08aa287dbc4125a4fc4779fefe9bd037d2a5a",
+        "airi/packages/stage-ui/src/tools/web-search.ts": "ae6b8d296492c2477d4ad42292817785c88f80af275bd83afbf05f1f8711838f",
+        "airi/packages/stage-ui/src/stores/modules/web-search.ts": "2599e64301d756a8dbb6ab19e43a44852d8086af1d866ccb9f45fa54880e04d4",
+        "airi/packages/stage-ui/src/stores/modules/slow-brain.ts": "90263f37d4faf5a611327333417bacf2b261b263a861367e517c99bce5d8b5df",
+        "airi/packages/stage-ui/src/stores/ai/chat-llm/tool-resolver.ts": "9b6a71a101027458189f05ea43db94381bd08e46710fdf6e4db98bc0740c3eeb",
+        "airi/packages/stage-ui/src/components/modules/WebSearch.vue": "715a37a56ebe1bc943d7d7f89b40b1fbcf77db67a8def9e74efeb2a076294f36",
+        "airi/packages/stage-ui/src/tools/firecrawl-search.browser.test.ts": "1c4f24fd019a30161f4a0198be36ce55bdaa5c15c03469ee5e35e1ceb761ed1b",
+        "airi/packages/stage-ui/src/stores/modules/web-search.browser.test.ts": "70ea5c2038efbcac907123bd06d49758c89cb8a7c0e74e69be47e17a3d6a789a",
+        "scripts/firecrawl.ps1": "d74ff00a0684def0823e5e92268afb28e12effdb1fd63426080c4bea5945b949",
+        "scripts/airi-env.ps1": "af2f4405d15c50256ff226a8787b4ae02254a70c599d3b6dab677fd70b46da97"
+      }
+    },
+    "session-firecrawl-fix": {
+      "at": "2026-10-11T04:59:08.514Z",
+      "task": "AIRI-037",
+      "note": "人工核对本轮启停/休眠执行门控、固定回归及对应来源；历史验证数字保留，实际设备和模型边界明确。",
+      "fingerprints": {
+        "catalog": "00fd161048f23416d95278f3b18ecdc0bb682d37fd45bdce532b0e958a457ddc",
+        "wiki/memory/sessions/2026-10-03-firecrawl-403-fix.md": "30e35ec17107e9f1bc434cebdce6c5393cb5728cc4de7217aef2dde6f6ac7ea5",
+        "airi/docs/ai/reports/2026-10-03-firecrawl-403-fix.md": "ae24ece52fab1e073a24c054cd52049778ebbd84204626a4e16e5e2bef600d5d",
+        "airi/packages/stage-ui/src/tools/web-search-gateway.ts": "af65d97d5b432d486ec8d248edd0150a7f253fe24bbf4188ac3aa857b3a8bd51",
+        "airi/packages/stage-ui/src/tools/web-search-contract.ts": "31a6a4cff712c96e929dad0fa109ca43265767f024437acd68f00cf919fc3d79",
+        "airi/apps/stage-web/vite.config.ts": "2bd89d2bd15ef60e65799a29e77ffebe712d2d13c94b1e83aefc0ad8da569abe",
+        "airi/packages/stage-ui/src/tools/web-search-gateway.test.ts": "1e0472b234e5b5f7bb6a673031edcbfb04ef69763265a722dc012763b0da03c9",
+        "airi/packages/stage-ui/src/tools/firecrawl-search.browser.test.ts": "1c4f24fd019a30161f4a0198be36ce55bdaa5c15c03469ee5e35e1ceb761ed1b",
+        "airi/packages/stage-ui/src/stores/modules/web-search.ts": "2599e64301d756a8dbb6ab19e43a44852d8086af1d866ccb9f45fa54880e04d4",
+        "airi/packages/stage-ui/src/stores/modules/web-search.browser.test.ts": "70ea5c2038efbcac907123bd06d49758c89cb8a7c0e74e69be47e17a3d6a789a",
+        "airi/packages/stage-ui/src/components/modules/WebSearch.vue": "715a37a56ebe1bc943d7d7f89b40b1fbcf77db67a8def9e74efeb2a076294f36",
+        "airi/packages/stage-ui/src/stores/ai/chat-llm/tool-resolver.ts": "9b6a71a101027458189f05ea43db94381bd08e46710fdf6e4db98bc0740c3eeb",
+        "airi/packages/i18n/src/locales/zh-Hans/settings.yaml": "b80bddf3e1735e13c4aaa18e434d2de435281b0af286b1572343e1db8cb5c67f"
+      }
+    },
+    "session-voice-slow-link": {
+      "at": "2026-10-11T04:59:09.612Z",
+      "task": "AIRI-037",
+      "note": "人工核对本轮启停/休眠执行门控、固定回归及对应来源；历史验证数字保留，实际设备和模型边界明确。",
+      "fingerprints": {
+        "catalog": "f49d1a33a460b5509ead89ce506107ca71fdb7dc5ec23c5f6ff8fdbc1d9cfe41",
+        "wiki/memory/sessions/2026-10-03-voice-slow-brain-link.md": "956257de708280f894fe4034f09233c2a38592e047fc871b0812accaf3397f51",
+        "airi/docs/ai/reports/2026-10-03-voice-slow-brain-link.md": "f9571c28d666ba2cc2a0ea26a2d3bc5d56b09e3b41258440c8ef02888d6b25ce",
+        "airi/packages/realtime-voice/src/brain.ts": "052430b4963294fc9498a0c836866e48cc873ed371249fa9791d1e80c8eea251",
+        "airi/packages/realtime-voice/src/contracts.ts": "c595e21c818b4944d8f476dabf2d6e657a7a9d720a24b2923df0d7b226530128",
+        "airi/packages/realtime-voice/src/doubao.ts": "bb9f4089c0815dda41a89e65f351eefd94bc191ba5f550c27a090cfeff9e335c",
+        "airi/packages/realtime-voice/src/gateway.ts": "ea979a337afede2a1d744759cdc9610b34b48ea8b98ae39007092275c05186d6",
+        "airi/packages/realtime-voice/src/gateway.test.ts": "bd1b15c56708be9b46d511853486819c6829ade4aea8d3c5b5054238a3ff2acb",
+        "airi/packages/stage-ui/src/stores/modules/slow-brain.ts": "90263f37d4faf5a611327333417bacf2b261b263a861367e517c99bce5d8b5df",
+        "airi/packages/stage-ui/src/stores/modules/realtime-voice.ts": "03d8538bde27e200d81d0e7a53da9d377d596f6750cb386318a3c09309c56922",
+        "airi/packages/stage-ui/src/stores/modules/realtime-brain.browser.test.ts": "ea402d42efc5938964c7a9922b3d34e78c0cd5279f105846f78a2ef44bbea9e6",
+        "airi/packages/stage-ui/src/components/scenarios/realtime-voice-controls.vue": "61fca1c33c0aea018ceb8a1fb5e9f6d53e05be03d2ad9f23d788263e563416bc"
+      }
+    },
+    "session-voice-delivery": {
+      "at": "2026-10-11T04:59:10.707Z",
+      "task": "AIRI-037",
+      "note": "人工核对本轮启停/休眠执行门控、固定回归及对应来源；历史验证数字保留，实际设备和模型边界明确。",
+      "fingerprints": {
+        "catalog": "f9f26f0151f229e2bd973fd5dbf7ebc153084f884fdef601c401237dea65d38c",
+        "wiki/memory/sessions/2026-10-03-voice-delivery-fix.md": "6e8ea58f84b95a41e1da0f2a57c625da13179cc1211abbf4b30ee0a5e2b144e2",
+        "airi/docs/ai/reports/2026-10-03-voice-delivery-fix.md": "572e33a5dfce9f0a1ce3e1f7b528560293a2f1fcf41556c5ed20a1aa4c848090",
+        "airi/packages/realtime-voice/src/contracts.ts": "c595e21c818b4944d8f476dabf2d6e657a7a9d720a24b2923df0d7b226530128",
+        "airi/packages/realtime-voice/src/doubao.ts": "bb9f4089c0815dda41a89e65f351eefd94bc191ba5f550c27a090cfeff9e335c",
+        "airi/packages/realtime-voice/src/audio.ts": "7eb221863f24fbff7811ed3328fcee4e3efea71a008876fe03464b5dceb53a6c",
+        "airi/packages/realtime-voice/src/brain.ts": "052430b4963294fc9498a0c836866e48cc873ed371249fa9791d1e80c8eea251",
+        "airi/packages/realtime-voice/src/gateway.test.ts": "bd1b15c56708be9b46d511853486819c6829ade4aea8d3c5b5054238a3ff2acb",
+        "airi/packages/stage-ui/src/stores/modules/realtime-voice.ts": "03d8538bde27e200d81d0e7a53da9d377d596f6750cb386318a3c09309c56922",
+        "airi/packages/stage-ui/src/stores/modules/realtime-brain.browser.test.ts": "ea402d42efc5938964c7a9922b3d34e78c0cd5279f105846f78a2ef44bbea9e6",
+        "airi/packages/stage-ui/src/stores/modules/realtime-audio.browser.test.ts": "76715f386428ed1ab09d5eea0773381fc80f21ad0cd934bb7326979b1f27354c",
+        "airi/packages/stage-ui/src/components/scenarios/realtime-voice-controls.vue": "61fca1c33c0aea018ceb8a1fb5e9f6d53e05be03d2ad9f23d788263e563416bc",
+        "airi/apps/stage-web/src/pages/index.vue": "35aec7fe6cd2e480368cd7ad93e7852d598ab34776d023cd01c16f290a1dfc19"
+      }
+    },
+    "session-fast-conversation-policy": {
+      "at": "2026-10-11T04:59:11.857Z",
+      "task": "AIRI-037",
+      "note": "人工核对本轮启停/休眠执行门控、固定回归及对应来源；历史验证数字保留，实际设备和模型边界明确。",
+      "fingerprints": {
+        "catalog": "ec14dd6664cb15df9b4e867cb81e2c7a53662556a80df2d908ade57a8e10aaf4",
+        "wiki/memory/sessions/2026-10-04-fast-conversation-policy.md": "e8d9d8044f5d88ed59917afd73fdaec04719872e5d812ce55c6677e8c2d18e80",
+        "airi/docs/ai/reports/2026-10-04-fast-conversation-policy.md": "bda6eca657a76f598da274d19f1930d5f561061f2cc4e31f7916ce4f04cae277",
+        "airi/packages/realtime-voice/src/conversation.ts": "f03281e432509398016d8503253d0671ead8ade571750e47e4a615e2ae0f9539",
+        "airi/packages/realtime-voice/src/conversation.test.ts": "41d70ebdacef967d9ff8342b62962ae2fbeb7cb2c6277fc322e3b3d2e76d22f7",
+        "airi/packages/realtime-voice/src/brain.ts": "052430b4963294fc9498a0c836866e48cc873ed371249fa9791d1e80c8eea251",
+        "airi/packages/stage-ui/src/stores/modules/slow-brain.ts": "90263f37d4faf5a611327333417bacf2b261b263a861367e517c99bce5d8b5df",
+        "airi/packages/stage-ui/src/stores/modules/realtime-voice.ts": "03d8538bde27e200d81d0e7a53da9d377d596f6750cb386318a3c09309c56922",
+        "airi/packages/stage-ui/src/stores/modules/realtime-brain.browser.test.ts": "ea402d42efc5938964c7a9922b3d34e78c0cd5279f105846f78a2ef44bbea9e6",
+        "airi/packages/stage-ui/src/components/scenarios/realtime-voice-controls.vue": "61fca1c33c0aea018ceb8a1fb5e9f6d53e05be03d2ad9f23d788263e563416bc",
+        "airi/packages/stage-pages/src/pages/settings/modules/realtime-voice.vue": "2701d23df60ad8d1448ba91008b1fb885103064b93da5e544b77a65724cf8787",
+        "开发文档/06-realtime-voice.md": "00cf6689c89f5cb95ea05a878a32e7fe7180e47305a77e4d7c3257815b9f9cc3"
+      }
+    },
+    "chatty-conversation": {
+      "at": "2026-10-11T04:59:13.111Z",
+      "task": "AIRI-037",
+      "note": "人工核对本轮启停/休眠执行门控、固定回归及对应来源；历史验证数字保留，实际设备和模型边界明确。",
+      "fingerprints": {
+        "catalog": "92da966206190dd5593d55151276d3e872e1ed4eac0d0ffc4f4c9c81f04a02be",
+        "wiki/modules/chatty-conversation.md": "e3c6e4ba84e60d8c81c49176f5f1f4a53c1ebc7e96791c543a121af7c0d30772",
+        "airi/packages/realtime-voice/src/conversation.ts": "f03281e432509398016d8503253d0671ead8ade571750e47e4a615e2ae0f9539",
+        "airi/packages/realtime-voice/src/brain.ts": "052430b4963294fc9498a0c836866e48cc873ed371249fa9791d1e80c8eea251",
+        "airi/packages/stage-ui/src/stores/modules/slow-brain.ts": "90263f37d4faf5a611327333417bacf2b261b263a861367e517c99bce5d8b5df",
+        "airi/packages/stage-ui/src/stores/modules/realtime-voice.ts": "03d8538bde27e200d81d0e7a53da9d377d596f6750cb386318a3c09309c56922",
+        "airi/packages/stage-ui/src/stores/companion.ts": "c7a00ee8075aa92537c8a176df60cb864e4be8ddfe70f915579b41a30b23c21c",
+        "airi/packages/stage-ui/src/stores/modules/realtime-brain.browser.test.ts": "ea402d42efc5938964c7a9922b3d34e78c0cd5279f105846f78a2ef44bbea9e6",
+        "airi/packages/stage-ui/src/components/scenarios/realtime-voice-controls.vue": "61fca1c33c0aea018ceb8a1fb5e9f6d53e05be03d2ad9f23d788263e563416bc",
+        "airi/packages/stage-pages/src/pages/settings/modules/realtime-voice.vue": "2701d23df60ad8d1448ba91008b1fb885103064b93da5e544b77a65724cf8787",
+        "airi/packages/i18n/src/locales/zh-Hans/settings.yaml": "b80bddf3e1735e13c4aaa18e434d2de435281b0af286b1572343e1db8cb5c67f",
+        "开发文档/06-realtime-voice.md": "00cf6689c89f5cb95ea05a878a32e7fe7180e47305a77e4d7c3257815b9f9cc3",
+        "airi/docs/ai/reports/2026-10-06-chatty-preparation-and-persona.md": "8c1e5cf3cfc6f6a39cb356fa69faec1e8d8adde38d0fd5131e7e49e74332c580",
+        "airi/packages/stage-ui/src/services/local-vision-context.ts": "115a1229b2ed27923764cf15809e3f85221322c588e723674cc2d1cfc951deda",
+        "airi/packages/stage-ui/src/stores/local-vision.ts": "23e9a3bdb82eba08c6b458317b0fb9c7c07eec2a9b430fe5f77bc77e849719d2",
+        "airi/packages/realtime-voice/src/prompts.ts": "667129522c73a5295ce1eb79545ae3e614a10dfee739f637e3c3da73360bce31"
+      }
+    },
+    "session-chatty-conversation": {
+      "at": "2026-10-11T04:59:14.211Z",
+      "task": "AIRI-037",
+      "note": "人工核对本轮启停/休眠执行门控、固定回归及对应来源；历史验证数字保留，实际设备和模型边界明确。",
+      "fingerprints": {
+        "catalog": "5fb94f731edcc89129935008ef10edfa249a94f157c96db0f55cb5887337bc19",
+        "wiki/memory/sessions/2026-10-04-chatty-conversation.md": "54a92ce39af39a2c577a0a737841b7ff250e0728c0c5d42be4459a5334adb31d",
+        "airi/docs/ai/reports/2026-10-04-chatty-conversation.md": "cbb1798f18261b34f2d250696c668c387fe0f753f05f527bf6fd9039eb9d217d",
+        "wiki/modules/chatty-conversation.md": "e3c6e4ba84e60d8c81c49176f5f1f4a53c1ebc7e96791c543a121af7c0d30772",
+        "airi/packages/stage-ui/src/stores/modules/slow-brain.ts": "90263f37d4faf5a611327333417bacf2b261b263a861367e517c99bce5d8b5df",
+        "airi/packages/stage-ui/src/stores/modules/realtime-voice.ts": "03d8538bde27e200d81d0e7a53da9d377d596f6750cb386318a3c09309c56922",
+        "airi/packages/stage-ui/src/stores/modules/realtime-brain.browser.test.ts": "ea402d42efc5938964c7a9922b3d34e78c0cd5279f105846f78a2ef44bbea9e6"
+      }
+    },
+    "session-memory-management": {
+      "at": "2026-10-09T10:04:57.746Z",
+      "task": "AIRI-035",
+      "note": "核对历史SQLite、姓名确认与开发者鉴权不变；补充AIRI-035本人聊天档案入口替代说明。",
+      "fingerprints": {
+        "catalog": "7c17415cf73262bd1f453438e00ed4d1ac602d82ddbfdedd61945fd84fdd236b",
+        "wiki/memory/sessions/2026-10-05-memory-management.md": "7c2502f3b26e2c712076325355404414c482ea16339d99d6298bebe362cc5eba",
+        "airi/docs/ai/reports/2026-10-05-memory-management.md": "b10fbe3a58ad92bed8d5b810a5d578f8a3b0e7484058dc6acf62f4e6144ad6ac",
+        "airi/docs/ai/adr/2026-10-05-name-confirmation-memory.md": "9b824aea5eeff344f43bdb199d012fe14f3e51660c6d56a41f78aeb1c05114b0",
+        "wiki/modules/storage-memory.md": "4a25a01704b2660b5056c41f65b079b2ef8ea50083e4ed5beeb60866c220bd1e"
+      }
+    },
+    "session-chatty-preparation-persona": {
+      "at": "2026-10-11T04:59:15.303Z",
+      "task": "AIRI-037",
+      "note": "人工核对本轮启停/休眠执行门控、固定回归及对应来源；历史验证数字保留，实际设备和模型边界明确。",
+      "fingerprints": {
+        "catalog": "da81a2a60453db77cf1e52edd6084940a23cb109ec405ae7705fcebe8b29c6d3",
+        "wiki/memory/sessions/2026-10-06-chatty-preparation-and-persona.md": "bab091cbf5bda6f77b479ab17023f3f85d992ef84e4132a062cb366896c9119b",
+        "airi/docs/ai/reports/2026-10-06-chatty-preparation-and-persona.md": "8c1e5cf3cfc6f6a39cb356fa69faec1e8d8adde38d0fd5131e7e49e74332c580",
+        "airi/packages/realtime-voice/src/conversation.ts": "f03281e432509398016d8503253d0671ead8ade571750e47e4a615e2ae0f9539",
+        "airi/packages/realtime-voice/src/brain.ts": "052430b4963294fc9498a0c836866e48cc873ed371249fa9791d1e80c8eea251",
+        "airi/packages/stage-ui/src/stores/modules/slow-brain.ts": "90263f37d4faf5a611327333417bacf2b261b263a861367e517c99bce5d8b5df",
+        "airi/packages/stage-ui/src/stores/modules/realtime-voice.ts": "03d8538bde27e200d81d0e7a53da9d377d596f6750cb386318a3c09309c56922",
+        "airi/packages/stage-ui/src/stores/modules/consciousness.ts": "663c1ac308c52ad921aab2de872805959496470b3a074bff7561ba0324f11b72",
+        "airi/packages/stage-pages/src/pages/settings/modules/realtime-voice.vue": "2701d23df60ad8d1448ba91008b1fb885103064b93da5e544b77a65724cf8787"
+      }
+    },
+    "session-chatty-idle-reflection": {
+      "at": "2026-10-11T04:59:16.403Z",
+      "task": "AIRI-037",
+      "note": "人工核对本轮启停/休眠执行门控、固定回归及对应来源；历史验证数字保留，实际设备和模型边界明确。",
+      "fingerprints": {
+        "catalog": "8918893c834a7ab0c422c1d490953b8b836cacde0996b6ac18d1f87251dccbac",
+        "wiki/memory/sessions/2026-10-06-chatty-idle-and-reflection.md": "cc6d032de3f12ca4677918a1829cb5f44ca0b987bb6ff2839b8355fbdf7d19a6",
+        "airi/packages/realtime-voice/src/conversation.ts": "f03281e432509398016d8503253d0671ead8ade571750e47e4a615e2ae0f9539",
+        "airi/packages/stage-ui/src/stores/modules/slow-brain.ts": "90263f37d4faf5a611327333417bacf2b261b263a861367e517c99bce5d8b5df",
+        "airi/packages/stage-ui/src/stores/modules/realtime-voice.ts": "03d8538bde27e200d81d0e7a53da9d377d596f6750cb386318a3c09309c56922",
+        "airi/packages/stage-ui/src/services/local-vision-context.ts": "115a1229b2ed27923764cf15809e3f85221322c588e723674cc2d1cfc951deda",
+        "airi/packages/stage-ui/src/stores/local-vision.ts": "23e9a3bdb82eba08c6b458317b0fb9c7c07eec2a9b430fe5f77bc77e849719d2",
+        "airi/packages/stage-ui/src/stores/modules/realtime-brain.browser.test.ts": "ea402d42efc5938964c7a9922b3d34e78c0cd5279f105846f78a2ef44bbea9e6",
+        "airi/packages/stage-pages/src/pages/settings/modules/realtime-voice.vue": "2701d23df60ad8d1448ba91008b1fb885103064b93da5e544b77a65724cf8787",
+        "airi/docs/ai/reports/2026-10-06-chatty-idle-and-reflection.md": "9c2f0d05085e0fc89163e9c62d2ac346075b7d448bde4e73c091088aa181b45f"
+      }
+    },
+    "face-adaptation": {
+      "at": "2026-10-06T14:18:30.167Z",
+      "task": "AIRI-029",
+      "note": "核对实际轨迹代码、基础锚点、冲突失效、加密存储及160项验证边界",
+      "fingerprints": {
+        "catalog": "add01f8eeb40ce79fb83ea763fd3f1d529df2f15ec5bfb7293784f6ab6b07525",
+        "wiki/algorithms/face-adaptation.md": "53015fa4c7cbd0b6ab0e5804d3f05d278658c49a052be4c91ac65d08cb1840f5",
+        "airi/services/local-vision/adaptation.py": "3c7ec8f4dddf936d1a070a9709e0ab8e0958fa6cc3480ffe640e3208c9a39415",
+        "airi/services/local-vision/model.py": "d247fdce431c1d2e32d39f0bdf39e2139856d9c69b28521b891740dd0f89043a",
+        "airi/services/local-vision/identity.py": "50b11e4ce0073b5c10eabf6c768dc9903a7212c7c977675a0ff6a908b6f3888f",
+        "airi/services/local-vision/recognition.py": "2dd1c461c4152441731d266786b9047765ca3d8f0ba8715f6d1a4721332054fc",
+        "airi/services/local-vision/tests/testadaptation.py": "7ea4179c6c7272dd602ebf056cc7f4130ee1388c1bbf4a3417a5bad559be9c1f",
+        "airi/docs/ai/adr/2026-10-06-trajectory-face-adaptation.md": "b93050714c767f16d6ad212f3754ea36e82fe9c16b5cad1bcc7098722dcc117d"
+      }
+    },
+    "session-active-greeting-recognition": {
+      "at": "2026-10-11T04:59:17.574Z",
+      "task": "AIRI-037",
+      "note": "人工核对本轮启停/休眠执行门控、固定回归及对应来源；历史验证数字保留，实际设备和模型边界明确。",
+      "fingerprints": {
+        "catalog": "48adba102bd41c6e0f5e7a8cf5b04fac4053ba0e90e4285060fbf6b4507a7824",
+        "wiki/memory/sessions/2026-10-06-active-greeting-and-recognition.md": "65e3c2cd47448fbfe2fea38e0368c4b473a1c031cba9af7c60d3af63aa175017",
+        "airi/packages/stage-ui/src/stores/companion.ts": "c7a00ee8075aa92537c8a176df60cb864e4be8ddfe70f915579b41a30b23c21c",
+        "airi/packages/stage-ui/src/stores/modules/realtime-voice.ts": "03d8538bde27e200d81d0e7a53da9d377d596f6750cb386318a3c09309c56922",
+        "airi/services/local-vision/identity.py": "50b11e4ce0073b5c10eabf6c768dc9903a7212c7c977675a0ff6a908b6f3888f",
+        "airi/docs/ai/reports/2026-10-06-active-greeting-and-recognition.md": "647ab3f322fc984336aa9675be2f9931b337e646a929b5fcbbb893c3a237b434"
+      }
+    },
+    "session-trajectory-face-adaptation": {
+      "at": "2026-10-06T14:18:31.778Z",
+      "task": "AIRI-029",
+      "note": "核对SDK取舍、160项回归、真实编码器隔离补采撤销与真人验收边界",
+      "fingerprints": {
+        "catalog": "05313547e1092cc315011f7ba3ac19fc79b8647b4794784255c3054ad4f3a9e4",
+        "wiki/memory/sessions/2026-10-06-trajectory-face-adaptation.md": "2487f3f0ad4fa2399bd489292b4980f5f00576a3af3a1e3d175763de35c39998",
+        "airi/services/local-vision/adaptation.py": "3c7ec8f4dddf936d1a070a9709e0ab8e0958fa6cc3480ffe640e3208c9a39415",
+        "airi/services/local-vision/adaptation_probe.py": "68a746f6219baa75c641abc51bbcab3b70154450167fb1260ac92f1e1e620902",
+        "airi/docs/ai/reports/2026-10-06-trajectory-face-adaptation.md": "5532f73b7b9fb58f7fa3eadd7b3e52b5127c9f244c9ae89f5e290b33653ab336"
+      }
+    },
+    "session-active-mode-voice": {
+      "at": "2026-10-11T04:59:18.743Z",
+      "task": "AIRI-037",
+      "note": "人工核对本轮启停/休眠执行门控、固定回归及对应来源；历史验证数字保留，实际设备和模型边界明确。",
+      "fingerprints": {
+        "catalog": "70a3ebb5d85dfb7b582960bd47a94364f1bc1205964f044f081472c14f07c19b",
+        "wiki/memory/sessions/2026-10-08-active-mode-voice.md": "5e1e386bbd0decb5ce8bd41ec56efdf5adb0a3d7428cc73fc295b1b8f25d646f",
+        "airi/packages/stage-ui/src/stores/companion.ts": "c7a00ee8075aa92537c8a176df60cb864e4be8ddfe70f915579b41a30b23c21c",
+        "airi/packages/stage-ui/src/stores/modules/realtime-brain.browser.test.ts": "ea402d42efc5938964c7a9922b3d34e78c0cd5279f105846f78a2ef44bbea9e6",
+        "airi/apps/stage-web/src/pages/index.vue": "35aec7fe6cd2e480368cd7ad93e7852d598ab34776d023cd01c16f290a1dfc19",
+        "airi/docs/ai/reports/2026-10-08-active-mode-voice.md": "9e1a484163e73a5d5815a6952ac4b285177497e50ef6f20bfabe3c3aee7f3af2"
+      }
+    },
+    "brain-prompts": {
+      "at": "2026-10-11T04:59:19.849Z",
+      "task": "AIRI-037",
+      "note": "人工核对本轮启停/休眠执行门控、固定回归及对应来源；历史验证数字保留，实际设备和模型边界明确。",
+      "fingerprints": {
+        "catalog": "06bb10152d7e0b3ba7e094c06245090159c2f1546cdc128a6e38ad7deca36ba4",
+        "wiki/modules/brain-prompts.md": "e8330f868bd39f8573577a3dd67bfb649a001a87dfd9de3aa60365929896dcbb",
+        "airi/packages/realtime-voice/src/prompts.ts": "667129522c73a5295ce1eb79545ae3e614a10dfee739f637e3c3da73360bce31",
+        "airi/packages/stage-ui/src/stores/modules/brain-prompts.ts": "2a2d64eb7f6cfd0ab68ac2eb2c88be4f2f27e52a63f815881672dc6054361bfb",
+        "airi/packages/stage-ui/src/components/scenarios/brain-prompt-editor.vue": "363411016a2fd735c5239f9e08fd79f7031c9e6792b0a732faacfe162ff1b626",
+        "airi/packages/stage-ui/src/stores/modules/slow-brain.ts": "90263f37d4faf5a611327333417bacf2b261b263a861367e517c99bce5d8b5df",
+        "airi/packages/stage-ui/src/stores/modules/realtime-voice.ts": "03d8538bde27e200d81d0e7a53da9d377d596f6750cb386318a3c09309c56922",
+        "airi/docs/ai/reports/2026-10-08-brain-prompt-editor.md": "482a5ac4adcfc6aff05d19daa59f94a2f1599473739bf6d4e18d17791660d4be",
+        "airi/packages/stage-ui/src/stores/stage-identity.ts": "0497f0bc349ee14110467b06e489266ea4554977e848e896aadf7b845cb783f3"
+      }
+    },
+    "session-brain-prompt-editor": {
+      "at": "2026-10-11T04:59:20.956Z",
+      "task": "AIRI-037",
+      "note": "人工核对本轮启停/休眠执行门控、固定回归及对应来源；历史验证数字保留，实际设备和模型边界明确。",
+      "fingerprints": {
+        "catalog": "564422e63d05fc98cfef85fdfe0ab7d4e487194ad8f1c516c55d8e448d6ab63e",
+        "wiki/memory/sessions/2026-10-08-brain-prompt-editor.md": "8d073b8476ab58260d0417cb22a9d4ae11052a877149791fec50c736f0977b83",
+        "airi/packages/realtime-voice/src/prompts.ts": "667129522c73a5295ce1eb79545ae3e614a10dfee739f637e3c3da73360bce31",
+        "airi/packages/stage-ui/src/stores/modules/brain-prompts.ts": "2a2d64eb7f6cfd0ab68ac2eb2c88be4f2f27e52a63f815881672dc6054361bfb",
+        "airi/packages/stage-ui/src/stores/modules/realtime-brain.browser.test.ts": "ea402d42efc5938964c7a9922b3d34e78c0cd5279f105846f78a2ef44bbea9e6",
+        "airi/docs/ai/reports/2026-10-08-brain-prompt-editor.md": "482a5ac4adcfc6aff05d19daa59f94a2f1599473739bf6d4e18d17791660d4be"
+      }
+    },
+    "session-face-stage-accounts": {
+      "at": "2026-10-11T04:59:22.078Z",
+      "task": "AIRI-037",
+      "note": "人工核对本轮启停/休眠执行门控、固定回归及对应来源；历史验证数字保留，实际设备和模型边界明确。",
+      "fingerprints": {
+        "catalog": "d225b453b4f7d39b5a226b506d63ec83c961bcd2717cd473572ca79007573e1a",
+        "wiki/memory/sessions/2026-10-09-face-stage-accounts.md": "eb8247389553e3c0a5104f5bb416e37cf8acc43708c5219013715c81f74cc414",
+        "airi/packages/stage-ui/src/stores/stage-identity.ts": "0497f0bc349ee14110467b06e489266ea4554977e848e896aadf7b845cb783f3",
+        "airi/packages/stage-ui/src/stores/local-vision.ts": "23e9a3bdb82eba08c6b458317b0fb9c7c07eec2a9b430fe5f77bc77e849719d2",
+        "airi/packages/stage-ui/src/stores/chat/session-store.ts": "ccdaa7291a00365fa5af79450025337dc7d21db970f34883430f14aba4349068",
+        "airi/packages/stage-ui/src/stores/stage-identity.browser.test.ts": "955becb9407fc087f0ac64b70fb029074a4140226dade3b3fb31c55cae0391ba",
+        "airi/docs/ai/adr/2026-10-09-face-stage-accounts.md": "7c2e34ac8edeff220771e30a02bc35602d2367c199b6387b3c671044f9e75737",
+        "airi/docs/ai/reports/2026-10-09-face-stage-accounts.md": "d3011d018de18e787b6bbd5656cd38e724930eb7a127c8b595d55fccaa46ba52"
+      }
+    },
+    "chat-archive": {
+      "at": "2026-10-11T04:59:23.293Z",
+      "task": "AIRI-037",
+      "note": "人工核对本轮启停/休眠执行门控、固定回归及对应来源；历史验证数字保留，实际设备和模型边界明确。",
+      "fingerprints": {
+        "catalog": "67837ae91e24b07342a73ff82cbcd3fe1dcdb9718f88ecf54492fdcabca23b88",
+        "wiki/modules/chat-archive.md": "4aa19da4821a66cd989a5d03743d8bb91edc337000a847c87074506e074e5a23",
+        "airi/packages/stage-ui/src/services/chat-archive.ts": "87cfc73d71342b6498018284e5061ac0d86d33c00d56fb4d74893f851673e064",
+        "airi/packages/stage-ui/src/stores/chat-archive.ts": "edc7233c5f67175732c87ed49f64c8e52cd0c1febb4fe2e8b23e3aaf4eb31551",
+        "airi/packages/stage-ui/src/libs/chat-archive-events.ts": "78b6f9c2d9898a66c60a31b62f0ca90022f3516c9612f06d214f2aca637dcbde",
+        "airi/packages/stage-ui/src/components/scenarios/chat-archive.vue": "fe48eb5437b7112c3b89a76d9b9c159f31d76c17008a4987c38bfc7e109927c5",
+        "airi/packages/stage-pages/src/pages/settings/modules/memory-long-term.vue": "3d828fa3b1ee7b43c56b9c9c5d2b05a0522cf60df0be4b8e2999dd961f1414a4",
+        "airi/packages/stage-ui/src/stores/chat/session-store.ts": "ccdaa7291a00365fa5af79450025337dc7d21db970f34883430f14aba4349068",
+        "airi/packages/stage-ui/src/database/repos/chat-sessions.repo.ts": "6ecd6f6419b8c6e4e178beab3b27a445a8e000e51cfd725152df8c11b34e5316",
+        "airi/packages/stage-ui/src/stores/chat-archive.browser.test.ts": "8bfb02b8fbac23a2d9263e42f8c7872bf7ada8796afbf7bb36ab34881a427768",
+        "airi/packages/stage-ui/src/stores/modules/realtime-brain.browser.test.ts": "ea402d42efc5938964c7a9922b3d34e78c0cd5279f105846f78a2ef44bbea9e6",
+        "airi/docs/ai/reports/2026-10-09-chat-archive.md": "1555c4e9882d9a2bb242349f94130d0a40976a2a38501bf4097522ef4e161d0a"
+      }
+    },
+    "session-chat-archive": {
+      "at": "2026-10-11T04:59:24.389Z",
+      "task": "AIRI-037",
+      "note": "人工核对本轮启停/休眠执行门控、固定回归及对应来源；历史验证数字保留，实际设备和模型边界明确。",
+      "fingerprints": {
+        "catalog": "bb2eec6a673264a395ff0e805b899194e7a0e0d0fd5c85051830999f757e8f0d",
+        "wiki/memory/sessions/2026-10-09-chat-archive.md": "20c10ef68ee7e0be003416a05da505245bed2701c134d362427d4c2ed6b6c6ba",
+        "airi/packages/stage-ui/src/services/chat-archive.ts": "87cfc73d71342b6498018284e5061ac0d86d33c00d56fb4d74893f851673e064",
+        "airi/packages/stage-ui/src/stores/chat-archive.ts": "edc7233c5f67175732c87ed49f64c8e52cd0c1febb4fe2e8b23e3aaf4eb31551",
+        "airi/packages/stage-ui/src/libs/chat-archive-events.ts": "78b6f9c2d9898a66c60a31b62f0ca90022f3516c9612f06d214f2aca637dcbde",
+        "airi/packages/stage-ui/src/components/scenarios/chat-archive.vue": "fe48eb5437b7112c3b89a76d9b9c159f31d76c17008a4987c38bfc7e109927c5",
+        "airi/packages/stage-pages/src/pages/settings/modules/memory-long-term.vue": "3d828fa3b1ee7b43c56b9c9c5d2b05a0522cf60df0be4b8e2999dd961f1414a4",
+        "airi/packages/stage-ui/src/stores/chat/session-store.ts": "ccdaa7291a00365fa5af79450025337dc7d21db970f34883430f14aba4349068",
+        "airi/packages/stage-ui/src/database/repos/chat-sessions.repo.ts": "6ecd6f6419b8c6e4e178beab3b27a445a8e000e51cfd725152df8c11b34e5316",
+        "airi/packages/stage-ui/src/stores/chat-archive.browser.test.ts": "8bfb02b8fbac23a2d9263e42f8c7872bf7ada8796afbf7bb36ab34881a427768",
+        "airi/packages/stage-ui/src/stores/modules/realtime-brain.browser.test.ts": "ea402d42efc5938964c7a9922b3d34e78c0cd5279f105846f78a2ef44bbea9e6",
+        "airi/docs/ai/reports/2026-10-09-chat-archive.md": "1555c4e9882d9a2bb242349f94130d0a40976a2a38501bf4097522ef4e161d0a",
+        "airi/docs/ai/adr/2026-10-09-chat-archive.md": "1be1e3aa9f593d59b1712b405ca8ebafc50c4352d955b39c3a65aea1f46670d7"
+      }
+    },
+    "session-voice-settings-regression": {
+      "at": "2026-10-11T04:59:25.506Z",
+      "task": "AIRI-037",
+      "note": "人工核对本轮启停/休眠执行门控、固定回归及对应来源；历史验证数字保留，实际设备和模型边界明确。",
+      "fingerprints": {
+        "catalog": "2b7d47817d681a08d7085a7c3b5f69203bfceabc7858b99984c8d8cf3f4c1a74",
+        "wiki/memory/sessions/2026-10-11-voice-and-settings-regression.md": "b1a1105fa25e86e439289e9a8a0379834740d34a5280ddae5a927e4ed9f18dd4",
+        "airi/packages/stage-layouts/src/components/Layouts/HeaderAvatar.vue": "9ba87155c7710e10cb548a8b770c85b70eec9817c055ff697d45ea22f2cf6611",
+        "airi/packages/stage-ui/src/stores/modules/realtime-voice.ts": "03d8538bde27e200d81d0e7a53da9d377d596f6750cb386318a3c09309c56922",
+        "airi/packages/stage-ui/src/stores/modules/realtime-brain.browser.test.ts": "ea402d42efc5938964c7a9922b3d34e78c0cd5279f105846f78a2ef44bbea9e6",
+        "airi/packages/stage-ui/src/stores/stage-identity.browser.test.ts": "955becb9407fc087f0ac64b70fb029074a4140226dade3b3fb31c55cae0391ba",
+        "airi/packages/realtime-voice/src/gateway.test.ts": "bd1b15c56708be9b46d511853486819c6829ade4aea8d3c5b5054238a3ff2acb",
+        "airi/docs/ai/reports/2026-10-11-voice-and-settings-regression.md": "e1b0e889ac14d99f0f17566602eccabf01f7d498f77dbb43cca1b30cd78fb71c"
+      }
+    },
+    "stage-runtime": {
+      "at": "2026-10-11T05:00:43.797Z",
+      "task": "AIRI-037",
+      "note": "最终核对任务与中文报告：35篇本轮复核，11篇原证据有效，总46篇；门禁11步通过，设备和模型边界不变。",
+      "fingerprints": {
+        "catalog": "0894d1579840bc1a6f82b577164ca3b6bf0af53dce989fbcd78e4ea34f1c3789",
+        "wiki/modules/stage-runtime.md": "7fcd46e4178440de929f4f74d4c46905bd8b1f631b8cc4dff0796e14172035ac",
+        "airi/packages/stage-ui/src/stores/stage-runtime.ts": "5243992952306f53e12167fc2914606d0def4a9f999a1abde0209c9500b2708b",
+        "airi/packages/stage-ui/src/stores/stage-runtime.browser.test.ts": "cf161e9ff9cd129e577a2f4d39862829b544f0f87b2b3929c0e37e14469f4dde",
+        "airi/packages/stage-ui/src/components/scenarios/stage-runtime-controls.vue": "aeee1354a5776f43a57be717b4dc28825b617c44fa35d2ddc967ab56601c9ec5",
+        "airi/apps/stage-web/src/stage-runtime-gateway.ts": "f8cdd354f375751bb4ca7d7b6bce599420a4a611d35448ebb7f16588c1c8e201",
+        "airi/apps/stage-web/src/components/local-vision-runtime.vue": "c96fe0e860027e267caffb1f431be98404479bdf7537d50761482bf6e074a619",
+        "airi/services/local-vision/service.py": "18efc08163e3fd366bb02876bc941c2217cb307ca1fabe85d100c79424521e13",
+        "airi/services/local-vision/tests/testservice.py": "c1970a5a1a1f512adff1acd0c5163fbc064c2f56e25d0a26cabc2142bfbbc9df",
+        "airi/packages/stage-ui/src/stores/chat.ts": "1ba970c472d3c391d23fe3c3f0437db5e2509b812f090f55d67e3c4973162518",
+        "airi/packages/stage-ui/src/stores/settings/audio-device.ts": "9151d2fb3794389c0a5cbd17af30e873faa72c510abd8b058effc15103e0d8c0",
+        "airi/packages/stage-ui/src/stores/modules/realtime-voice.ts": "03d8538bde27e200d81d0e7a53da9d377d596f6750cb386318a3c09309c56922",
+        "airi/packages/stage-layouts/src/composables/theme-color.ts": "573de6e22cf5152befb98abacb0c2d2365694dd4d9167218804cab81d4e20eec",
+        "airi/apps/stage-web/src/composables/theme-color.browser.test.ts": "0b95139684fe36da71b1d48b2d1e7f7ed6a9df9585dcbb4f54f0ee1e82bfb528",
+        "scripts/vision.ps1": "f58aca5f38f79fb64a4ff7b453ec7c5bd97058139ed91b379ef309f8e50d861d",
+        "scripts/test-airi-delivery.ps1": "87f893be0e8eb9890348a52859a9e1e00b6c283e8152a01848f92ba2933bdb6a",
+        "scripts/check-airi-gateways.mjs": "acb0ccd4c4b0ede08a876312236b99dacf1adbf910161a4b57c725ab867f2e95",
+        "开发文档/04-development-guide.md": "76d14eb8258f8ed45e8a8cc1fde6f19e66865f487148cba8d7fc02822103b176",
+        "airi/docs/ai/reports/2026-10-11-stage-runtime-and-delivery.md": "54cf181a3cbf840b7cdac9e478606caa0b4fa98f38f488c4e5d86e15bbc51095"
+      }
+    },
+    "session-stage-runtime-delivery": {
+      "at": "2026-10-11T05:00:44.941Z",
+      "task": "AIRI-037",
+      "note": "最终核对任务与中文报告：35篇本轮复核，11篇原证据有效，总46篇；门禁11步通过，设备和模型边界不变。",
+      "fingerprints": {
+        "catalog": "b38d6678dde2f5d70acd94e7806101a6354c74eb113ea47a14b083b42cb2cd33",
+        "wiki/memory/sessions/2026-10-11-stage-runtime-and-delivery.md": "249994d93cf6d567f4c51bcac8e83e01f0434f6f3f5132374fc31dda1a1fa169",
+        "airi/packages/stage-ui/src/stores/stage-runtime.ts": "5243992952306f53e12167fc2914606d0def4a9f999a1abde0209c9500b2708b",
+        "airi/packages/stage-ui/src/stores/stage-runtime.browser.test.ts": "cf161e9ff9cd129e577a2f4d39862829b544f0f87b2b3929c0e37e14469f4dde",
+        "airi/packages/stage-ui/src/components/scenarios/stage-runtime-controls.vue": "aeee1354a5776f43a57be717b4dc28825b617c44fa35d2ddc967ab56601c9ec5",
+        "airi/apps/stage-web/src/stage-runtime-gateway.ts": "f8cdd354f375751bb4ca7d7b6bce599420a4a611d35448ebb7f16588c1c8e201",
+        "airi/apps/stage-web/src/components/local-vision-runtime.vue": "c96fe0e860027e267caffb1f431be98404479bdf7537d50761482bf6e074a619",
+        "airi/services/local-vision/service.py": "18efc08163e3fd366bb02876bc941c2217cb307ca1fabe85d100c79424521e13",
+        "airi/services/local-vision/tests/testservice.py": "c1970a5a1a1f512adff1acd0c5163fbc064c2f56e25d0a26cabc2142bfbbc9df",
+        "airi/packages/stage-ui/src/stores/chat.ts": "1ba970c472d3c391d23fe3c3f0437db5e2509b812f090f55d67e3c4973162518",
+        "airi/packages/stage-ui/src/stores/settings/audio-device.ts": "9151d2fb3794389c0a5cbd17af30e873faa72c510abd8b058effc15103e0d8c0",
+        "airi/packages/stage-ui/src/stores/modules/realtime-voice.ts": "03d8538bde27e200d81d0e7a53da9d377d596f6750cb386318a3c09309c56922",
+        "airi/packages/stage-layouts/src/composables/theme-color.ts": "573de6e22cf5152befb98abacb0c2d2365694dd4d9167218804cab81d4e20eec",
+        "airi/apps/stage-web/src/composables/theme-color.browser.test.ts": "0b95139684fe36da71b1d48b2d1e7f7ed6a9df9585dcbb4f54f0ee1e82bfb528",
+        "scripts/vision.ps1": "f58aca5f38f79fb64a4ff7b453ec7c5bd97058139ed91b379ef309f8e50d861d",
+        "scripts/test-airi-delivery.ps1": "87f893be0e8eb9890348a52859a9e1e00b6c283e8152a01848f92ba2933bdb6a",
+        "scripts/check-airi-gateways.mjs": "acb0ccd4c4b0ede08a876312236b99dacf1adbf910161a4b57c725ab867f2e95",
+        "开发文档/04-development-guide.md": "76d14eb8258f8ed45e8a8cc1fde6f19e66865f487148cba8d7fc02822103b176",
+        "airi/docs/ai/reports/2026-10-11-stage-runtime-and-delivery.md": "54cf181a3cbf840b7cdac9e478606caa0b4fa98f38f488c4e5d86e15bbc51095"
+      }
+    }
+  }
+}

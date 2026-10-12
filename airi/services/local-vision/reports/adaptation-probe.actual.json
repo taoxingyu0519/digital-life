@@ -1,0 +1,26 @@
+{
+  "at": "2026-10-06T14:01:59.539295+00:00",
+  "status": "PASS",
+  "evidence_mode": "saved-aligned-crops-and-constructed-trajectory",
+  "model": "edgeface-s",
+  "constructed_frames": 13,
+  "quality_counts": {
+    "accepted": 13
+  },
+  "added_samples": 1,
+  "held_out_constructed_scores_before": [
+    0.9418414235115051,
+    0.8924721479415894,
+    0.9851311445236206
+  ],
+  "held_out_constructed_scores_after": [
+    0.9753023386001587,
+    0.8924721479415894,
+    0.9851311445236206
+  ],
+  "public_negative_examples": 3,
+  "public_negative_max": 0.141045480966568,
+  "revocation_restored_original": true,
+  "real_gallery_modified": false,
+  "note": "使用真实 EdgeFace 编码器和已有授权裁剪，临时加密图库独立运行。姿态、亮度和轨迹由程序构造，位置已知，未验证真人连续跟踪、现场误认率或独立录像提升。原始人物库未增加补采样本。"
+}

@@ -1,0 +1,32 @@
+{
+  "name": "@proj-airi/realtime-voice",
+  "type": "module",
+  "private": true,
+  "description": "Local Doubao full duplex voice gateway and browser audio",
+  "exports": {
+    "./brain": "./src/brain.ts",
+    "./prompts": "./src/prompts.ts",
+    "./conversation": "./src/conversation.ts",
+    "./contracts": "./src/contracts.ts",
+    "./client": "./src/client.ts",
+    "./audio": "./src/audio.ts",
+    "./vite": "./dist/vite.mjs",
+    "./capture.worklet": "./src/capture.worklet.ts"
+  },
+  "scripts": {
+    "build": "tsdown",
+    "typecheck": "tsc --noEmit",
+    "test:run": "vitest run"
+  },
+  "dependencies": {
+    "@moeru/eventa": "catalog:",
+    "@moeru/std": "catalog:",
+    "valibot": "catalog:",
+    "ws": "catalog:"
+  },
+  "devDependencies": {
+    "@types/audioworklet": "catalog:",
+    "@types/ws": "catalog:",
+    "vite": "catalog:"
+  }
+}
