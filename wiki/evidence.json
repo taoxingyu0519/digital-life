@@ -13,14 +13,14 @@
       }
     },
     "project-state": {
-      "at": "2026-11-11T06:42:46.361Z",
+      "at": "2026-11-11T06:44:26.568Z",
       "task": "AIRI-050",
-      "note": "核对现行架构、官网演示与最新私有同步边界。",
+      "note": "核对最终上传证据、完成任务和未验收边界。",
       "fingerprints": {
         "catalog": "e73c2e5cdec344c77aba172d4bebc40d21270736367bb2638c46a1ea85074d70",
         "wiki/overview/project-state.md": "0c1af11e6c22b32bddfb7746b61e544baaf23ecf4063e8f2b6bd998887888880",
         "开发文档/01-system-architecture.md": "7bdf4550c251e017f51beb84ecaca307056a787632cfc22bb0942418375d2a6a",
-        "项目管理/tasks.json": "f5d34177a50257b0651fa7d1c34dbb9101e3946ae679168da8b2b69c88ea7501",
+        "项目管理/tasks.json": "e5d24b84efd215862bcca1a386c5dd7ef48ce4fcee8bb665085b094eaf187779",
         "airi/apps/stage-web/src/App.vue": "847e358cb85cd8ff5c480af67b5cacf12998349e2618b2967023c5dac50788eb",
         "airi/packages/memory-pgvector/src/index.ts": "5d97984288d18607ca47cb7b81ec3a4727844a91c20c3c0f676f1b760e163f79"
       }
@@ -266,13 +266,13 @@
       }
     },
     "evolution": {
-      "at": "2026-11-11T06:42:41.760Z",
+      "at": "2026-11-11T06:44:28.188Z",
       "task": "AIRI-050",
-      "note": "核对最新任务和增量快照的演进记录。",
+      "note": "核对最终上传证据、完成任务和未验收边界。",
       "fingerprints": {
         "catalog": "ee11ff1552fb77e578438e5e8afa74fc86df463f2d737bb0622e675ab0f2086b",
         "wiki/memory/evolution.md": "1b09b468bac4a6951b93350c1cd20b43a2fceb68c7abb7259473b699734741c3",
-        "项目管理/tasks.json": "f5d34177a50257b0651fa7d1c34dbb9101e3946ae679168da8b2b69c88ea7501",
+        "项目管理/tasks.json": "e5d24b84efd215862bcca1a386c5dd7ef48ce4fcee8bb665085b094eaf187779",
         "开发文档/02-installation.md": "9c4960c2e2f51adaf614b3695b4ef708ad93b77acdd713909596216a8a843058",
         "airi/docs/ai/adr/2026-09-29-local-social-vision.md": "95b8d81535f99c782621cca56bdd4d9e3283308743e804ef3538ee112040ede7",
         "airi/docs/ai/adr/2026-09-30-active-social-companion.md": "3f5bf949f1322690b2bb3e103358f4ec31842295208f1c8d21a0f95cc35ac00b",
