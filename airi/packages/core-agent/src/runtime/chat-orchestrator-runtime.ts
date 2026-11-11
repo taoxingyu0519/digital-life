@@ -112,6 +112,8 @@ function hasAssistantOutput(message: StreamingAssistantMessage) {
  * Options accepted by the chat orchestrator runtime for one user send.
  */
 export interface ChatOrchestratorSendOptions {
+  /** Captured at input dispatch; the user and assistant turn keep this local archive recipient. */
+  archive?: ChatHistoryItem['archive']
   /** Provider model identifier used for the outbound LLM request. */
   model: string
   /** Concrete chat provider implementation selected by the caller. */
@@ -551,6 +553,7 @@ export function createChatOrchestratorRuntime(deps: ChatOrchestratorRuntimeDeps)
       turnId: roundId,
       message: {
         role: 'user',
+        archive: options.archive,
         content: sendingMessage,
         createdAt: sendingCreatedAt,
         id: streamContextMessageId,
@@ -577,6 +580,7 @@ export function createChatOrchestratorRuntime(deps: ChatOrchestratorRuntimeDeps)
 
     const buildingMessage: StreamingAssistantMessage = {
       role: 'assistant',
+      archive: options.archive,
       content: '',
       slices: [],
       tool_results: [],
@@ -654,6 +658,7 @@ export function createChatOrchestratorRuntime(deps: ChatOrchestratorRuntimeDeps)
 
       const userMessage = {
         role: 'user' as const,
+        archive: options.archive,
         content: finalContent,
         createdAt: sendingCreatedAt,
         id: roundId,

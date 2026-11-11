@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ChatSessionsDrawer } from '@proj-airi/stage-ui/components/scenarios/chat'
+import { ChatReadingControls, ChatSessionsDrawer } from '@proj-airi/stage-ui/components/scenarios/chat'
 import { useChatSessionStore } from '@proj-airi/stage-ui/stores/chat/session-store'
 import { BasicButton } from '@proj-airi/ui'
 import { storeToRefs } from 'pinia'
@@ -42,11 +42,13 @@ const activeSessionTitle = computed(() => {
           :aria-expanded="sessionsDrawerOpen"
         >
           <span aria-hidden="true" :class="['i-solar:dialog-2-outline size-5 shrink-0']" />
-          <span truncate text-sm font-medium>{{ activeSessionTitle }}</span>
+          <span :class="['truncate text-sm font-medium']">{{ activeSessionTitle }}</span>
           <span aria-hidden="true" :class="['i-solar:alt-arrow-down-outline size-4 shrink-0 opacity-60']" />
         </BasicButton>
       </template>
     </ChatSessionsDrawer>
+
+    <ChatReadingControls />
 
     <BasicButton
       size="unset"

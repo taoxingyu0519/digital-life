@@ -3,7 +3,9 @@ import { createRequire } from 'node:module'
 // Read-only delivery probes use the configured local gateway; no camera, history or paid completion is sent.
 const require = createRequire(new URL('../airi/packages/realtime-voice/package.json', import.meta.url))
 const { WebSocket } = require('ws')
-const origin = 'http://127.0.0.1:5173'
+const origin = process.env.AIRI_WEB_ORIGIN ?? 'http://127.0.0.1:5173'
+if (!/^http:\/\/127\.0\.0\.1:\d+$/.test(origin))
+  throw new Error('AIRI_WEB_ORIGIN must point to the local AIRI web port')
 const checks = []
 async function check(name, probe) {
   try {
@@ -34,6 +36,16 @@ await check('真实视觉服务', async () => {
   if (!response.ok || !health.ready)
     throw new Error('models')
   return { ready: true, device: health.device }
+})
+await check('当前共享配置网关及同源保护', async () => {
+  const response = await fetch(`${origin}/api/shared-settings`, { headers: { 'x-airi-settings': '1', Origin: origin }, signal: AbortSignal.timeout(12000) })
+  const snapshot = await response.json()
+  if (!response.ok || !Number.isSafeInteger(snapshot.revision) || !('settings' in snapshot))
+    throw new Error('shared-settings')
+  const denied = await fetch(`${origin}/api/shared-settings`, { signal: AbortSignal.timeout(5000) })
+  if (denied.status !== 403)
+    throw new Error('origin')
+  return { revision: snapshot.revision, hasSharedCopy: snapshot.settings !== null }
 })
 await check('真实语音网关配置连接', () => new Promise((resolve, reject) => {
   const socket = new WebSocket(`${origin.replace('http:', 'ws:')}/api/realtime-voice`, { origin })

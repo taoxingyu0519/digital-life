@@ -125,23 +125,28 @@ class RecognitionClock:
 
 
 class FaceEvidence:
-    """Fuse quality-weighted scores only when the current frame independently supports the same unique person."""
+    """Fuse scores and bridge brief dips against a fixed, independently confirmed face reference."""
     def __init__(self):
         self.tracks = {}
+        self.references = {}
 
     def clear(self, track=None):
         if track is None:
             self.tracks.clear()
+            self.references.clear()
         else:
             self.tracks.pop(track, None)
+            self.references.pop(track, None)
 
     def retain(self, active, now):
         self.tracks = {track: samples for track, samples in self.tracks.items()
                        if track in active or (samples and now - samples[-1][0] <= 1.5)}
+        self.references = {track: reference for track, reference in self.references.items()
+                           if track in active and 0 <= now - reference[0] <= 2.5}
 
     def fuse(self, track, ranked, now, quality, threshold=.55, margin=.1):
         if not ranked or ranked[0][0] < threshold - .05 or (len(ranked) > 1 and ranked[0][0] - ranked[1][0] < margin):
-            self.clear(track)
+            self.tracks.pop(track, None)
             return ranked
         score, person, name = ranked[0]
         history = self.tracks.setdefault(track, deque(maxlen=4))
@@ -153,6 +158,27 @@ class FaceEvidence:
         history.append((now, person, score, weight))
         fused = sum(item[2] * item[3] for item in history) / sum(item[3] for item in history)
         return [(fused, person, name), *ranked[1:]]
+
+    def stabilize(self, track, ranked, vector, now, identity, previous, threshold=.55, margin=.1):
+        """A held match cannot refresh its reference, teach a profile, or outlive the last independent match."""
+        reference = self.references.get(track)
+        norm = float(np.linalg.norm(vector))
+        separated = bool(ranked and (len(ranked) == 1 or ranked[0][0] - ranked[1][0] >= margin))
+        if norm < 1e-6 or not np.isfinite(vector).all() or not separated:
+            self.references.pop(track, None)
+            return identity, now
+        vector = vector / norm
+        if identity['identity_status'] == 'confirmed':
+            if ranked[0][1] == identity['person_id'] and ranked[0][0] >= threshold:
+                self.references[track] = (now, identity['person_id'], vector.copy())
+            return identity, now
+        if (identity['identity_status'] == 'unknown' and reference and previous
+                and previous['identity_status'] == 'confirmed' and previous['person_id'] == reference[1]
+                and ranked[0][1] == reference[1] and 0 <= now - reference[0] <= 2.5
+                and float(reference[2] @ vector) >= .8):
+            return dict(identity_status='confirmed', person_id=reference[1], display_name=ranked[0][2]), reference[0]
+        self.references.pop(track, None)
+        return identity, now
 
 
 def configured_recognizer(folder, people):

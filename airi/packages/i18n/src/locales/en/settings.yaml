@@ -1,5 +1,27 @@
 common:
   save: Save
+shared-config:
+  title: Configuration sync
+  description: Share host prompts, models and conversation settings across devices
+  scope: Brain prompts, the slow model and its parameters, user-configured model services, conversation style and web search settings sync to the desktop through the current connection. Saved changes usually sync within seconds.
+  revision: 'Shared revision: {revision}'
+  states:
+    loading: Loading shared configuration
+    empty: No shared configuration yet
+    synced: Synced to the desktop
+    pending: Changes pending; keep this page open
+    offline: Sync unavailable; local settings retained and retried after reconnect
+    conflict: Conflicting edits; local changes retained
+    follower: Another window in this browser owns synchronization
+  conflict-help: Another device saved a newer configuration. Use the latest desktop copy or save this local configuration as the shared version. Your local copy is backed up before replacement.
+  use-host: Use latest desktop copy
+  use-local: Keep and share local configuration
+  refresh: Check synchronization
+  device-help: Camera and microphone permissions, device selection, running or sleeping state, login and chat history retain their existing storage rules. Realtime voice model and voice are already stored by the desktop gateway.
+  backup: 'Local backup saved: {date}'
+  backup-help: This backup contains local settings replaced by a shared copy. Restoring it shares them with other devices and backs up the current configuration.
+  restore: Restore and share backup
+  old-origin: Previous settings may remain in the browser storage of the old address. If it is still available, open this page there and choose to keep and share its local configuration. A new address cannot directly read another origin’s browser storage.
 chat-archive:
   title: Chat archive
   description: Conversations across sessions, organized by person and character
@@ -10,6 +32,8 @@ chat-archive:
   refresh: Refresh
   guest: Stranger
   unnamed: Unnamed archive
+  unassigned: Recipient unconfirmed
+  anonymous-person: 'Unnamed person · {id}'
   character: Character
   no-people: No conversation partners found.
   unknown-time: Time not recorded
@@ -79,11 +103,16 @@ realtime:
     configurePersona: Edit character card and system prompt
     prompts:
       title: Fast and slow brain system prompts
-      help: Review and edit the rules used by model requests. Identity still comes from the active character card. Chinese defaults persist in this browser. Save for the next task or call.
+      conflict: Another window or device updated the rules. Your unsaved draft is retained. Use the latest rules, or keep your draft and save it explicitly.
+      useLatest: Use latest rules
+      keepDraft: Keep draft and continue editing
+      help: Review and edit the rules used by model requests. Identity still comes from the active character card. Save the Chinese defaults or your edits for the next task or call. Web shares saved rules through Configuration sync, where you can check the status.
       fast: Fast brain work prompt
       fastHelp: Quick replies, task delegation, acceptance and waiting phrases. Up to 2500 characters.
       slow: Slow brain task prompt
       slowHelp: Background reasoning, verification and tool use. Up to 3000 characters.
+      speech: Spoken reply rules
+      speechHelp: Shared by the fast brain, spoken task results, greetings and continuation. Defaults to three sentences and 30 characters unless detail is requested. Guides generation without cutting audio. Pure text is unrestricted. Up to 1500 characters.
       more: Edit result expression, automatic speech and conversation style
       result: Slow brain result expression prompt
       resultHelp: Findings in the character voice. Doubao reads this script directly. Up to 2000 characters.
@@ -2218,7 +2247,7 @@ local-vision:
     collecting: Match qualifies. Collecting continuous evidence.
     below-threshold: Face detected, but the stored profile match is too weak. Treating the person as a stranger.
     ambiguous: Similar candidates exist. Identity remains unconfirmed.
-    no-templates: No face templates available. Confirm the name in a real conversation and complete enrollment.
+    no-templates: No face templates available. One clear face can first create an unnamed profile, then confirm its name in conversation.
     face-not-visible: No clear face detected. Face the camera.
     face-too-small: Face too small. Move closer to the camera.
     multiple-faces: Multiple faces detected. Identity attribution is paused.
@@ -2253,7 +2282,7 @@ local-vision:
   mode-help: Active mode starts the local camera, greetings, and small talk by default. Passive mode stops the camera and waits for your input.
   chat-interval: Minimum interval between conversation starters
   minutes: '{count} minutes'
-  natural-learning: Say “My name is Alex” in normal chat. One clear face creates a profile automatically. Other angles accumulate during conversations.
+  natural-learning: One clear face first creates an unnamed profile with a permanent ID. A confirmed name updates its label without changing login or the stage conversation.
   learning: 'Getting to know {name} · {count} clear samples. You can turn your head gently.'
   photos: '{count} face angles saved'
   memory-chat: '{name}, you previously said “{memory}”. Would you like to tell me more?'
@@ -2271,11 +2300,13 @@ local-vision:
   preview: Local camera preview
   running: Local camera is on · Vision settings
   proactive: Proactive greeting
-  hello: Hello, Stranger! What is your name? I can remember you and our conversations on this computer.
+  hello: Hello! What is your name?
+  hello-visitor: Hello! It is nice to meet you.
+  confirm-name: 'Did I write your name correctly: {name}?'
   hello-name: 'Hello, {name}!'
   privacy: The camera stays on by default. Frames stay local. Introductions save encrypted face crops and memories. Profiles can be deleted. Inform anyone in view.
   face: Consent to local face registration and matching
-  face-help: Obtain each participant's consent. Changing this setting stops the camera. Matching cannot unlock private content.
+  face-help: Obtain each participant's consent. Clear single faces can create unnamed IDs and encrypted samples before naming. Faces select archives, never logins or developer permissions. Changing this setting stops the camera.
   observations: Allow current observation text in the chat API
   names: Allow recognized names in external APIs
   names-help: Includes chat, realtime voice, and speech providers. Profiles stay local. Visual replies do not enter cloud sync.
@@ -2291,7 +2322,7 @@ local-vision:
   save: Save person
   correct: Wrong person — stop matching
   delete: Delete profile, photos, and memories
-  enroll-help: Introduce yourself in conversation. Clear face samples create your profile automatically. Face crops stay encrypted on this computer.
+  enroll-help: Clear face samples first create an unnamed profile. A confirmed name keeps its ID and earlier conversations. Face crops and templates stay encrypted locally. Developer memory management can delete them.
   uncalibrated: Multiple frames and conservative thresholds confirm identity. Uncertain matches remain strangers. Correct a name through conversation.
   calibrated: Local calibration matches this gallery.
   look: Look at the current frame
@@ -2369,6 +2400,11 @@ memory-admin:
   delete-memory: Delete this memory
   confirm-delete: Confirm deletion
   empty: This person and character have no conversation memories.
-  delete-person: Delete person and all memories
-  confirm-delete-person: Confirm deletion of profile, memories, and face data
+  delete-person: Forget this person completely
+  confirm-delete-person: Confirm forgetting this person
+  cancel: Cancel
+  forget-help: Clear the profile, face data, and conversation memories for every character, plus this browser's chat history, favorites, notes, and summaries for this person. Other people remain unchanged. Other browsers, devices, exports, and private backups remain separate.
+  forget-confirmation: 'Forget everything about {name}? This cannot be undone. The stage will close to stop ongoing conversations from saving again. Start the stage to test meeting this person again.'
+  forgotten: This person has been forgotten in the host and this browser. Start the stage to meet them again.
+  forget-error: Could not finish clearing all data. Some data may already be deleted. Retry the confirmation. If developer access expired, start the stage and sign in again.
   planned: Recent conversation recall is available. Fact extraction, vector search, and cross-device profile sync are not implemented.

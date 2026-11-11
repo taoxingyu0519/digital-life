@@ -9,6 +9,33 @@ from recognition import FaceEvidence, RecognitionClock, RecognitionGallery
 
 
 class RecognitionTests(unittest.TestCase):
+    def test_fixed_reference_never_confirms_a_new_track_or_hides_conflict_or_loss(self):
+        confirmed = dict(identity_status='confirmed', person_id='person-a', display_name='A')
+        unknown = dict(identity_status='unknown', person_id=None, display_name=None)
+        reference = np.array([.7, np.sqrt(1 - .7 ** 2)], np.float32)
+        weak = np.array([.48, np.sqrt(1 - .48 ** 2)], np.float32)
+        for disruption in ('different-person', 'ambiguous', 'lost', 'jump', 'expired'):
+            with self.subTest(disruption=disruption):
+                evidence = FaceEvidence()
+                evidence.stabilize('a', [(.7, 'person-a', 'A')], reference, 0, confirmed, None)
+                ranked = [(.48, 'person-a', 'A')]
+                now = 1
+                if disruption == 'different-person':
+                    ranked = [(.6, 'person-b', 'B')]
+                elif disruption == 'ambiguous':
+                    ranked.append((.46, 'person-b', 'B'))
+                elif disruption == 'lost':
+                    evidence.retain(set(), .5)
+                elif disruption == 'jump':
+                    evidence.clear('a')
+                else:
+                    now = 2.6
+                result, _ = evidence.stabilize('a', ranked, weak, now, unknown, confirmed)
+                self.assertIsNone(result['person_id'])
+        evidence = FaceEvidence()
+        result, _ = evidence.stabilize('new', [(.48, 'person-a', 'A')], weak, 0, unknown, None)
+        self.assertIsNone(result['person_id'])
+
     def test_confirmed_face_reduces_embeddings_but_changes_and_learning_restore_them(self):
         clock = RecognitionClock()
         image = np.full((112, 112, 3), 100, np.uint8)

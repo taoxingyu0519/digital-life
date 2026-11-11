@@ -56,6 +56,11 @@ class People:
                        '认识新朋友时，复述听到的完整姓名并询问文字是否正确。用户否认时询问错字和正确写法，'
                        '必要时请用户打出完整姓名，再复述确认。只有本人明确确认后才能声称名字登记成功。'
                        '姓名不是账号身份，不授予开发者权限。', time.time()))
+            db.execute('INSERT OR IGNORE INTO behavior_rules VALUES (?,?,?)', ('unnamed-friend',
+                       '未命名的朋友先使用永久人物ID归档，照常交流。适时换一种自然方式询问对方希望如何称呼，'
+                       '不要每句话都问名字，不催促、不打断；对方拒绝时尊重拒绝。'
+                       '得到名字后确认文字写法，只更新同一人物ID的显示姓名，以后自然称呼其名字。'
+                       '人脸仅用于消息归档，不能触发登录、退出或切换主舞台会话。', time.time()))
 
     @contextmanager
     def connect(self):
@@ -164,6 +169,20 @@ class People:
             self.add_photos(person, photos)
         self.evidence.clear()
         self.confirmed.clear()
+        return person
+
+    def anonymous(self, vector, pose, jpeg):
+        """A quality-checked single face can own records before it supplies a name."""
+        samples = np.asarray(vector, np.float32).reshape(1, 128)
+        if not np.isfinite(samples).all() or np.linalg.norm(samples) < 1e-9:
+            raise ValueError('invalid-face-sample')
+        with self.connect() as db:
+            if db.execute('SELECT COUNT(*) FROM people').fetchone()[0] >= 100:
+                raise ValueError('The local gallery is full')
+            person = str(uuid.uuid4())
+            db.execute('INSERT INTO people VALUES (?,?,?)', (person, '', protect(samples.tobytes())))
+            db.execute('INSERT INTO encounters VALUES (?,?,?)', (person, time.time(), time.time()))
+        self.add_photos(person, {pose: jpeg})
         return person
 
     def delete(self, person):
@@ -303,7 +322,7 @@ class People:
 
     def resolve(self, track, scores, now, threshold=.55, margin=.1):
         previous = self.confirmed.get(track)
-        if previous and now - previous[1] <= 2 and scores:
+        if previous and 0 <= now - previous[1] <= 2.5 and scores:
             score, person, name = scores[0]
             retention = max(.5, threshold - .05)
             separated = len(scores) == 1 or score - scores[1][0] >= margin
@@ -318,8 +337,11 @@ class People:
             if len(scores) > 1 and scores[0][0] - scores[1][0] < margin:
                 status = 'ambiguous'
         history = self.evidence.setdefault(track, deque(maxlen=6))
-        # Three independent samples must fit within the live observation's two-second lease, including slow cameras.
-        while history and now - history[0][0] > 2:
+        # One-Hz capture needs jitter tolerance across three samples. Every sample still requires a current unique match.
+        if history and (now < history[-1][0] or now - history[-1][0] > 1.5
+                        or (scores and history[-1][1] != scores[0][1])):
+            history.clear()
+        while history and now - history[0][0] > 3.5:
             history.popleft()
         if status != 'candidate':
             history.clear()

@@ -11,6 +11,7 @@ import { useChatSessionStore } from '../../stores/chat/session-store'
 import { useDeveloperAccessStore } from '../../stores/developer-access'
 import { useLocalVisionStore } from '../../stores/local-vision'
 import { useAiriCardStore } from '../../stores/modules/airi-card'
+import { useStageRuntimeStore } from '../../stores/stage-runtime'
 
 defineProps<{ mode: 'memory' | 'database' | 'short-term' }>()
 const { t } = useI18n()
@@ -18,6 +19,7 @@ const access = useDeveloperAccessStore()
 const sessions = useChatSessionStore()
 const cards = useAiriCardStore()
 const local = useLocalVisionStore()
+const runtime = useStageRuntimeStore()
 const prefix = 'settings.memory-admin.'
 const overviewSchema = object({
   counts: record(string(), number()),
@@ -38,6 +40,9 @@ const name = ref('')
 const error = ref(false)
 const busy = ref(false)
 const pendingDelete = ref('')
+const pendingPerson = ref<{ id: string, name: string }>()
+const forgotten = ref(false)
+const forgetError = ref(false)
 let generation = 0
 
 async function refresh() {
@@ -83,7 +88,33 @@ async function save(path: string, body?: unknown, method = 'PATCH') {
   await readMemories()
 }
 
+async function forgetPerson() {
+  const target = pendingPerson.value
+  if (!target || person.value !== target.id)
+    return
+  forgotten.value = false
+  forgetError.value = false
+  try {
+    // Server authorization precedes local deletion. Keep the captured target on partial failure so retry remains possible.
+    await access.request(`/admin/persons/${encodeURIComponent(target.id)}`, undefined, 'DELETE')
+    await runtime.close()
+    await sessions.forgetLocalPerson(target.id)
+    overview.value = undefined
+    person.value = ''
+    memories.value = []
+    faceExtensions.value = []
+    pendingPerson.value = undefined
+    pendingDelete.value = ''
+    forgotten.value = true
+  }
+  catch {
+    forgetError.value = true
+  }
+}
+
 watch([person, character], () => {
+  pendingDelete.value = ''
+  pendingPerson.value = undefined
   void perform(readMemories)
 })
 onMounted(() => {
@@ -102,6 +133,12 @@ onScopeDispose(() => {
     </Button>
     <p v-if="error" role="alert">
       {{ t(`${prefix}operation-error`) }}
+    </p>
+    <p v-if="forgetError" role="alert">
+      {{ t(`${prefix}forget-error`) }}
+    </p>
+    <p v-if="forgotten" role="status">
+      {{ t(`${prefix}forgotten`) }}
     </p>
     <template v-if="mode === 'short-term'">
       <p>{{ t(`${prefix}history-help`) }}</p>
@@ -129,13 +166,30 @@ onScopeDispose(() => {
           {{ t(`${prefix}save`) }}
         </Button>
       </div>
-      <FieldSelect v-model="person" :label="t(`${prefix}person`)" :placeholder="t(`${prefix}select-person`)" :options="overview.persons.map(item => ({ label: item.display_name, value: item.person_id }))" />
-      <FieldInput v-model="character" :label="t(`${prefix}character`)" :description="t(`${prefix}character-help`)" />
+      <FieldSelect v-model="person" :disabled="busy" :label="t(`${prefix}person`)" :placeholder="t(`${prefix}select-person`)" :options="overview.persons.map(item => ({ label: item.display_name || t('settings.chat-archive.anonymous-person', { id: item.person_id.slice(0, 8) }), value: item.person_id }))" />
+      <FieldInput v-model="character" :disabled="busy" :label="t(`${prefix}character`)" :description="t(`${prefix}character-help`)" />
       <template v-if="person">
         <FieldInput v-model="name" :label="t(`${prefix}name`)" :maxlength="64" />
         <Button :disabled="busy || !name.trim()" @click="perform(() => save(`/admin/persons/${person}`, { name }))">
           {{ t(`${prefix}save-name`) }}
         </Button>
+        <div :class="['flex flex-col gap-2 rounded-lg border border-red-300 p-3 dark:border-red-800']">
+          <p>{{ t(`${prefix}forget-help`) }}</p>
+          <Button color="red" :disabled="busy" @click="pendingPerson = { id: person, name: overview.persons.find(item => item.person_id === person)?.display_name ?? '' }">
+            {{ t(`${prefix}delete-person`) }}
+          </Button>
+          <template v-if="pendingPerson?.id === person">
+            <p>{{ t(`${prefix}forget-confirmation`, { name: pendingPerson.name }) }}</p>
+            <div :class="['flex flex-wrap gap-2']">
+              <Button color="red" :disabled="busy" @click="perform(forgetPerson)">
+                {{ t(`${prefix}confirm-delete-person`) }}
+              </Button>
+              <Button :disabled="busy" @click="pendingPerson = undefined">
+                {{ t(`${prefix}cancel`) }}
+              </Button>
+            </div>
+          </template>
+        </div>
         <h3 :class="['font-semibold']">
           {{ t(`${prefix}face-extensions`) }}
         </h3>
@@ -170,12 +224,6 @@ onScopeDispose(() => {
         <p v-if="!memories.length">
           {{ t(`${prefix}empty`) }}
         </p>
-        <Button color="red" :disabled="busy" @click="pendingDelete = 'person'">
-          {{ t(`${prefix}delete-person`) }}
-        </Button>
-        <Button v-if="pendingDelete === 'person'" color="red" :disabled="busy" @click="perform(() => save(`/admin/persons/${person}`, undefined, 'DELETE'))">
-          {{ t(`${prefix}confirm-delete-person`) }}
-        </Button>
       </template>
       <p>{{ t(`${prefix}planned`) }}</p>
     </template>

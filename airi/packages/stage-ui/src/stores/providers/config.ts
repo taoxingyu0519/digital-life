@@ -2,6 +2,7 @@ import type {} from 'pinia-plugin-synced'
 
 import type { InferenceServiceProvider, ProviderValidationStatus } from '../../libs/providers/types'
 import type { ProviderReplicaRow } from '../../services/inference-service-providers'
+import type { SharedSettings } from '../../services/shared-settings-contract'
 import type { ProviderSyncRow, ProviderSyncSnapshot } from './merge'
 
 import { useDebounceFn, useIntervalFn, useLocalStorage } from '@vueuse/core'
@@ -13,6 +14,7 @@ import { computed, shallowRef, watch } from 'vue'
 import { client } from '../../composables/api'
 import { getDefinedProvider } from '../../libs/providers'
 import { inferenceServiceProvidersService as service } from '../../services/inference-service-providers'
+import { deviceProviderDefinitions } from '../../services/shared-settings-contract'
 import { useAuthStore } from '../auth'
 import { mergeProviderSync } from './merge'
 
@@ -512,6 +514,37 @@ export const useProviderConfigStore = defineStore('provider-config', () => {
     replicaMerged = false
   }
 
+  /** The host shares user-owned credentials only; hosted authentication stays device-owned. */
+  async function applySharedProviders(rows: SharedSettings['providers']) {
+    const next: Record<string, StoredProvider> = {}
+    const added: Record<string, boolean> = {}
+    for (const [id, row] of Object.entries(providers.value)) {
+      // Automatically discovered, unlisted browser adapters are local runtime scaffolding.
+      if (!isUserProvider(row) || !addedProviders.value[id] || deviceProviderDefinitions.has(row.definitionId)) {
+        next[id] = row
+        added[id] = !!addedProviders.value[id]
+      }
+    }
+    for (const row of rows) {
+      if (deviceProviderDefinitions.has(row.definitionId))
+        continue
+      const definition = getDefinedProvider(row.definitionId)
+      if (!definition || definition.configuredBy === 'authentication' || (next[row.id] && !isUserProvider(next[row.id])))
+        throw new Error('shared-provider-invalid')
+      const current = providers.value[row.id]
+      next[row.id] = {
+        id: row.id,
+        definitionId: row.definitionId,
+        config: row.config,
+        configuredBy: 'user',
+        status: current && isEqual(current.config, row.config) ? current.status : 'unconfigured',
+      }
+      added[row.id] = row.added
+    }
+    providers.value = next
+    addedProviders.value = added
+  }
+
   return {
     providers,
     configs,
@@ -536,6 +569,7 @@ export const useProviderConfigStore = defineStore('provider-config', () => {
     removeProvider,
     updateProviderConfig,
     resetProviders,
+    applySharedProviders,
     onAfterSync,
     onRemoteWorking,
   }
@@ -555,6 +589,7 @@ export const useProviderConfigStore = defineStore('provider-config', () => {
       'removeProvider',
       'updateProviderConfig',
       'resetProviders',
+      'applySharedProviders',
     ],
     state: true,
   },

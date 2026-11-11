@@ -10,6 +10,9 @@ import { defineConfig } from 'vitest/config'
 
 import unoConfig from './uno.config'
 
+// Glob paths use forward slashes on Windows as well.
+const sourceRoot = import.meta.dirname.replaceAll('\\', '/')
+
 export default defineConfig({
   root: import.meta.dirname,
   plugins: [
@@ -30,10 +33,10 @@ export default defineConfig({
       content: {
         ...unoConfig.content,
         filesystem: [
-          `${import.meta.dirname}/src/**/*.vue`,
-          `${import.meta.dirname}/../../packages/stage-layouts/src/**/*.vue`,
-          `${import.meta.dirname}/../../packages/stage-ui/src/**/*.vue`,
-          `${import.meta.dirname}/../../packages/ui/src/**/*.vue`,
+          `${sourceRoot}/src/**/*.vue`,
+          `${sourceRoot}/../../packages/stage-layouts/src/**/*.vue`,
+          `${sourceRoot}/../../packages/stage-ui/src/**/*.vue`,
+          `${sourceRoot}/../../packages/ui/src/**/*.vue`,
         ],
       },
     }),

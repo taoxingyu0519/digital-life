@@ -62,6 +62,10 @@ describe('extractMessageText', () => {
 })
 
 describe('isCloudSyncableMessage', () => {
+  it('aIRI-045 keeps face-attributed records local while ordinary authenticated messages retain cloud eligibility', () => {
+    expect(isCloudSyncableMessage({ role: 'user', content: 'Generated personal record', archive: { personId: 'generated-person', displayName: 'Generated', characterName: 'AIRI' } })).toBe(false)
+    expect(isCloudSyncableMessage({ role: 'user', content: 'Generated ordinary record', archive: { personId: null, displayName: '', characterName: 'AIRI' } })).toBe(true)
+  })
   it('keeps answers derived from transient visual evidence out of cloud history', () => {
     expect(isCloudSyncableMessage({ role: 'assistant', content: 'A private local name', slices: [], tool_results: [], localVisionDerived: true })).toBe(false)
   })

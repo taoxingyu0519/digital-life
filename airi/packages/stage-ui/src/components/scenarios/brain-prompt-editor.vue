@@ -17,21 +17,33 @@ const prompts = useBrainPromptsStore()
 const voice = useRealtimeVoiceStore()
 const slowBrain = useSlowBrainStore()
 const draft = ref(structuredClone(toRaw(prompts.config)))
+const draftBase = ref(prompts.revision)
+const draftConflict = ref(false)
 const saved = ref(false)
 const saveError = ref('')
 const style = computed(() => v.parse(conversationStyleSchema, voice.conversationStyle))
 const valid = computed(() => v.safeParse(brainPromptSchema, draft.value).success)
-const dirty = computed(() => JSON.stringify(draft.value) !== prompts.revision)
+const dirty = computed(() => JSON.stringify(draft.value) !== draftBase.value)
 
-watch(() => prompts.revision, () => {
+watch(() => prompts.revision, (revision) => {
+  const currentDraft = JSON.stringify(draft.value)
+  if (currentDraft !== draftBase.value && currentDraft !== revision) {
+    draftConflict.value = true
+    saved.value = false
+    return
+  }
+  draftBase.value = revision
+  draftConflict.value = false
   draft.value = structuredClone(toRaw(prompts.config))
-})
+}, { flush: 'sync' })
 watch(draft, () => {
   if (dirty.value)
     saved.value = false
 }, { deep: true })
 
 function save() {
+  if (draftConflict.value)
+    return
   saveError.value = ''
   try {
     prompts.save(draft.value)
@@ -40,6 +52,14 @@ function save() {
   catch (error) {
     saveError.value = errorMessageFrom(error) ?? t('settings.realtime.brain.prompts.invalid')
   }
+}
+
+function resolveDraft(useLatest: boolean) {
+  if (useLatest)
+    draft.value = structuredClone(toRaw(prompts.config))
+  draftBase.value = prompts.revision
+  draftConflict.value = false
+  saved.value = false
 }
 
 function restore() {
@@ -61,6 +81,7 @@ function restore() {
     </div>
     <FieldInput v-model="draft.fast" :single-line="false" input-class="min-h-64 resize-y" :label="t('settings.realtime.brain.prompts.fast')" :description="t('settings.realtime.brain.prompts.fastHelp')" />
     <FieldInput v-model="draft.slow" :single-line="false" input-class="min-h-48 resize-y" :label="t('settings.realtime.brain.prompts.slow')" :description="t('settings.realtime.brain.prompts.slowHelp')" />
+    <FieldInput v-model="draft.speech" :single-line="false" input-class="min-h-40 resize-y" :label="t('settings.realtime.brain.prompts.speech')" :description="t('settings.realtime.brain.prompts.speechHelp')" />
     <details :class="['rounded-xl border p-4', 'border-neutral-200 dark:border-neutral-800']">
       <summary :class="['cursor-pointer text-sm font-medium']">
         {{ t('settings.realtime.brain.prompts.more') }}
@@ -78,8 +99,21 @@ function restore() {
     <p v-if="voice.active" :class="['text-sm text-neutral-600 dark:text-neutral-300']">
       {{ t('settings.realtime.brain.prompts.active') }}
     </p>
+    <div v-if="draftConflict" :class="['flex flex-col gap-3']">
+      <p role="alert">
+        {{ t('settings.realtime.brain.prompts.conflict') }}
+      </p>
+      <div :class="['flex flex-wrap gap-3']">
+        <Button @click="resolveDraft(true)">
+          {{ t('settings.realtime.brain.prompts.useLatest') }}
+        </Button>
+        <Button @click="resolveDraft(false)">
+          {{ t('settings.realtime.brain.prompts.keepDraft') }}
+        </Button>
+      </div>
+    </div>
     <div :class="['flex flex-wrap items-center gap-3']">
-      <Button :disabled="voice.active || !valid || (!dirty && !prompts.invalidStored)" @click="save">
+      <Button :disabled="voice.active || draftConflict || !valid || (!dirty && !prompts.invalidStored)" @click="save">
         {{ t('settings.realtime.brain.prompts.save') }}
       </Button>
       <Button variant="secondary" @click="restore">

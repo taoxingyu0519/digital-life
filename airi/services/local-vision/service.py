@@ -236,14 +236,17 @@ async def social(binding: str, value: SocialEvent):
         if state.source is not source or generation != source['privacy_generation']:
             raise HTTPException(409, 'stale-result')
         actor = social_actor(binding, value.track_id)
-        if value.ask_name and actor['identity_status'] == 'unknown':
+        if value.ask_name and (actor['identity_status'] == 'unknown' or not actor.get('display_name')):
             state.runtime.social.ask(value.track_id)
-        person = actor['person_id'] if actor['identity_status'] == 'confirmed' else None
+        person = state.runtime.social.archive_person(value.track_id, actor)
+        current_profile = state.runtime.people.profile(person, value.character) if person else None
+        recipient = dict(person_id=current_profile['person_id'], display_name=current_profile['display_name']) if current_profile else None
         state.runtime.social.review_identity(value.track_id, actor)
         learning = state.runtime.social.status()
-        if learning['name_state'] in ('confirming', 'correcting') or (learning['name'] and learning['name'] != actor['display_name']):
+        if not state.runtime.social.origin_anonymous and (learning['name_state'] in ('confirming', 'correcting') or (learning['name'] and learning['name'] != actor['display_name'])):
             person = None
         return dict(learning=learning,
+                    recipient=recipient,
                     profile=state.runtime.people.profile(person, value.character) if person else None,
                     rules=state.runtime.people.rules())
     return await state.worker(read)
@@ -257,8 +260,9 @@ async def conversation(binding: str, value: Conversation):
         if state.source is not source or generation != source['privacy_generation']:
             raise HTTPException(409, 'stale-result')
         actor = social_actor(binding, value.track_id)
+        previous_person = state.runtime.social.archive_person(value.track_id, actor)
         outcome = state.runtime.social.converse(value.track_id, actor, value.text, value.character, value.event_id)
-        return dict(outcome=outcome, learning=state.runtime.social.status())
+        return dict(outcome=outcome, learning=state.runtime.social.status(), forgotten_person=previous_person if outcome == 'declined' else None)
     return await state.worker(remember)
 
 

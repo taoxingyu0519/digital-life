@@ -175,7 +175,6 @@ export const useChatStore = defineStore('chat', () => {
   const { t } = useI18n()
   const runtimePrompt = useAiriRuntimePrompt()
   const authStore = useAuthStore()
-  const identity = useStageIdentityStore()
   const llmStore = useLLM()
   const llmToolsStore = useLlmToolsStore()
   const llmToolsetPromptsStore = useLlmToolsetPromptsStore()
@@ -189,6 +188,7 @@ export const useChatStore = defineStore('chat', () => {
   const artistryAutonomousStore = useAutonomousArtistryStore()
   const { activeModel, activeProvider } = storeToRefs(consciousnessStore)
   const chatSession = useChatSessionStore()
+  const identity = useStageIdentityStore()
   const chatStream = useChatStreamStore()
   const chatContext = useChatContextStore()
   const cardStore = useAiriCardStore()
@@ -304,7 +304,8 @@ export const useChatStore = defineStore('chat', () => {
 
     try {
       // Project after diagnostics, at the provider boundary. Vision never enters history or the context registry.
-      const archiveContext = await archiveStore.recall()
+      // An expired recipient must remove personal recall, never interrupt the stage conversation.
+      const archiveContext = await archiveStore.recall().catch(() => '')
       if (archiveContext) {
         providerContext = { turns: [...providerContext.turns, {
           type: 'system',
@@ -413,13 +414,14 @@ export const useChatStore = defineStore('chat', () => {
         const snapshot = { ...chatContext.getContextsSnapshot() }
         // Account data belongs to this request, not the persistent context registry.
         // A signed-out request therefore cannot inherit the previous account snapshot.
-        const account = createUserAccountContext(authStore, t('base.guest.name'), identity)
+        const account = createUserAccountContext(authStore, t('base.guest.name'))
         snapshot[account.contextId] = [account]
         return snapshot
       },
     },
     foregroundStream: {
       patch: (message) => {
+        message.archive ??= identity.captureArchive(cardStore.activeCard?.name || 'AIRI')
         streamingMessage.value = message
       },
       reset: () => {
@@ -489,7 +491,7 @@ export const useChatStore = defineStore('chat', () => {
     targetSessionId?: string,
   ) {
     await observeLocalVisionInput(sendingMessage, targetSessionId ?? activeSessionId.value)
-    return runtime.ingest(sendingMessage, options, targetSessionId)
+    return runtime.ingest(sendingMessage, { ...options, archive: identity.captureArchive(cardStore.activeCard?.name || 'AIRI') }, targetSessionId)
   }
 
   function requiresToolSelection(name: string) {
@@ -539,6 +541,7 @@ export const useChatStore = defineStore('chat', () => {
 
     await observeLocalVisionInput(payload.text, payload.sessionId)
     await runtime.ingest(payload.text, {
+      archive: identity.captureArchive(cardStore.activeCard?.name || 'AIRI'),
       model: modelId,
       chatProvider,
       attachments: payload.attachments,

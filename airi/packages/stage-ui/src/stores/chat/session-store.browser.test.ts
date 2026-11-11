@@ -102,7 +102,7 @@ afterEach(() => {
 })
 
 describe('chat session synchronization', () => {
-  it('aIRI-034 converges on a face account across renderers without resetting matching sessions or opening cloud sockets', async () => {
+  it('aIRI-045 shares archive recipients across renderers without changing the stage account or opening cloud sockets', async () => {
     const namespace = `face-session:${crypto.randomUUID()}`
     const leader = createSyncedContext(namespace, 'leader-only')
     await vi.waitFor(() => expect(leader.runtime.isLeader()).toBe(true))
@@ -113,10 +113,11 @@ describe('chat session synchronization', () => {
     const followerIdentity = useStageIdentityStore(follower.pinia)
     const followerSessions = useChatSessionStore(follower.pinia)
     await leaderIdentity.setCameraIdentity({ person_id: 'generated-face', display_name: 'Test person' }, Date.now() + 2000)
-    await vi.waitFor(() => expect(followerIdentity.userId).toBe('local-face:generated-face'))
+    await vi.waitFor(() => expect(followerIdentity.archiveUserId).toBe('local-face:generated-face'))
+    expect(followerIdentity.userId).toBe('local')
     await followerSessions.initialize()
     const sessionId = followerSessions.activeSessionId
-    expect(followerSessions.sessionMetas[sessionId]?.userId).toBe('local-face:generated-face')
+    expect(followerSessions.sessionMetas[sessionId]?.userId).toBe('local')
     let mutations = 0
     leaderSessions.$subscribe(() => mutations++)
     await followerSessions.activateCurrentUser()
@@ -127,7 +128,8 @@ describe('chat session synchronization', () => {
     await leaderIdentity.setCameraIdentity(null)
     await vi.waitFor(() => expect(followerIdentity.userId).toBe('local'))
     await vi.waitFor(() => expect(followerSessions.sessionMetas[followerSessions.activeSessionId]?.userId).toBe('local'))
-    expect(followerSessions.messages).not.toEqual(leaderSessions.sessionMessages[sessionId])
+    expect(followerSessions.activeSessionId).toBe(sessionId)
+    expect(followerSessions.messages).toEqual(leaderSessions.sessionMessages[sessionId])
   })
   it('initializes a follower through the canonical session action', async () => {
     // ROOT CAUSE:

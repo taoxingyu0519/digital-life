@@ -6,6 +6,7 @@ import type { ChatHistoryItem, StreamingAssistantMessage } from '../../../../typ
 import type { ChatHistoryReplyPayload } from '../reply'
 import type { ChatToolCallRendererRegistry } from './tool-call-renderer'
 
+import { BasicButton } from '@proj-airi/ui'
 import { Virtualizer } from 'virtua/vue'
 import { computed, useTemplateRef } from 'vue'
 import { useI18n } from 'vue-i18n'
@@ -16,10 +17,11 @@ import ChatErrorItem from './error-item.vue'
 import ChatHistoryMessageFrame from './history-message-frame.vue'
 import ChatUserItem from './user-item.vue'
 
+import { useSettingsChatReading } from '../../../../stores/settings/chat-reading'
 import { useChatHistoryScroll } from '../composables/use-chat-history-scroll'
 import { useChatHistoryTopFade } from '../composables/use-chat-history-top-fade'
 import { useVirtualizerBottomAlignment, useVirtualizerScroll } from '../composables/use-virtualizer-scroll'
-import { getChatHistoryItemCopyText, getChatHistoryItemKey } from '../utils'
+import { getChatHistoryItemCopyText, getChatHistoryItemKey, mergeChatHistory } from '../utils'
 
 defineOptions({
   inheritAttrs: false,
@@ -27,6 +29,8 @@ defineOptions({
 
 const props = withDefaults(defineProps<{
   messages: ChatHistoryItem[]
+  /** Call-local captions are visible before persistence, with mutation actions disabled. */
+  liveMessages?: ChatHistoryItem[]
   streamingMessage?: StreamingAssistantMessage
   sending?: boolean
   assistantLabel?: string
@@ -74,12 +78,15 @@ const scrollContainerRef = useTemplateRef<InstanceType<typeof ChatHistoryScrollC
 const chatHistoryRef = computed<HTMLElement | null>(() => scrollContainerRef.value?.viewport ?? null)
 const virtualizerRef = useTemplateRef<VirtualizerHandle>('virtualizer')
 const tailInset = computed(() => props.tailInset)
-const { scrollToIndex } = useVirtualizerScroll({
+const { scrollToIndex, cancelScroll } = useVirtualizerScroll({
+  container: chatHistoryRef,
   tailInset,
   virtualizer: virtualizerRef,
 })
 
 const { t } = useI18n()
+const reading = useSettingsChatReading()
+const readingLayout = computed(() => reading.historyStyle)
 const labels = computed(() => ({
   assistant: props.assistantLabel ?? t('stage.chat.message.character-name.airi'),
   user: props.userLabel ?? t('stage.chat.message.character-name.you'),
@@ -87,13 +94,19 @@ const labels = computed(() => ({
   retry: props.retryLabel ?? t('stage.chat.actions.retry'),
 }))
 
-const streaming = computed<StreamingAssistantMessage>(() => props.streamingMessage ?? { role: 'assistant', content: '', slices: [], tool_results: [] })
+const emptyStreamingMessage: StreamingAssistantMessage = { role: 'assistant', content: '', slices: [], tool_results: [] }
+const streaming = computed<StreamingAssistantMessage>(() => props.streamingMessage ?? emptyStreamingMessage)
 const showStreamingPlaceholder = computed(() => (streaming.value.slices?.length ?? 0) === 0 && !streaming.value.content)
+const emptyLiveMessages: ChatHistoryItem[] = []
+const liveIds = computed(() => new Set(props.liveMessages?.flatMap(message => message.id ? [message.id] : [])))
+function isLiveMessage(message: ChatHistoryItem) {
+  return !!message.id && liveIds.value.has(message.id)
+}
 function shouldShowPlaceholder(message: ChatHistoryItem) {
   return !!streaming.value.id && message.id === streaming.value.id
 }
 function canReplyToMessage(message: ChatHistoryItem) {
-  if (!message.id)
+  if (!message.id || isLiveMessage(message))
     return false
 
   if (message.role !== 'assistant' && message.role !== 'user')
@@ -105,18 +118,19 @@ function canReplyToMessage(message: ChatHistoryItem) {
   return getChatHistoryItemCopyText(message).trim().length > 0
 }
 const renderMessages = computed<ChatHistoryItem[]>(() => {
+  const messages = mergeChatHistory(props.messages, props.liveMessages ?? emptyLiveMessages)
   if (!props.sending)
-    return props.messages
+    return messages
 
   const streamId = streaming.value.id
   if (!streamId)
-    return props.messages
+    return messages
 
-  const hasStreamAlready = props.messages.some(message => message.role === 'assistant' && message.id === streamId)
+  const hasStreamAlready = messages.some(message => message.role === 'assistant' && message.id === streamId)
   if (hasStreamAlready)
-    return props.messages
+    return messages
 
-  return [...props.messages, streaming.value]
+  return [...messages, streaming.value]
 })
 function canRetryMessageAt(index: number) {
   const precedingMessage = renderMessages.value[index - 1]
@@ -140,12 +154,13 @@ const { itemProps } = useVirtualizerBottomAlignment({
   virtualizer: virtualizerRef,
 })
 
-useChatHistoryScroll({
+const { showLatest, scrollToLatest } = useChatHistoryScroll({
   container: chatHistoryRef,
   messages: renderMessages,
-  getKey: getChatHistoryItemKey,
   scrollToIndex,
+  cancelScroll,
   tailInset,
+  layout: readingLayout,
 })
 useChatHistoryTopFade({
   container: chatHistoryRef,
@@ -161,6 +176,8 @@ function emitCopyMessage(message: ChatHistoryItem, index: number) {
 }
 
 function emitDeleteMessage(message: ChatHistoryItem, index: number) {
+  if (isLiveMessage(message))
+    return
   emit('deleteMessage', {
     message,
     index,
@@ -219,72 +236,103 @@ function emitToolCallRerun(
 </script>
 
 <template>
-  <ChatHistoryScrollContainer
-    ref="scroll-container"
+  <div
     v-bind="$attrs"
-    :variant="variant"
-    :scrollbar="scrollbar"
+    :style="reading.historyStyle"
+    :class="['relative h-full w-full']"
   >
-    <Virtualizer
-      ref="virtualizer"
-      :data="renderMessages"
-      :buffer-size="CHAT_HISTORY_OVERSCAN"
-      :item-props="itemProps"
-      :scroll-ref="chatHistoryRef ?? undefined"
+    <ChatHistoryScrollContainer
+      ref="scroll-container"
+      :variant="variant"
+      :scrollbar="scrollbar"
     >
-      <template #default="{ item: message, index }">
-        <ChatHistoryMessageFrame
-          :key="getChatHistoryItemKey(message, index)"
-          :variant="variant"
-          :scroll-container="chatHistoryRef"
-          :reply-enabled="canReplyToMessage(message)"
-          @reply="emitReplyMessage(message)"
-        >
-          <ChatErrorItem
-            v-if="message.role === 'error'"
-            :message="message"
-            :label="labels.error"
-            :retry-label="labels.retry"
-            :can-retry="canRetryMessageAt(index)"
-            :show-placeholder="sending && index === renderMessages.length - 1"
-            :scroll-container="chatHistoryRef"
+      <Virtualizer
+        ref="virtualizer"
+        :data="renderMessages"
+        :buffer-size="CHAT_HISTORY_OVERSCAN"
+        :item-props="itemProps"
+        :scroll-ref="chatHistoryRef ?? undefined"
+      >
+        <template #default="{ item: message, index }">
+          <ChatHistoryMessageFrame
+            :key="getChatHistoryItemKey(message, index)"
+            :archive="message.archive"
+            :role="message.role"
             :variant="variant"
-            :surface="surface"
-            @copy="emitCopyMessage(message, index)"
-            @retry="emitRetryMessage(message, index)"
-            @delete="emitDeleteMessage(message, index)"
-          />
-          <ChatAssistantItem
-            v-else-if="message.role === 'assistant'"
-            :message="message"
-            :label="labels.assistant"
-            :reply-target="getReplyTarget(message)"
-            :can-reply="canReplyToMessage(message)"
-            :show-placeholder="shouldShowPlaceholder(message) && showStreamingPlaceholder"
             :scroll-container="chatHistoryRef"
-            :variant="variant"
-            :surface="surface"
-            :tool-call-renderers="toolCallRenderers"
-            @copy="emitCopyMessage(message, index)"
-            @delete="emitDeleteMessage(message, index)"
+            :reply-enabled="canReplyToMessage(message)"
             @reply="emitReplyMessage(message)"
-            @tool-call-rerun="emitToolCallRerun(message, index, $event)"
-          />
-          <ChatUserItem
-            v-else-if="message.role === 'user'"
-            :message="message"
-            :label="labels.user"
-            :reply-target="getReplyTarget(message)"
-            :can-reply="canReplyToMessage(message)"
-            :scroll-container="chatHistoryRef"
-            :variant="variant"
-            :surface="surface"
-            @copy="emitCopyMessage(message, index)"
-            @delete="emitDeleteMessage(message, index)"
-            @reply="emitReplyMessage(message)"
-          />
-        </ChatHistoryMessageFrame>
-      </template>
-    </Virtualizer>
-  </ChatHistoryScrollContainer>
+          >
+            <ChatErrorItem
+              v-if="message.role === 'error'"
+              :message="message"
+              :label="labels.error"
+              :retry-label="labels.retry"
+              :can-retry="canRetryMessageAt(index)"
+              :show-placeholder="sending && index === renderMessages.length - 1"
+              :scroll-container="chatHistoryRef"
+              :variant="variant"
+              :surface="surface"
+              @copy="emitCopyMessage(message, index)"
+              @retry="emitRetryMessage(message, index)"
+              @delete="emitDeleteMessage(message, index)"
+            />
+            <ChatAssistantItem
+              v-else-if="message.role === 'assistant'"
+              :message="message"
+              :label="labels.assistant"
+              :reply-target="getReplyTarget(message)"
+              :can-reply="canReplyToMessage(message)"
+              :can-delete="!isLiveMessage(message)"
+              :show-placeholder="shouldShowPlaceholder(message) && showStreamingPlaceholder"
+              :scroll-container="chatHistoryRef"
+              :variant="variant"
+              :surface="surface"
+              :tool-call-renderers="toolCallRenderers"
+              @copy="emitCopyMessage(message, index)"
+              @delete="emitDeleteMessage(message, index)"
+              @reply="emitReplyMessage(message)"
+              @tool-call-rerun="emitToolCallRerun(message, index, $event)"
+            />
+            <ChatUserItem
+              v-else-if="message.role === 'user'"
+              :message="message"
+              :label="labels.user"
+              :reply-target="getReplyTarget(message)"
+              :can-reply="canReplyToMessage(message)"
+              :can-delete="!isLiveMessage(message)"
+              :scroll-container="chatHistoryRef"
+              :variant="variant"
+              :surface="surface"
+              @copy="emitCopyMessage(message, index)"
+              @delete="emitDeleteMessage(message, index)"
+              @reply="emitReplyMessage(message)"
+            />
+          </ChatHistoryMessageFrame>
+        </template>
+      </Virtualizer>
+    </ChatHistoryScrollContainer>
+    <BasicButton
+      v-if="showLatest"
+      size="unset"
+      :class="[
+        'absolute bottom-3 right-3 z-30 flex items-center gap-1 rounded-full border px-3 py-2 text-sm shadow-md backdrop-blur-md',
+        'border-primary-200/70 bg-neutral-50/95 text-primary-700 dark:border-primary-800/70 dark:bg-neutral-900/95 dark:text-primary-200',
+        'focus-visible:outline-2 focus-visible:outline-primary-500',
+      ]"
+      @click="scrollToLatest"
+    >
+      <span aria-hidden="true" :class="['i-solar:alt-arrow-down-outline size-4']" />
+      {{ t('stage.chat.reading.latest') }}
+    </BasicButton>
+  </div>
 </template>
+
+<style scoped>
+:deep(.chat-message-item-container) {
+  font-size: var(--chat-message-font-size);
+  line-height: 1.6;
+  max-width: var(--chat-bubble-max-width);
+  padding: var(--chat-bubble-padding);
+}
+</style>

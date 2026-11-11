@@ -1,6 +1,8 @@
 import type { ChatRequestOptions } from '@proj-airi/provider-inference'
 import type {} from 'pinia-plugin-synced'
 
+import type { SharedSettings } from '../../services/shared-settings-contract'
+
 import { useLocalStorageManualReset } from '@proj-airi/stage-shared/composables'
 import { refManualReset } from '@vueuse/core'
 import { defineStore } from 'pinia'
@@ -53,6 +55,17 @@ export const useConsciousnessStore = defineStore('consciousness', () => {
     1.0,
     persistenceOptions,
   )
+
+  async function applySharedModel(model: SharedSettings['model']) {
+    activeProvider.value = model.provider
+    activeModel.value = model.model
+    activeCustomModelName.value = model.customModel
+    temperature.value = model.temperature
+    topP.value = model.topP
+    await settingsStore.setReasoning(model.reasoning)
+    await settingsStore.setTemperatureEnabled(model.temperatureEnabled)
+    await settingsStore.setTopPEnabled(model.topPEnabled)
+  }
 
   // Saved slider values do not imply consent to override provider defaults.
   // All request paths consume these projections; disabled fields stay undefined.
@@ -154,6 +167,7 @@ export const useConsciousnessStore = defineStore('consciousness', () => {
     filteredModels,
 
     // Actions
+    applySharedModel,
     resetModelSelection,
     loadModelsForProvider,
     getModelsForProvider,
@@ -162,6 +176,7 @@ export const useConsciousnessStore = defineStore('consciousness', () => {
   }
 }, {
   synced: {
+    actions: ['applySharedModel'],
     state: true,
   },
 })

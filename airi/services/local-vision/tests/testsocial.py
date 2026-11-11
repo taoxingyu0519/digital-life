@@ -10,6 +10,22 @@ from social import SocialLearning, spoken_name
 
 
 class SocialTests(unittest.TestCase):
+    def test_AIRI_045_anonymous_face_owns_early_conversation_and_keeps_its_id_after_confirmed_name(self):
+        self.social.sample('anonymous-track', self.vector, 'front', b'generated-photo', self.unknown)
+        person = self.social.person
+        self.assertIsNotNone(person)
+        self.assertEqual(self.people.profile(person, 'airi')['display_name'], '')
+        self.social.converse('anonymous-track', self.unknown, '先聊聊音乐吧', 'airi', 'before-name')
+        self.social.ask('anonymous-track')
+        self.assertEqual(self.social.person, person)
+        self.social.converse('anonymous-track', self.unknown, '我叫小明', 'airi', 'introduce')
+        self.assertEqual(self.people.profile(person, 'airi')['display_name'], '')
+        self.social.converse('anonymous-track', self.unknown, '名字正确', 'airi', 'confirm-name')
+        self.assertEqual(self.social.person, person)
+        self.assertEqual(self.people.profile(person, 'airi')['display_name'], '小明')
+        self.assertIn('before-name', [memory['event_id'] for memory in self.people.memory_records(person, 'airi')])
+        self.assertEqual(len(self.people.list()), 1)
+
     def setUp(self):
         self.folder = tempfile.TemporaryDirectory()
         self.people = People(Path(self.folder.name), 'test-model')
@@ -50,6 +66,30 @@ class SocialTests(unittest.TestCase):
                 self.social.sample('track', self.vector, 'front', b'face', self.unknown)
         self.assertEqual(self.people.list(), [])
         self.assertEqual(self.social.status()['name_state'], 'confirming')
+
+    # http://127.0.0.1:5174 — AIRI-041: retrying a greeting erased a spoken introduction.
+    def test_AIRI_041_repeated_greeting_preserves_confirmation_and_enrollment(self):
+        with patch('social.time.monotonic', return_value=10):
+            self.social.ask('track')
+            self.social.converse('track', self.unknown, '我是小明', 'airi', 'intro')
+            self.social.ask('track')
+            self.assertEqual(self.social.status()['name'], '小明')
+            self.assertEqual(self.social.status()['name_state'], 'confirming')
+            self.social.converse('track', self.unknown, '名字正确', 'airi', 'confirm')
+        for index in range(10):
+            with patch('social.time.monotonic', return_value=11 + index * .5):
+                self.social.ask('track')
+                self.social.sample('track', self.vector, 'front', b'face-jpeg', self.unknown)
+        self.assertIsNotNone(self.social.person)
+        self.assertEqual(len(self.people.list()), 1)
+        self.assertEqual(self.people.list()[0]['display_name'], '小明')
+
+    def test_AIRI_041_repeated_greeting_does_not_reset_a_declined_introduction(self):
+        self.social.ask('track')
+        self.social.converse('track', self.unknown, '不要记住我', 'airi', 'decline')
+        self.social.ask('track')
+        self.assertEqual(self.social.converse('track', self.unknown, '我叫小明', 'airi', 'later'), 'declined')
+        self.assertEqual(self.people.list(), [])
 
     def test_AIRI_025_correction_preserves_profile_and_requires_confirmation(self):
         person = self.introduce()

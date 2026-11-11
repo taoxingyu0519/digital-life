@@ -1,8 +1,11 @@
+import type { Pinia } from 'pinia'
+
 import type { ChatHistoryItem } from '../../../../types/chat'
 
 import en from '@proj-airi/i18n/locales/en'
 
-import { beforeEach, describe, expect, it, vi } from 'vitest'
+import { createPinia, disposePinia } from 'pinia'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { render } from 'vitest-browser-vue'
 import { nextTick } from 'vue'
 import { createI18n } from 'vue-i18n'
@@ -12,6 +15,18 @@ import ChatHistory from './history.vue'
 import { getChatHistoryItemKey } from '../utils'
 
 const triggerHaptic = vi.fn()
+const historyPiniaInstances: Pinia[] = []
+
+function createHistoryPinia() {
+  const pinia = createPinia()
+  historyPiniaInstances.push(pinia)
+  return pinia
+}
+
+afterEach(() => {
+  historyPiniaInstances.splice(0).forEach(pinia => disposePinia(pinia))
+  localStorage.clear()
+})
 
 vi.mock('web-haptics/vue', () => ({
   useWebHaptics: () => ({ trigger: triggerHaptic }),
@@ -128,6 +143,43 @@ function dispatchTouchEvent(
 }
 
 describe('chat history', () => {
+  // http://127.0.0.1:5174 — AIRI-047: default tail lock, manual history reading, and explicit return.
+  it.each(['desktop', 'mobile'] as const)('aIRI-047 keeps %s history at the live edge until manually scrolled upward', async (variant) => {
+    let messages: ChatHistoryItem[] = Array.from({ length: 40 }, (_, index) => ({ id: `follow-${index}`, role: 'user', content: `Generated message ${index} `.repeat(index % 5 + 1) }))
+    const screen = await render(ChatHistory, {
+      props: { messages, variant, style: 'height: 240px; width: 320px;' },
+      global: { plugins: [createEnglishI18n(), createHistoryPinia()] },
+    })
+    const history = screen.container.querySelector<HTMLElement>('.chat-history-list')
+    if (!history)
+      throw new Error('Expected a chat viewport')
+    const atTail = () => history.scrollHeight - history.clientHeight - history.scrollTop <= 24
+    await vi.waitFor(() => expect(atTail()).toBe(true))
+    history.querySelector('.chat-message-item')?.dispatchEvent(new PointerEvent('pointerover', { bubbles: true }))
+    messages = [...messages, { id: 'follow-new-1', role: 'user', content: 'Generated latest message' }]
+    await screen.rerender({ messages })
+    await vi.waitFor(() => expect(atTail()).toBe(true))
+    await vi.waitFor(() => expect(screen.container.textContent).not.toContain('Back to latest'))
+
+    messages = [...messages, { id: 'follow-queued', role: 'user', content: 'Generated pending alignment' }]
+    await screen.rerender({ messages })
+    history.dispatchEvent(new WheelEvent('wheel', { deltaY: -100, bubbles: true }))
+    history.scrollTop = 0
+    history.dispatchEvent(new Event('scroll'))
+    await vi.waitFor(() => expect(screen.container.textContent).toContain('Back to latest'))
+    messages = [...messages, { id: 'follow-new-2', role: 'user', content: 'Generated message while reading history' }]
+    await screen.rerender({ messages })
+    await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)))
+    expect(history.scrollTop).toBe(0)
+    await screen.getByRole('button', { name: 'Back to latest', exact: true }).click()
+    await vi.waitFor(() => expect(atTail()).toBe(true))
+    await vi.waitFor(() => expect(screen.container.textContent).not.toContain('Back to latest'))
+    messages = [...messages, { id: 'follow-new-3', role: 'user', content: 'Generated message after returning' }]
+    await screen.rerender({ messages })
+    await vi.waitFor(() => expect(atTail()).toBe(true))
+    expect(screen.container.textContent).toContain('Generated message after returning')
+  })
+
   beforeEach(() => {
     triggerHaptic.mockClear()
   })
@@ -153,7 +205,7 @@ describe('chat history', () => {
         style: 'height: 240px; width: 320px;',
       },
       global: {
-        plugins: [createEnglishI18n()],
+        plugins: [createEnglishI18n(), createHistoryPinia()],
       },
     })
 
@@ -177,7 +229,7 @@ describe('chat history', () => {
         style: 'height: 240px; width: 320px; overflow-y: auto;',
       },
       global: {
-        plugins: [createEnglishI18n()],
+        plugins: [createEnglishI18n(), createHistoryPinia()],
       },
     })
 
@@ -209,7 +261,7 @@ describe('chat history', () => {
         style: 'height: 240px; width: 320px;',
       },
       global: {
-        plugins: [createEnglishI18n()],
+        plugins: [createEnglishI18n(), createHistoryPinia()],
       },
     })
 
@@ -232,6 +284,7 @@ describe('chat history', () => {
       expect(screen.container.textContent).toContain('Desktop message 99')
     })
 
+    history.dispatchEvent(new WheelEvent('wheel', { deltaY: -100, bubbles: true }))
     history.scrollTop = 0
     history.dispatchEvent(new Event('scroll'))
 
@@ -264,7 +317,7 @@ describe('chat history', () => {
         style: 'height: 240px; width: 320px; overflow-y: auto;',
       },
       global: {
-        plugins: [createEnglishI18n()],
+        plugins: [createEnglishI18n(), createHistoryPinia()],
       },
     })
 
@@ -281,7 +334,8 @@ describe('chat history', () => {
 
     const historyBottom = history.getBoundingClientRect().bottom
     expect(historyBottom - messages[1].getBoundingClientRect().bottom).toBeLessThanOrEqual(16)
-    expect(historyBottom - messages[0].getBoundingClientRect().bottom).toBeLessThanOrEqual(64)
+    const placeholderHeight = messages[1].getBoundingClientRect().height
+    expect(historyBottom - messages[0].getBoundingClientRect().bottom).toBeLessThanOrEqual(placeholderHeight + 16)
   })
 
   // ROOT CAUSE:
@@ -306,7 +360,7 @@ describe('chat history', () => {
         style: 'height: 240px; width: 320px; overflow-y: auto;',
       },
       global: {
-        plugins: [createEnglishI18n()],
+        plugins: [createEnglishI18n(), createHistoryPinia()],
       },
     })
 
@@ -341,6 +395,7 @@ describe('chat history', () => {
     expect(getComputedStyle(history).overflowY).toBe('auto')
     expect(screen.container.querySelector('.scrollable-area-scrollbar--vertical')).toBeNull()
 
+    history.dispatchEvent(new WheelEvent('wheel', { deltaY: -100, bubbles: true }))
     history.scrollTop = 0
     history.dispatchEvent(new Event('scroll'))
 
@@ -357,7 +412,7 @@ describe('chat history', () => {
         style: 'height: 240px; width: 320px; overflow-y: auto;',
       },
       global: {
-        plugins: [createEnglishI18n()],
+        plugins: [createEnglishI18n(), createHistoryPinia()],
       },
     })
 
@@ -397,7 +452,7 @@ describe('chat history', () => {
         style: 'height: 240px; width: 320px; overflow-y: auto;',
       },
       global: {
-        plugins: [createEnglishI18n()],
+        plugins: [createEnglishI18n(), createHistoryPinia()],
       },
     })
 
@@ -416,7 +471,7 @@ describe('chat history', () => {
         style: 'height: 480px; width: 480px; overflow-y: auto;',
       },
       global: {
-        plugins: [createEnglishI18n()],
+        plugins: [createEnglishI18n(), createHistoryPinia()],
       },
     })
 
@@ -436,7 +491,7 @@ describe('chat history', () => {
       props: {
         messages: [{ role: 'error', content: '**Retry this request**' }],
       },
-      global: { plugins: [createEnglishI18n()] },
+      global: { plugins: [createEnglishI18n(), createHistoryPinia()] },
     })
 
     await vi.waitFor(() => expect(screen.container.querySelector('strong')?.textContent).toBe('Retry this request'))
@@ -457,7 +512,7 @@ describe('chat history', () => {
         variant: 'mobile',
         style: 'height: 480px; width: 320px; overflow-y: auto;',
       },
-      global: { plugins: [createEnglishI18n()] },
+      global: { plugins: [createEnglishI18n(), createHistoryPinia()] },
     })
 
     await vi.waitFor(() => expect(screen.container.textContent).toContain('Remote sent 400 response'))
@@ -486,7 +541,7 @@ describe('chat history', () => {
         style: 'height: 480px; width: 480px; overflow-y: auto;',
       },
       global: {
-        plugins: [createEnglishI18n()],
+        plugins: [createEnglishI18n(), createHistoryPinia()],
       },
     })
 
@@ -517,7 +572,7 @@ describe('chat history', () => {
         style: 'height: 480px; width: 480px; overflow-y: auto;',
       },
       global: {
-        plugins: [createEnglishI18n()],
+        plugins: [createEnglishI18n(), createHistoryPinia()],
       },
     })
 
@@ -534,7 +589,7 @@ describe('chat history', () => {
         style: 'height: 480px; width: 480px; overflow-y: auto;',
       },
       global: {
-        plugins: [createEnglishI18n()],
+        plugins: [createEnglishI18n(), createHistoryPinia()],
       },
     })
 
@@ -562,7 +617,7 @@ describe('chat history', () => {
         style: 'height: 240px; width: 320px; overflow-y: auto;',
       },
       global: {
-        plugins: [createEnglishI18n()],
+        plugins: [createEnglishI18n(), createHistoryPinia()],
       },
     })
 
@@ -640,7 +695,7 @@ describe('chat history', () => {
         style: 'height: 240px; width: 320px; overflow-y: auto;',
       },
       global: {
-        plugins: [createEnglishI18n()],
+        plugins: [createEnglishI18n(), createHistoryPinia()],
       },
     })
 
@@ -687,7 +742,7 @@ describe('chat history', () => {
         style: 'height: 240px; width: 320px; overflow-y: auto;',
       },
       global: {
-        plugins: [createEnglishI18n()],
+        plugins: [createEnglishI18n(), createHistoryPinia()],
       },
     })
 
@@ -736,7 +791,7 @@ describe('chat history', () => {
         style: 'height: 240px; width: 320px; overflow-y: auto;',
       },
       global: {
-        plugins: [createEnglishI18n()],
+        plugins: [createEnglishI18n(), createHistoryPinia()],
       },
     })
 
@@ -798,7 +853,7 @@ describe('chat history', () => {
         style: 'height: 240px; width: 320px; overflow-y: auto;',
       },
       global: {
-        plugins: [createEnglishI18n()],
+        plugins: [createEnglishI18n(), createHistoryPinia()],
       },
     })
 
@@ -876,7 +931,7 @@ describe('chat history', () => {
         style: 'height: 240px; width: 320px; overflow-y: auto;',
       },
       global: {
-        plugins: [createEnglishI18n()],
+        plugins: [createEnglishI18n(), createHistoryPinia()],
       },
     })
 
@@ -944,7 +999,7 @@ describe('chat history', () => {
         style: 'height: 240px; width: 320px; overflow-y: auto;',
       },
       global: {
-        plugins: [createEnglishI18n()],
+        plugins: [createEnglishI18n(), createHistoryPinia()],
       },
     })
 
@@ -1016,7 +1071,7 @@ describe('chat history', () => {
         style: 'height: 240px; width: 320px; overflow-y: auto;',
       },
       global: {
-        plugins: [createEnglishI18n()],
+        plugins: [createEnglishI18n(), createHistoryPinia()],
       },
     })
 
@@ -1068,7 +1123,7 @@ describe('chat history', () => {
         style: 'height: 240px; width: 320px; overflow-y: auto;',
       },
       global: {
-        plugins: [createEnglishI18n()],
+        plugins: [createEnglishI18n(), createHistoryPinia()],
       },
     })
 
@@ -1107,7 +1162,7 @@ describe('chat history', () => {
         style: 'height: 240px; width: 320px; overflow-y: auto;',
       },
       global: {
-        plugins: [createEnglishI18n()],
+        plugins: [createEnglishI18n(), createHistoryPinia()],
       },
     })
 
@@ -1167,7 +1222,7 @@ describe('chat history', () => {
         style: 'height: 240px; width: 320px; overflow-y: auto;',
       },
       global: {
-        plugins: [createEnglishI18n()],
+        plugins: [createEnglishI18n(), createHistoryPinia()],
       },
     })
 
@@ -1211,7 +1266,7 @@ describe('chat history', () => {
         style: 'height: 240px; width: 320px; overflow-y: auto;',
       },
       global: {
-        plugins: [createEnglishI18n()],
+        plugins: [createEnglishI18n(), createHistoryPinia()],
       },
     })
 
@@ -1260,7 +1315,7 @@ describe('chat history', () => {
         style: 'height: 240px; width: 320px; overflow-y: auto;',
       },
       global: {
-        plugins: [createEnglishI18n()],
+        plugins: [createEnglishI18n(), createHistoryPinia()],
       },
     })
 
@@ -1308,7 +1363,7 @@ describe('chat history', () => {
         style: 'height: 240px; width: 320px; overflow-y: auto;',
       },
       global: {
-        plugins: [createEnglishI18n()],
+        plugins: [createEnglishI18n(), createHistoryPinia()],
       },
     })
 
@@ -1349,7 +1404,7 @@ describe('chat history', () => {
         style: 'height: 240px; width: 320px; overflow-y: auto;',
       },
       global: {
-        plugins: [createEnglishI18n()],
+        plugins: [createEnglishI18n(), createHistoryPinia()],
       },
     })
 
@@ -1406,7 +1461,7 @@ describe('chat history', () => {
         style: 'height: 240px; width: 320px; overflow-y: auto;',
       },
       global: {
-        plugins: [createEnglishI18n()],
+        plugins: [createEnglishI18n(), createHistoryPinia()],
       },
     })
 
@@ -1458,7 +1513,7 @@ describe('chat history', () => {
         style: 'height: 240px; width: 320px; overflow-y: auto;',
       },
       global: {
-        plugins: [createEnglishI18n()],
+        plugins: [createEnglishI18n(), createHistoryPinia()],
       },
     })
 
@@ -1507,7 +1562,7 @@ describe('chat history', () => {
         style: 'height: 240px; width: 320px; overflow-y: auto;',
       },
       global: {
-        plugins: [createEnglishI18n()],
+        plugins: [createEnglishI18n(), createHistoryPinia()],
       },
     })
 
@@ -1547,7 +1602,7 @@ describe('chat history', () => {
         style: 'height: 240px; width: 320px; overflow-y: auto;',
       },
       global: {
-        plugins: [createEnglishI18n()],
+        plugins: [createEnglishI18n(), createHistoryPinia()],
       },
     })
 
@@ -1572,7 +1627,7 @@ describe('chat history', () => {
         style: 'height: 240px; width: 320px; overflow-y: auto;',
       },
       global: {
-        plugins: [createEnglishI18n()],
+        plugins: [createEnglishI18n(), createHistoryPinia()],
       },
     })
 
@@ -1617,7 +1672,7 @@ describe('chat history', () => {
         style: 'height: 240px; width: 320px; overflow-y: auto;',
       },
       global: {
-        plugins: [createEnglishI18n()],
+        plugins: [createEnglishI18n(), createHistoryPinia()],
       },
     })
 
@@ -1657,7 +1712,7 @@ describe('chat history', () => {
     }
     const screen = await render(ChatHistory, {
       props: { messages: [message], style: 'height: 480px; width: 480px; overflow-y: auto;' },
-      global: { plugins: [createEnglishI18n()] },
+      global: { plugins: [createEnglishI18n(), createHistoryPinia()] },
     })
     await screen.getByLabelText('Re-run tool call').nth(1).click()
     expect(screen.emitted('toolCallRerun')).toEqual([[expect.objectContaining({ invocationId: 'invocation-1', toolCallId: 'same' })]])
@@ -1693,7 +1748,7 @@ describe('chat history', () => {
         style: 'height: 480px; width: 480px; overflow-y: auto;',
       },
       global: {
-        plugins: [createEnglishI18n()],
+        plugins: [createEnglishI18n(), createHistoryPinia()],
       },
     })
 

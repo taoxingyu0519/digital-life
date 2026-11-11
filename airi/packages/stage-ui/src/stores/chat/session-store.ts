@@ -49,8 +49,9 @@ export interface DeleteChatMessagePayload {
   sessionId: string
 }
 
-/** A finalized voice transcript targets the session captured when the call began. */
+/** Live and finalized voice text targets the session captured when the call began. */
 export interface VoiceTranscriptPayload {
+  archive?: ChatHistoryItem['archive']
   sessionId: string
   generation: number
   userId: string
@@ -58,8 +59,26 @@ export interface VoiceTranscriptPayload {
   id: string
   role: 'user' | 'assistant'
   text: string
+  /** First caption time, preserved when playback confirmation arrives later. */
+  createdAt?: number
   interrupted?: boolean
   localVisionDerived?: true
+}
+
+/** Builds the same stage message for live captions and persisted transcripts. This does not confirm playback or write storage. */
+export function createVoiceTranscriptMessage(payload: VoiceTranscriptPayload, createdAt: number): ChatHistoryItem {
+  const base = { id: payload.id, content: payload.text, createdAt, archive: payload.archive ? { ...payload.archive } : undefined }
+  if (payload.role === 'assistant') {
+    return {
+      ...base,
+      role: 'assistant',
+      slices: [{ type: 'text', text: payload.text }],
+      tool_results: [],
+      ...(payload.interrupted ? { interrupted: true as const } : {}),
+      ...(payload.localVisionDerived ? { localVisionDerived: true as const } : {}),
+    }
+  }
+  return { ...base, role: 'user' }
 }
 
 /**
@@ -80,7 +99,8 @@ export const useChatSessionStore = defineStore('chat-session', () => {
   // Re-enter synchronized actions through this store's owner, never the ambient active instance.
   const pinia = getActivePinia()
   const { token: authToken } = storeToRefs(useAuthStore())
-  const { userId, displayName, cloudSyncAllowed } = storeToRefs(useStageIdentityStore())
+  const identity = useStageIdentityStore()
+  const { userId, displayName, cloudSyncAllowed } = storeToRefs(identity)
   const { activeCardId, systemPrompt } = storeToRefs(useAiriCardStore())
 
   const chatSessionSelection = useChatSessionSelectionStore()
@@ -352,18 +372,9 @@ export const useChatSessionStore = defineStore('chat-session', () => {
     if (!messages)
       return false
     const previous = messages.find(message => message.id === payload.id)
-    const message: ChatHistoryItem = payload.role === 'assistant'
-      ? {
-          id: payload.id,
-          role: 'assistant',
-          content: payload.text,
-          slices: [{ type: 'text', text: payload.text }],
-          tool_results: [],
-          createdAt: previous?.createdAt ?? Date.now(),
-          ...(payload.interrupted ? { interrupted: true as const } : {}),
-          ...(payload.localVisionDerived ? { localVisionDerived: true as const } : {}),
-        }
-      : { id: payload.id, role: 'user', content: payload.text, createdAt: previous?.createdAt ?? Date.now() }
+    const recipient = previous?.archive ?? payload.archive ?? captureArchive(payload.sessionId, payload.role, payload.localVisionDerived)
+    // Keep a stored timestamp first, then the first live caption time. Direct finalized callers use the receipt time.
+    const message = createVoiceTranscriptMessage({ ...payload, archive: recipient }, previous?.createdAt ?? payload.createdAt ?? Date.now())
     sessionMessages.value[payload.sessionId] = previous
       ? messages.map(item => item.id === payload.id ? message : item)
       : [...messages, message]
@@ -390,10 +401,25 @@ export const useChatSessionStore = defineStore('chat-session', () => {
     ensureSession(sessionId)
     message.id ??= nanoid()
     message.createdAt ??= Date.now()
+    message.archive ??= captureArchive(sessionId, message.role, message.localVisionDerived)
+    if (message.archive)
+      message.archive = { ...message.archive }
     replaceSessionMessages(sessionId, [
       ...(sessionMessages.value[sessionId] ?? []),
       message,
     ])
+  }
+
+  /** Assistant output keeps the user's recipient even if a different face appears while generation is running. */
+  function captureArchive(sessionId: string, role: ChatHistoryItem['role'], localVisionDerived = false): ChatHistoryItem['archive'] {
+    if (role !== 'user' && role !== 'assistant')
+      return undefined
+    if (role === 'assistant' && !localVisionDerived) {
+      const previous = sessionMessages.value[sessionId]?.findLast(message => message.role === 'user')
+      if (previous)
+        return previous.archive ? { ...previous.archive } : undefined
+    }
+    return identity.captureArchive(useAiriCardStore(pinia).activeCard?.name || 'AIRI')
   }
 
   /** Removes one message by stable id or by its current history index. */
@@ -1502,6 +1528,49 @@ export const useChatSessionStore = defineStore('chat-session', () => {
     return cloneDeep(sessionMessages.value)
   }
 
+  /**
+   * Clears one deleted face profile across all characters after the maintenance API accepts deletion.
+   * The caller stops stage producers first. Only the elected renderer changes persisted sessions;
+   * replicated identity/session state revokes cached conversations in the other windows.
+   */
+  async function forgetLocalPerson(personId: string) {
+    if (!personId.trim())
+      throw new Error('person-id-required')
+    const targetUserId = `local-face:${personId}`
+    await identity.forgetPerson(personId)
+
+    await persistQueue
+    const stored = await chatSessionsRepo.getIndex(targetUserId)
+    const sessionIds = new Set(Object.values(sessionMetas.value).filter(meta => meta.userId === targetUserId).map(meta => meta.sessionId))
+    for (const character of Object.values(stored?.characters ?? {})) {
+      for (const id of Object.keys(character.sessions))
+        sessionIds.add(id)
+    }
+
+    for (const [id, messages] of Object.entries(sessionMessages.value)) {
+      if (!sessionIds.has(id) && messages.some(message => message.archive?.personId === personId)) {
+        bumpSessionGeneration(id)
+        sessionMessages.value[id] = messages.filter(message => message.archive?.personId !== personId)
+      }
+    }
+
+    // Keep generation tombstones until identity activation replaces the loaded account.
+    for (const id of sessionIds) {
+      bumpSessionGeneration(id)
+      delete sessionMetas.value[id]
+      delete sessionMessages.value[id]
+      loadedSessions.delete(id)
+      staleSessions.delete(id)
+      cloudHydratedSessions.delete(id)
+      loadingSessions.delete(id)
+    }
+    if (index.value?.userId === targetUserId) {
+      clearInMemoryState()
+      await activateCurrentUser()
+    }
+    await enqueuePersist(() => chatSessionsRepo.forgetPerson(personId))
+  }
+
   async function resetAllSessions() {
     const currentUserId = getCurrentUserId()
     const characterId = getCurrentCharacterId()
@@ -1706,6 +1775,7 @@ export const useChatSessionStore = defineStore('chat-session', () => {
     cleanupMessages,
     getAllSessions,
     resetAllSessions,
+    forgetLocalPerson,
 
     ensureSession,
     deleteMessage,
@@ -1715,6 +1785,7 @@ export const useChatSessionStore = defineStore('chat-session', () => {
     persistSessionMessages,
     getSessionMessages,
     getSessionMessagesIfLoaded,
+    captureArchive,
     sessionMessages,
     sessionMetas,
     getSessionGeneration,
@@ -1747,6 +1818,7 @@ export const useChatSessionStore = defineStore('chat-session', () => {
       'ensureCurrentSession',
       'exportSessions',
       'forkSession',
+      'forgetLocalPerson',
       'importSessions',
       'loadSession',
       'pushMessageToCloud',

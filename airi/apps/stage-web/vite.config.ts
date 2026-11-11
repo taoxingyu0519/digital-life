@@ -29,6 +29,7 @@ import { VitePWA } from 'vite-plugin-pwa'
 
 // Bundle this host-only source with the config; the UI package has no Node build.
 import { firecrawlSearchPlugin } from '../../packages/stage-ui/src/tools/web-search-gateway'
+import { sharedSettingsPlugin } from './src/shared-settings-gateway'
 import { stageRuntimePlugin } from './src/stage-runtime-gateway'
 
 const stageUIAssetsRoot = resolve(join(import.meta.dirname, '..', '..', 'packages', 'stage-ui', 'src', 'assets'))
@@ -128,6 +129,7 @@ export default defineConfig({
   },
 
   plugins: [
+    sharedSettingsPlugin(),
     stageRuntimePlugin(),
     firecrawlSearchPlugin(resolve(import.meta.dirname, '../../../.tools/firecrawl/node_modules/firecrawl-cli/dist/index.js')),
     realtimeVoicePlugin(),

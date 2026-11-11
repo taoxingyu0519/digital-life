@@ -1207,8 +1207,11 @@ airi/apps/stage-web/src/pages/settings/characters/components/CharacterCreate.vue
 airi/apps/stage-web/src/pages/settings/characters/components/CharacterDialog.vue
 airi/apps/stage-web/src/pages/settings/characters/components/CharacterItem.vue
 airi/apps/stage-web/src/pages/settings/characters/index.vue
+airi/apps/stage-web/src/pages/settings/shared-config.vue
 airi/apps/stage-web/src/pages/settings/system/developer.vue
 airi/apps/stage-web/src/pages/settings/system/index.vue
+airi/apps/stage-web/src/shared-settings-gateway.test.ts
+airi/apps/stage-web/src/shared-settings-gateway.ts
 airi/apps/stage-web/src/stage-runtime-gateway.ts
 airi/apps/stage-web/src/stores/background.ts
 airi/apps/stage-web/src/stores/devtools-lag.ts
@@ -1404,6 +1407,15 @@ airi/docs/ai/reports/2026-10-09-chat-archive.md
 airi/docs/ai/reports/2026-10-09-face-stage-accounts.md
 airi/docs/ai/reports/2026-10-11-stage-runtime-and-delivery.md
 airi/docs/ai/reports/2026-10-11-voice-and-settings-regression.md
+airi/docs/ai/reports/2026-10-12-config-sync.md
+airi/docs/ai/reports/2026-10-18-short-speech-settings.png
+airi/docs/ai/reports/2026-10-18-stranger-introduction-and-short-speech.md
+airi/docs/ai/reports/2026-10-19-parallel-voice-and-group-presence.md
+airi/docs/ai/reports/2026-10-19-person-forgetting.md
+airi/docs/ai/reports/2026-10-28-face-stability.md
+airi/docs/ai/reports/2026-10-28-message-person-archive.md
+airi/docs/ai/reports/2026-10-29-stage-history-reading.md
+airi/docs/ai/reports/2026-10-31-stage-tail-follow.md
 airi/docs/content/en/about/privacy.md
 airi/docs/content/en/about/terms.md
 airi/docs/content/en/blog/DevLog-2025.03.05/assets/airi-build-dark.avif
@@ -3276,6 +3288,7 @@ airi/packages/realtime-voice/src/brain.ts
 airi/packages/realtime-voice/src/capture.worklet.ts
 airi/packages/realtime-voice/src/client.ts
 airi/packages/realtime-voice/src/contracts.ts
+airi/packages/realtime-voice/src/conversation-contract.ts
 airi/packages/realtime-voice/src/conversation.test.ts
 airi/packages/realtime-voice/src/conversation.ts
 airi/packages/realtime-voice/src/doubao.ts
@@ -3466,6 +3479,7 @@ airi/packages/server-shared/src/types/websocket/events.ts
 airi/packages/server-shared/src/types/websocket/index.ts
 airi/packages/server-shared/tsconfig.json
 airi/packages/server-shared/tsdown.config.ts
+airi/packages/stage-layouts/README.md
 airi/packages/stage-layouts/package.json
 airi/packages/stage-layouts/src/assets/logo-dark.svg
 airi/packages/stage-layouts/src/assets/logo.svg
@@ -4055,6 +4069,8 @@ airi/packages/stage-ui/src/components/scenarios/chat/components/history.story.vu
 airi/packages/stage-ui/src/components/scenarios/chat/components/history.vue
 airi/packages/stage-ui/src/components/scenarios/chat/components/image-attachment-preview.browser.test.ts
 airi/packages/stage-ui/src/components/scenarios/chat/components/image-attachment-preview.vue
+airi/packages/stage-ui/src/components/scenarios/chat/components/reading-controls.browser.test.ts
+airi/packages/stage-ui/src/components/scenarios/chat/components/reading-controls.vue
 airi/packages/stage-ui/src/components/scenarios/chat/components/reply-preview.vue
 airi/packages/stage-ui/src/components/scenarios/chat/components/reply-quote.vue
 airi/packages/stage-ui/src/components/scenarios/chat/components/response-citations.browser.test.ts
@@ -4465,6 +4481,8 @@ airi/packages/stage-ui/src/services/chat-archive.ts
 airi/packages/stage-ui/src/services/inference-service-providers.test.ts
 airi/packages/stage-ui/src/services/inference-service-providers.ts
 airi/packages/stage-ui/src/services/local-vision-context.ts
+airi/packages/stage-ui/src/services/shared-settings-client.ts
+airi/packages/stage-ui/src/services/shared-settings-contract.ts
 airi/packages/stage-ui/src/services/speech/bus.ts
 airi/packages/stage-ui/src/services/speech/pipeline-runtime.ts
 airi/packages/stage-ui/src/stores/ai/chat-llm/llm.test.ts
@@ -4592,7 +4610,9 @@ airi/packages/stage-ui/src/stores/modules/web-search.test.ts
 airi/packages/stage-ui/src/stores/modules/web-search.ts
 airi/packages/stage-ui/src/stores/onboarding.test.ts
 airi/packages/stage-ui/src/stores/onboarding.ts
+airi/packages/stage-ui/src/stores/participant-archive.browser.test.ts
 airi/packages/stage-ui/src/stores/perf-tracer-bridge.ts
+airi/packages/stage-ui/src/stores/person-forgetting.browser.test.ts
 airi/packages/stage-ui/src/stores/plugin-host-capabilities.ts
 airi/packages/stage-ui/src/stores/providers/config-defaults.test.ts
 airi/packages/stage-ui/src/stores/providers/config-defaults.ts
@@ -4608,6 +4628,7 @@ airi/packages/stage-ui/src/stores/settings/analytics.ts
 airi/packages/stage-ui/src/stores/settings/audio-device.test.ts
 airi/packages/stage-ui/src/stores/settings/audio-device.ts
 airi/packages/stage-ui/src/stores/settings/beat-sync.ts
+airi/packages/stage-ui/src/stores/settings/chat-reading.ts
 airi/packages/stage-ui/src/stores/settings/controls-island.ts
 airi/packages/stage-ui/src/stores/settings/developer.ts
 airi/packages/stage-ui/src/stores/settings/general.test.ts
@@ -4617,6 +4638,8 @@ airi/packages/stage-ui/src/stores/settings/spine.ts
 airi/packages/stage-ui/src/stores/settings/stage-model.test.ts
 airi/packages/stage-ui/src/stores/settings/stage-model.ts
 airi/packages/stage-ui/src/stores/settings/theme.ts
+airi/packages/stage-ui/src/stores/shared-settings.browser.test.ts
+airi/packages/stage-ui/src/stores/shared-settings.ts
 airi/packages/stage-ui/src/stores/speech-output-control.browser.test.ts
 airi/packages/stage-ui/src/stores/speech-output-control.test.ts
 airi/packages/stage-ui/src/stores/speech-output-control.ts
@@ -4675,6 +4698,7 @@ airi/packages/stage-ui/stories/styles/main.css
 airi/packages/stage-ui/stories/styles/transitions.css
 airi/packages/stage-ui/test/chat-service.ts
 airi/packages/stage-ui/test/local-vision-service.ts
+airi/packages/stage-ui/test/shared-settings.ts
 airi/packages/stage-ui/tsconfig.json
 airi/packages/stage-ui/uno.config.ts
 airi/packages/stage-ui/vite.config.ts
@@ -5598,6 +5622,7 @@ scripts/project-manager-ui/wiki.css
 scripts/project-manager.mjs
 scripts/project-wiki.mjs
 scripts/project-wiki.test.mjs
+scripts/protect-shared-settings.py
 scripts/start-airi-background.ps1
 scripts/start-airi-lan.ps1
 scripts/start-airi.ps1
@@ -5642,6 +5667,15 @@ wiki/memory/sessions/2026-10-09-chat-archive.md
 wiki/memory/sessions/2026-10-09-face-stage-accounts.md
 wiki/memory/sessions/2026-10-11-stage-runtime-and-delivery.md
 wiki/memory/sessions/2026-10-11-voice-and-settings-regression.md
+wiki/memory/sessions/2026-10-12-config-sync.md
+wiki/memory/sessions/2026-10-17-port-repair.md
+wiki/memory/sessions/2026-10-18-stranger-introduction.md
+wiki/memory/sessions/2026-10-19-parallel-voice.md
+wiki/memory/sessions/2026-10-19-person-forgetting.md
+wiki/memory/sessions/2026-10-28-face-stability.md
+wiki/memory/sessions/2026-10-28-message-person-archive.md
+wiki/memory/sessions/2026-10-29-stage-history-reading.md
+wiki/memory/sessions/2026-10-31-stage-tail-follow.md
 wiki/modules/brain-prompts.md
 wiki/modules/chat-archive.md
 wiki/modules/chat.md
@@ -5650,6 +5684,7 @@ wiki/modules/clients.md
 wiki/modules/companion.md
 wiki/modules/fast-slow-brain.md
 wiki/modules/local-runtime.md
+wiki/modules/shared-config.md
 wiki/modules/stage-runtime.md
 wiki/modules/storage-memory.md
 wiki/modules/voice.md
@@ -5665,4 +5700,5 @@ wiki/templates/topic.md
 开发文档/07-local-vision.md
 开发文档/08-lan-testing.md
 开发文档/09-github-private-backup.md
+开发文档/10-304-demo.md
 项目管理/tasks.json

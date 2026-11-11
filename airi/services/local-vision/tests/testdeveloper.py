@@ -13,6 +13,7 @@ from fastapi.testclient import TestClient
 
 from developer import DeveloperAccess
 from identity import People
+from social import SocialLearning
 from service import app, state
 
 
@@ -140,3 +141,44 @@ class DeveloperTests(unittest.TestCase):
         self.assertEqual(self.people.extension_records(person), [])
         self.assertEqual(self.people.memory_records(person, 'airi')[0]['text'], '测试记忆')
         self.assertEqual(len(self.people.list()), 1)
+
+    def test_AIRI_042_forgetting_removes_every_personal_table_and_allows_a_fresh_introduction(self):
+        vector = np.eye(1, 128, dtype=np.float32)[0]
+        person = self.people.enroll('生成测试人物', [vector] * 10, {'front': b'generated-jpeg'})
+        other = self.people.enroll('另一个生成测试人物', [np.eye(2, 128, dtype=np.float32)[1]] * 10)
+        self.people.rename(person, '生成测试人物')
+        self.people.remember(person, 'first-character', 'generated-first', '生成测试记忆一')
+        self.people.remember(person, 'second-character', 'generated-second', '生成测试记忆二')
+        self.people.remember(other, 'first-character', 'generated-other', '其他人物记忆')
+        feature = np.eye(1, 512, dtype=np.float32)[0]
+        self.people.add_extensions(person, 'test:512', 'generated-round', 'base-hash',
+            [dict(vector=feature, pose='left', light='normal', jpeg=b'\xff\xd8generated')])
+        with self.people.connect() as db:
+            db.execute('INSERT INTO recognition_templates VALUES (?,?,?,?,?)', (person, 'test:512', 'front', 'generated-hash', b'generated-encrypted-feature'))
+        reset = unittest.mock.Mock()
+        state.runtime.reset = reset
+        self.login()
+        path = '/admin/persons/' + person
+        self.assertEqual(self.client.delete(path).status_code, 200)
+        self.assertEqual(self.client.get(path).status_code, 404)
+        reset.assert_called_once()
+        reopened = People(Path(self.folder.name), 'test')
+        with reopened.connect() as db:
+            self.assertEqual(db.execute('SELECT COUNT(*) FROM people WHERE id=?', (person,)).fetchone()[0], 0)
+            for table in ('photos', 'memories', 'encounters', 'recognition_templates', 'face_extensions', 'name_confirmations'):
+                self.assertEqual(db.execute(f'SELECT COUNT(*) FROM {table} WHERE person=?', (person,)).fetchone()[0], 0, table)
+        self.assertEqual(reopened.memory_records(other, 'first-character')[0]['text'], '其他人物记忆')
+        self.assertTrue(reopened.rules())
+        self.assertEqual(self.client.delete(path).status_code, 200)
+        social = SocialLearning(reopened)
+        unknown = dict(identity_status='unknown', person_id=None, display_name=None)
+        social.converse('fresh-track', unknown, '我叫新朋友', 'first-character', 'fresh-introduction')
+        self.assertEqual(social.status()['name_state'], 'confirming')
+        self.assertEqual(len(reopened.list()), 1)
+        social.converse('fresh-track', unknown, '名字正确', 'first-character', 'fresh-confirmation')
+        for index in range(10):
+            with patch('social.time.monotonic', return_value=social.started + 1 + index * .5):
+                social.sample('fresh-track', vector, 'front', b'generated-jpeg', unknown)
+        self.assertIsNotNone(social.person)
+        self.assertNotEqual(social.person, person)
+        self.assertEqual([item['event_id'] for item in reopened.memory_records(social.person, 'first-character')], ['fresh-introduction'])

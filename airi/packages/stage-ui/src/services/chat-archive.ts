@@ -1,4 +1,5 @@
-import type { ArchiveAnnotation, ArchiveMessage, ArchivePage, ArchiveQuery } from '../types/chat-archive'
+import type { ArchiveAnnotation, ArchiveMessage, ArchivePage, ArchivePartner, ArchiveQuery } from '../types/chat-archive'
+import type { ChatSessionRecord } from '../types/chat-session'
 
 import { chatSessionsRepo } from '../database/repos/chat-sessions.repo'
 import { storage } from '../database/storage'
@@ -19,21 +20,21 @@ function compareMessages(a: ArchiveMessage, b: ArchiveMessage) {
 
 async function records(scope: ArchiveScope): Promise<ArchiveMessage[]> {
   scope.assertCurrent()
-  const index = await chatSessionsRepo.getIndex(scope.userId)
+  const keys = await storage.getKeys('local:chat/sessions')
   scope.assertCurrent()
-  if (!index || index.userId !== scope.userId)
-    return []
-  const metas = Object.values(index.characters[scope.characterId]?.sessions ?? {})
   const messages: ArchiveMessage[] = []
-  for (const meta of metas) {
-    if (meta.userId !== scope.userId || meta.characterId !== scope.characterId)
-      continue
-    const record = await chatSessionsRepo.getSession(meta.sessionId)
+  for (const key of keys) {
+    const record = await storage.getItemRaw<ChatSessionRecord>(key)
     scope.assertCurrent()
-    if (!record || record.meta.userId !== scope.userId || record.meta.characterId !== scope.characterId)
+    if (!record || record.meta.characterId !== scope.characterId)
       continue
+    const meta = record.meta
     for (const [position, message] of record.messages.entries()) {
       if (message.role !== 'user' && message.role !== 'assistant')
+        continue
+      // Auth-owned historical records remain readable. New mixed-stage records use immutable message ownership.
+      const owner = message.archive?.personId ? `local-face:${message.archive.personId}` : meta.userId
+      if (owner !== scope.userId)
         continue
       const annotation = message.id ? await storage.getItemRaw<ArchiveAnnotation>(annotationKey(meta.sessionId, message.id)) : null
       scope.assertCurrent()
@@ -53,6 +54,41 @@ async function records(scope: ArchiveScope): Promise<ArchiveMessage[]> {
     }
   }
   return messages.sort(compareMessages)
+}
+
+/** Enumerates local relationships without selecting, loading or replacing the active stage conversation. */
+export async function listArchivePartners(scope: ArchiveScope, all = false): Promise<ArchivePartner[]> {
+  const groups = new Map<string, ArchivePartner & { sessionIds: Set<string> }>()
+  for (const key of await storage.getKeys('local:chat/sessions')) {
+    const record = await storage.getItemRaw<ChatSessionRecord>(key)
+    scope.assertCurrent()
+    if (!record)
+      continue
+    for (const message of record.messages) {
+      if (message.role !== 'user' && message.role !== 'assistant')
+        continue
+      const userId = message.archive?.personId ? `local-face:${message.archive.personId}` : record.meta.userId
+      if (!all && userId !== scope.userId)
+        continue
+      const characterId = record.meta.characterId
+      const id = JSON.stringify([userId, characterId])
+      let group = groups.get(id)
+      if (!group) {
+        const person = message.archive?.personId ? await storage.getItemRaw<{ display_name: string }>(`local:chat/people/${encodeURIComponent(message.archive.personId)}`) : null
+        const index = await chatSessionsRepo.getIndex(userId)
+        scope.assertCurrent()
+        group = { userId, characterId, displayName: person?.display_name ?? message.archive?.displayName ?? index?.displayName ?? '', sessions: 0, updatedAt: 0, preview: '', sessionIds: new Set() }
+        groups.set(id, group)
+      }
+      group.sessionIds.add(record.meta.sessionId)
+      const at = message.createdAt ?? record.meta.updatedAt
+      if (at >= group.updatedAt) {
+        group.updatedAt = at
+        group.preview = extractMessageText(message).slice(0, 100)
+      }
+    }
+  }
+  return [...groups.values()].map(({ sessionIds, ...group }) => ({ ...group, sessions: sessionIds.size })).sort((a, b) => b.updatedAt - a.updatedAt)
 }
 
 /** Searches persisted sessions without changing the active conversation. Missing historic timestamps are never guessed. */
@@ -104,14 +140,14 @@ export async function removeArchiveAnnotation(sessionId: string, messageId: stri
 
 /** Exports visible original message payloads and shared annotations, without internal prompts or runtime context. */
 export async function exportArchive(scope: ArchiveScope) {
-  const index = await chatSessionsRepo.getIndex(scope.userId)
-  scope.assertCurrent()
+  const visible = await records(scope)
   const sources: Array<{ sessionId: string, messages: Array<{ role: string, content: unknown, id?: string, createdAt?: number }> }> = []
-  for (const meta of Object.values(index?.characters[scope.characterId]?.sessions ?? {})) {
-    const record = await chatSessionsRepo.getSession(meta.sessionId)
+  for (const sessionId of new Set(visible.map(message => message.sessionId))) {
+    const record = await chatSessionsRepo.getSession(sessionId)
     scope.assertCurrent()
-    if (record?.meta.userId === scope.userId && record.meta.characterId === scope.characterId) {
-      sources.push({ sessionId: meta.sessionId, messages: record.messages.filter(message => message.role === 'user' || message.role === 'assistant').map(message => ({
+    if (record) {
+      const positions = new Set(visible.filter(message => message.sessionId === sessionId).map(message => message.position))
+      sources.push({ sessionId, messages: record.messages.filter((_, position) => positions.has(position)).map(message => ({
         role: message.role,
         content: message.content,
         id: message.id,
@@ -119,5 +155,5 @@ export async function exportArchive(scope: ArchiveScope) {
       })) })
     }
   }
-  return { format: 'airi-chat-archive:v1', userId: scope.userId, characterId: scope.characterId, sources, messages: await records(scope) }
+  return { format: 'airi-chat-archive:v1', userId: scope.userId, characterId: scope.characterId, sources, messages: visible }
 }

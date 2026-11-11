@@ -10,6 +10,7 @@ interface VirtualScrollRequest {
 }
 
 interface VirtualizerScrollOptions {
+  container: Readonly<Ref<HTMLElement | null>>
   /** Extra space reserved after an end-aligned item. */
   tailInset: Readonly<Ref<number>>
   /** Virtua handle that owns item measurement and scrolling. */
@@ -23,13 +24,13 @@ interface VirtualizerBottomAlignmentOptions {
 }
 
 /**
- * Queues the latest index scroll until Virtua has measured its viewport.
+ * Queues one DOM scroll until Virtua has measured its viewport and item geometry.
  *
  * Virtua exposes its component handle before its internal ResizeObserver stores
  * a non-zero viewport size. This adapter polls only while one request waits for that value.
  */
 export function useVirtualizerScroll(
-  { tailInset, virtualizer }: VirtualizerScrollOptions,
+  { container, tailInset, virtualizer }: VirtualizerScrollOptions,
 ) {
   let didObserveReadyFrame = false
   const pendingRequest = shallowRef<VirtualScrollRequest>()
@@ -41,7 +42,8 @@ export function useVirtualizerScroll(
       return
     }
 
-    if (!currentVirtualizer || currentVirtualizer.viewportSize <= 0) {
+    const viewport = container.value
+    if (!viewport || !currentVirtualizer || currentVirtualizer.viewportSize <= 0) {
       didObserveReadyFrame = false
       return
     }
@@ -53,16 +55,24 @@ export function useVirtualizerScroll(
       return
     }
 
-    currentVirtualizer.scrollToIndex(request.index, {
-      align: request.align,
-      offset: request.align === 'end' ? Math.max(0, tailInset.value) : 0,
-    })
+    // NOTICE: Virtua 0.50.4 repeats index scrolling during measurement, overriding later manual gestures.
+    // Use public item geometry for one DOM scroll. Source: virtua/lib/vue/index.js.map createScrollScheduler.
+    // Remove when Virtua exposes cancellation.
+    const offset = currentVirtualizer.getItemOffset(request.index)
+    viewport.scrollTop = Math.max(0, request.align === 'end'
+      ? offset + currentVirtualizer.getItemSize(request.index) - currentVirtualizer.viewportSize + Math.max(0, tailInset.value)
+      : offset)
     pendingRequest.value = undefined
     didObserveReadyFrame = false
     pause()
   }, { immediate: false })
 
   return {
+    cancelScroll() {
+      pendingRequest.value = undefined
+      didObserveReadyFrame = false
+      pause()
+    },
     scrollToIndex(index: number, align: 'start' | 'end') {
       pendingRequest.value = { align, index }
       didObserveReadyFrame = false

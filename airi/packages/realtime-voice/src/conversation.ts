@@ -3,11 +3,11 @@ import type { BrainPromptSettings } from './prompts'
 
 import * as v from 'valibot'
 
+import { conversationStyleSchema } from './conversation-contract'
 import { brainPromptDefaults } from './prompts'
 
-export const conversationStyles = ['basic', 'natural', 'concise', 'listening', 'chatty'] as const
-export const conversationStyleSchema = v.picklist(conversationStyles)
-export type ConversationStyle = v.InferOutput<typeof conversationStyleSchema>
+export { continuationDelaySchema, conversationStyles, conversationStyleSchema } from './conversation-contract'
+export type { ConversationStyle } from './conversation-contract'
 
 export const continuationOutputSchema = v.pipe(v.string(), v.trim(), v.minLength(1), v.maxLength(400), v.check(text => !text.startsWith('{') && !text.includes('```') && !/<(?:think|reasoning)[\s>]/i.test(text), 'Speech must not contain JSON, reasoning or code blocks'))
 
@@ -24,8 +24,6 @@ export interface ContinuationFailure {
   elapsedMs: number
   httpStatus?: number
 }
-
-export const continuationDelaySchema = v.pipe(v.number(), v.integer(), v.minValue(1), v.maxValue(120))
 
 /** Host facts about heard automatic segments. The model chooses wording and interprets silence tentatively. */
 export interface ContinuationContext {

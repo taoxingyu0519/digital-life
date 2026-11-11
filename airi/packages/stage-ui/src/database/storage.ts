@@ -7,5 +7,21 @@ export const storage = createStorage({
   driver: memoryDriver(),
 })
 
-storage.mount('local', indexedDbDriver({ base: 'airi-local' }))
-storage.mount('outbox', indexedDbDriver({ base: 'airi-sync-queue' }))
+function indexedDbNamespace(base: string) {
+  const driver = indexedDbDriver({ base })
+  const prefix = `${base}:`
+  return {
+    ...driver,
+    // NOTICE:
+    // The installed IndexedDB driver returns physical keys, including its base and other namespaces.
+    // unstorage expects relative keys. Strip this namespace before its mount filtering.
+    // Source: unstorage/drivers/indexedb.mjs. Remove when the driver returns scoped, relative keys.
+    async getKeys() {
+      const keys = await driver.getKeys!('', {})
+      return keys.filter(key => key.startsWith(prefix)).map(key => key.slice(prefix.length))
+    },
+  }
+}
+
+storage.mount('local', indexedDbNamespace('airi-local'))
+storage.mount('outbox', indexedDbNamespace('airi-sync-queue'))

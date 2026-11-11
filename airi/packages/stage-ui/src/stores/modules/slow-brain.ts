@@ -76,16 +76,16 @@ export const useSlowBrainStore = defineStore('slow-brain', () => {
 
   const systemInstructions = computed(() => [
     cards.systemPrompt.slice(0, 8000),
-    createUserAccountContext(auth, t('base.guest.name'), identity).text,
+    createUserAccountContext(auth, t('base.guest.name')).text,
     prompts.config.slow,
     toolsetPrompts.activeToolsetPrompt,
     conversationPolicy(conversationStyle.value, prompts.config).workerInstructions,
     slowBrainOutputInstructions,
   ].filter(Boolean).join('\n\n'))
 
-  function conversation(facts: ConversationFact[], objective: string, sessionId: string, recall: string): Conversation {
+  function conversation(facts: ConversationFact[], objective: string, sessionId: string, recall: string, spoken: boolean): Conversation {
     return { turns: [
-      { type: 'system', id: crypto.randomUUID(), authority: 'system', content: [{ type: 'text', text: systemInstructions.value }] },
+      { type: 'system', id: crypto.randomUUID(), authority: 'system', content: [{ type: 'text', text: [systemInstructions.value, spoken ? prompts.config.speech : ''].filter(Boolean).join('\n\n') }] },
       ...(recall ? [{ type: 'system' as const, id: crypto.randomUUID(), authority: 'system' as const, content: [{ type: 'text' as const, text: recall }] }] : []),
       { type: 'system', id: crypto.randomUUID(), authority: 'context', content: [{ type: 'text', text: JSON.stringify({
         conversation_facts: facts,
@@ -97,7 +97,7 @@ export const useSlowBrainStore = defineStore('slow-brain', () => {
   }
 
   /** Captures provider, session, user, and generation at dispatch. Later changes invalidate tools and results. */
-  function executor(sessionId: string): ThinkingExecutor {
+  function executor(sessionId: string, spoken = false): ThinkingExecutor {
     return async (task, facts, signal, reportProgress) => {
       if (!configured.value)
         throw new Error('Background model is not configured')
@@ -138,7 +138,7 @@ export const useSlowBrainStore = defineStore('slow-brain', () => {
       const tools = await resolveLlmTools({ builtInTools: [], debugTools: [], sparkCommandTools: [], customTools: [historyTool(sessionId)], archiveTools: await archive.createTools() })
       const recall = await archive.recall()
       assertCurrent()
-      await streamFrom({ model, chatProvider: provider, conversation: conversation(facts, task.objective, sessionId, recall), options, builtinToolsResolver: async () => {
+      await streamFrom({ model, chatProvider: provider, conversation: conversation(facts, task.objective, sessionId, recall, spoken), options, builtinToolsResolver: async () => {
         return tools.map(tool => ({ ...tool, execute: async (...args: Parameters<Tool['execute']>) => {
           assertCurrent()
           reportProgress?.({ stage: 'tool_started', tool_name: tool.function.name })
@@ -210,10 +210,11 @@ export const useSlowBrainStore = defineStore('slow-brain', () => {
       conversation: { turns: [
         { type: 'system', id: crypto.randomUUID(), authority: 'system', content: [{ type: 'text', text: [
           cards.systemPrompt.slice(0, 8000),
-          createUserAccountContext(auth, t('base.guest.name'), identity).text,
+          createUserAccountContext(auth, t('base.guest.name')).text,
           await archive.recall(),
           prompts.config.styles.chatty,
           prompts.config.continuation,
+          prompts.config.speech,
           'Only return spoken Chinese within 400 characters. Never return JSON, Markdown, private reasoning or tools.',
         ].join('\n\n') }] },
         // Host event data stays in a system envelope. The core's context authority projects to a user message.

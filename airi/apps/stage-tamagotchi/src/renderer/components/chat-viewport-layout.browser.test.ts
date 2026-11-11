@@ -4,7 +4,8 @@ import en from '@proj-airi/i18n/locales/en'
 
 import { ChatHistory } from '@proj-airi/stage-ui/components'
 import { ScrollableArea } from '@proj-airi/ui'
-import { describe, expect, it, vi } from 'vitest'
+import { createPinia, disposePinia } from 'pinia'
+import { afterEach, describe, expect, it, vi } from 'vitest'
 import { render } from 'vitest-browser-vue'
 import { defineComponent, shallowRef } from 'vue'
 import { createI18n } from 'vue-i18n'
@@ -21,6 +22,17 @@ function createEnglishI18n() {
     messages: { en },
   })
 }
+
+const piniaInstances: ReturnType<typeof createPinia>[] = []
+function createHistoryPinia() {
+  const pinia = createPinia()
+  piniaInstances.push(pinia)
+  return pinia
+}
+afterEach(() => {
+  piniaInstances.splice(0).forEach(pinia => disposePinia(pinia))
+  localStorage.clear()
+})
 
 describe('desktop chat viewport layout', () => {
   it('keeps history behind the fixed translucent composer', async () => {
@@ -123,7 +135,7 @@ describe('desktop chat viewport layout', () => {
 
     const screen = await render(TestHost, {
       global: {
-        plugins: [createEnglishI18n()],
+        plugins: [createEnglishI18n(), createHistoryPinia()],
       },
     })
     const composer = screen.getByTestId('chat-composer-layer').element() as HTMLElement
@@ -200,7 +212,7 @@ describe('desktop chat viewport layout', () => {
 
     const screen = await render(TestHost, {
       global: {
-        plugins: [createEnglishI18n()],
+        plugins: [createEnglishI18n(), createHistoryPinia()],
       },
     })
     const composer = screen.getByTestId('chat-composer-layer').element() as HTMLElement

@@ -1,5 +1,25 @@
 import type { ChatHistoryItem } from '../../../types/chat'
 
+/** Live captions replace their stored counterpart by ID. New captions retain first-seen order while playback finishes. */
+export function mergeChatHistory(messages: ChatHistoryItem[], previews: ChatHistoryItem[]): ChatHistoryItem[] {
+  if (!previews.length)
+    return messages
+  const merged = [...messages]
+  for (const preview of previews) {
+    const existing = merged.findIndex(message => !!preview.id && message.id === preview.id)
+    if (existing >= 0) {
+      merged[existing] = preview
+      continue
+    }
+    const next = merged.findIndex(message => message.createdAt !== undefined && preview.createdAt !== undefined && message.createdAt > preview.createdAt)
+    if (next >= 0)
+      merged.splice(next, 0, preview)
+    else
+      merged.push(preview)
+  }
+  return merged
+}
+
 function isTextPart(part: unknown): part is { type: 'text', text?: string } {
   return typeof part === 'object'
     && part !== null

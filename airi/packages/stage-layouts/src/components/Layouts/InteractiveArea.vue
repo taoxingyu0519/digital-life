@@ -10,6 +10,7 @@ import { useChatStore } from '@proj-airi/stage-ui/stores/chat'
 import { useChatSessionStore } from '@proj-airi/stage-ui/stores/chat/session-store'
 import { useChatStreamStore } from '@proj-airi/stage-ui/stores/chat/stream-store'
 import { useContextBridgeStore } from '@proj-airi/stage-ui/stores/mods/api/context-bridge'
+import { useRealtimeVoiceStore } from '@proj-airi/stage-ui/stores/modules/realtime-voice'
 import { useDeferredMount } from '@proj-airi/ui'
 import { storeToRefs } from 'pinia'
 import { computed, ref } from 'vue'
@@ -27,6 +28,7 @@ const { activeSendSessionId, activeStreamingMessage, sending } = storeToRefs(cha
 const { activeSessionId, messages } = storeToRefs(useChatSessionStore())
 const { streamingMessage } = storeToRefs(useChatStreamStore())
 const { isReceivingRemoteStream } = storeToRefs(useContextBridgeStore())
+const { previewMessages } = storeToRefs(useRealtimeVoiceStore())
 
 const isLoading = ref(true)
 const chatInput = useChatInput()
@@ -85,6 +87,7 @@ async function handleRetryMessage(index: number) {
           <ChatHistory
             v-if="isReady"
             :messages="historyMessages"
+            :live-messages="previewMessages"
             :sending="isActiveSessionSending"
             :streaming-message="visibleStreamingMessage"
             :class="['h-full']"

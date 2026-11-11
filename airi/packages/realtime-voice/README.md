@@ -1,5 +1,9 @@
 # Realtime voice
 
+## 转写与消息关联
+
+AIRI-046按响应范围关联助手文本，允许不同轮次重复相同短回答。VAD先到、ASR item ID晚到时，显示ID和provider item ID分别管理，防止覆盖前一条消息。Stage UI提供独立临时字幕，持久化和确认事实继续等待原最终转写或音频排空规则。详见工作区中文交付报告。
+
 Local Web integration for Doubao Seeduplex realtime voice 3.0. This package owns
 browser audio, a validated Eventa channel, the Node WebSocket gateway, and a
 bounded fast/slow brain task runtime. The frontend model handles conversation;
@@ -141,3 +145,7 @@ AIRI-033新增`./prompts`公开契约：中文默认规则、完整设置schema�
 浏览器共享store保存经过校验的快照，快脑、慢脑和问候/续聊读取同一来源。
 用户可编辑行为，程序继续执行结构输出、工具权限及单一发声调度。
 见[提示词ADR](../../docs/ai/adr/2026-10-08-brain-prompt-editor.md)。
+
+AIRI-041新增speech可编辑语音偏好，默认同时不超过三句、三十字，用户明确要求详细时例外。
+实际请求在已有角色/风格规则后附加该偏好，不覆盖用户保存的提示词。
+这是生成指导，不能代替工具schema、播放状态或强制长度控制。

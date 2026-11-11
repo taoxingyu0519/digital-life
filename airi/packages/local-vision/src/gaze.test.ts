@@ -71,10 +71,23 @@ it('holds a brief detector miss and releases prolonged loss, stale frames and di
   expect(gaze.update(value, source, 50, true, 0.1)).toBeUndefined()
   value.snapshot.payload.actors[0].face_bbox = [0.1, 0.2, 0.3, 0.4]
   expect(gaze.update(value, source, 50, true, 0.1)).toBeDefined()
-  expect(gaze.update(value, source, 501, true, 0.1)).toBeUndefined()
+  expect(gaze.update(value, source, 1501, true, 0.1)).toBeUndefined()
   expect(gaze.update(value, source, 50, true, 0.1)).toBeDefined()
   expect(gaze.update(value, source, 50, false, 0.1)).toBeUndefined()
   expect(gaze.update(value, { ...source, epoch: 2 }, 50, true, 0.1)).toBeUndefined()
+})
+
+// http://127.0.0.1:5174 — AIRI-044: the 500-ms gaze expiry resets halfway between one-Hz frames.
+// ROOT CAUSE: gaze freshness assumed high-rate inference. Keep the target for a bounded 1500 ms, within the observation lease.
+it('aIRI-044 keeps gaze between one-Hz frames and respects a shorter observation lease', () => {
+  const gaze = new FaceGaze()
+  const value = frame()
+  expect(gaze.update(value, value.snapshot, 50, true, 0.1)).toBeDefined()
+  expect(gaze.update(value, value.snapshot, 1200, true, 0.1)).toBeDefined()
+  expect(gaze.update(value, value.snapshot, 1501, true, 0.1)).toBeUndefined()
+  value.snapshot.valid_for_ms = 700
+  expect(gaze.update(value, value.snapshot, 50, true, 0.1)).toBeDefined()
+  expect(gaze.update(value, value.snapshot, 701, true, 0.1)).toBeUndefined()
 })
 
 it('keeps one tracked face when another enters and respects an explicit primary target', () => {

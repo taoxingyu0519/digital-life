@@ -156,6 +156,18 @@ function createHarness(getActiveProvider = () => 'mock-provider') {
 }
 
 describe('createChatOrchestratorRuntime', () => {
+  it('aIRI-045 preserves one archive recipient across both sides of each queued turn', async () => {
+    const harness = createHarness()
+    const a = { personId: 'generated-core-a', displayName: '', characterName: 'AIRI' }
+    const b = { personId: 'generated-core-b', displayName: 'Generated B', characterName: 'AIRI' }
+    await harness.runtime.ingest('Generated first turn', { model: 'gpt-test', chatProvider: provider, archive: a })
+    await harness.runtime.ingest('Generated second turn', { model: 'gpt-test', chatProvider: provider, archive: b })
+    const messages = harness.sessionMessages['session-1'].filter(message => message.role === 'user' || message.role === 'assistant')
+    expect(messages.map(message => message.archive?.personId)).toEqual([a.personId, a.personId, b.personId, b.personId])
+    expect(harness.foregroundPatches.at(-1)?.archive?.personId).toBe(b.personId)
+    expect(JSON.stringify(harness.stream.mock.calls[1][2])).not.toContain('generated-core-a')
+  })
+
   // ROOT CAUSE:
   //
   // The marker parser buffered 24 literal characters plus its marker-safety tail.

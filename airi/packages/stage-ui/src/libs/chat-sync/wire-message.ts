@@ -65,7 +65,7 @@ export function extractMessageText(message: ChatHistoryItem): string {
  *   the wire schema cannot preserve their runtime state.
  */
 export function isCloudSyncableMessage(message: ChatHistoryItem): boolean {
-  if (message.localVisionDerived)
+  if (message.localVisionDerived || message.archive?.personId)
     return false
   if (message.role === 'tool')
     return false

@@ -18,6 +18,7 @@ import { useVisionStore } from '@proj-airi/stage-ui/stores/modules/vision'
 import { useOnboardingStore } from '@proj-airi/stage-ui/stores/onboarding'
 import { useSettings, useSettingsAudioDevice } from '@proj-airi/stage-ui/stores/settings'
 import { useSettingsStageModel } from '@proj-airi/stage-ui/stores/settings/stage-model'
+import { useSharedSettingsStore } from '@proj-airi/stage-ui/stores/shared-settings'
 import { useStageRuntimeStore } from '@proj-airi/stage-ui/stores/stage-runtime'
 import { ErrorBoundary, useTheme } from '@proj-airi/ui'
 import { StageTransitionGroup } from '@proj-airi/ui-transitions'
@@ -49,6 +50,7 @@ const settingsAudioDeviceStore = useSettingsAudioDevice()
 const { showingSetup } = storeToRefs(onboardingStore)
 const { isDark } = useTheme()
 const cardStore = useAiriCardStore()
+const sharedSettings = useSharedSettingsStore()
 useArtistryStore()
 useConsciousnessStore()
 useHearingStore()
@@ -64,6 +66,7 @@ async function removeAuthenticationProviderConfiguration() {
     return
 
   await cardStore.configureForAuthentication(false)
+  await sharedSettings.restoreModel()
 }
 
 function registerAuthenticatedSetup() {
@@ -72,6 +75,7 @@ function registerAuthenticatedSetup() {
       return
 
     await cardStore.configureForAuthentication(true)
+    await sharedSettings.restoreModel()
     await onboardingStore.closeAfterAuthentication()
   })
   stopLoggedOutSetup ??= authStore.onLogout(removeAuthenticationProviderConfiguration)
@@ -129,6 +133,8 @@ onMounted(async () => {
   if (!authStore.isAuthenticated)
     await removeAuthenticationProviderConfiguration()
 
+  await sharedSettings.initialize(syncedPinia)
+
   // Guests enter the stage directly. Provider setup stays available in settings.
 
   await chatStore.initialize(syncedPinia)
@@ -149,6 +155,7 @@ onUnmounted(() => {
   stopAuthenticatedSetup?.()
   stopLoggedOutSetup?.()
   chatStore.dispose()
+  sharedSettings.dispose()
   contextBridgeStore.dispose()
 })
 

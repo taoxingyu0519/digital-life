@@ -171,4 +171,20 @@ export const chatSessionsRepo = {
     await storage.removeItem(tombstoneKey(userId))
     await storage.removeItem(outboxKey(userId))
   },
+
+  /** Deletes only this recipient's messages from shared stage sessions. Other people's messages stay in place. */
+  async forgetPerson(personId: string) {
+    for (const key of await storage.getKeys('local:chat/sessions')) {
+      const record = await storage.getItemRaw<ChatSessionRecord>(key)
+      if (!record || record.meta.userId === `local-face:${personId}`)
+        continue
+      const removed = record.messages.filter(message => message.archive?.personId === personId)
+      if (!removed.length)
+        continue
+      record.messages = record.messages.filter(message => message.archive?.personId !== personId)
+      await this.saveSession(record.meta.sessionId, record)
+      await this.deleteAnnotations(record.meta.sessionId, removed.flatMap(message => message.id ? [message.id] : []))
+    }
+    await this.clear(`local-face:${personId}`)
+  },
 }

@@ -23,7 +23,7 @@ class TrajectoryLearning:
             return
         track, box = tracks[0]
         box = np.asarray(box)
-        if (self.track != track or (self.frame_at is not None and (now <= self.frame_at or now - self.frame_at > .8))
+        if (self.track != track or (self.frame_at is not None and (now <= self.frame_at or now - self.frame_at > 1.5))
                 or (self.box is not None and np.max(np.abs(box - self.box)) > .07)):
             self.clear('discontinuous')
         self.track, self.box, self.frame_at = track, box.copy(), now
@@ -75,7 +75,7 @@ class TrajectoryLearning:
             confirmations = current['confirmations']
             if not confirmations or now - confirmations[-1] >= .25:
                 confirmations.append(now)
-            confirmations[:] = [at for at in confirmations if now - at <= 2]
+            confirmations[:] = [at for at in confirmations if now - at <= 3.5]
             if len(confirmations) >= 3:
                 if current['anchored'] and current['candidates']:
                     # Closing proof uses the unchanged base, never these candidates or older automatic extensions.

@@ -7,6 +7,7 @@
     "./brain": "./src/brain.ts",
     "./prompts": "./src/prompts.ts",
     "./conversation": "./src/conversation.ts",
+    "./conversation-contract": "./src/conversation-contract.ts",
     "./contracts": "./src/contracts.ts",
     "./client": "./src/client.ts",
     "./audio": "./src/audio.ts",

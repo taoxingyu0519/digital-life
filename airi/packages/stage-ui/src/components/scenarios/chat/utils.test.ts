@@ -2,7 +2,22 @@ import type { ChatHistoryItem } from '../../../types/chat'
 
 import { describe, expect, it } from 'vitest'
 
-import { getChatHistoryItemKey } from './utils'
+import { getChatHistoryItemKey, mergeChatHistory } from './utils'
+
+// http://127.0.0.1:5174 — AIRI-046: live captions and confirmed history share one visible message per ID.
+it('aIRI-046 merges captions in first-seen order without duplicating or changing saved records', () => {
+  const saved: ChatHistoryItem[] = [
+    { id: 'generated-old', role: 'user', content: 'Generated historical record' },
+    { id: 'generated-user', role: 'user', content: 'Generated old hypothesis', createdAt: 10 },
+    { id: 'generated-next', role: 'user', content: 'Generated next turn', createdAt: 30 },
+  ]
+  const answer: ChatHistoryItem = { id: 'generated-answer', role: 'assistant', content: 'Generated live answer', createdAt: 20, slices: [], tool_results: [] }
+  const merged = mergeChatHistory(saved, [answer, { ...saved[1], content: 'Generated corrected text' }])
+  expect(merged.map(message => message.id)).toEqual(['generated-old', 'generated-user', 'generated-answer', 'generated-next'])
+  expect(merged[1].content).toBe('Generated corrected text')
+  expect(saved[1].content).toBe('Generated old hypothesis')
+  expect(mergeChatHistory(merged, [answer])).toHaveLength(4)
+})
 
 describe('getChatHistoryItemKey', () => {
   it('prefers stable message ids when available', () => {

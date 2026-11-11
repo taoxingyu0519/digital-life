@@ -39,15 +39,36 @@ class IdentityTests(unittest.TestCase):
         self.assertEqual(result['person_id'], person)
         self.assertEqual(result['identity_status'], 'confirmed')
 
+    # http://127.0.0.1:5174 — AIRI-044: one-second capture includes encoding and transport jitter.
+    def test_one_hz_camera_confirms_with_jitter_and_recovers_after_one_rejected_frame(self):
+        person = self.enroll()
+        for now in (0, 1.02, 2.04):
+            result = self.people.match('track', self.vector, now)
+        self.assertEqual(result['person_id'], person)
+        result = self.people.match('track', self.vector, 4.08)
+        self.assertEqual(result['person_id'], person)
+
+    def test_confirmation_restarts_after_a_candidate_change_or_interrupted_sampling(self):
+        self.enroll()
+        first = [(.8, 'first', 'A')]
+        second = [(.8, 'second', 'B')]
+        self.people.resolve('track', first, 0)
+        self.people.resolve('track', second, .3)
+        self.people.resolve('track', second, .6)
+        self.assertEqual(self.people.resolve('track', second, .9)['person_id'], 'second')
+        self.assertEqual(self.people.resolve('new', first, 0)['identity_status'], 'candidate')
+        self.assertEqual(self.people.resolve('new', first, 1.6)['identity_status'], 'candidate')
+        self.assertEqual(self.people.resolve('new', first, 2.6)['identity_status'], 'candidate')
+
     def test_slow_camera_conflict_and_expired_evidence_cannot_restore_a_name(self):
         self.enroll()
-        for now in (0, 1.1, 2.2):
+        for now in (0, 1.6, 3.2):
             result = self.people.match('track', self.vector, now)
         self.assertEqual(result['identity_status'], 'candidate')
         other = np.zeros(128, np.float32)
         other[1] = 1
-        self.people.match('track', other, 2.3)
-        self.assertEqual(self.people.match('track', self.vector, 2.6)['identity_status'], 'candidate')
+        self.people.match('track', other, 3.5)
+        self.assertEqual(self.people.match('track', self.vector, 3.8)['identity_status'], 'candidate')
 
     def test_templates_are_encrypted_and_social_matching_needs_no_manual_calibration(self):
         self.enroll()
@@ -127,4 +148,4 @@ class IdentityTests(unittest.TestCase):
         self.enroll()
         for now in (0, .3, .6):
             self.people.match('track', self.vector, now)
-        self.assertEqual(self.people.match('track', self.vector, 3)['identity_status'], 'candidate')
+        self.assertEqual(self.people.match('track', self.vector, 4)['identity_status'], 'candidate')

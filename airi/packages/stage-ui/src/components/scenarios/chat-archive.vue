@@ -39,7 +39,7 @@ let generation = 0
 
 const visiblePartners = computed(() => partners.value.filter(partner => partner.displayName.toLocaleLowerCase().includes(peopleSearch.value.toLocaleLowerCase())))
 const canEdit = computed(() => !!editor.value?.messageId)
-const canDelete = computed(() => canEdit.value && selected.value?.userId === identity.userId)
+const canDelete = computed(() => canEdit.value && selected.value?.userId === identity.archiveUserId)
 
 function name(partner: ArchivePartner) {
   return partner.displayName || t(`${prefix}${partner.userId === 'local' ? 'guest' : 'unnamed'}`)
@@ -99,7 +99,7 @@ async function refresh() {
       return
     partners.value = next
     selected.value = next.find(partner => partner.userId === selected.value?.userId && partner.characterId === selected.value?.characterId)
-      ?? next.find(partner => partner.userId === identity.userId && partner.characterId === (cards.activeCardId || 'default')) ?? next[0]
+      ?? next.find(partner => partner.userId === identity.archiveUserId && partner.characterId === (cards.activeCardId || 'default')) ?? next[0]
     await load()
   }
   catch {
@@ -187,7 +187,7 @@ async function download() {
   catch { error.value = true }
 }
 
-watch(() => [identity.userId, identity.displayName, cards.activeCardId, access.authenticated], () => {
+watch(() => [identity.archiveUserId, identity.person?.display_name, cards.activeCardId, access.authenticated], () => {
   clear()
   if (!access.authenticated)
     all.value = false

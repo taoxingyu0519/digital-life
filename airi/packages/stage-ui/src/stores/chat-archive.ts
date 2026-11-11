@@ -9,9 +9,8 @@ import { toJsonSchema } from 'xsschema'
 import * as v from 'valibot'
 
 import { chatSessionsRepo } from '../database/repos/chat-sessions.repo'
-import { storage } from '../database/storage'
 import { ChatArchiveChannel } from '../libs/chat-archive-events'
-import { annotateArchive, exportArchive, queryArchive, readArchiveContext, removeArchiveAnnotation } from '../services/chat-archive'
+import { annotateArchive, exportArchive, listArchivePartners, queryArchive, readArchiveContext, removeArchiveAnnotation } from '../services/chat-archive'
 import { useChatSessionStore } from './chat/session-store'
 import { useDeveloperAccessStore } from './developer-access'
 import { useAiriCardStore } from './modules/airi-card'
@@ -43,13 +42,15 @@ export const useChatArchiveStore = defineStore('chat-archive', () => {
     return channel.changed()
   }
 
-  async function scope(userId = identity.userId, characterId = cards.activeCardId || 'default') {
+  async function scope(userId = identity.archiveUserId, characterId = cards.activeCardId || 'default') {
     const currentUser = identity.userId
+    const currentRecipient = identity.archiveUserId
     const currentCard = cards.activeCardId
-    if (userId !== currentUser)
+    const own = userId === currentRecipient || userId === currentUser
+    if (!own)
       await access.refresh()
     const assertCurrent = () => {
-      if (identity.userId !== currentUser || cards.activeCardId !== currentCard || (userId !== currentUser && !access.authenticated))
+      if (identity.userId !== currentUser || identity.archiveUserId !== currentRecipient || cards.activeCardId !== currentCard || (!own && !access.authenticated))
         throw new Error('archive-scope-changed')
     }
     assertCurrent()
@@ -63,23 +64,10 @@ export const useChatArchiveStore = defineStore('chat-archive', () => {
       if (!access.authenticated)
         throw new Error('archive-access-denied')
     }
-    const indexes = all ? await Promise.all((await storage.getKeys('local:chat/index')).map(key => storage.getItemRaw<Awaited<ReturnType<typeof chatSessionsRepo.getIndex>>>(key))) : [await chatSessionsRepo.getIndex(current.userId)]
+    const result = await listArchivePartners(current, all)
     current.assertCurrent()
     if (all && !access.authenticated)
       throw new Error('archive-access-denied')
-    const result: ArchivePartner[] = []
-    for (const index of indexes) {
-      if (!index)
-        continue
-      for (const [characterId, character] of Object.entries(index.characters)) {
-        const metas = Object.values(character.sessions).sort((a, b) => b.updatedAt - a.updatedAt)
-        const last = metas[0]
-        if (!last)
-          continue
-        const page = await queryArchive(await scope(index.userId, characterId), { limit: 1 })
-        result.push({ userId: index.userId, displayName: index.displayName ?? (index.userId === current.userId ? identity.displayName ?? '' : ''), characterId, sessions: metas.length, updatedAt: last.updatedAt, preview: page.messages[0]?.text.slice(0, 100) ?? '' })
-      }
-    }
     current.assertCurrent()
     return result.sort((a, b) => b.updatedAt - a.updatedAt)
   }
@@ -103,7 +91,8 @@ export const useChatArchiveStore = defineStore('chat-archive', () => {
     const current = await scope(userId, characterId)
     await readArchiveContext(current, sessionId, messageId, 0)
     // Only the active account can invoke the existing session mutation path. Other accounts remain read-only here.
-    if (userId !== identity.userId)
+    const record = await chatSessionsRepo.getSession(sessionId)
+    if (record?.meta.userId !== identity.userId)
       throw new Error('archive-delete-other-account')
     await sessions.deleteMessage({ sessionId, messageId })
     current.assertCurrent()
@@ -139,10 +128,10 @@ export const useChatArchiveStore = defineStore('chat-archive', () => {
 
   /** Captures the current relationship. Every execution and IO completion rejects account or character changes. */
   async function createTools(): Promise<Tool[]> {
-    const userId = identity.userId
+    const userId = identity.archiveUserId
     const characterId = cards.activeCardId || 'default'
     const assertOwner = () => {
-      if (identity.userId !== userId || (cards.activeCardId || 'default') !== characterId)
+      if (identity.archiveUserId !== userId || (cards.activeCardId || 'default') !== characterId)
         throw new Error('archive-scope-changed')
     }
     async function tool<TSchema extends v.GenericSchema>(name: string, description: string, schema: TSchema, execute: (input: v.InferOutput<TSchema>) => Promise<unknown>): Promise<Tool> {

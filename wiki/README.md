@@ -12,13 +12,16 @@
 | 解释摄像头、识别人脸与自然建档 | [本地视觉算法](algorithms/local-vision.md) |
 | 排查角度/光照失认、轨迹补采与撤销 | [人脸鲁棒性](algorithms/face-adaptation.md) |
 | 解释视觉、姓名、记忆如何进入回答 | [视觉社交数据流](flows/visual-social.md) |
-| 排查人脸账户、右上角姓名和换人历史 | [视觉社交数据流](flows/visual-social.md) |
+| 排查人脸归档、稳定登录和气泡姓名标签 | [视觉社交数据流](flows/visual-social.md) |
 | 解释主动问候和闲聊 | [主动交流](modules/companion.md) |
 | 添加或排查话痨风格、无人回应续聊和暂停 | [活泼话痨](modules/chatty-conversation.md) |
 | 解释实时语音与音频处理 | [语音链路](modules/voice.md) |
+| 排查说话正常但主舞台漏记录、重复短回答 | [语音链路](modules/voice.md) |
+| 调整聊天字号、气泡与回到最新消息 | [客户端与扩展](modules/clients.md) |
 | 舞台启动/关闭、资源休眠与交付回归 | [统一启停](modules/stage-runtime.md) |
 | 解释豆包快慢脑、文字入口和后台结果 | [快慢脑协作](modules/fast-slow-brain.md) |
 | 查看和修改快慢脑、结果及续聊提示词 | [系统提示词编辑](modules/brain-prompts.md) |
+| 换端口后配置重置、笔记本/台式机同步与冲突 | [配置同步](modules/shared-config.md) |
 | 排查Firecrawl 403、注册免费账户、核对来源与额度 | [快慢脑联网边界](modules/fast-slow-brain.md#联网边界) |
 | 解释存储、记忆、删除与隔离 | [数据与记忆](modules/storage-memory.md) |
 | 优化聊天档案、按人物翻阅与智能体历史查询 | [聊天档案](modules/chat-archive.md) |

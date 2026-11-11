@@ -176,6 +176,8 @@ class Runtime:
                 self.adaptation.clear()
         self.recognition_clock.retain(active, now)
         self.face_evidence.retain(active, now)
+        if len(tracks) != 1 or not policy['face']:
+            self.face_evidence.clear()
         self.social.observe(list(map(str, tracks)))
         selected = str(tracks[0]) if len(tracks) == 1 else primary if primary in active else None
         self.motion = {key: value for key, value in self.motion.items() if key in active}
@@ -215,6 +217,7 @@ class Runtime:
             normalized_box = box / normalize
             if previous_box is not None and np.max(np.abs(normalized_box - previous_box)) > .07:
                 self.motion.pop(track, None)
+                self.face_evidence.clear(track)
             self.boxes[track] = normalized_box
             if policy['face'] and not overlap and now - self.face_times.get(track, -1) >= .2:
                 self.face_times[track] = now
@@ -246,6 +249,13 @@ class Runtime:
                         self.face_evidence.clear(track)
                     fused = self.face_evidence.fuse(track, ranked, now, quality, threshold, margin)
                     identity = self.people.resolve(track, fused, now, threshold, margin)
+                    matched_at = now
+                    if len(tracks) == 1:
+                        identity, matched_at = self.face_evidence.stabilize(track, ranked, vector, now, identity,
+                            previous_identity[1] if previous_identity else None, threshold, margin)
+                    held = matched_at != now
+                    if held:
+                        self.people.confirmed[track] = (identity['person_id'], matched_at)
                     reason = {'confirmed': 'confirmed', 'candidate': 'collecting', 'ambiguous': 'ambiguous'}.get(identity['identity_status'])
                     self.recognition_diagnostics[track] = dict(
                         reason=reason or ('below-threshold' if ranked else 'no-templates'),
@@ -256,9 +266,10 @@ class Runtime:
                     base_trusted = bool(base_ranked and base_ranked[0][1] == identity['person_id']
                                         and base_ranked[0][0] >= .7
                                         and (len(base_ranked) == 1 or base_ranked[0][0] - base_ranked[1][0] >= .15))
-                    allow_social = not self.edge or identity['identity_status'] != 'confirmed' or base_trusted
+                    allow_social = not held and (not self.edge or identity['identity_status'] != 'confirmed' or base_trusted)
                     if quality == 'accepted' and len(tracks) == 1 and is_current() and allow_social:
-                        needs_sample = bool((self.social.name_state == 'confirmed' and self.social.name and not self.social.person) or self.enrollment)
+                        needs_sample = bool((identity['identity_status'] == 'unknown' and not self.social.person and not self.social.name)
+                                            or (self.social.name_state == 'confirmed' and self.social.name and not self.social.person) or self.enrollment)
                         if identity['identity_status'] == 'confirmed':
                             needs_sample = needs_sample or identity['person_id'] not in self.social.memorized
                         if self.edge and needs_sample:
@@ -266,10 +277,10 @@ class Runtime:
                             self.secondary_extractions += 1
                         if canonical is not None:
                             self.social.sample(track, canonical, self.sample_pose, self.sample_photo, identity)
-                    self.identities[track] = (now, identity)
+                    self.identities[track] = (matched_at, identity)
                     actor.update(identity)
                     enrollment = self.enrollment
-                    if quality == 'accepted' and enrollment and is_current() and len(tracks) == 1 and now - enrollment['last'] >= .4:
+                    if not held and quality == 'accepted' and enrollment and is_current() and len(tracks) == 1 and now - enrollment['last'] >= .4:
                         if now - enrollment['started'] > 60 or (enrollment['track'] is not None and enrollment['track'] != track):
                             self.enrollment = None
                         elif len(enrollment['samples']) < 30 and enrollment['poses'].count(self.sample_pose) < 10:
@@ -280,7 +291,7 @@ class Runtime:
                 else:
                     cached = self.identities.get(track)
                     # Brief blur or a head turn does not erase a known face. Multiple faces revoke ownership immediately.
-                    if quality == 'multiple-faces' or not cached or now - cached[0] > 1.5:
+                    if quality == 'multiple-faces' or not cached or now - cached[0] > 2.5:
                         self.people.invalidate(track)
                         self.identities.pop(track, None)
                         self.recognition_diagnostics.pop(track, None)
@@ -292,7 +303,7 @@ class Runtime:
             elif policy['face'] and not overlap and track in self.identities:
                 at, identity = self.identities[track]
                 quality = self.face_quality.get(track, quality)
-                if now - at <= 1.5:
+                if now - at <= 2.5:
                     actor.update(identity)
             # Overlap makes body ownership ambiguous. Never attach hand or face cues across people.
             face_box = self.face_boxes.get(track)

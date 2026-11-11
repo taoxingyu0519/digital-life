@@ -7,6 +7,9 @@
  M .gitignore
  M README.md
  D apps/stage-pocket/src/assets/icons/modules/games/factorio.png
+ M apps/stage-tamagotchi/README.md
+ M apps/stage-tamagotchi/src/renderer/components/chat-viewport-layout.browser.test.ts
+ M apps/stage-tamagotchi/vitest.config.ts
  M apps/stage-web/package.json
  M apps/stage-web/src/App.vue
  D apps/stage-web/src/assets/icons/modules/games/factorio.png
@@ -224,6 +227,8 @@
  D integrations/twitter-services/tsconfig.json
  M integrations/vscode/vscode-airi/package.json
  M package.json
+ M packages/core-agent/src/runtime/chat-orchestrator-runtime.test.ts
+ M packages/core-agent/src/runtime/chat-orchestrator-runtime.ts
  M packages/core-agent/src/types/chat.ts
  M packages/i18n/src/locales/en/base.yaml
  M packages/i18n/src/locales/en/settings.yaml
@@ -235,6 +240,7 @@
  M packages/stage-layouts/src/components/Layouts/InteractiveArea.vue
  M packages/stage-layouts/src/components/Layouts/MobileInteractiveArea.vue
  M packages/stage-layouts/src/components/Layouts/mobile-settings-drawer.vue
+ M packages/stage-layouts/src/components/Widgets/chat-panel-header.vue
  M packages/stage-layouts/src/composables/theme-color.ts
  M packages/stage-pages/README.md
  M packages/stage-pages/package.json
@@ -261,7 +267,18 @@
  M packages/stage-ui/src/components/modules/WebSearch.vue
  D packages/stage-ui/src/components/modules/X.vue
  M packages/stage-ui/src/components/modules/index.ts
+ M packages/stage-ui/src/components/scenarios/chat/components/assistant-item.vue
+ M packages/stage-ui/src/components/scenarios/chat/components/history-message-frame.vue
+ M packages/stage-ui/src/components/scenarios/chat/components/history.browser.test.ts
+ M packages/stage-ui/src/components/scenarios/chat/components/history.vue
  M packages/stage-ui/src/components/scenarios/chat/components/sessions-drawer.vue
+ M packages/stage-ui/src/components/scenarios/chat/components/user-item.vue
+ M packages/stage-ui/src/components/scenarios/chat/composables/use-chat-history-scroll.browser.test.ts
+ M packages/stage-ui/src/components/scenarios/chat/composables/use-chat-history-scroll.ts
+ M packages/stage-ui/src/components/scenarios/chat/composables/use-virtualizer-scroll.ts
+ M packages/stage-ui/src/components/scenarios/chat/index.ts
+ M packages/stage-ui/src/components/scenarios/chat/utils.test.ts
+ M packages/stage-ui/src/components/scenarios/chat/utils.ts
  M packages/stage-ui/src/components/scenarios/dialogs/onboarding/onboarding.browser.test.ts
  M packages/stage-ui/src/components/scenarios/dialogs/onboarding/onboarding.vue
  M packages/stage-ui/src/components/scenarios/dialogs/onboarding/step-welcome.browser.test.ts
@@ -274,6 +291,7 @@
  M packages/stage-ui/src/composables/vision/use-vision-inference.test.ts
  M packages/stage-ui/src/composables/vision/use-vision-inference.ts
  M packages/stage-ui/src/database/repos/chat-sessions.repo.ts
+ M packages/stage-ui/src/database/storage.ts
  M packages/stage-ui/src/libs/chat-sync/wire-message.test.ts
  M packages/stage-ui/src/libs/chat-sync/wire-message.ts
  M packages/stage-ui/src/stores/ai/chat-llm/llm.ts
@@ -296,7 +314,9 @@
  M packages/stage-ui/src/stores/modules/index.ts
  D packages/stage-ui/src/stores/modules/twitter.ts
  M packages/stage-ui/src/stores/modules/web-search.ts
+ M packages/stage-ui/src/stores/providers/config.ts
  M packages/stage-ui/src/stores/settings/audio-device.ts
+ M packages/stage-ui/src/stores/settings/index.ts
  D packages/stage-ui/src/tools/web-search.test.ts
  M packages/stage-ui/src/tools/web-search.ts
  M packages/stage-ui/src/types/chat-session.ts
@@ -311,6 +331,9 @@
  M vitest.config.ts
 ?? apps/stage-web/src/components/local-vision-runtime.vue
 ?? apps/stage-web/src/composables/theme-color.browser.test.ts
+?? apps/stage-web/src/pages/settings/shared-config.vue
+?? apps/stage-web/src/shared-settings-gateway.test.ts
+?? apps/stage-web/src/shared-settings-gateway.ts
 ?? apps/stage-web/src/stage-runtime-gateway.ts
 ?? docs/ai/adr/2026-09-29-local-social-vision.md
 ?? docs/ai/adr/2026-09-30-active-social-companion.md
@@ -343,6 +366,15 @@
 ?? docs/ai/reports/2026-10-09-face-stage-accounts.md
 ?? docs/ai/reports/2026-10-11-stage-runtime-and-delivery.md
 ?? docs/ai/reports/2026-10-11-voice-and-settings-regression.md
+?? docs/ai/reports/2026-10-12-config-sync.md
+?? docs/ai/reports/2026-10-18-short-speech-settings.png
+?? docs/ai/reports/2026-10-18-stranger-introduction-and-short-speech.md
+?? docs/ai/reports/2026-10-19-parallel-voice-and-group-presence.md
+?? docs/ai/reports/2026-10-19-person-forgetting.md
+?? docs/ai/reports/2026-10-28-face-stability.md
+?? docs/ai/reports/2026-10-28-message-person-archive.md
+?? docs/ai/reports/2026-10-29-stage-history-reading.md
+?? docs/ai/reports/2026-10-31-stage-tail-follow.md
 ?? packages/local-vision/README.md
 ?? packages/local-vision/package.json
 ?? packages/local-vision/src/camera-lease.ts
@@ -364,6 +396,7 @@
 ?? packages/realtime-voice/src/capture.worklet.ts
 ?? packages/realtime-voice/src/client.ts
 ?? packages/realtime-voice/src/contracts.ts
+?? packages/realtime-voice/src/conversation-contract.ts
 ?? packages/realtime-voice/src/conversation.test.ts
 ?? packages/realtime-voice/src/conversation.ts
 ?? packages/realtime-voice/src/doubao.ts
@@ -377,12 +410,15 @@
 ?? packages/realtime-voice/tsconfig.json
 ?? packages/realtime-voice/tsdown.config.ts
 ?? packages/realtime-voice/vitest.config.ts
+?? packages/stage-layouts/README.md
 ?? packages/stage-pages/src/pages/settings/modules/realtime-voice.vue
 ?? packages/stage-ui-live2d/README.md
 ?? packages/stage-ui-three/src/composables/vrm/head-gaze.test.ts
 ?? packages/stage-ui-three/src/composables/vrm/head-gaze.ts
 ?? packages/stage-ui/src/components/scenarios/brain-prompt-editor.vue
 ?? packages/stage-ui/src/components/scenarios/chat-archive.vue
+?? packages/stage-ui/src/components/scenarios/chat/components/reading-controls.browser.test.ts
+?? packages/stage-ui/src/components/scenarios/chat/components/reading-controls.vue
 ?? packages/stage-ui/src/components/scenarios/developer-gate.browser.test.ts
 ?? packages/stage-ui/src/components/scenarios/developer-gate.vue
 ?? packages/stage-ui/src/components/scenarios/local-vision-panel.vue
@@ -396,6 +432,8 @@
 ?? packages/stage-ui/src/libs/chat-archive-events.ts
 ?? packages/stage-ui/src/services/chat-archive.ts
 ?? packages/stage-ui/src/services/local-vision-context.ts
+?? packages/stage-ui/src/services/shared-settings-client.ts
+?? packages/stage-ui/src/services/shared-settings-contract.ts
 ?? packages/stage-ui/src/stores/chat-archive.browser.test.ts
 ?? packages/stage-ui/src/stores/chat-archive.ts
 ?? packages/stage-ui/src/stores/chat/voice-transcript.browser.test.ts
@@ -410,6 +448,11 @@
 ?? packages/stage-ui/src/stores/modules/realtime-voice.ts
 ?? packages/stage-ui/src/stores/modules/slow-brain.ts
 ?? packages/stage-ui/src/stores/modules/web-search.browser.test.ts
+?? packages/stage-ui/src/stores/participant-archive.browser.test.ts
+?? packages/stage-ui/src/stores/person-forgetting.browser.test.ts
+?? packages/stage-ui/src/stores/settings/chat-reading.ts
+?? packages/stage-ui/src/stores/shared-settings.browser.test.ts
+?? packages/stage-ui/src/stores/shared-settings.ts
 ?? packages/stage-ui/src/stores/stage-identity.browser.test.ts
 ?? packages/stage-ui/src/stores/stage-identity.ts
 ?? packages/stage-ui/src/stores/stage-runtime.browser.test.ts
@@ -423,6 +466,7 @@
 ?? packages/stage-ui/src/types/chat-archive.ts
 ?? packages/stage-ui/test/chat-service.ts
 ?? packages/stage-ui/test/local-vision-service.ts
+?? packages/stage-ui/test/shared-settings.ts
 ?? services/local-vision/.gitignore
 ?? services/local-vision/README.md
 ?? services/local-vision/adaptation.py

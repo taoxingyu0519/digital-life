@@ -17,7 +17,7 @@ export async function visionRequest(path: string, body?: unknown, method = body 
   return response.json()
 }
 
-/** Owns one stream and one in-flight frame. stop fences every pending callback. */
+/** Sends at most one frame per second with one frame in flight. stop fences every pending callback. */
 export class LocalVisionCapture {
   source?: VisionSource
   stream?: MediaStream
@@ -172,7 +172,7 @@ export class LocalVisionCapture {
     catch { return this.fail() }
     finally {
       if (!this.stopped)
-        this.timer = setTimeout(() => { void this.tick() }, 67)
+        this.timer = setTimeout(() => { void this.tick() }, 1000)
     }
   }
 

@@ -91,6 +91,98 @@ async function fixture() {
 }
 
 describe('local full-duplex voice gateway', () => {
+  // http://127.0.0.1:5174 — AIRI-046: audible short replies disappeared from the stage history.
+  // ROOT CAUSE: deduplication compared text across responses. New response scope now resets the text accumulator.
+  it.each([true, false])('aIRI-046 preserves equal replies in separate responses, response ID=%s', async (withId) => {
+    const app = await fixture()
+    const client = await app.client()
+    await client.send({ type: 'config:save', id: 'save', config: { ...defaultVoiceConfig, apiKey: 'test-credential' } })
+    await vi.waitFor(() => expect(client.events.length).toBe(1))
+    let upstreamSocket: WsSocket | undefined
+    app.upstream.on('connection', (socket) => {
+      upstreamSocket = socket
+      socket.once('message', () => socket.send(JSON.stringify({ type: 'session.created' })))
+    })
+    await client.send({ type: 'start', start: { instructions: 'Generated test', history: [], slowBrain: false } })
+    await vi.waitFor(() => expect(client.events).toContainEqual({ type: 'ready' }))
+    for (const index of [1, 2]) {
+      const response = withId ? { response_id: `generated-response-${index}` } : {}
+      upstreamSocket?.send(JSON.stringify({ type: 'conversation.item.input_audio_transcription.completed', item_id: `generated-input-${index}`, transcript: `Generated request ${index}` }))
+      upstreamSocket?.send(JSON.stringify({ type: 'response.created', ...response }))
+      upstreamSocket?.send(JSON.stringify({ type: 'response.output_text.done', ...response, text: 'Generated repeated reply' }))
+      upstreamSocket?.send(JSON.stringify({ type: 'response.output_text.done', ...response, text: 'Generated repeated reply' }))
+    }
+    await vi.waitFor(() => expect(client.events.filter(event => event.type === 'transcript' && event.role === 'assistant' && event.final)).toHaveLength(2))
+    const replies = client.events.filter((event): event is Extract<VoiceEvent, { type: 'transcript' }> => event.type === 'transcript' && event.role === 'assistant')
+    expect(replies.map(event => event.text)).toEqual(['Generated repeated reply', 'Generated repeated reply'])
+    expect(replies[0].id).not.toBe(replies[1].id)
+  })
+
+  // http://127.0.0.1:5174 — AIRI-046: VAD starts without ASR starts reused the previous message ID.
+  // ROOT CAUSE: VAD did not allocate a turn. A separate provider item ID now correlates late and duplicate finals.
+  it('aIRI-046 separates VAD-led user turns and deduplicates their final packets', async () => {
+    const app = await fixture()
+    const client = await app.client()
+    await client.send({ type: 'config:save', id: 'save', config: { ...defaultVoiceConfig, apiKey: 'test-credential' } })
+    await vi.waitFor(() => expect(client.events.length).toBe(1))
+    let upstreamSocket: WsSocket | undefined
+    app.upstream.on('connection', (socket) => {
+      upstreamSocket = socket
+      socket.once('message', () => socket.send(JSON.stringify({ type: 'session.created' })))
+    })
+    await client.send({ type: 'start', start: { instructions: 'Generated test', history: [], slowBrain: false } })
+    await vi.waitFor(() => expect(client.events).toContainEqual({ type: 'ready' }))
+    for (const index of [1, 2]) {
+      upstreamSocket?.send(JSON.stringify({ type: 'input_audio_buffer.speech_started' }))
+      upstreamSocket?.send(JSON.stringify({ type: 'conversation.item.input_audio_transcription.delta', delta: `Generated partial ${index}` }))
+      const final = { type: 'conversation.item.input_audio_transcription.completed', item_id: `generated-vad-${index}`, transcript: `Generated final ${index}` }
+      upstreamSocket?.send(JSON.stringify(final))
+      upstreamSocket?.send(JSON.stringify(final))
+    }
+    await vi.waitFor(() => expect(client.events.filter(event => event.type === 'transcript' && event.role === 'user' && event.final)).toHaveLength(4))
+    const users = client.events.filter((event): event is Extract<VoiceEvent, { type: 'transcript' }> => event.type === 'transcript' && event.role === 'user' && event.final)
+    expect(users[0].id).toBe(users[1].id)
+    expect(users[2].id).toBe(users[3].id)
+    expect(users[0].id).not.toBe(users[2].id)
+  })
+
+  // http://127.0.0.1:5174 — AIRI-043: an old task receipt canceled the next user turn.
+  // ROOT CAUSE: delegation was global. Receipts now retain their input turn and cannot cancel the next response.
+  it.each([true, false])('aIRI-043 keeps the next native response audible after a late task receipt, ASR start=%s', async (started) => {
+    const app = await fixture()
+    const client = await app.client()
+    await client.send({ type: 'config:save', id: 'save', config: { ...defaultVoiceConfig, apiKey: 'test-credential' } })
+    await vi.waitFor(() => expect(client.events.length).toBe(1))
+    let upstreamSocket: WsSocket | undefined
+    const sent: Array<{ type: string }> = []
+    app.upstream.on('connection', (socket) => {
+      upstreamSocket = socket
+      socket.on('message', data => sent.push(JSON.parse(data.toString())))
+      socket.once('message', () => socket.send(JSON.stringify({ type: 'session.created' })))
+    })
+    await client.send({ type: 'start', start: { instructions: 'Character', history: [], slowBrain: true } })
+    await vi.waitFor(() => expect(client.events).toContainEqual({ type: 'ready' }))
+    const emit = (message: object) => upstreamSocket?.send(JSON.stringify(message))
+    emit({ type: 'conversation.item.input_audio_transcription.completed', item_id: 'task-turn', transcript: '帮我准备练唱方法' })
+    emit({ type: 'response.function_call_arguments.done', response_id: 'task-response', items: [{ call_id: 'task-call', name: 'spawn_thinking', arguments: '{"objective":"准备练唱方法"}' }] })
+    await vi.waitFor(() => expect(client.events.some(event => event.type === 'tools')).toBe(true))
+    if (started)
+      emit({ type: 'conversation.item.input_audio_transcription.started', item_id: 'next-turn' })
+    emit({ type: 'conversation.item.input_audio_transcription.completed', item_id: 'next-turn', transcript: '先聊聊你喜欢什么歌' })
+    await vi.waitFor(() => expect(client.events).toContainEqual(expect.objectContaining({ type: 'transcript', role: 'user', text: '先聊聊你喜欢什么歌', final: true })))
+    await client.send({ type: 'tool-results', results: [{ callId: 'task-call', output: '{"accepted":true}' }] })
+    await vi.waitFor(() => expect(sent.some(message => message.type === 'conversation.item.create')).toBe(true))
+    emit({ type: 'response.created', response_id: 'next-response' })
+    emit({ type: 'response.output_text.done', response_id: 'next-response', text: '我喜欢轻快的旋律。' })
+    emit({ type: 'response.output_audio.started', response_id: 'next-response', tts_type: 'chat_tts' })
+    const pcm = Buffer.alloc(640).toString('base64')
+    emit({ type: 'response.output_audio.delta', response_id: 'next-response', delta: pcm })
+    emit({ type: 'response.output_audio.done', response_id: 'next-response' })
+    await vi.waitFor(() => expect(client.events).toContainEqual({ type: 'audio', audio: pcm }))
+    expect(client.events).toContainEqual(expect.objectContaining({ type: 'transcript', role: 'assistant', text: '我喜欢轻快的旋律。' }))
+    expect(sent.filter(message => message.type === 'response.cancel')).toHaveLength(0)
+  })
+
   // http://127.0.0.1:5174 — AIRI-036: a disconnected browser must not crash the gateway.
   it('aIRI-036 drops a configuration reply after its client disconnects and serves the next client', async () => {
     const app = await fixture()

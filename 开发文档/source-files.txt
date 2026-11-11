@@ -1204,8 +1204,11 @@ apps/stage-web/src/pages/settings/characters/components/CharacterCreate.vue
 apps/stage-web/src/pages/settings/characters/components/CharacterDialog.vue
 apps/stage-web/src/pages/settings/characters/components/CharacterItem.vue
 apps/stage-web/src/pages/settings/characters/index.vue
+apps/stage-web/src/pages/settings/shared-config.vue
 apps/stage-web/src/pages/settings/system/developer.vue
 apps/stage-web/src/pages/settings/system/index.vue
+apps/stage-web/src/shared-settings-gateway.test.ts
+apps/stage-web/src/shared-settings-gateway.ts
 apps/stage-web/src/stage-runtime-gateway.ts
 apps/stage-web/src/stores/background.ts
 apps/stage-web/src/stores/devtools-lag.ts
@@ -1401,6 +1404,15 @@ docs/ai/reports/2026-10-09-chat-archive.md
 docs/ai/reports/2026-10-09-face-stage-accounts.md
 docs/ai/reports/2026-10-11-stage-runtime-and-delivery.md
 docs/ai/reports/2026-10-11-voice-and-settings-regression.md
+docs/ai/reports/2026-10-12-config-sync.md
+docs/ai/reports/2026-10-18-short-speech-settings.png
+docs/ai/reports/2026-10-18-stranger-introduction-and-short-speech.md
+docs/ai/reports/2026-10-19-parallel-voice-and-group-presence.md
+docs/ai/reports/2026-10-19-person-forgetting.md
+docs/ai/reports/2026-10-28-face-stability.md
+docs/ai/reports/2026-10-28-message-person-archive.md
+docs/ai/reports/2026-10-29-stage-history-reading.md
+docs/ai/reports/2026-10-31-stage-tail-follow.md
 docs/content/en/about/privacy.md
 docs/content/en/about/terms.md
 docs/content/en/blog/DevLog-2025.03.05/assets/airi-build-dark.avif
@@ -3273,6 +3285,7 @@ packages/realtime-voice/src/brain.ts
 packages/realtime-voice/src/capture.worklet.ts
 packages/realtime-voice/src/client.ts
 packages/realtime-voice/src/contracts.ts
+packages/realtime-voice/src/conversation-contract.ts
 packages/realtime-voice/src/conversation.test.ts
 packages/realtime-voice/src/conversation.ts
 packages/realtime-voice/src/doubao.ts
@@ -3463,6 +3476,7 @@ packages/server-shared/src/types/websocket/events.ts
 packages/server-shared/src/types/websocket/index.ts
 packages/server-shared/tsconfig.json
 packages/server-shared/tsdown.config.ts
+packages/stage-layouts/README.md
 packages/stage-layouts/package.json
 packages/stage-layouts/src/assets/logo-dark.svg
 packages/stage-layouts/src/assets/logo.svg
@@ -4052,6 +4066,8 @@ packages/stage-ui/src/components/scenarios/chat/components/history.story.vue
 packages/stage-ui/src/components/scenarios/chat/components/history.vue
 packages/stage-ui/src/components/scenarios/chat/components/image-attachment-preview.browser.test.ts
 packages/stage-ui/src/components/scenarios/chat/components/image-attachment-preview.vue
+packages/stage-ui/src/components/scenarios/chat/components/reading-controls.browser.test.ts
+packages/stage-ui/src/components/scenarios/chat/components/reading-controls.vue
 packages/stage-ui/src/components/scenarios/chat/components/reply-preview.vue
 packages/stage-ui/src/components/scenarios/chat/components/reply-quote.vue
 packages/stage-ui/src/components/scenarios/chat/components/response-citations.browser.test.ts
@@ -4462,6 +4478,8 @@ packages/stage-ui/src/services/chat-archive.ts
 packages/stage-ui/src/services/inference-service-providers.test.ts
 packages/stage-ui/src/services/inference-service-providers.ts
 packages/stage-ui/src/services/local-vision-context.ts
+packages/stage-ui/src/services/shared-settings-client.ts
+packages/stage-ui/src/services/shared-settings-contract.ts
 packages/stage-ui/src/services/speech/bus.ts
 packages/stage-ui/src/services/speech/pipeline-runtime.ts
 packages/stage-ui/src/stores/ai/chat-llm/llm.test.ts
@@ -4589,7 +4607,9 @@ packages/stage-ui/src/stores/modules/web-search.test.ts
 packages/stage-ui/src/stores/modules/web-search.ts
 packages/stage-ui/src/stores/onboarding.test.ts
 packages/stage-ui/src/stores/onboarding.ts
+packages/stage-ui/src/stores/participant-archive.browser.test.ts
 packages/stage-ui/src/stores/perf-tracer-bridge.ts
+packages/stage-ui/src/stores/person-forgetting.browser.test.ts
 packages/stage-ui/src/stores/plugin-host-capabilities.ts
 packages/stage-ui/src/stores/providers/config-defaults.test.ts
 packages/stage-ui/src/stores/providers/config-defaults.ts
@@ -4605,6 +4625,7 @@ packages/stage-ui/src/stores/settings/analytics.ts
 packages/stage-ui/src/stores/settings/audio-device.test.ts
 packages/stage-ui/src/stores/settings/audio-device.ts
 packages/stage-ui/src/stores/settings/beat-sync.ts
+packages/stage-ui/src/stores/settings/chat-reading.ts
 packages/stage-ui/src/stores/settings/controls-island.ts
 packages/stage-ui/src/stores/settings/developer.ts
 packages/stage-ui/src/stores/settings/general.test.ts
@@ -4614,6 +4635,8 @@ packages/stage-ui/src/stores/settings/spine.ts
 packages/stage-ui/src/stores/settings/stage-model.test.ts
 packages/stage-ui/src/stores/settings/stage-model.ts
 packages/stage-ui/src/stores/settings/theme.ts
+packages/stage-ui/src/stores/shared-settings.browser.test.ts
+packages/stage-ui/src/stores/shared-settings.ts
 packages/stage-ui/src/stores/speech-output-control.browser.test.ts
 packages/stage-ui/src/stores/speech-output-control.test.ts
 packages/stage-ui/src/stores/speech-output-control.ts
@@ -4672,6 +4695,7 @@ packages/stage-ui/stories/styles/main.css
 packages/stage-ui/stories/styles/transitions.css
 packages/stage-ui/test/chat-service.ts
 packages/stage-ui/test/local-vision-service.ts
+packages/stage-ui/test/shared-settings.ts
 packages/stage-ui/tsconfig.json
 packages/stage-ui/uno.config.ts
 packages/stage-ui/vite.config.ts

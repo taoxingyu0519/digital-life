@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { signOut } from '@proj-airi/stage-ui/libs/auth'
 import { useAuthStore } from '@proj-airi/stage-ui/stores/auth'
-import { useStageIdentityStore } from '@proj-airi/stage-ui/stores/stage-identity'
 import { AnimatedContent, Avatar } from '@proj-airi/ui'
 import { storeToRefs } from 'pinia'
 import {
@@ -23,7 +22,6 @@ defineProps<{
 
 const authStore = useAuthStore()
 const { isAuthenticated, user, credits } = storeToRefs(authStore)
-const { cameraAccounts, displayName, person } = storeToRefs(useStageIdentityStore())
 const { t } = useI18n()
 
 const userName = computed(() => user.value?.name)
@@ -48,24 +46,9 @@ const formattedCredits = computed(() => credits.value.toLocaleString())
     >
       <div :class="['i-solar:settings-minimalistic-bold-duotone size-5 text-neutral-500 dark:text-neutral-400']" />
     </RouterLink>
-    <RouterLink
-      v-if="cameraAccounts"
-      to="/settings/modules/vision"
-      :aria-label="t('base.face-account.status', { name: displayName || t('base.guest.name') })"
-      :title="t('base.face-account.description')"
-      :class="[
-        'min-h-11 flex items-center gap-2 rounded-xl px-3 py-2 text-sm backdrop-blur-md',
-        'border-2 border-solid border-neutral-100/60 dark:border-neutral-800/30',
-        'bg-neutral-50/70 text-neutral-700 dark:bg-neutral-800/70 dark:text-neutral-200',
-        'focus-visible:outline-2 focus-visible:outline-primary-500',
-      ]"
-    >
-      <div :class="[person ? 'i-solar:user-id-bold-duotone text-primary-500' : 'i-solar:user-rounded-bold-duotone text-neutral-500', 'size-5 shrink-0']" />
-      <span role="status" :class="['max-w-40 truncate font-medium']">{{ displayName || t('base.guest.name') }}</span>
-    </RouterLink>
     <!-- Guests can configure their own provider without signing in. -->
     <!-- NOTICE: The avatar is stored in the localstorage, it will be shown at the first time of the page load, so we do not need the skeleton loading here -->
-    <template v-else-if="!isAuthenticated">
+    <template v-if="!isAuthenticated">
       <RouterLink
         to="/settings/providers"
         :class="[

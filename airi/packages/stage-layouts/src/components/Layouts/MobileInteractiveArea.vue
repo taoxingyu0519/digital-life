@@ -5,7 +5,7 @@ import type { ChatHistoryItem } from '@proj-airi/stage-ui/types/chat'
 import { isStageTamagotchi } from '@proj-airi/stage-shared'
 import { useThreeViewControl } from '@proj-airi/stage-ui-three'
 import { CharacterSwitcherDrawer, ChatHistory } from '@proj-airi/stage-ui/components'
-import { ChatImageAttachmentPreview, ChatReplyPreview, ChatSessionsDrawer, useChatComposer, useChatImages } from '@proj-airi/stage-ui/components/scenarios/chat'
+import { ChatImageAttachmentPreview, ChatReadingControls, ChatReplyPreview, ChatSessionsDrawer, useChatComposer, useChatImages } from '@proj-airi/stage-ui/components/scenarios/chat'
 import { useAnalytics, useAudioAnalyzer } from '@proj-airi/stage-ui/composables'
 import { useChatInput } from '@proj-airi/stage-ui/composables/use-chat-input'
 import { useAudioContext } from '@proj-airi/stage-ui/stores/audio'
@@ -14,6 +14,7 @@ import { useChatSessionStore } from '@proj-airi/stage-ui/stores/chat/session-sto
 import { useChatStreamStore } from '@proj-airi/stage-ui/stores/chat/stream-store'
 import { useL2dViewControl } from '@proj-airi/stage-ui/stores/live2d'
 import { useContextBridgeStore } from '@proj-airi/stage-ui/stores/mods/api/context-bridge'
+import { useRealtimeVoiceStore } from '@proj-airi/stage-ui/stores/modules/realtime-voice'
 import { useSettings, useSettingsAudioDevice } from '@proj-airi/stage-ui/stores/settings'
 import { useSettingsStageModel } from '@proj-airi/stage-ui/stores/settings/stage-model'
 import { BasicButton, BasicTextarea } from '@proj-airi/ui'
@@ -43,6 +44,7 @@ const { activeSessionId, messages } = storeToRefs(chatSession)
 const { streamingMessage } = storeToRefs(chatStream)
 const { activeSendSessionId, activeStreamingMessage, sending } = storeToRefs(chatOrchestrator)
 const { isReceivingRemoteStream } = storeToRefs(useContextBridgeStore())
+const { previewMessages } = storeToRefs(useRealtimeVoiceStore())
 const historyMessages = computed(() => messages.value)
 const isActiveSessionSending = computed(() => (
   (sending.value && activeSendSessionId.value === activeSessionId.value)
@@ -319,6 +321,7 @@ onUnmounted(() => {
       >
         <span aria-hidden="true" :class="['i-solar:dialog-2-outline size-6']" />
       </BasicButton>
+      <ChatReadingControls variant="mobile" />
       <CharacterSwitcherDrawer />
       <MobileSettingsDrawer
         v-model:character-voice-enabled="characterVoiceEnabled"
@@ -353,6 +356,7 @@ onUnmounted(() => {
             v-if="!viewControlsEnabled"
             variant="mobile"
             :messages="historyMessages"
+            :live-messages="previewMessages"
             :sending="isActiveSessionSending"
             :streaming-message="visibleStreamingMessage"
             class="chat-history"

@@ -61,9 +61,38 @@ class ContinuousIdentityTests(unittest.TestCase):
             self.assertEqual(result['actors'][0]['identity_status'], 'confirmed')
             self.assertEqual(result['actors'][0]['person_id'], self.person)
             self.assertEqual(quality, 'blur-or-exposure')
-        result, _ = self.observe(2.3)
+        result, _ = self.observe(3.2)
         self.assertEqual(result['actors'][0]['identity_status'], 'unavailable')
         self.assertIsNone(result['actors'][0]['person_id'])
+
+    # http://127.0.0.1:5174 — AIRI-044: a single weak embedding interrupts the stage account.
+    def test_confirmed_reference_bridges_a_score_dip_without_learning_or_extending_itself(self):
+        reference = self.vector.copy()
+        reference[0], reference[1] = .7, np.sqrt(1 - .7 ** 2)
+        self.runtime.face_sample.return_value = (reference, 'accepted')
+        self.confirm()
+        weak = self.vector.copy()
+        weak[0], weak[1] = .48, np.sqrt(1 - .48 ** 2)
+        self.runtime.face_sample.return_value = (weak, 'accepted')
+        with patch.object(self.runtime.social, 'sample') as sample:
+            result, _ = self.observe(1.62)
+            self.assertEqual(result['actors'][0]['person_id'], self.person)
+            sample.assert_not_called()
+            result, _ = self.observe(2.64)
+            self.assertEqual(result['actors'][0]['person_id'], self.person)
+        result, _ = self.observe(3.66)
+        self.assertIsNone(result['actors'][0]['person_id'])
+
+    def test_reference_cannot_hide_a_different_face_on_the_same_body_track(self):
+        self.confirm()
+        stranger = np.zeros(128, np.float32)
+        stranger[1] = 1
+        self.runtime.face_sample.return_value = (stranger, 'accepted')
+        result, _ = self.observe(.9)
+        self.assertIsNone(result['actors'][0]['person_id'])
+        self.runtime.face_sample.return_value = (self.vector, 'accepted')
+        result, _ = self.observe(1.2)
+        self.assertEqual(result['actors'][0]['identity_status'], 'candidate')
 
     def test_slow_frames_confirm_and_expose_diagnostics_without_identity_or_vectors(self):
         for now in (0, .6, 1.2):
@@ -73,7 +102,7 @@ class ContinuousIdentityTests(unittest.TestCase):
         diagnostic = self.runtime.recognition_diagnostics[actor['track_id']]
         self.assertEqual(diagnostic, dict(reason='confirmed', samples=3, score=1.0, threshold=.55))
         self.runtime.face_sample.return_value = (None, 'blur-or-exposure')
-        result, _ = self.observe(3)
+        result, _ = self.observe(4)
         self.assertEqual(self.runtime.recognition_diagnostics, {})
 
     def test_multiple_faces_revoke_the_name_without_waiting_for_blur_grace(self):

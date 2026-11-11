@@ -19,8 +19,8 @@
       ],
       "status": "current",
       "changed": [],
-      "reviewedAt": "2026-10-11T04:58:49.195Z",
-      "task": "AIRI-037"
+      "reviewedAt": "2026-10-29T06:30:41.236Z",
+      "task": "AIRI-046"
     },
     {
       "id": "project-state",
@@ -45,8 +45,8 @@
       ],
       "status": "current",
       "changed": [],
-      "reviewedAt": "2026-10-12T03:55:58.356Z",
-      "task": "AIRI-038"
+      "reviewedAt": "2026-11-11T06:42:46.361Z",
+      "task": "AIRI-050"
     },
     {
       "id": "change-routing",
@@ -67,8 +67,8 @@
       ],
       "status": "current",
       "changed": [],
-      "reviewedAt": "2026-10-11T04:58:51.394Z",
-      "task": "AIRI-037"
+      "reviewedAt": "2026-11-11T06:42:49.456Z",
+      "task": "AIRI-050"
     },
     {
       "id": "chat",
@@ -91,6 +91,8 @@
         "AIRI-023"
       ],
       "sources": [
+        "airi/packages/stage-ui/src/stores/chat/session-store.ts",
+        "airi/packages/stage-ui/src/stores/modules/realtime-voice.ts",
         "airi/packages/stage-ui/src/stores/chat.ts",
         "airi/packages/core-agent/src/runtime/chat-orchestrator-runtime.ts",
         "airi/packages/core-agent/src/runtime/context-registry.ts",
@@ -113,8 +115,8 @@
       ],
       "status": "current",
       "changed": [],
-      "reviewedAt": "2026-10-11T04:58:52.568Z",
-      "task": "AIRI-037"
+      "reviewedAt": "2026-10-29T06:30:45.706Z",
+      "task": "AIRI-046"
     },
     {
       "id": "local-vision",
@@ -157,14 +159,14 @@
       ],
       "status": "current",
       "changed": [],
-      "reviewedAt": "2026-10-06T14:18:13.247Z",
-      "task": "AIRI-029"
+      "reviewedAt": "2026-10-28T16:15:18.117Z",
+      "task": "AIRI-045"
     },
     {
       "id": "visual-social",
       "path": "wiki/flows/visual-social.md",
       "title": "视觉社交数据流",
-      "summary": "视觉观察、姓名确认、舞台人脸账户、历史隔离和每请求人物记忆。",
+      "summary": "视觉观察、匿名ID、姓名确认、逐消息归档和每请求人物记忆，与登录解耦。",
       "tags": [
         "数据流",
         "流转",
@@ -182,6 +184,8 @@
         "右上角"
       ],
       "sources": [
+        "airi/services/local-vision/service.py",
+        "airi/services/local-vision/identity.py",
         "airi/apps/stage-web/src/components/local-vision-runtime.vue",
         "airi/packages/local-vision/src/client.ts",
         "airi/packages/local-vision/src/contracts.ts",
@@ -200,8 +204,8 @@
       ],
       "status": "current",
       "changed": [],
-      "reviewedAt": "2026-10-11T04:58:53.740Z",
-      "task": "AIRI-037"
+      "reviewedAt": "2026-10-28T16:28:31.021Z",
+      "task": "AIRI-045"
     },
     {
       "id": "companion",
@@ -228,8 +232,8 @@
       ],
       "status": "current",
       "changed": [],
-      "reviewedAt": "2026-10-11T04:58:54.850Z",
-      "task": "AIRI-037"
+      "reviewedAt": "2026-10-28T16:15:11.478Z",
+      "task": "AIRI-045"
     },
     {
       "id": "voice",
@@ -253,6 +257,8 @@
         "AIRI-023"
       ],
       "sources": [
+        "airi/packages/realtime-voice/src/gateway.test.ts",
+        "airi/packages/stage-ui/src/stores/chat/session-store.ts",
         "airi/packages/stage-ui/src/stores/modules/hearing.ts",
         "airi/packages/stage-ui/src/stores/modules/speech.ts",
         "airi/packages/realtime-voice/src/pcm.ts",
@@ -273,8 +279,8 @@
       ],
       "status": "current",
       "changed": [],
-      "reviewedAt": "2026-10-11T04:58:55.944Z",
-      "task": "AIRI-037"
+      "reviewedAt": "2026-10-29T06:30:47.126Z",
+      "task": "AIRI-046"
     },
     {
       "id": "storage-memory",
@@ -297,6 +303,8 @@
         "数据"
       ],
       "sources": [
+        "airi/packages/core-agent/src/types/chat.ts",
+        "airi/packages/stage-ui/src/libs/chat-sync/wire-message.ts",
         "airi/packages/stage-ui/src/database/storage.ts",
         "airi/packages/stage-ui/src/database/repos/chat-sessions.repo.ts",
         "airi/packages/stage-ui/src/stores/chat/session-store.ts",
@@ -315,12 +323,13 @@
         "airi/packages/stage-ui/src/components/scenarios/chat/components/sessions-drawer.vue",
         "airi/packages/stage-ui/src/services/chat-archive.ts",
         "airi/packages/stage-ui/src/stores/chat-archive.ts",
-        "airi/packages/stage-ui/src/libs/chat-archive-events.ts"
+        "airi/packages/stage-ui/src/libs/chat-archive-events.ts",
+        "airi/packages/stage-ui/src/stores/person-forgetting.browser.test.ts"
       ],
       "status": "current",
       "changed": [],
-      "reviewedAt": "2026-10-09T10:04:42.907Z",
-      "task": "AIRI-035"
+      "reviewedAt": "2026-10-29T06:30:48.563Z",
+      "task": "AIRI-046"
     },
     {
       "id": "clients",
@@ -349,6 +358,15 @@
         "AIRI-023"
       ],
       "sources": [
+        "airi/packages/stage-layouts/src/components/Layouts/MobileInteractiveArea.vue",
+        "airi/packages/stage-ui/src/components/scenarios/chat/composables/use-virtualizer-scroll.ts",
+        "airi/packages/stage-layouts/src/components/Layouts/InteractiveArea.vue",
+        "airi/packages/stage-ui/src/components/scenarios/chat/composables/use-chat-history-scroll.ts",
+        "airi/packages/stage-layouts/src/components/Widgets/chat-panel-header.vue",
+        "airi/packages/stage-ui/src/components/scenarios/chat/components/reading-controls.vue",
+        "airi/packages/stage-ui/src/stores/settings/chat-reading.ts",
+        "airi/packages/stage-ui/src/components/scenarios/chat/components/history-message-frame.vue",
+        "airi/packages/stage-ui/src/components/scenarios/chat/components/history.vue",
         "airi/apps/stage-web/src/App.vue",
         "airi/packages/stage-ui/src/components/scenes/Stage.vue",
         "airi/packages/stage-ui/src/stores/modules/airi-card.ts",
@@ -375,14 +393,14 @@
       ],
       "status": "current",
       "changed": [],
-      "reviewedAt": "2026-10-11T04:58:57.075Z",
-      "task": "AIRI-037"
+      "reviewedAt": "2026-10-31T09:49:40.618Z",
+      "task": "AIRI-047"
     },
     {
       "id": "local-runtime",
       "path": "wiki/modules/local-runtime.md",
       "title": "本地运行与服务排查",
-      "summary": "本机与LAN/UU服务、SSH地址漂移、设备归属与Wiki入口。",
+      "summary": "本机与LAN/UU、304官网受邀演示、SSH、端口归属与设备边界。",
       "tags": [
         "启动",
         "运行",
@@ -407,12 +425,13 @@
         "scripts/lan-gateway.mjs",
         "scripts/project-manager.mjs",
         "scripts/project-wiki.mjs",
-        "scripts/stop-airi.ps1"
+        "scripts/stop-airi.ps1",
+        "开发文档/10-304-demo.md"
       ],
       "status": "current",
       "changed": [],
-      "reviewedAt": "2026-10-11T04:58:58.288Z",
-      "task": "AIRI-037"
+      "reviewedAt": "2026-11-05T16:03:08.285Z",
+      "task": "AIRI-049"
     },
     {
       "id": "memory",
@@ -441,8 +460,8 @@
       ],
       "status": "current",
       "changed": [],
-      "reviewedAt": "2026-10-12T03:55:56.719Z",
-      "task": "AIRI-038"
+      "reviewedAt": "2026-11-11T06:42:47.815Z",
+      "task": "AIRI-050"
     },
     {
       "id": "evolution",
@@ -468,8 +487,8 @@
       ],
       "status": "current",
       "changed": [],
-      "reviewedAt": "2026-10-12T03:55:59.441Z",
-      "task": "AIRI-038"
+      "reviewedAt": "2026-11-11T06:42:41.760Z",
+      "task": "AIRI-050"
     },
     {
       "id": "decisions",
@@ -498,8 +517,8 @@
       ],
       "status": "current",
       "changed": [],
-      "reviewedAt": "2026-10-11T04:59:01.601Z",
-      "task": "AIRI-037"
+      "reviewedAt": "2026-10-28T16:15:21.370Z",
+      "task": "AIRI-045"
     },
     {
       "id": "lessons",
@@ -517,6 +536,7 @@
         "ready"
       ],
       "sources": [
+        "airi/docs/ai/reports/2026-10-29-stage-history-reading.md",
         "airi/docs/ai/adr/2026-09-30-active-social-companion.md",
         "airi/packages/realtime-voice/src/doubao.ts",
         "airi/services/local-vision/social.py",
@@ -532,8 +552,8 @@
       ],
       "status": "current",
       "changed": [],
-      "reviewedAt": "2026-10-11T04:59:02.821Z",
-      "task": "AIRI-037"
+      "reviewedAt": "2026-10-31T09:49:42.121Z",
+      "task": "AIRI-047"
     },
     {
       "id": "maintenance",
@@ -646,8 +666,8 @@
       ],
       "status": "current",
       "changed": [],
-      "reviewedAt": "2026-10-06T14:18:21.366Z",
-      "task": "AIRI-029"
+      "reviewedAt": "2026-10-28T16:15:51.774Z",
+      "task": "AIRI-045"
     },
     {
       "id": "session-face-gaze",
@@ -672,8 +692,8 @@
       ],
       "status": "current",
       "changed": [],
-      "reviewedAt": "2026-10-01T13:29:31.175Z",
-      "task": "AIRI-015"
+      "reviewedAt": "2026-10-28T09:08:08.907Z",
+      "task": "AIRI-044"
     },
     {
       "id": "fast-slow-brain",
@@ -740,8 +760,8 @@
       ],
       "status": "current",
       "changed": [],
-      "reviewedAt": "2026-10-11T04:59:07.309Z",
-      "task": "AIRI-037"
+      "reviewedAt": "2026-10-29T06:30:56.217Z",
+      "task": "AIRI-046"
     },
     {
       "id": "session-search-capability",
@@ -764,8 +784,8 @@
       ],
       "status": "current",
       "changed": [],
-      "reviewedAt": "2026-10-09T10:04:49.885Z",
-      "task": "AIRI-035"
+      "reviewedAt": "2026-10-29T06:31:00.685Z",
+      "task": "AIRI-046"
     },
     {
       "id": "session-firecrawl",
@@ -795,8 +815,8 @@
       ],
       "status": "current",
       "changed": [],
-      "reviewedAt": "2026-10-09T10:04:50.868Z",
-      "task": "AIRI-035"
+      "reviewedAt": "2026-10-28T16:15:33.841Z",
+      "task": "AIRI-045"
     },
     {
       "id": "session-fast-slow",
@@ -850,8 +870,8 @@
       ],
       "status": "current",
       "changed": [],
-      "reviewedAt": "2026-10-11T04:59:08.514Z",
-      "task": "AIRI-037"
+      "reviewedAt": "2026-10-28T16:15:35.292Z",
+      "task": "AIRI-045"
     },
     {
       "id": "session-voice-slow-link",
@@ -880,8 +900,8 @@
       ],
       "status": "current",
       "changed": [],
-      "reviewedAt": "2026-10-11T04:59:09.612Z",
-      "task": "AIRI-037"
+      "reviewedAt": "2026-10-29T06:31:02.086Z",
+      "task": "AIRI-046"
     },
     {
       "id": "session-voice-delivery",
@@ -914,8 +934,8 @@
       ],
       "status": "current",
       "changed": [],
-      "reviewedAt": "2026-10-11T04:59:10.707Z",
-      "task": "AIRI-037"
+      "reviewedAt": "2026-10-29T06:31:03.540Z",
+      "task": "AIRI-046"
     },
     {
       "id": "session-fast-conversation-policy",
@@ -948,8 +968,8 @@
       ],
       "status": "current",
       "changed": [],
-      "reviewedAt": "2026-10-11T04:59:11.857Z",
-      "task": "AIRI-037"
+      "reviewedAt": "2026-10-29T06:31:05.084Z",
+      "task": "AIRI-046"
     },
     {
       "id": "chatty-conversation",
@@ -985,8 +1005,8 @@
       ],
       "status": "current",
       "changed": [],
-      "reviewedAt": "2026-10-11T04:59:13.111Z",
-      "task": "AIRI-037"
+      "reviewedAt": "2026-10-29T06:30:57.625Z",
+      "task": "AIRI-046"
     },
     {
       "id": "session-chatty-conversation",
@@ -1011,8 +1031,8 @@
       ],
       "status": "current",
       "changed": [],
-      "reviewedAt": "2026-10-11T04:59:14.211Z",
-      "task": "AIRI-037"
+      "reviewedAt": "2026-10-29T06:31:06.595Z",
+      "task": "AIRI-046"
     },
     {
       "id": "session-memory-management",
@@ -1036,8 +1056,8 @@
       ],
       "status": "current",
       "changed": [],
-      "reviewedAt": "2026-10-09T10:04:57.746Z",
-      "task": "AIRI-035"
+      "reviewedAt": "2026-10-29T06:31:08.016Z",
+      "task": "AIRI-046"
     },
     {
       "id": "session-chatty-preparation-persona",
@@ -1065,8 +1085,8 @@
       ],
       "status": "current",
       "changed": [],
-      "reviewedAt": "2026-10-11T04:59:15.303Z",
-      "task": "AIRI-037"
+      "reviewedAt": "2026-10-29T06:31:09.440Z",
+      "task": "AIRI-046"
     },
     {
       "id": "session-chatty-idle-reflection",
@@ -1096,8 +1116,8 @@
       ],
       "status": "current",
       "changed": [],
-      "reviewedAt": "2026-10-11T04:59:16.403Z",
-      "task": "AIRI-037"
+      "reviewedAt": "2026-10-29T06:31:11.036Z",
+      "task": "AIRI-046"
     },
     {
       "id": "face-adaptation",
@@ -1125,8 +1145,8 @@
       ],
       "status": "current",
       "changed": [],
-      "reviewedAt": "2026-10-06T14:18:30.167Z",
-      "task": "AIRI-029"
+      "reviewedAt": "2026-10-28T16:15:19.607Z",
+      "task": "AIRI-045"
     },
     {
       "id": "session-active-greeting-recognition",
@@ -1147,8 +1167,8 @@
       ],
       "status": "current",
       "changed": [],
-      "reviewedAt": "2026-10-11T04:59:17.574Z",
-      "task": "AIRI-037"
+      "reviewedAt": "2026-10-29T06:31:12.464Z",
+      "task": "AIRI-046"
     },
     {
       "id": "session-trajectory-face-adaptation",
@@ -1169,8 +1189,8 @@
       ],
       "status": "current",
       "changed": [],
-      "reviewedAt": "2026-10-06T14:18:31.778Z",
-      "task": "AIRI-029"
+      "reviewedAt": "2026-10-28T09:08:11.629Z",
+      "task": "AIRI-044"
     },
     {
       "id": "session-active-mode-voice",
@@ -1193,8 +1213,8 @@
       ],
       "status": "current",
       "changed": [],
-      "reviewedAt": "2026-10-11T04:59:18.743Z",
-      "task": "AIRI-037"
+      "reviewedAt": "2026-10-29T06:31:13.941Z",
+      "task": "AIRI-046"
     },
     {
       "id": "brain-prompts",
@@ -1223,8 +1243,8 @@
       ],
       "status": "current",
       "changed": [],
-      "reviewedAt": "2026-10-11T04:59:19.849Z",
-      "task": "AIRI-037"
+      "reviewedAt": "2026-10-29T06:30:59.064Z",
+      "task": "AIRI-046"
     },
     {
       "id": "session-brain-prompt-editor",
@@ -1246,8 +1266,8 @@
       ],
       "status": "current",
       "changed": [],
-      "reviewedAt": "2026-10-11T04:59:20.956Z",
-      "task": "AIRI-037"
+      "reviewedAt": "2026-10-29T06:31:15.570Z",
+      "task": "AIRI-046"
     },
     {
       "id": "session-face-stage-accounts",
@@ -1274,8 +1294,8 @@
       ],
       "status": "current",
       "changed": [],
-      "reviewedAt": "2026-10-11T04:59:22.078Z",
-      "task": "AIRI-037"
+      "reviewedAt": "2026-10-29T06:31:17.009Z",
+      "task": "AIRI-046"
     },
     {
       "id": "chat-archive",
@@ -1293,6 +1313,8 @@
         "AIRI-035"
       ],
       "sources": [
+        "airi/packages/stage-ui/src/stores/stage-identity.ts",
+        "airi/packages/stage-ui/src/stores/participant-archive.browser.test.ts",
         "airi/packages/stage-ui/src/services/chat-archive.ts",
         "airi/packages/stage-ui/src/stores/chat-archive.ts",
         "airi/packages/stage-ui/src/libs/chat-archive-events.ts",
@@ -1302,12 +1324,14 @@
         "airi/packages/stage-ui/src/database/repos/chat-sessions.repo.ts",
         "airi/packages/stage-ui/src/stores/chat-archive.browser.test.ts",
         "airi/packages/stage-ui/src/stores/modules/realtime-brain.browser.test.ts",
-        "airi/docs/ai/reports/2026-10-09-chat-archive.md"
+        "airi/docs/ai/reports/2026-10-09-chat-archive.md",
+        "airi/packages/stage-ui/src/database/storage.ts",
+        "airi/packages/stage-ui/src/stores/person-forgetting.browser.test.ts"
       ],
       "status": "current",
       "changed": [],
-      "reviewedAt": "2026-10-11T04:59:23.293Z",
-      "task": "AIRI-037"
+      "reviewedAt": "2026-10-29T06:30:51.708Z",
+      "task": "AIRI-046"
     },
     {
       "id": "session-chat-archive",
@@ -1336,8 +1360,8 @@
       ],
       "status": "current",
       "changed": [],
-      "reviewedAt": "2026-10-11T04:59:24.389Z",
-      "task": "AIRI-037"
+      "reviewedAt": "2026-10-29T06:31:18.454Z",
+      "task": "AIRI-046"
     },
     {
       "id": "session-voice-settings-regression",
@@ -1362,8 +1386,8 @@
       ],
       "status": "current",
       "changed": [],
-      "reviewedAt": "2026-10-11T04:59:25.506Z",
-      "task": "AIRI-037"
+      "reviewedAt": "2026-10-29T06:31:19.966Z",
+      "task": "AIRI-046"
     },
     {
       "id": "stage-runtime",
@@ -1401,8 +1425,8 @@
       ],
       "status": "current",
       "changed": [],
-      "reviewedAt": "2026-10-11T05:00:43.797Z",
-      "task": "AIRI-037"
+      "reviewedAt": "2026-11-11T06:42:50.875Z",
+      "task": "AIRI-050"
     },
     {
       "id": "session-stage-runtime-delivery",
@@ -1438,8 +1462,315 @@
       ],
       "status": "current",
       "changed": [],
-      "reviewedAt": "2026-10-11T05:00:44.941Z",
-      "task": "AIRI-037"
+      "reviewedAt": "2026-11-11T06:42:43.309Z",
+      "task": "AIRI-050"
+    },
+    {
+      "tags": [
+        "同步",
+        "配置",
+        "提示词",
+        "慢脑",
+        "笔记本",
+        "端口",
+        "重置",
+        "离线",
+        "冲突",
+        "AIRI-039"
+      ],
+      "summary": "4173新来源配置空白、台式机加密副本、离线/草稿/冲突和登录角色卡恢复。",
+      "title": "跨设备配置同步",
+      "sources": [
+        "airi/packages/stage-ui/src/stores/settings/chat-reading.ts",
+        "airi/packages/stage-ui/src/services/shared-settings-contract.ts",
+        "airi/packages/stage-ui/src/services/shared-settings-client.ts",
+        "airi/packages/stage-ui/src/stores/shared-settings.ts",
+        "airi/packages/stage-ui/src/stores/providers/config.ts",
+        "airi/packages/stage-ui/src/stores/modules/consciousness.ts",
+        "airi/packages/stage-ui/src/components/scenarios/brain-prompt-editor.vue",
+        "airi/packages/stage-ui/src/stores/shared-settings.browser.test.ts",
+        "airi/apps/stage-web/src/shared-settings-gateway.ts",
+        "airi/apps/stage-web/src/shared-settings-gateway.test.ts",
+        "airi/apps/stage-web/src/pages/settings/shared-config.vue",
+        "airi/apps/stage-web/src/App.vue",
+        "scripts/protect-shared-settings.py",
+        "scripts/test-airi-delivery.ps1",
+        "scripts/check-airi-gateways.mjs",
+        "airi/docs/ai/reports/2026-10-12-config-sync.md",
+        "airi/packages/realtime-voice/src/conversation-contract.ts",
+        "airi/packages/realtime-voice/src/conversation.ts",
+        "airi/packages/realtime-voice/package.json",
+        "airi/apps/stage-web/vite.config.ts",
+        "airi/packages/stage-ui/test/shared-settings.ts"
+      ],
+      "path": "wiki/modules/shared-config.md",
+      "id": "shared-config",
+      "status": "current",
+      "changed": [],
+      "reviewedAt": "2026-10-29T06:30:54.620Z",
+      "task": "AIRI-046"
+    },
+    {
+      "tags": [
+        "开发记录",
+        "同步",
+        "配置",
+        "浏览器",
+        "回归",
+        "AIRI-039"
+      ],
+      "summary": "AIRI-039：来源分区原因、共享加密宿主、重连和草稿保护、真实双来源与设备边界。",
+      "title": "笔记本与台式机配置同步记录",
+      "sources": [
+        "airi/packages/stage-ui/src/services/shared-settings-contract.ts",
+        "airi/packages/stage-ui/src/services/shared-settings-client.ts",
+        "airi/packages/stage-ui/src/stores/shared-settings.ts",
+        "airi/packages/stage-ui/src/stores/providers/config.ts",
+        "airi/packages/stage-ui/src/stores/modules/consciousness.ts",
+        "airi/packages/stage-ui/src/components/scenarios/brain-prompt-editor.vue",
+        "airi/packages/stage-ui/src/stores/shared-settings.browser.test.ts",
+        "airi/apps/stage-web/src/shared-settings-gateway.ts",
+        "airi/apps/stage-web/src/shared-settings-gateway.test.ts",
+        "airi/apps/stage-web/src/pages/settings/shared-config.vue",
+        "airi/apps/stage-web/src/App.vue",
+        "scripts/protect-shared-settings.py",
+        "scripts/test-airi-delivery.ps1",
+        "scripts/check-airi-gateways.mjs",
+        "airi/docs/ai/reports/2026-10-12-config-sync.md",
+        "airi/packages/realtime-voice/src/conversation-contract.ts",
+        "airi/packages/realtime-voice/src/conversation.ts",
+        "airi/packages/realtime-voice/package.json",
+        "airi/apps/stage-web/vite.config.ts",
+        "airi/packages/stage-ui/test/shared-settings.ts"
+      ],
+      "path": "wiki/memory/sessions/2026-10-12-config-sync.md",
+      "id": "session-config-sync",
+      "status": "current",
+      "changed": [],
+      "reviewedAt": "2026-10-29T06:31:22.910Z",
+      "task": "AIRI-046"
+    },
+    {
+      "id": "session-port-conflict",
+      "path": "wiki/memory/sessions/2026-10-17-port-repair.md",
+      "title": "笔记本连接与台式机端口冲突修复",
+      "summary": "AIRI-040：保留5173原项目，参数化后台启动器与SSH转发为4173，区分网络和设备验收。",
+      "tags": [
+        "开发记录",
+        "UU",
+        "SSH",
+        "端口",
+        "AIRI-040"
+      ],
+      "sources": [
+        "scripts/start-airi.ps1",
+        "scripts/start-airi-background.ps1",
+        "开发文档/04-development-guide.md"
+      ],
+      "status": "current",
+      "changed": [],
+      "reviewedAt": "2026-11-11T06:42:44.918Z",
+      "task": "AIRI-050"
+    },
+    {
+      "id": "session-stranger-introduction",
+      "path": "wiki/memory/sessions/2026-10-18-stranger-introduction.md",
+      "title": "陌生人认识、姓名确认与短语音修复",
+      "summary": "AIRI-041：问候失败开场、登记邀请幂等、空闲核对、语音篇幅及真实快慢脑协议。",
+      "tags": [
+        "陌生人",
+        "问候",
+        "姓名",
+        "语音",
+        "AIRI-041"
+      ],
+      "sources": [
+        "airi/packages/stage-ui/src/stores/companion.ts",
+        "airi/packages/stage-ui/src/stores/local-vision.ts",
+        "airi/packages/realtime-voice/src/prompts.ts",
+        "airi/services/local-vision/social.py",
+        "airi/services/local-vision/tests/testsocial.py",
+        "airi/packages/stage-ui/src/stores/modules/realtime-brain.browser.test.ts",
+        "airi/docs/ai/reports/2026-10-18-stranger-introduction-and-short-speech.md"
+      ],
+      "status": "current",
+      "changed": [],
+      "reviewedAt": "2026-10-29T06:31:25.970Z",
+      "task": "AIRI-046"
+    },
+    {
+      "id": "session-person-forgetting",
+      "path": "wiki/memory/sessions/2026-10-19-person-forgetting.md",
+      "title": "人物全部记忆清除与重新认识",
+      "summary": "AIRI-042：主机/浏览器按人物ID全角色清理、舞台关闭、多窗口撤销与IndexedDB命名空间枚举修正。",
+      "tags": [
+        "删除",
+        "记忆",
+        "人物",
+        "重新认识",
+        "IndexedDB",
+        "AIRI-042"
+      ],
+      "sources": [
+        "airi/packages/stage-ui/src/components/scenarios/memory-manager.vue",
+        "airi/packages/stage-ui/src/stores/chat/session-store.ts",
+        "airi/packages/stage-ui/src/database/storage.ts",
+        "airi/packages/stage-ui/src/stores/person-forgetting.browser.test.ts",
+        "airi/services/local-vision/tests/testdeveloper.py",
+        "airi/docs/ai/reports/2026-10-19-person-forgetting.md"
+      ],
+      "status": "current",
+      "changed": [],
+      "reviewedAt": "2026-10-29T06:31:27.487Z",
+      "task": "AIRI-046"
+    },
+    {
+      "id": "session-parallel-voice",
+      "path": "wiki/memory/sessions/2026-10-19-parallel-voice.md",
+      "title": "多人画面与快慢脑并行语音",
+      "summary": "AIRI-043：多人在场误挂断、迟到工具回执取消新回答的复现与话轮隔离，后台未完成时继续收听和回答。",
+      "tags": [
+        "多人",
+        "陌生人",
+        "语音卡住",
+        "并行",
+        "工具回执",
+        "AIRI-043"
+      ],
+      "sources": [
+        "airi/packages/stage-ui/src/stores/companion.ts",
+        "airi/packages/stage-ui/src/stores/modules/realtime-voice.ts",
+        "airi/packages/realtime-voice/src/doubao.ts",
+        "airi/packages/realtime-voice/src/gateway.test.ts",
+        "airi/packages/stage-ui/src/stores/modules/realtime-brain.browser.test.ts",
+        "airi/docs/ai/reports/2026-10-19-parallel-voice-and-group-presence.md"
+      ],
+      "status": "current",
+      "changed": [],
+      "reviewedAt": "2026-10-29T06:31:29.012Z",
+      "task": "AIRI-046"
+    },
+    {
+      "id": "session-face-stability",
+      "path": "wiki/memory/sessions/2026-10-28-face-stability.md",
+      "title": "人脸稳定与每秒一次采集",
+      "summary": "AIRI-044：1Hz采集、确认窗口、固定参考去抖、租期提前续约、补采与目光时效联动。",
+      "tags": [
+        "人脸",
+        "跳名",
+        "跳动",
+        "每秒一次",
+        "1Hz",
+        "稳定",
+        "AIRI-044"
+      ],
+      "sources": [
+        "airi/packages/local-vision/src/client.ts",
+        "airi/packages/local-vision/src/gaze.ts",
+        "airi/packages/stage-ui/src/stores/stage-identity.ts",
+        "airi/packages/stage-ui/src/stores/local-vision.ts",
+        "airi/packages/stage-ui/src/stores/stage-identity.browser.test.ts",
+        "airi/services/local-vision/identity.py",
+        "airi/services/local-vision/recognition.py",
+        "airi/services/local-vision/model.py",
+        "airi/services/local-vision/adaptation.py",
+        "airi/docs/ai/reports/2026-10-28-face-stability.md"
+      ],
+      "status": "current",
+      "changed": [],
+      "reviewedAt": "2026-10-28T16:16:02.141Z",
+      "task": "AIRI-045"
+    },
+    {
+      "id": "session-message-person-archive",
+      "path": "wiki/memory/sessions/2026-10-28-message-person-archive.md",
+      "title": "人脸登录解耦与逐消息人物归档",
+      "summary": "AIRI-045：稳定舞台会话、匿名UUID先归档、确认姓名后更新标签、混合会话按人清除。",
+      "tags": [
+        "人脸",
+        "登录",
+        "归档",
+        "名字",
+        "标签",
+        "UUID",
+        "AIRI-045"
+      ],
+      "sources": [
+        "airi/packages/stage-ui/src/stores/stage-identity.ts",
+        "airi/packages/stage-ui/src/stores/local-vision.ts",
+        "airi/packages/core-agent/src/runtime/chat-orchestrator-runtime.ts",
+        "airi/packages/stage-ui/src/stores/chat/session-store.ts",
+        "airi/packages/stage-ui/src/stores/modules/realtime-voice.ts",
+        "airi/packages/stage-ui/src/services/chat-archive.ts",
+        "airi/packages/stage-ui/src/stores/participant-archive.browser.test.ts",
+        "airi/services/local-vision/social.py",
+        "airi/services/local-vision/service.py",
+        "airi/docs/ai/reports/2026-10-28-message-person-archive.md"
+      ],
+      "status": "current",
+      "changed": [],
+      "reviewedAt": "2026-10-29T06:31:30.776Z",
+      "task": "AIRI-046"
+    },
+    {
+      "id": "session-stage-history-reading",
+      "path": "wiki/memory/sessions/2026-10-29-stage-history-reading.md",
+      "title": "主舞台漏记录与字号气泡调节",
+      "summary": "AIRI-046：按话轮关联转写、临时字幕投影、字号气泡本地偏好与回到最新消息。",
+      "tags": [
+        "漏记录",
+        "字幕",
+        "字号",
+        "气泡",
+        "ID",
+        "最新消息",
+        "AIRI-046"
+      ],
+      "sources": [
+        "airi/packages/realtime-voice/src/doubao.ts",
+        "airi/packages/realtime-voice/src/gateway.test.ts",
+        "airi/packages/stage-ui/src/stores/modules/realtime-voice.ts",
+        "airi/packages/stage-ui/src/stores/chat/session-store.ts",
+        "airi/packages/stage-ui/src/stores/settings/chat-reading.ts",
+        "airi/packages/stage-ui/src/components/scenarios/chat/components/reading-controls.vue",
+        "airi/packages/stage-ui/src/components/scenarios/chat/components/history.vue",
+        "airi/packages/stage-ui/src/components/scenarios/chat/composables/use-chat-history-scroll.ts",
+        "scripts/test-airi-delivery.ps1",
+        "airi/docs/ai/reports/2026-10-29-stage-history-reading.md"
+      ],
+      "status": "current",
+      "changed": [],
+      "reviewedAt": "2026-10-31T09:49:45.271Z",
+      "task": "AIRI-047"
+    },
+    {
+      "id": "session-stage-tail-follow",
+      "path": "wiki/memory/sessions/2026-10-31-stage-tail-follow.md",
+      "title": "主舞台默认贴底与手动翻阅",
+      "summary": "AIRI-047：默认锁定最新消息，手动上翻释放，返回后持续跟随，并取消排队定位。",
+      "tags": [
+        "自动滚动",
+        "贴底",
+        "最新消息",
+        "手动上翻",
+        "滚动条",
+        "触摸",
+        "AIRI-047"
+      ],
+      "sources": [
+        "airi/apps/stage-tamagotchi/vitest.config.ts",
+        "airi/apps/stage-tamagotchi/src/renderer/components/chat-viewport-layout.browser.test.ts",
+        "airi/packages/stage-ui/src/components/scenarios/chat/composables/use-chat-history-scroll.ts",
+        "airi/packages/stage-ui/src/components/scenarios/chat/composables/use-chat-history-scroll.browser.test.ts",
+        "airi/packages/stage-ui/src/components/scenarios/chat/composables/use-virtualizer-scroll.ts",
+        "airi/packages/stage-ui/src/components/scenarios/chat/components/history.vue",
+        "airi/packages/stage-ui/src/components/scenarios/chat/components/history.browser.test.ts",
+        "airi/docs/ai/reports/2026-10-31-stage-tail-follow.md"
+      ],
+      "status": "current",
+      "changed": [],
+      "reviewedAt": "2026-10-31T09:53:32.213Z",
+      "task": "AIRI-047"
     }
   ],
   "errors": []

@@ -70,6 +70,12 @@ export interface ContextMessage extends ContextUpdate<Record<string, unknown>, u
 }
 
 export type ChatHistoryItem = (ChatMessage | ErrorMessage) & {
+  /** Local archive ownership captured for this turn. It never selects a login or a stage session. */
+  archive?: {
+    personId: string | null
+    displayName: string
+    characterName: string
+  }
   /** Transient visual evidence produced this response. Exclude it from future prompts and cloud sync. */
   localVisionDerived?: true
   context?: ContextMessage
@@ -106,4 +112,4 @@ export type ChatStreamEvent
     | { type: 'assistant-end', message: string, sessionId: string, context: ChatStreamEventContext }
     | { type: 'assistant-message', message: ChatAssistantMessage, sessionId: string, messageText: string, context: ChatStreamEventContext }
 
-export type StreamingAssistantMessage = ChatAssistantMessage & { context?: ContextMessage } & { createdAt?: number, id?: string }
+export type StreamingAssistantMessage = ChatAssistantMessage & { context?: ContextMessage } & { createdAt?: number, id?: string, archive?: ChatHistoryItem['archive'] }

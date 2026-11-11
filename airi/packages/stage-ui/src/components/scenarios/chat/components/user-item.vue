@@ -17,12 +17,14 @@ const props = withDefaults(defineProps<{
   label: string
   replyTarget?: ChatHistoryReplyPayload
   canReply?: boolean
+  canDelete?: boolean
   scrollContainer?: HTMLElement | null
   variant?: 'desktop' | 'mobile'
   /** How the bubble paints its background; see `ChatHistory`'s `surface`. */
   surface?: 'translucent' | 'opaque'
 }>(), {
   canReply: false,
+  canDelete: true,
   scrollContainer: null,
   variant: 'desktop',
   surface: 'translucent',
@@ -73,9 +75,10 @@ const copyText = computed(() => getChatHistoryItemCopyText(props.message as Chat
 </script>
 
 <template>
-  <div v-if="message.role === 'user'" :class="['font-cute', containerClasses]" class="ph-no-capture">
+  <div v-if="message.role === 'user'" :class="['font-cute ph-no-capture', containerClasses]">
     <ChatActionMenu
       :can-reply="canReply"
+      :can-delete="canDelete"
       :copy-text="copyText"
       placement="left"
       :press-feedback-enabled="variant === 'mobile'"
@@ -87,24 +90,23 @@ const copyText = computed(() => getChatHistoryItemCopyText(props.message as Chat
       <template #default="{ setMeasuredElement }">
         <div
           :ref="setMeasuredElement"
-          flex="~ col" shadow="sm neutral-200/50 dark:none"
-          min-w-20 rounded-xl h="unset <sm:fit"
           :class="[
-            'chat-message-item-container',
+            'chat-message-item-container min-w-20 flex flex-col rounded-xl h-unset <sm:h-fit',
+            'shadow-sm shadow-neutral-200/50 dark:shadow-none',
             boxClasses,
             (isStageWeb() || isStageCapacitor()) && props.variant === 'mobile' ? 'select-none sm:select-auto' : '',
           ]"
         >
           <ChatReplyQuote v-if="replyTarget" :target="replyTarget" />
           <div>
-            <span text-sm text="black/60 dark:white/65" font-normal class="inline <sm:hidden">{{ label }}</span>
+            <span :class="['inline text-sm text-black/60 font-normal <sm:hidden dark:text-white/65']">{{ label }}</span>
           </div>
           <div v-if="images.length" :class="['flex flex-wrap gap-2 py-2']">
             <img v-for="(image, index) in images" :key="index" :src="image" :alt="t('stage.chat.images.description')" :class="['max-h-64 max-w-full rounded-xl object-contain']">
           </div>
           <MarkdownRenderer
-            :content="content as string"
-            class="break-words"
+            :content="content"
+            :class="['break-words']"
           />
         </div>
       </template>

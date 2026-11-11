@@ -9,6 +9,7 @@ import { useChatStore } from './chat'
 import { useChatSessionStore } from './chat/session-store'
 import { useLocalVisionStore } from './local-vision'
 import { useAiriCardStore } from './modules/airi-card'
+import { useBrainPromptsStore } from './modules/brain-prompts'
 import { useConsciousnessStore } from './modules/consciousness'
 import { useRealtimeVoiceStore } from './modules/realtime-voice'
 import { useSpeechOutputControlStore } from './speech-output-control'
@@ -23,6 +24,7 @@ export const useCompanionStore = defineStore('companion', () => {
   const chat = useChatStore()
   const sessions = useChatSessionStore()
   const cards = useAiriCardStore()
+  const prompts = useBrainPromptsStore()
   const consciousness = useConsciousnessStore()
   const realtime = useRealtimeVoiceStore()
   const speech = useSpeechRuntimeStore()
@@ -45,13 +47,18 @@ export const useCompanionStore = defineStore('companion', () => {
   let autoCallTrack = ''
   let autoCallOwned = false
   let personSeenAt = 0
+  let promptedName = ''
 
   async function maintainVoice() {
     const now = performance.now()
     const actors = local.isFresh() ? local.result?.snapshot.payload.actors : undefined
     const actor = actors?.length === 1 && actors[0].primary ? actors[0] : undefined
-    if (local.mode !== 'active' || !local.owner || !local.permissions.greetings || document.hidden || !actor || ['unavailable', 'ambiguous'].includes(actor.identity_status)) {
-      if (autoCallOwned && (local.mode !== 'active' || !local.owner || !local.permissions.greetings || document.hidden || now - personSeenAt > 30000)) {
+    const allowed = local.mode === 'active' && local.owner && local.permissions.greetings && !document.hidden
+    // Presence keeps an existing call alive. Account selection and automatic entry still require one eligible visitor.
+    if (allowed && actors?.length)
+      personSeenAt = now
+    if (!allowed || !actor || ['unavailable', 'ambiguous'].includes(actor.identity_status)) {
+      if (autoCallOwned && (!allowed || now - personSeenAt > 30000)) {
         realtime.stop()
         autoCallOwned = false
       }
@@ -97,6 +104,7 @@ export const useCompanionStore = defineStore('companion', () => {
           content: [{ type: 'text', text: [
             cards.systemPrompt.slice(0, 8000),
             'A local companion event invites you to start a brief, natural conversation. Nobody has sent a new user message. Ask one considerate question in the interface language. Use only actual quoted memories. Do not invent shared experiences or infer feelings from facial cues. Return spoken text only, at most two sentences. Do not execute tools.',
+            prompts.config.speech,
             local.project(sessions.activeSessionId),
             `Suggested opening: ${JSON.stringify(fallback)}`,
           ].join('\n\n') }],
@@ -134,7 +142,18 @@ export const useCompanionStore = defineStore('companion', () => {
           modelError.value = true
         })
       }
-      const event = local.candidate(busy.value || thinking.value || document.hidden)
+      const actor = local.result?.snapshot.payload.actors.find(actor => actor.primary)
+      const learning = local.learning
+      const confirmation = local.permissions.face && local.permissions.names && local.permissions.observations
+        && learning?.name && (learning.name_state === 'confirming' || learning.name_state === 'correcting')
+      const nameKey = confirmation && actor ? JSON.stringify([local.source, actor.track_id, learning.name, learning.name_state]) : ''
+      // A final ASR turn can reach the registry after the provider has already answered.
+      // Give its pending spelling check one independent speech opportunity, without a fabricated user turn.
+      const introduction = nameKey && nameKey !== promptedName && local.isFresh() && local.mode === 'active'
+        && local.permissions.greetings && !busy.value && !thinking.value && !document.hidden
+      const event = introduction
+        ? { eventId: crypto.randomUUID(), key: actor!.person_id ?? 'anonymous', name: null, kind: 'introduction' as const }
+        : local.candidate(busy.value || thinking.value || document.hidden)
       if (!event || !local.owner)
         return
       // Camera greetings share the call's speech owner. Only periodic camera small talk yields to chatty continuation.
@@ -142,7 +161,6 @@ export const useCompanionStore = defineStore('companion', () => {
         return
       const current = generation
       const sessionId = sessions.activeSessionId
-      const actor = local.result?.snapshot.payload.actors.find(actor => actor.primary)
       if (!actor)
         return
       await local.readSocial(event.kind === 'greeting' && !event.name)
@@ -150,12 +168,22 @@ export const useCompanionStore = defineStore('companion', () => {
         return
       if (realtime.active && realtime.conversationStyle === 'chatty' && realtime.slowBrainConfigured) {
         const text = await realtime.greet()
-        if (text && generation === current && local.isFresh() && local.owner)
-          local.showGreeting(event, text)
-        return
+        if (text) {
+          if (generation === current && local.isFresh() && local.owner)
+            local.showGreeting(event, text)
+          if (introduction && generation === current)
+            promptedName = nameKey
+          return
+        }
+        // A failed optional draft must not erase the encounter. The existing local welcome stays available.
+        if (generation !== current || busy.value || !local.isFresh() || !local.owner)
+          return
       }
       const allowedName = local.permissions.names ? event.name : null
-      let text = allowedName ? t('settings.local-vision.hello-name', { name: allowedName }) : t('settings.local-vision.hello')
+      const welcome = local.permissions.face && local.permissions.names && local.learning?.awaiting_name ? 'hello' : 'hello-visitor'
+      let text = allowedName ? t('settings.local-vision.hello-name', { name: allowedName }) : t(`settings.local-vision.${welcome}`)
+      if (introduction)
+        text = t('settings.local-vision.confirm-name', { name: learning!.name })
       if (event.kind === 'greeting' && allowedName && local.profile?.memories.length)
         text = `${text} ${t('settings.local-vision.memory-chat', { name: allowedName, memory: local.profile.memories[0].text.slice(0, 100) })}`
       if (event.kind === 'chat') {
@@ -167,10 +195,19 @@ export const useCompanionStore = defineStore('companion', () => {
         text = await compose(text, event.eventId)
         thinking.value = false
       }
+      else if (realtime.conversationStyle !== 'chatty') {
+        thinking.value = true
+        text = await compose(text, event.eventId)
+        thinking.value = false
+      }
       const visible = local.isFresh() && local.result?.snapshot.payload.actors.find(item => item.primary)?.track_id === actor.track_id
       if (generation !== current || !visible || busy.value || !local.active || local.mode !== 'active' || sessionId !== sessions.activeSessionId)
         return
+      if (realtime.active && !control.speechMuted && !await realtime.speak(text))
+        return
       local.showGreeting(event, text)
+      if (introduction)
+        promptedName = nameKey
       if (!realtime.active) {
         sessions.appendSessionMessage(sessionId, {
           id: event.eventId,
@@ -184,10 +221,7 @@ export const useCompanionStore = defineStore('companion', () => {
       }
       if (control.speechMuted || (!realtime.active && !speech.isHost()))
         return
-      if (realtime.active) {
-        await realtime.speak(text)
-      }
-      else {
+      if (!realtime.active) {
         intent = speech.openIntent({ ownerId: 'local-vision', intentId: event.eventId, behavior: 'queue', priority: -10 })
         intent.writeLiteral(text)
         intent.end()
@@ -212,6 +246,7 @@ export const useCompanionStore = defineStore('companion', () => {
   ], cancel, { flush: 'sync' })
   watch(() => local.mode, (mode) => {
     autoCallTrack = ''
+    promptedName = ''
     if (mode === 'passive' && autoCallOwned) {
       realtime.stop()
       autoCallOwned = false
@@ -223,6 +258,7 @@ export const useCompanionStore = defineStore('companion', () => {
       autoCallTrack = ''
       autoCallOwned = false
       contextAt = 0
+      promptedName = ''
     }
   }, { flush: 'sync' })
   watch([

@@ -48,6 +48,21 @@ mobile-tools:
   close-view: 保存并关闭视图调节
   hearing: 听觉
 chat:
+  reading:
+    latest: 回到最新消息
+    title: 文字与气泡大小
+    font: 字号
+    font-decrease: 减小字号
+    font-increase: 增大字号
+    bubble: 气泡
+    bubble-decrease: 缩小气泡
+    bubble-increase: 放大气泡
+    bubble-0: 最小
+    bubble-1: 紧凑
+    bubble-2: 标准
+    bubble-3: 宽松
+    bubble-4: 最大
+    reset: 恢复默认
   voice-input: 语音输入
   error-details:
     show: 查看详情

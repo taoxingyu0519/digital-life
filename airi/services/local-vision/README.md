@@ -55,8 +55,9 @@ Memories are scoped to the visible person and active character. They are not ver
 
 ## Constraints
 
-Introductions in real conversation start automatic learning with one fresh, quality-checked face.
-The person must confirm the written name before ten consistent samples create a profile.
+With enrollment consent, one fresh, quality-checked face can reserve an anonymous profile and permanent random ID before a name is known.
+The person must confirm the written name before it replaces the blank display name. Early memories keep the same ID.
+The existing named and manual enrollment paths still collect ten consistent samples.
 Other angles accumulate during later conversations.
 Conservative social matching works without manual calibration. Independent quality evaluation remains open.
 The current machine uses EdgeFace S through the existing ONNX Runtime. SFace remains the enrollment encoder.
@@ -92,6 +93,7 @@ The private `recognition.json` selects `sface`, `edgeface-xs`, or `edgeface-s`. 
 
 姓名确认习惯保存在 SQLite 行为规则，候选状态与写库保护由 SocialLearning 执行。
 明确确认后修改原人物 ID，保留照片和角色交流记忆。完整操作、验证与未建设能力见工作区中文报告。
+此处“修改原人物”指更新原 ID 对应的显示名，UUID 本身不变。`social.recipient` 与可读记忆 `profile` 分离，核对姓名不丢失归档对象。拒绝记忆撤销匿名档案及当前浏览器对应原文，并转为被动模式，避免立即重新采集。
 管理 API 要求本机开发者会话，密码只存加盐摘要。`developer.py --username <用户名>` 用隐藏输入配置账号。
 轮换后重启服务撤销旧会话。不要把密码、摘要、Cookie、真人姓名或照片写入报告和 Git。
 

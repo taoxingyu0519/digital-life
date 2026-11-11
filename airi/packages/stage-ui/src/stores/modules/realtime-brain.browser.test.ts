@@ -16,7 +16,7 @@ import Settings from '../../../../stage-pages/src/pages/settings/modules/realtim
 import Controls from '../../components/scenarios/realtime-voice-controls.vue'
 
 import { useChatInput } from '../../composables/use-chat-input'
-import { chatSessionsRepo } from '../../database/repos/chat-sessions.repo'
+import { storage } from '../../database/storage'
 import { setupSynced } from '../../libs/pinia'
 import { registerLocalVisionContext } from '../../services/local-vision-context'
 import { useAudioContext } from '../audio'
@@ -44,6 +44,8 @@ const boundary = vi.hoisted(() => ({
   playback: [] as Array<{ end: () => void }>,
   configured: true,
   configError: '',
+  sendBarrier: undefined as ((command: VoiceCommand) => Promise<void>) | undefined,
+  input: [] as Array<(frame: string) => void>,
 }))
 
 vi.mock('@proj-airi/realtime-voice/client', () => ({
@@ -64,6 +66,7 @@ vi.mock('@proj-airi/realtime-voice/client', () => ({
       this.connection.commands.push(command)
       if (command.type === 'start')
         this.connection.event({ type: 'ready' })
+      await boundary.sendBarrier?.(command)
     }
 
     close() {}
@@ -78,7 +81,7 @@ vi.mock('@proj-airi/realtime-voice/audio', () => ({
       boundary.playback.push({ end: () => onSpeaking(false) })
     }
 
-    async start() {}
+    async start(onFrame: (frame: string) => void) { boundary.input.push(onFrame) }
     play() { this.onSpeaking(true) }
     interrupt() { this.onSpeaking(false) }
     setMuted() {}
@@ -93,6 +96,8 @@ afterEach(() => {
   boundary.playback = []
   boundary.configured = true
   boundary.configError = ''
+  boundary.sendBarrier = undefined
+  boundary.input = []
   vi.useRealTimers()
   vi.restoreAllMocks()
   localStorage.clear()
@@ -157,6 +162,169 @@ function completeSpeech(client: ReturnType<typeof connection>, narration: Extrac
 }
 
 describe('realtime brain browser integration', () => {
+  // http://127.0.0.1:5174 — AIRI-046: live spoken captions never reached the stage history until playback drained.
+  // ROOT CAUSE: history consumed only committed records. Local captions now feed the same history without confirming playback.
+  it('aIRI-046 exposes live captions and replaces them with one confirmed history record', async () => {
+    const { voice, sessions } = await fixture()
+    expect(await voice.start()).toBe(true)
+    const client = connection()
+    client.event({ type: 'transcript', id: 'generated-live-user', role: 'user', text: 'Generated user draft', final: false })
+    expect(voice.previewMessages).toEqual(expect.arrayContaining([expect.objectContaining({ role: 'user', content: 'Generated user draft' })]))
+    client.event({ type: 'transcript', id: 'generated-live-user', role: 'user', text: 'Generated user final', final: true })
+    client.event({ type: 'transcript', id: 'generated-live-answer', role: 'assistant', text: 'Generated live answer', final: false })
+    expect(voice.previewMessages).toEqual(expect.arrayContaining([expect.objectContaining({ role: 'assistant', content: 'Generated live answer' })]))
+    client.event({ type: 'transcript', id: 'generated-live-answer', role: 'assistant', text: 'Generated final answer', final: true })
+    expect(sessions.messages.some(message => message.content === 'Generated final answer')).toBe(false)
+    expect(voice.previewMessages).toEqual(expect.arrayContaining([expect.objectContaining({ content: 'Generated final answer' })]))
+    client.event({ type: 'audio-done' })
+    await vi.waitFor(() => expect(sessions.messages.filter(message => message.content === 'Generated final answer')).toHaveLength(1))
+    await vi.waitFor(() => expect(voice.previewMessages).toHaveLength(0))
+    voice.stop()
+    expect(voice.previewMessages).toHaveLength(0)
+  })
+
+  it('aIRI-045 keeps one live voice connection and freezes each transcript recipient while faces change', async () => {
+    const { voice, sessions } = await fixture()
+    const identity = useStageIdentityStore()
+    await identity.setCameraIdentity({ person_id: 'generated-voice-a', display_name: '' }, Date.now() + 10000)
+    expect(await voice.start()).toBe(true)
+    const client = connection()
+    const session = sessions.activeSessionId
+    client.event({ type: 'transcript', id: 'generated-a-turn', role: 'user', text: 'Generated A partial', final: false })
+    await identity.setCameraIdentity({ person_id: 'generated-voice-b', display_name: 'Generated B' }, Date.now() + 10000)
+    client.event({ type: 'transcript', id: 'generated-a-turn', role: 'user', text: 'Generated A final', final: true })
+    client.event({ type: 'transcript', id: 'generated-a-answer', role: 'assistant', text: 'Generated answer to A', final: true })
+    client.event({ type: 'audio-done' })
+    await vi.waitFor(() => expect(sessions.messages.some(message => message.content === 'Generated answer to A')).toBe(true))
+    expect(sessions.messages.find(message => message.content === 'Generated A final')?.archive?.personId).toBe('generated-voice-a')
+    expect(sessions.messages.find(message => message.content === 'Generated answer to A')?.archive?.personId).toBe('generated-voice-a')
+    client.event({ type: 'activity', speaking: false, responding: false })
+    expect(await voice.speak('Generated welcome for B')).toBe(true)
+    const welcome = client.commands.findLast((command): command is Extract<VoiceCommand, { type: 'speak' }> => command.type === 'speak')!
+    completeSpeech(client, welcome)
+    await vi.waitFor(() => expect(sessions.messages.some(message => message.content === welcome.text)).toBe(true))
+    expect(sessions.messages.find(message => message.content === welcome.text)?.archive?.personId).toBe('generated-voice-b')
+    client.event({ type: 'transcript', id: 'generated-b-turn', role: 'user', text: 'Generated B final', final: true })
+    await vi.waitFor(() => expect(sessions.messages.some(message => message.content === 'Generated B final')).toBe(true))
+    expect(sessions.messages.find(message => message.content === 'Generated B final')?.archive?.personId).toBe('generated-voice-b')
+    await identity.setCameraIdentity(null)
+    expect(sessions.activeSessionId).toBe(session)
+    expect(identity.userId).toBe('local')
+    expect(voice.status).toBe('listening')
+    expect(boundary.clients.filter(client => client.commands.some(command => command.type === 'start'))).toHaveLength(1)
+  })
+
+  // http://127.0.0.1:5174 — AIRI-041: a failed optional draft left the first visitor completely ungreeted.
+  it('aIRI-041 welcomes an unknown visitor even when optional greeting preparation fails', async () => {
+    const canvas = document.createElement('canvas')
+    canvas.width = 320
+    canvas.height = 240
+    const painting = setInterval(() => canvas.getContext('2d')!.fillRect(0, 0, 320, 240), 50)
+    const stream = canvas.captureStream(15)
+    vi.spyOn(navigator.mediaDevices, 'getUserMedia').mockResolvedValue(stream)
+    cleanups.push(() => {
+      clearInterval(painting)
+      stream.getTracks().forEach(track => track.stop())
+    })
+    const { voice, consciousness } = await fixture(false, true)
+    const modelFetch = vi.fn<typeof fetch>().mockImplementation(async () => reply('{"not":"spoken text"}'))
+    const provider: GenerationProvider = { generation: model => ({ protocol: 'chat-completions', config: { model, baseURL: 'https://model.test/', fetch: modelFetch } }) }
+    consciousness.activeProvider = 'test-service'
+    consciousness.activeModel = 'slow-test'
+    vi.spyOn(consciousness, 'getChatProviderInstance').mockResolvedValue(provider)
+    voice.conversationStyle = 'chatty'
+    voice.continuationDelaySeconds = 60
+    await voice.start()
+    const client = connection()
+    await vi.waitFor(() => expect(client.commands.some(command => command.type === 'speak')).toBe(true), { timeout: 6500 })
+    const speech = client.commands.find((command): command is Extract<VoiceCommand, { type: 'speak' }> => command.type === 'speak')!
+    expect(speech.text).toContain('What is your name?')
+    expect(modelFetch).toHaveBeenCalledTimes(1)
+    const request = JSON.parse(String(modelFetch.mock.calls[0][1]?.body))
+    expect(request.messages.at(-1).content).toContain('awaiting_name')
+    completeSpeech(client, speech)
+    await useCompanionStore().tick()
+    expect(client.commands.filter(command => command.type === 'speak')).toHaveLength(1)
+  }, 12000)
+
+  it('aIRI-041 routes final spoken introductions and confirmation to the visible face without premature registration', async () => {
+    const canvas = document.createElement('canvas')
+    canvas.width = 320
+    canvas.height = 240
+    const painting = setInterval(() => canvas.getContext('2d')!.fillRect(0, 0, 320, 240), 50)
+    const stream = canvas.captureStream(15)
+    vi.spyOn(navigator.mediaDevices, 'getUserMedia').mockResolvedValue(stream)
+    cleanups.push(() => {
+      clearInterval(painting)
+      stream.getTracks().forEach(track => track.stop())
+    })
+    const { voice, sessions } = await fixture(false, true)
+    const local = useLocalVisionStore()
+    await vi.waitFor(() => expect(local.source).toBeDefined(), { timeout: 5000 })
+    const learning = { name: '小明', person_id: null, samples: 0, poses: [], learning: true, awaiting_name: false, name_state: 'confirming' }
+    await fetch(`/api/local-vision/bindings/${local.source!.session_binding_id}/test-scene`, {
+      method: 'POST',
+      body: JSON.stringify({ actors: [{ track_id: 'visitor', bbox: [0.1, 0.1, 0.9, 0.9], face_bbox: [0.3, 0.1, 0.5, 0.3], primary: true, identity_status: 'unknown', person_id: null, display_name: null, visible_cues: [] }], turns: [learning, { ...learning, name_state: 'confirmed' }] }),
+    })
+    await vi.waitFor(() => {
+      expect(local.isFresh()).toBe(true)
+      expect(local.result?.snapshot.payload.actors[0]?.track_id).toBe('visitor')
+    }, { timeout: 5000 })
+    expect(await voice.start()).toBe(true)
+    const client = connection()
+    client.event({ type: 'transcript', id: 'intro', role: 'user', text: '我叫小明', final: true })
+    await vi.waitFor(() => expect(local.learning?.name_state).toBe('confirming'))
+    expect(local.profile).toBeNull()
+    expect(useStageIdentityStore().lease).toBeNull()
+    expect(local.project(sessions.activeSessionId)).toContain('Candidate spelling: "小明"')
+    await vi.waitFor(() => expect(client.commands.some(command => command.type === 'context' && command.instructions.includes('"name_state":"confirming"'))).toBe(true))
+    await vi.waitFor(() => expect(client.commands.some(command => command.type === 'speak' && command.text.includes('Did I write your name correctly'))).toBe(true), { timeout: 3000 })
+    const confirmation = client.commands.find((command): command is Extract<VoiceCommand, { type: 'speak' }> => command.type === 'speak' && command.text.includes('Did I write your name correctly'))!
+    completeSpeech(client, confirmation)
+    client.event({ type: 'transcript', id: 'confirm', role: 'user', text: '名字正确', final: true })
+    await vi.waitFor(() => expect(local.learning?.name_state).toBe('confirmed'))
+    expect(local.learning?.person_id).toBeNull()
+    expect(local.project(sessions.activeSessionId)).toContain('Wait for quality-checked face samples')
+    expect(local.project(sessions.activeSessionId)).not.toContain('First confirm the written name.')
+    expect(voice.active).toBe(true)
+  })
+
+  it('aIRI-041 includes the short speech preference in fast, worker and optional speech requests without constraining pure text', async () => {
+    const { voice, consciousness, sessions, container } = await fixture(true)
+    const speechField = Array.from(container.querySelectorAll('label')).find(label => label.textContent?.includes('Spoken reply rules'))!.querySelector('textarea')!
+    expect(speechField.value).toContain('同时不超过3句话、30个字')
+    await userEvent.fill(speechField, 'PUBLIC_SPEECH_RULE：默认同时不超过3句话、30个字，用户要求详细时例外。')
+    await userEvent.click(Array.from(container.querySelectorAll('button')).find(button => button.textContent?.includes('Save prompts'))!)
+    expect(useBrainPromptsStore().config.speech).toContain('PUBLIC_SPEECH_RULE')
+    const modelFetch = vi.fn<typeof fetch>().mockImplementation(async (_input, options) => {
+      const request = JSON.parse(String(options?.body))
+      return reply(request.messages.at(-1).role === 'system' ? '你好呀，怎么称呼你？' : JSON.stringify({ status: 'completed', result_summary: '已核对，当前记录有效。', suggested_utterance: '已核对。', delivery_policy: 'when_idle' }))
+    })
+    const provider: GenerationProvider = { generation: model => ({ protocol: 'chat-completions', config: { model, baseURL: 'https://model.test/', fetch: modelFetch } }) }
+    consciousness.activeProvider = 'test-service'
+    consciousness.activeModel = 'slow-test'
+    vi.spyOn(consciousness, 'getChatProviderInstance').mockResolvedValue(provider)
+    expect(await voice.start()).toBe(true)
+    const start = connection().commands.find(command => command.type === 'start')!
+    expect(start.start.instructions).toContain('同时不超过3句话、30个字')
+    expect(start.start.instructions).toContain('PUBLIC_SPEECH_RULE')
+    await voice.sendText('核对当前记录', sessions.activeSessionId)
+    await vi.waitFor(() => expect(modelFetch).toHaveBeenCalledTimes(1))
+    await vi.waitFor(() => expect(voice.tasks[0]?.status).toBe('completed'))
+    expect(JSON.parse(String(modelFetch.mock.calls[0][1]?.body)).messages[0].content).toContain('同时不超过3句话、30个字')
+    expect(JSON.parse(String(modelFetch.mock.calls[0][1]?.body)).messages[0].content).toContain('PUBLIC_SPEECH_RULE')
+    voice.stop()
+    await voice.sendText('文字核对当前记录', sessions.activeSessionId)
+    await vi.waitFor(() => expect(modelFetch).toHaveBeenCalledTimes(2))
+    await vi.waitFor(() => expect(voice.tasks[0]?.status).toBe('completed'))
+    expect(JSON.parse(String(modelFetch.mock.calls[1][1]?.body)).messages[0].content).not.toContain('同时不超过3句话、30个字')
+    expect(JSON.parse(String(modelFetch.mock.calls[1][1]?.body)).messages[0].content).not.toContain('PUBLIC_SPEECH_RULE')
+    voice.stop()
+    await useSlowBrainStore().composeContinuation(sessions.activeSessionId, [], new AbortController().signal, { phase: 'greeting', unanswered_segments: 0, remaining_probe_opportunities: 2 })
+    expect(JSON.parse(String(modelFetch.mock.calls[2][1]?.body)).messages[0].content).toContain('同时不超过3句话、30个字')
+    expect(JSON.parse(String(modelFetch.mock.calls[2][1]?.body)).messages[0].content).toContain('PUBLIC_SPEECH_RULE')
+  })
+
   it('aIRI-037 sleep closes a live call and rejects late provider audio and manual reconnects', async () => {
     const originalFetch = window.fetch.bind(window)
     vi.spyOn(window, 'fetch').mockImplementation((input, options) => String(input).startsWith('/api/stage-runtime/')
@@ -191,7 +359,7 @@ describe('realtime brain browser integration', () => {
   // ROOT CAUSE: startup awaited all archive IO. Bound that wait and keep read failures separate from audio.
   it('aIRI-036 keeps voice available when optional archive storage fails', async () => {
     const { voice } = await fixture()
-    const read = vi.spyOn(chatSessionsRepo, 'getIndex').mockRejectedValueOnce(new Error('public-storage-failure'))
+    const read = vi.spyOn(storage, 'getKeys').mockRejectedValueOnce(new Error('public-storage-failure'))
     expect(await voice.start()).toBe(true)
     expect(voice.status).toBe('listening')
     expect(read).toHaveBeenCalled()
@@ -201,9 +369,9 @@ describe('realtime brain browser integration', () => {
     const { voice, sessions } = await fixture()
     const previous = await sessions.createSession('default', { setActive: false, messages: [{ id: 'public-delayed', role: 'user', content: 'PUBLIC_DELAYED_ARCHIVE', createdAt: Date.now() - 86400000 }] })
     await useChatArchiveStore().annotate('local', 'default', previous, 'public-delayed', { starred: true, tags: [], note: '', summary: '' })
-    const original = chatSessionsRepo.getIndex.bind(chatSessionsRepo)
+    const original = storage.getKeys.bind(storage)
     let finish!: () => void
-    const read = vi.spyOn(chatSessionsRepo, 'getIndex').mockImplementationOnce(async (id) => {
+    const read = vi.spyOn(storage, 'getKeys').mockImplementationOnce(async (id) => {
       await new Promise<void>((resolve) => {
         finish = resolve
       })
@@ -234,7 +402,7 @@ describe('realtime brain browser integration', () => {
     sessions.applyRemoteSnapshot({ activeSessionId: sessions.activeSessionId, sessionMessages: sessions.sessionMessages, sessionMetas: sessions.sessionMetas })
     expect(voice.status).toBe('listening')
     await identity.setCameraIdentity(null)
-    expect(voice.status).toBe('idle')
+    expect(voice.status).toBe('listening')
     await sessions.activateCurrentUser()
   })
 
@@ -362,7 +530,7 @@ describe('realtime brain browser integration', () => {
   // http://127.0.0.1:5174 — AIRI-032: active mode leaves the configured realtime call idle with ordinary input enabled.
   // ROOT CAUSE: maintainVoice rejected enabled ordinary input, although the page already pauses its ASR consumer during realtime calls.
   // Remove that gate. Keep one call per encounter, explicit mode restart, and passive-mode cleanup.
-  it.each([false, true])('aIRI-032 starts one encounter call with ordinary microphone enabled=%s', async (inputEnabled) => {
+  it.each([false, true])('aIRI-032 / AIRI-043 starts one encounter call with ordinary microphone enabled=%s and keeps group presence', async (inputEnabled) => {
     const canvas = document.createElement('canvas')
     canvas.width = 320
     canvas.height = 240
@@ -405,6 +573,37 @@ describe('realtime brain browser integration', () => {
     expect(devices.enabled).toBe(inputEnabled)
     expect(connection().commands.filter(command => command.type === 'start')).toHaveLength(1)
 
+    // AIRI-043: presence remains valid when a second stranger joins and the primary track changes.
+    const identityBeforeGroup = useStageIdentityStore().userId
+    const sessionBeforeGroup = useChatSessionStore().activeSessionId
+    const originalNow = performance.now.bind(performance)
+    let clockOffset = 0
+    vi.spyOn(performance, 'now').mockImplementation(() => originalNow() + clockOffset)
+    const sourceBeforeGroup = local.source!.session_binding_id
+    const firstActor = local.result!.snapshot.payload.actors[0]
+    const secondActor = { ...firstActor, track_id: firstActor.track_id + 1, primary: true }
+    await fetch(`/api/local-vision/bindings/${sourceBeforeGroup}/test-scene`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ actors: [{ ...firstActor, primary: false }, secondActor] }),
+    })
+    await vi.waitFor(() => expect(local.result?.snapshot.payload.actors).toHaveLength(2), { timeout: 2500 })
+    for (let step = 0; step < 7; step++) {
+      const sequence = local.result!.snapshot.payload.frame_seq
+      clockOffset += 5000
+      await vi.waitFor(() => expect(local.result!.snapshot.payload.frame_seq).toBeGreaterThan(sequence), { timeout: 2500 })
+      await companion.tick()
+    }
+    expect(voice.status).toBe('listening')
+    expect(useStageIdentityStore().userId).toBe(identityBeforeGroup)
+    expect(useChatSessionStore().activeSessionId).toBe(sessionBeforeGroup)
+    await fetch(`/api/local-vision/bindings/${sourceBeforeGroup}/test-scene`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ actors: [firstActor] }),
+    })
+    await vi.waitFor(() => expect(local.result?.snapshot.payload.actors).toHaveLength(1), { timeout: 2500 })
+
     voice.stop()
     await companion.tick()
     await companion.tick()
@@ -422,16 +621,16 @@ describe('realtime brain browser integration', () => {
       body: JSON.stringify({ actors: [{ ...local.result!.snapshot.payload.actors[0], identity_status: 'confirmed', person_id: 'generated-account', display_name: '测试账户' }] }),
     })
     const identity = useStageIdentityStore()
-    await vi.waitFor(() => expect(identity.userId).toBe('local-face:generated-account'))
-    await vi.waitFor(() => expect(boundary.clients.filter(client => client.commands.some(command => command.type === 'start'))).toHaveLength(3), { timeout: 5000 })
+    await vi.waitFor(() => expect(identity.archiveUserId).toBe('local-face:generated-account'), { timeout: 2500 })
+    expect(identity.userId).toBe('local')
+    expect(boundary.clients.filter(client => client.commands.some(command => command.type === 'start'))).toHaveLength(2)
     expect(voice.status).toBe('listening')
-    const start = connection().commands.find(command => command.type === 'start')!
-    expect(start.start.instructions).toContain('测试账户')
+    await vi.waitFor(() => expect(connection().commands.some(command => command.type === 'context' && command.instructions.includes('测试账户'))).toBe(true))
     expect(useChatSessionStore().sessionMetas[useChatSessionStore().activeSessionId]?.userId).toBe(identity.userId)
     expect(local.source!.session_binding_id).toBe(source)
     local.setMode('passive')
     expect(voice.active).toBe(false)
-  }, 15000)
+  }, 25000)
 
   // http://127.0.0.1:5174 — AIRI-028: visual identity refreshes restart the last seconds of the idle countdown.
   // ROOT CAUSE: a timer captures no private data. Only the draft and automatic speech require visual-scope invalidation.
@@ -1375,6 +1574,23 @@ describe('realtime brain browser integration', () => {
     await vi.waitFor(() => expect(client.commands.some(command => command.type === 'tool-results')).toBe(true))
     expect(voice.tasks[0].status).toBe('running')
     await vi.waitFor(() => expect(modelFetch).toHaveBeenCalledOnce())
+    // AIRI-043: background work leaves microphone input and native conversation available.
+    const frame = btoa('\0'.repeat(640))
+    boundary.input.at(-1)!(frame)
+    expect(client.commands).toContainEqual({ type: 'audio', audio: frame })
+    client.event({ type: 'activity', speaking: true, responding: false })
+    client.event({ type: 'transcript', id: 'next-user', role: 'user', text: '先聊聊你喜欢什么歌', final: true })
+    client.event({ type: 'activity', speaking: false, responding: true })
+    client.event({ type: 'audio', audio: btoa('\0\0') })
+    client.event({ type: 'transcript', id: 'next-answer', role: 'assistant', text: '我喜欢轻快的旋律。', final: true })
+    client.event({ type: 'audio-done' })
+    boundary.playback.at(-1)!.end()
+    client.event({ type: 'activity', speaking: false, responding: false })
+    await vi.waitFor(() => expect(sessions.messages.some(message => message.content === '我喜欢轻快的旋律。')).toBe(true))
+    expect(voice.tasks[0].status).toBe('running')
+    expect(voice.status).toBe('listening')
+    boundary.input.at(-1)!(frame)
+    expect(client.commands.filter(command => command.type === 'audio')).toHaveLength(2)
     client.event({ type: 'activity', speaking: true, responding: false })
     finish(reply(JSON.stringify({ status: 'completed', result_summary: 'The background result is ready.', suggested_utterance: '刚才的结果准备好了。', delivery_policy: 'when_idle' })))
     await vi.waitFor(() => expect(voice.tasks[0].status).toBe('completed'))
@@ -1390,6 +1606,35 @@ describe('realtime brain browser integration', () => {
     expect(voice.tasks).toHaveLength(0)
     client.event({ type: 'transcript', id: 'late', role: 'assistant', text: 'Late reply after closing', final: true })
     expect(sessions.messages.some(message => message.content === 'Late reply after closing')).toBe(false)
+  })
+
+  // http://127.0.0.1:5174 — AIRI-043: completing an old receipt discarded newer playback and response activity.
+  // ROOT CAUSE: post-send cleanup had no turn guard. Only the originating turn can release native playback.
+  it('aIRI-043 does not interrupt a newer reply when sending an old task receipt completes', async () => {
+    const { voice, consciousness } = await fixture()
+    const modelFetch = vi.fn<typeof fetch>(() => new Promise<Response>(() => {}))
+    const provider: GenerationProvider = { generation: model => ({ protocol: 'chat-completions', config: { model, baseURL: 'https://model.test/', fetch: modelFetch } }) }
+    consciousness.activeProvider = 'test-service'
+    consciousness.activeModel = 'slow-test'
+    vi.spyOn(consciousness, 'getChatProviderInstance').mockResolvedValue(provider)
+    let receiptSent!: () => void
+    boundary.sendBarrier = command => command.type === 'tool-results' ? new Promise(resolve => receiptSent = resolve) : Promise.resolve()
+    await voice.start()
+    const client = connection()
+    client.event({ type: 'transcript', id: 'old-user', role: 'user', text: '准备练唱方法', final: true })
+    client.event({ type: 'tools', calls: [{ call_id: 'old-work', name: 'spawn_thinking', arguments: '{"objective":"准备练唱方法"}' }] })
+    await vi.waitFor(() => expect(receiptSent).toBeTypeOf('function'))
+    client.event({ type: 'activity', speaking: true, responding: false })
+    client.event({ type: 'transcript', id: 'new-user', role: 'user', text: '先聊点别的', final: true })
+    client.event({ type: 'activity', speaking: false, responding: true })
+    client.event({ type: 'audio', audio: btoa('\0\0') })
+    receiptSent()
+    await vi.waitFor(() => expect(client.commands.some(command => command.type === 'context')).toBe(true))
+    // Allow the receipt continuation to finish. Native generation must retain its speech slot.
+    await new Promise(resolve => setTimeout(resolve, 30))
+    expect(voice.responding).toBe(true)
+    expect(voice.tasks[0].status).toBe('running')
+    expect(client.commands.filter(command => command.type === 'speak')).toHaveLength(0)
   })
 
   it('executes a conversation database query through the model tool round and retains actual evidence', async () => {

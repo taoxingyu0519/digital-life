@@ -48,6 +48,21 @@ mobile-tools:
   close-view: Save and close view controls
   hearing: Hearing
 chat:
+  reading:
+    latest: Back to latest
+    title: Text and bubble size
+    font: Text size
+    font-decrease: Decrease text size
+    font-increase: Increase text size
+    bubble: Bubbles
+    bubble-decrease: Smaller bubbles
+    bubble-increase: Larger bubbles
+    bubble-0: Smallest
+    bubble-1: Compact
+    bubble-2: Standard
+    bubble-3: Roomy
+    bubble-4: Largest
+    reset: Restore defaults
   voice-input: Voice input
   error-details:
     show: Show details

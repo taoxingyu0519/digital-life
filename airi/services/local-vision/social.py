@@ -38,6 +38,7 @@ class SocialLearning:
         self.track = None
         self.name = ''
         self.person = None
+        self.origin_anonymous = False
         self.started = 0
         self.last_sample = 0
         self.samples = []
@@ -52,6 +53,13 @@ class SocialLearning:
         self.events = set()
 
     def ask(self, track):
+        # A camera greeting can be retried while a person is replying or samples are collected.
+        # Reopening that same invitation must not erase confirmation, samples, or refusal.
+        if self.declined == track or (self.track == track and (
+                self.name_state != 'idle' or self.name or self.person or time.monotonic() < self.awaiting)):
+            if self.declined != track and self.track == track and self.person and not self.name:
+                self.awaiting = time.monotonic() + 120
+            return
         self.reset()
         self.track = track
         self.awaiting = time.monotonic() + 120
@@ -80,7 +88,7 @@ class SocialLearning:
         name = spoken_name(text, self.track == track and (now < self.awaiting or self.name_state == 'correcting'))
         rejected = bool(re.search(r'不(?:要|想|用).*(?:记|存|拍)|忘(?:掉|记)我|forget me|don.t remember', text, re.I))
         if rejected:
-            person = self.person or (identity.get('person_id') if identity.get('identity_status') == 'confirmed' else None)
+            person = self.person or self.rename_person or (identity.get('person_id') if identity.get('identity_status') == 'confirmed' else None)
             if person:
                 self.people.delete(person)
             self.reset()
@@ -101,9 +109,11 @@ class SocialLearning:
             name = spoken_name('叫我' + full_correction[2])
         if (name and name != candidate) or (name and self.name_state == 'idle'):
             previous = self.rename_person or self.person or (identity.get('person_id') if identity.get('identity_status') == 'confirmed' else None)
+            origin_anonymous = self.origin_anonymous
             self.reset()
             self.track, self.name, self.started, self.last_seen = track, name, now, now
             self.rename_person = previous
+            self.origin_anonymous = origin_anonymous
             self.name_state = 'confirming'
         elif correction and candidate:
             self.track, self.name = track, candidate
@@ -143,6 +153,13 @@ class SocialLearning:
         now = time.monotonic()
         if self.declined == track:
             return
+        if identity.get('identity_status') == 'unknown' and not self.name and not self.person:
+            self.track = track
+            self.person = self.people.anonymous(vector, pose, jpeg)
+            self.origin_anonymous = True
+            self.last_seen = now
+            self.samples = [vector]
+            self.photos = {pose: jpeg}
         self.review_identity(track, identity)
         if self.name_state in ('confirming', 'correcting'):
             return
@@ -176,10 +193,17 @@ class SocialLearning:
 
     def review_identity(self, track, identity):
         person = identity.get('person_id') if identity.get('identity_status') == 'confirmed' else None
-        if self.name_state == 'idle' and person and not self.people.name_confirmed(person):
+        if self.name_state == 'idle' and person and identity.get('display_name') and not self.people.name_confirmed(person):
             self.track, self.name, self.rename_person = track, identity['display_name'], person
             self.name_state = 'confirming'
             self.started = self.last_seen = time.monotonic()
+
+    def archive_person(self, track, identity):
+        if identity.get('identity_status') == 'confirmed':
+            return identity['person_id']
+        if self.track == track and self.origin_anonymous and self.declined != track:
+            return self.person or self.rename_person
+        return None
 
     def status(self):
         if self.name and time.monotonic() - self.started >= 180:

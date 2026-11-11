@@ -35,6 +35,10 @@ Do not omit optional dependencies when building an installer. Windows ARM64 and 
 
 ## Verification
 
+共享聊天定位改动还需运行 `vitest run --project browser src/renderer/components/chat-viewport-layout.browser.test.ts`。
+该浏览器测试检查长/短历史及流式尾部避开悬浮输入框，不启动 Electron 或真实模型。
+测试须挂载真实 Pinia，Windows 样式扫描路径统一使用 `/`。
+
 Run the focused runtime tests:
 
 ```sh

@@ -2,6 +2,7 @@ import { useTachie } from '@proj-airi/stage-ui-tachie'
 import { defineStore, storeToRefs } from 'pinia'
 
 import { useSettingsAnalytics } from './analytics'
+import { useSettingsChatReading } from './chat-reading'
 import { useSettingsControlsIsland } from './controls-island'
 import { useSettingsDeveloper } from './developer'
 import { useSettingsGeneral } from './general'
@@ -13,6 +14,7 @@ export * from './analytics'
 // Export sub-stores
 export * from './audio-device'
 export * from './beat-sync'
+export * from './chat-reading'
 export * from './controls-island'
 export * from './developer'
 export * from './general'
@@ -38,6 +40,7 @@ export const useSettings = defineStore('settings', () => {
   const tachie = useTachie()
   const controlsIsland = useSettingsControlsIsland()
   const developer = useSettingsDeveloper()
+  const chatReading = useSettingsChatReading()
 
   async function resetState() {
     await stageModel.resetState()
@@ -48,6 +51,7 @@ export const useSettings = defineStore('settings', () => {
     theme.resetState()
     controlsIsland.resetState()
     developer.resetState()
+    chatReading.resetState()
   }
 
   // Extract refs from sub-stores to maintain proper reactivity

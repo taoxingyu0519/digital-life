@@ -1,11 +1,11 @@
-﻿param([int]$ReadyTimeoutSeconds = 90)
+﻿param([int]$ReadyTimeoutSeconds = 90, [ValidateSet(5173,4173)][int]$WebPort = 5173)
 . (Join-Path $PSScriptRoot 'airi-env.ps1')
 $AiriRuntime = Join-Path $AiriWorkspace '.runtime'
 $AiriWebProcess = $null
 New-Item -ItemType Directory -Path $AiriRuntime -Force | Out-Null
 
 function Test-AiriWeb {
-    $AiriRequest = [Net.HttpWebRequest]::Create('http://127.0.0.1:5173/')
+    $AiriRequest = [Net.HttpWebRequest]::Create("http://127.0.0.1:$WebPort/")
     $AiriRequest.Proxy = $null
     $AiriRequest.Timeout = 3000
     try {
@@ -19,10 +19,10 @@ function Test-AiriWeb {
 }
 
 function Test-AiriVisionReady {
-    $AiriRequest = [Net.HttpWebRequest]::Create('http://127.0.0.1:5173/api/local-vision/health')
+    $AiriRequest = [Net.HttpWebRequest]::Create("http://127.0.0.1:$WebPort/api/local-vision/health")
     $AiriRequest.Proxy = $null
     $AiriRequest.Timeout = 3000
-    $AiriRequest.Headers['Origin'] = 'http://127.0.0.1:5173'
+    $AiriRequest.Headers['Origin'] = "http://127.0.0.1:$WebPort"
     $AiriRequest.Headers['X-Airi-Vision'] = '1'
     $AiriRequest.Headers['Sec-Fetch-Site'] = 'same-origin'
     try {
@@ -44,10 +44,10 @@ function Test-AiriPort([int]$Port) {
 
 $AiriWebReady = Test-AiriWeb
 if (-not $AiriWebReady) {
-    if (Test-AiriPort 5173) { throw '5173 已有服务，但不是健康的 AIRI 网页。请先检查日志，保留现有进程。' }
-    $AiriWebProcess = Start-Process powershell.exe -ArgumentList @('-NoProfile', '-ExecutionPolicy', 'Bypass', '-File', ('"' + (Join-Path $PSScriptRoot 'start-airi.ps1') + '"'), '-Mode', 'web') -WorkingDirectory $AiriWorkspace -WindowStyle Hidden -PassThru -RedirectStandardOutput (Join-Path $AiriRuntime 'web.log') -RedirectStandardError (Join-Path $AiriRuntime 'web-error.log')
+    if (Test-AiriPort $WebPort) { throw "端口 $WebPort 已有服务，但不是健康的 AIRI 网页。请先检查日志，保留现有进程。" }
+    $AiriWebProcess = Start-Process powershell.exe -ArgumentList @('-NoProfile', '-ExecutionPolicy', 'Bypass', '-File', ('"' + (Join-Path $PSScriptRoot 'start-airi.ps1') + '"'), '-Mode', 'web', '-WebPort', $WebPort) -WorkingDirectory $AiriWorkspace -WindowStyle Hidden -PassThru -RedirectStandardOutput (Join-Path $AiriRuntime 'web.log') -RedirectStandardError (Join-Path $AiriRuntime 'web-error.log')
     $AiriRecordedWeb = Get-Process -Id $AiriWebProcess.Id -ErrorAction Stop
-    @{pid=$AiriRecordedWeb.Id;started=$AiriRecordedWeb.StartTime.ToString('o');workspace=$AiriRepo;port=5173} | ConvertTo-Json | Set-Content -LiteralPath (Join-Path $AiriRuntime 'web-process.json') -Encoding utf8
+    @{pid=$AiriRecordedWeb.Id;started=$AiriRecordedWeb.StartTime.ToString('o');workspace=$AiriRepo;port=$WebPort} | ConvertTo-Json | Set-Content -LiteralPath (Join-Path $AiriRuntime 'web-process.json') -Encoding utf8
 } elseif (-not (Test-AiriPort 18765)) {
     & powershell.exe -NoProfile -ExecutionPolicy Bypass -File (Join-Path $PSScriptRoot 'vision.ps1') start
     if ($LASTEXITCODE -ne 0) { throw '视觉服务启动失败，请检查 .runtime/vision-service-error.log。' }
@@ -56,7 +56,7 @@ if (-not $AiriWebReady) {
 $AiriDeadline = [DateTime]::UtcNow.AddSeconds($ReadyTimeoutSeconds)
 do {
     if ((Test-AiriWeb) -and (Test-AiriVisionReady)) {
-        Write-Host 'AIRI 后台服务已就绪：网页 5173，视觉模型 ready=true。'
+        Write-Host "AIRI 后台服务已就绪：网页 $WebPort，视觉模型 ready=true。"
         exit 0
     }
     if ($AiriWebProcess -and $AiriWebProcess.HasExited) { throw 'Web 启动进程已退出，请检查 .runtime/web-error.log。' }

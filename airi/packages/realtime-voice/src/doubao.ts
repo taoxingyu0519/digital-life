@@ -66,6 +66,7 @@ export class DoubaoSession {
   private closed = false
   private ready = false
   private userId: string = randomUUID()
+  private userItemId?: string
   private assistantId: string = randomUUID()
   private userText = ''
   private assistantText = ''
@@ -74,9 +75,11 @@ export class DoubaoSession {
   private canceledResponseId?: string
   private suppressAudio = false
   private userSpeaking = false
+  private inputTurn = 0
   private readonly sessionPayload: ReturnType<typeof createDoubaoSession>
   private readonly pendingCalls = new Set<string>()
-  private readonly callNames = new Map<string, string>()
+  private readonly callOrigins = new Map<string, { name: string, turn: number, responseId?: string }>()
+  private readonly delegatedResponses = new Set<string>()
   private readonly completedCalls = new Set<string>()
   private readonly speechIds = new Set<string>()
   private readonly finishedAudio = new Set<string>()
@@ -145,6 +148,17 @@ export class DoubaoSession {
     this.stop()
   }
 
+  /** VAD and ASR starts can describe the same turn. Provider item IDs bind late finals without changing its displayed ID. */
+  private beginInput(itemId?: string) {
+    this.inputTurn++
+    this.userSpeaking = true
+    this.userItemId = itemId
+    this.userId = itemId ?? randomUUID()
+    this.userText = ''
+    this.delegated = false
+    this.interruptResponse()
+  }
+
   private receive(message: v.InferOutput<typeof providerEventSchema>) {
     switch (message.type) {
       case 'session.created':
@@ -154,12 +168,13 @@ export class DoubaoSession {
         break
       case 'input_audio_buffer.speech_started':
       case 'conversation.item.input_audio_transcription.started':
-        this.userSpeaking = true
-        this.delegated = false
-        this.interruptResponse()
-        if (message.type.endsWith('transcription.started')) {
-          this.userId = message.item_id ?? randomUUID()
-          this.userText = ''
+        if (!this.userSpeaking) {
+          this.beginInput(message.item_id)
+        }
+        else if (message.type.endsWith('transcription.started') && !this.userItemId) {
+          this.userItemId = message.item_id
+          if (!this.userText && message.item_id)
+            this.userId = message.item_id
         }
         break
       case 'conversation.item.input_audio_transcription.delta':
@@ -168,6 +183,11 @@ export class DoubaoSession {
         break
       case 'conversation.item.input_audio_transcription.result':
       case 'conversation.item.input_audio_transcription.completed':
+        // A complete ASR item also identifies a new turn when no start event preceded it.
+        if (!this.userSpeaking && message.item_id !== this.userItemId)
+          this.beginInput(message.item_id)
+        else if (this.userSpeaking && !this.userItemId)
+          this.userItemId = message.item_id
         // Cumulative and final text replace draft hypotheses, including corrected characters in a person's name.
         this.userText = message.transcript ?? message.text ?? this.userText
         this.transcript('user', message.type.endsWith('completed'))
@@ -181,7 +201,7 @@ export class DoubaoSession {
           break
         if (this.pendingSpeech && message.tts_type !== 'chat_tts_text')
           break
-        this.currentAudio = { responseId: message.response_id, speechId: message.tts_type === 'chat_tts_text' ? this.pendingSpeech : undefined, suppressed: message.tts_type === 'chat_tts_text' ? !this.pendingSpeech : this.delegated || !!this.pendingSpeech }
+        this.currentAudio = { responseId: message.response_id, speechId: message.tts_type === 'chat_tts_text' ? this.pendingSpeech : undefined, suppressed: message.tts_type === 'chat_tts_text' ? !this.pendingSpeech : this.delegated || this.delegatedResponses.has(message.response_id) || !!this.pendingSpeech }
         this.suppressAudio = this.currentAudio.suppressed
         if (this.suppressAudio)
           break
@@ -214,22 +234,30 @@ export class DoubaoSession {
           break
         for (const call of calls) {
           this.pendingCalls.add(call.call_id)
-          this.callNames.set(call.call_id, call.name)
+          this.callOrigins.set(call.call_id, { name: call.name, turn: this.inputTurn, responseId: message.response_id })
         }
         this.emit({ type: 'tools', calls })
         this.emit({ type: 'activity', speaking: this.userSpeaking, responding: false })
         break
       }
       case 'response.created':
+        if (message.response_id && (message.response_id === this.assistantId || this.completedResponses.has(message.response_id)))
+          break
+        if (!this.assistantFinished)
+          this.transcript('assistant', true, true)
+        this.assistantId = message.response_id ?? randomUUID()
+        this.assistantText = ''
+        this.assistantFinished = false
         this.suppressAudio = false
         break
       case 'response.output_text.delta':
       case 'response.output_text.done':
-        if (this.pendingSpeech || this.delegated)
+        if (this.pendingSpeech || this.delegated || (message.response_id && this.delegatedResponses.has(message.response_id)))
           break
         if (message.response_id && this.completedResponses.has(message.response_id))
           break
-        if (this.assistantFinished && message.type.endsWith('.done') && message.text === this.assistantText)
+        // Responses can legitimately repeat a short answer. Only an unkeyed repeat inside this response is a duplicate.
+        if (this.assistantFinished && !message.response_id && message.type.endsWith('.done') && message.text === this.assistantText)
           break
         if (message.response_id && message.response_id === this.canceledResponseId)
           break
@@ -242,8 +270,11 @@ export class DoubaoSession {
         this.assistantText = message.type.endsWith('.done') ? message.text ?? this.assistantText : this.assistantText + (message.delta ?? '')
         this.assistantFinished = message.type.endsWith('.done')
         this.transcript('assistant', this.assistantFinished)
-        if (this.assistantFinished && message.response_id)
+        if (this.assistantFinished && message.response_id) {
           this.completedResponses.add(message.response_id)
+          if (this.completedResponses.size > 256)
+            this.completedResponses.delete(this.completedResponses.values().next().value!)
+        }
         break
       case 'response.output_audio.delta': {
         if (!this.currentAudio || this.suppressAudio || this.currentAudio.suppressed || (message.response_id && message.response_id !== this.currentAudio.responseId))
@@ -347,17 +378,26 @@ export class DoubaoSession {
   toolResults(results: { callId: string, output: string }[]) {
     if (!this.ready || this.closed || results.some(result => !this.pendingCalls.has(result.callId)))
       return
-    const acceptance = results.some(result => this.callNames.get(result.callId) === 'spawn_thinking' && v.safeParse(v.object({ accepted: v.literal(true) }), JSON.parse(result.output)).success)
+    const accepted = results.flatMap((result) => {
+      const origin = this.callOrigins.get(result.callId)
+      return origin?.name === 'spawn_thinking' && v.safeParse(v.object({ accepted: v.literal(true) }), JSON.parse(result.output)).success ? [origin] : []
+    })
+    for (const origin of accepted) {
+      if (origin.responseId)
+        this.delegatedResponses.add(origin.responseId)
+    }
+    while (this.delegatedResponses.size > 256)
+      this.delegatedResponses.delete(this.delegatedResponses.values().next().value!)
     for (const result of results) {
       this.pendingCalls.delete(result.callId)
-      this.callNames.delete(result.callId)
+      this.callOrigins.delete(result.callId)
       this.completedCalls.add(result.callId)
     }
     if (this.completedCalls.size > 256)
       this.completedCalls.delete(this.completedCalls.values().next().value!)
     this.send({ type: 'conversation.item.create', event_id: randomUUID(), items: results.map(result => ({ call_id: result.callId, role: 'tool', content: [{ type: 'input_text', text: result.output }] })) })
-    if (acceptance) {
-      // Application TTS owns the acknowledgement and result. Cancel native continuation to keep one voice output.
+    if (!this.userSpeaking && accepted.some(origin => origin.turn === this.inputTurn)) {
+      // Application TTS owns this turn's acknowledgement. An older receipt cannot cancel a newer user response.
       this.delegated = true
       this.suppressAudio = true
       if (!this.pendingSpeech)

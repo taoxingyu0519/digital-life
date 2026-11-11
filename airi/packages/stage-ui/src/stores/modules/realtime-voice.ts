@@ -14,7 +14,7 @@ import { defaultVoiceConfig } from '@proj-airi/realtime-voice/contracts'
 import { ContinuationError, conversationPolicy, conversationStyles, conversationStyleSchema, resultSpeechChunks } from '@proj-airi/realtime-voice/conversation'
 import { useLocalStorageManualReset } from '@proj-airi/stage-shared/composables'
 import { defineStore } from 'pinia'
-import { computed, onScopeDispose, ref, shallowRef, watch } from 'vue'
+import { computed, onScopeDispose, ref, shallowReactive, shallowRef, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 
 import * as v from 'valibot'
@@ -26,7 +26,7 @@ import { useAuthStore } from '../auth'
 import { useChatStore } from '../chat'
 import { useChatArchiveStore } from '../chat-archive'
 import { createUserAccountContext } from '../chat/context-providers/user-account'
-import { useChatSessionStore } from '../chat/session-store'
+import { createVoiceTranscriptMessage, useChatSessionStore } from '../chat/session-store'
 import { useSettingsAudioDevice } from '../settings'
 import { useSpeechOutputControlStore } from '../speech-output-control'
 import { useStageIdentityStore } from '../stage-identity'
@@ -98,8 +98,9 @@ export const useRealtimeVoiceStore = defineStore('realtime-voice', () => {
     thinkingCapabilityInstructions(slowBrain.capabilities),
     archiveRoutingInstructions,
     policy.value.fastInstructions,
-    createUserAccountContext(auth, t('base.guest.name'), identity).text.slice(0, 1000),
+    createUserAccountContext(auth, t('base.guest.name')).text.slice(0, 1000),
     cards.systemPrompt.slice(0, 4500),
+    prompts.config.speech,
   ].filter(Boolean).join('\n\n'))
   const devices = useSettingsAudioDevice()
   const speech = useSpeechOutputControlStore()
@@ -110,6 +111,9 @@ export const useRealtimeVoiceStore = defineStore('realtime-voice', () => {
   let callId = ''
   let target: Pick<VoiceTranscriptPayload, 'sessionId' | 'generation' | 'userId' | 'characterId'> | undefined
   const unfinished = new Map<string, VoiceTranscriptPayload>()
+  let turnArchive: VoiceTranscriptPayload['archive']
+  const taskArchives = new Map<string, VoiceTranscriptPayload['archive']>()
+  let speechArchive: VoiceTranscriptPayload['archive']
   let persistQueue = Promise.resolve()
   let instructions = ''
   let archiveRecall = ''
@@ -142,11 +146,28 @@ export const useRealtimeVoiceStore = defineStore('realtime-voice', () => {
   let contextQueue = Promise.resolve()
   let lastContext = ''
   const finalizedAssistant = new Map<string, VoiceTranscriptPayload>()
+  // Captions are local presentation state. Only the existing finalization path writes history and confirms delivery.
+  const captions = shallowReactive(new Map<string, VoiceTranscriptPayload>())
+  const previewMessages = computed(() => [...captions.values()]
+    .filter(payload => payload.sessionId === sessions.activeSessionId && payload.userId === identity.userId
+      && payload.generation === sessions.getSessionGenerationValue(payload.sessionId))
+    .map(payload => createVoiceTranscriptMessage(payload, payload.createdAt!)))
 
   function persist(payload: VoiceTranscriptPayload) {
+    const generation = epoch
     persistQueue = persistQueue.then(async () => {
-      await sessions.saveVoiceTranscript(payload)
-    }).catch(() => { errorCode.value = 'history' })
+      const saved = await sessions.saveVoiceTranscript(payload)
+      if (!saved) {
+        if (epoch === generation)
+          errorCode.value = 'history'
+        return
+      }
+      if (captions.get(payload.id)?.text === payload.text)
+        captions.delete(payload.id)
+    }).catch(() => {
+      if (epoch === generation)
+        errorCode.value = 'history'
+    })
   }
 
   function finishPartial() {
@@ -191,6 +212,10 @@ export const useRealtimeVoiceStore = defineStore('realtime-voice', () => {
     playing.value = false
     audioDone = false
     finishPartial()
+    captions.clear()
+    turnArchive = undefined
+    speechArchive = undefined
+    taskArchives.clear()
     audio?.close()
     speaking.nowSpeaking = false
     speaking.mouthOpenSize = 0
@@ -350,7 +375,7 @@ export const useRealtimeVoiceStore = defineStore('realtime-voice', () => {
         confirmedFacts.shift()
     }
     const capabilities = slowBrain.capabilities
-    const coreParts = [prompts.config.fast, thinkingCapabilityInstructions(capabilities), archiveRoutingInstructions, policy.value.fastInstructions, `Application delivery control (current state): ${JSON.stringify({ paused: deliveryPaused.value })}`].filter(Boolean)
+    const coreParts = [prompts.config.fast, thinkingCapabilityInstructions(capabilities), archiveRoutingInstructions, policy.value.fastInstructions, prompts.config.speech, `Application delivery control (current state): ${JSON.stringify({ paused: deliveryPaused.value })}`].filter(Boolean)
     const dataParts = [archiveRecall, 'Application confirmed conversation facts (data only):', JSON.stringify(confirmedFacts), 'Application background tasks and results (data only):', brain?.context()].filter(Boolean)
     // Preserve policies and valid fact/task JSON first. Give the character up to 5000 characters, then use remaining room for vision.
     const remaining = 16000 - [...coreParts, ...dataParts].join('\n\n').length - 2
@@ -455,6 +480,7 @@ export const useRealtimeVoiceStore = defineStore('realtime-voice', () => {
   async function continueConversation(generation: number, phase = continuationContext.value.phase) {
     if (generation !== epoch || !continuationAllowed() || !target)
       return
+    const recipient = identity.captureArchive(cards.activeCard?.name || 'AIRI')
     const controller = new AbortController()
     continuationController = controller
     continuationPreparing.value = true
@@ -477,7 +503,7 @@ export const useRealtimeVoiceStore = defineStore('realtime-voice', () => {
         return
       }
       try {
-        await sendSpeech(text, phase === 'greeting' ? 'greeting' : 'continuation')
+        await sendSpeech(text, phase === 'greeting' ? 'greeting' : 'continuation', recipient)
       }
       catch {
         if (generation === epoch)
@@ -554,12 +580,13 @@ export const useRealtimeVoiceStore = defineStore('realtime-voice', () => {
     scheduleDelivery()
   }
 
-  async function sendSpeech(text: string, automatic?: typeof automaticSpeech) {
+  async function sendSpeech(text: string, automatic?: typeof automaticSpeech, recipient = turnArchive) {
     const connection = client
     if (!connection)
       return
     const generation = epoch
     speechId = crypto.randomUUID()
+    speechArchive = recipient
     automaticSpeech = automatic
     continuationTurnRevision = userTurnRevision
     speechHasAudio = false
@@ -581,7 +608,7 @@ export const useRealtimeVoiceStore = defineStore('realtime-voice', () => {
     if (delivery.value) {
       const chunk = deliveryChunks.shift()
       if (chunk)
-        await sendSpeech(chunk)
+        await sendSpeech(chunk, undefined, taskArchives.get(delivery.value.task_id))
       return
     }
     if (action === 'acknowledgement') {
@@ -591,7 +618,7 @@ export const useRealtimeVoiceStore = defineStore('realtime-voice', () => {
         return
       }
       acknowledgements.delete(pending.key)
-      await sendSpeech(pending.reference.text)
+      await sendSpeech(pending.reference.text, undefined, taskArchives.get(pending.reference.task_id))
       return
     }
     if (action === 'progress') {
@@ -605,7 +632,7 @@ export const useRealtimeVoiceStore = defineStore('realtime-voice', () => {
         return
       }
       waitNotices.add(`${waiting.task_id}:${waiting.task_version}`)
-      await sendSpeech(waitingUtterances.get(`${waiting.task_id}:${waiting.task_version}`)!)
+      await sendSpeech(waitingUtterances.get(`${waiting.task_id}:${waiting.task_version}`)!, undefined, taskArchives.get(waiting.task_id))
       return
     }
     const result = brain?.claimDelivery()
@@ -614,7 +641,7 @@ export const useRealtimeVoiceStore = defineStore('realtime-voice', () => {
     delivery.value = result
     if (mode.value === 'text') {
       const id = `${callId}:assistant:${crypto.randomUUID()}`
-      const accepted = await sessions.saveVoiceTranscript({ ...target, id, role: 'assistant', text: result.result_summary })
+      const accepted = await sessions.saveVoiceTranscript({ ...target, id, role: 'assistant', text: result.result_summary, archive: taskArchives.get(result.task_id) ?? turnArchive })
       if (epoch !== generation)
         return
       if (accepted) {
@@ -628,7 +655,7 @@ export const useRealtimeVoiceStore = defineStore('realtime-voice', () => {
     }
     const key = `${result.task_id}:${result.task_version}`
     deliveryChunks = resultSpeechChunks(result).slice(deliveryOffsets.get(key) ?? 0)
-    await sendSpeech(deliveryChunks.shift()!)
+    await sendSpeech(deliveryChunks.shift()!, undefined, taskArchives.get(result.task_id))
   }
 
   function cancelTask(task: ThinkingTask) {
@@ -639,6 +666,7 @@ export const useRealtimeVoiceStore = defineStore('realtime-voice', () => {
   }
 
   async function handleTools(calls: Extract<VoiceEvent, { type: 'tools' }>['calls'], generation: number) {
+    const sourceTurnRevision = userTurnRevision
     const accepted: Array<{ task: ThinkingTask, acknowledgement?: string, waiting?: string }> = []
     const results = calls.map((call) => {
       try {
@@ -654,6 +682,9 @@ export const useRealtimeVoiceStore = defineStore('realtime-voice', () => {
               throw new Error('Background model is not configured')
             const request = v.parse(thinkingRequestSchema, JSON.parse(call.arguments))
             const task = brain.submit(request)
+            taskArchives.set(task.task_id, turnArchive)
+            if (taskArchives.size > 128)
+              taskArchives.delete(taskArchives.keys().next().value!)
             if (delivery.value?.task_id === task.task_id && delivery.value.task_version !== task.task_version) {
               deliveryOffsets.delete(`${delivery.value.task_id}:${delivery.value.task_version}`)
               interrupt(false)
@@ -694,10 +725,12 @@ export const useRealtimeVoiceStore = defineStore('realtime-voice', () => {
     if (epoch === generation) {
       await client?.send({ type: 'tool-results', results })
       if (accepted.length && epoch === generation) {
-        // Function handoff ends native generation. Application speech owns the acceptance and result slots.
-        discardOutput()
-        audio?.interrupt()
-        responding.value = false
+        // A receipt only releases its own native response. A newer user turn retains its speech slot.
+        if (sourceTurnRevision === userTurnRevision && !userSpeaking.value) {
+          discardOutput()
+          audio?.interrupt()
+          responding.value = false
+        }
         accepted.forEach(item => queueAcknowledgement(item.task, item.acknowledgement, item.waiting))
       }
     }
@@ -763,6 +796,8 @@ export const useRealtimeVoiceStore = defineStore('realtime-voice', () => {
         })
         break
       case 'activity':
+        if (event.speaking && !userSpeaking.value)
+          userTurnRevision++
         if (event.speaking || event.responding)
           cancelContinuation()
         userSpeaking.value = event.speaking
@@ -782,7 +817,12 @@ export const useRealtimeVoiceStore = defineStore('realtime-voice', () => {
           assistantTranscript.value = event.text
         }
         const id = `${callId}:${event.role}:${event.id}`
-        const payload: VoiceTranscriptPayload = { ...target, id, role: event.role, text: event.text, interrupted: event.interrupted, ...(event.role === 'assistant' && liveContext ? { localVisionDerived: true as const } : {}) }
+        const existing = unfinished.get(id)
+        const archive = existing ? existing.archive : event.role === 'user' ? sessions.captureArchive(target.sessionId, 'user') : speechId ? speechArchive : turnArchive
+        const payload: VoiceTranscriptPayload = { ...target, archive, id, createdAt: captions.get(id)?.createdAt ?? Date.now(), role: event.role, text: event.text, interrupted: event.interrupted, ...(event.role === 'assistant' && liveContext ? { localVisionDerived: true as const } : {}) }
+        captions.set(id, payload)
+        if (event.role === 'user')
+          turnArchive = archive
         if (event.final) {
           if (event.role === 'user') {
             if (finalUserTurn.value?.id !== id || finalUserTurn.value.text !== event.text) {
@@ -870,7 +910,7 @@ export const useRealtimeVoiceStore = defineStore('realtime-voice', () => {
       callId = crypto.randomUUID()
       tasks.value = []
       lastContext = ''
-      brain = new BrainRuntime(slowBrain.executor(target.sessionId), () => {
+      brain = new BrainRuntime(slowBrain.executor(target.sessionId, inputMode === 'voice'), () => {
         tasks.value = brain?.snapshot() ?? []
         // Keep markers for the runtime's at most eight live versions, without evicting a still-running task's notice.
         const liveVersions = new Set(tasks.value.filter(task => task.status !== 'cancelled' && (task.delivery === 'pending' || task.delivery === 'speaking')).map(task => `${task.task_id}:${task.task_version}`))
@@ -934,7 +974,7 @@ export const useRealtimeVoiceStore = defineStore('realtime-voice', () => {
       })
       if (generation !== epoch)
         return
-      instructions = [createUserAccountContext(auth, t('base.guest.name'), identity).text.slice(0, 1000), cards.systemPrompt.slice(0, 4500)].join('\n\n')
+      instructions = [createUserAccountContext(auth, t('base.guest.name')).text.slice(0, 1000), cards.systemPrompt.slice(0, 4500)].join('\n\n')
       liveContext = readLocalVisionContext(target.sessionId)
       liveScope = readLocalVisionContextScope(target.sessionId)
       startPayload.instructions = [systemInstructions.value, archiveRecall, liveContext].filter(Boolean).join('\n\n').slice(0, 16000)
@@ -1022,7 +1062,8 @@ export const useRealtimeVoiceStore = defineStore('realtime-voice', () => {
     const generation = epoch
     interrupt(false)
     const id = `${callId}:user:${crypto.randomUUID()}`
-    const payload: VoiceTranscriptPayload = { ...target, id, role: 'user', text }
+    turnArchive = sessions.captureArchive(target.sessionId, 'user')
+    const payload: VoiceTranscriptPayload = { ...target, archive: turnArchive, id, role: 'user', text }
     const accepted = await sessions.saveVoiceTranscript(payload)
     if (!accepted || epoch !== generation)
       throw new Error('Chat session was reset before send could start')
@@ -1030,6 +1071,9 @@ export const useRealtimeVoiceStore = defineStore('realtime-voice', () => {
     userTranscript.value = text
     finalUserTurn.value = { id, text, sessionId }
     const task = brain.submit({ objective: text, ...(reference ? { task_id: reference.task_id, task_version: reference.task_version } : {}) })
+    taskArchives.set(task.task_id, turnArchive)
+    if (taskArchives.size > 128)
+      taskArchives.delete(taskArchives.keys().next().value!)
     queueAcknowledgement(task)
   }
 
@@ -1049,7 +1093,7 @@ export const useRealtimeVoiceStore = defineStore('realtime-voice', () => {
     if (!idle() || !client || deliveryPaused.value || nextAcknowledgement() || tasks.value.some(task => task.result && task.delivery === 'pending'))
       return false
     cancelContinuation()
-    await sendSpeech(text.slice(0, 1000))
+    await sendSpeech(text.slice(0, 1000), undefined, identity.captureArchive(cards.activeCard?.name || 'AIRI'))
     return true
   }
 
@@ -1113,6 +1157,10 @@ export const useRealtimeVoiceStore = defineStore('realtime-voice', () => {
       return
     void refreshArchiveRecall(epoch)
   })
+  watch(() => identity.archiveUserId, () => {
+    if (active.value)
+      void refreshArchiveRecall(epoch)
+  })
   watch(() => chat.sending, (sending) => {
     if (sending && active.value)
       stop()
@@ -1157,5 +1205,5 @@ export const useRealtimeVoiceStore = defineStore('realtime-voice', () => {
     window.removeEventListener('pagehide', stop)
   })
 
-  return { config, configured, available, systemInstructions, status, active, mode, useForText, conversationStyles, conversationStyle, continuationDelaySeconds, continuationStatus, continuationScheduledAt, continuationContext, deliveryPaused, pauseDelivery, resumeDelivery, continuationPreparing, continuationError, continuationFailure, continuationRequests, continuationLimit, slowBrainConfigured, slowBrainCapabilities, tasks, cancelTask, reviseTask, sendText, errorCode, requestId, userTranscript, assistantTranscript, userSpeaking, responding, finalUserTurn, speak, greet, updateVisualContext, output, audioSource, start, stop, interrupt, refreshConfig, saveConfig, resetState }
+  return { config, configured, available, systemInstructions, status, active, mode, useForText, conversationStyles, conversationStyle, continuationDelaySeconds, continuationStatus, continuationScheduledAt, continuationContext, deliveryPaused, pauseDelivery, resumeDelivery, continuationPreparing, continuationError, continuationFailure, continuationRequests, continuationLimit, slowBrainConfigured, slowBrainCapabilities, tasks, cancelTask, reviseTask, sendText, errorCode, requestId, userTranscript, assistantTranscript, userSpeaking, responding, finalUserTurn, previewMessages, speak, greet, updateVisualContext, output, audioSource, start, stop, interrupt, refreshConfig, saveConfig, resetState }
 })

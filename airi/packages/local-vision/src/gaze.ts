@@ -14,7 +14,8 @@ export class FaceGaze {
   private position?: { x: number, y: number }
 
   update(frame: FrameResult | undefined, source: VisionSource | undefined, ageMs: number, allowed: boolean, deltaSeconds: number) {
-    if (!allowed || !source || !frame || !sameSource(frame.snapshot, source) || ageMs > 500 || ageMs < 0) {
+    // One-Hz inference needs a complete sampling interval plus transport time before gaze returns to idle.
+    if (!allowed || !source || !frame || !sameSource(frame.snapshot, source) || ageMs > Math.min(1500, frame.snapshot.valid_for_ms) || ageMs < 0) {
       this.clear()
       return undefined
     }

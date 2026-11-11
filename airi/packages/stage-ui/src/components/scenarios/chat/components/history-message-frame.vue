@@ -1,16 +1,21 @@
 <script setup lang="ts">
+import type { ChatHistoryItem } from '../../../../types/chat'
 import type { SwipeableSlotProps } from '../../../gestures'
 
 import { useElementVisibility } from '@vueuse/core'
-import { computed, useTemplateRef } from 'vue'
+import { computed, onMounted, useTemplateRef } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { useWebHaptics } from 'web-haptics/vue'
 
+import { useStageIdentityStore } from '../../../../stores/stage-identity'
 import { Swipeable } from '../../../gestures'
 
 const props = withDefaults(defineProps<{
   scrollContainer?: HTMLElement | null
   variant?: 'desktop' | 'mobile'
   replyEnabled?: boolean
+  archive?: ChatHistoryItem['archive']
+  role?: ChatHistoryItem['role']
 }>(), {
   replyEnabled: false,
   scrollContainer: null,
@@ -29,6 +34,20 @@ const isVisible = useElementVisibility(messageRef, {
 })
 
 const { trigger: triggerHaptic } = useWebHaptics()
+const identity = useStageIdentityStore()
+const { t } = useI18n()
+const archiveLabel = computed(() => {
+  const archive = props.archive
+  if (!archive?.personId)
+    return props.role === 'user' || props.role === 'assistant' ? `${archive?.characterName || 'AIRI'}-${t('settings.chat-archive.unassigned')}` : ''
+  const name = identity.names[archive.personId] || archive.displayName || `${t('base.guest.name')} · ${archive.personId.slice(0, 8)}`
+  return `${archive.characterName}-${name}`
+})
+onMounted(() => {
+  void identity.loadNames().catch(() => {
+    // The message's saved name remains usable when the optional name directory cannot be read.
+  })
+})
 
 function getReplyIconStyle(swipe: SwipeableSlotProps) {
   const offset = Math.abs(swipe.offset)
@@ -52,6 +71,9 @@ function getReplyIconStyle(swipe: SwipeableSlotProps) {
       variant === 'mobile' ? 'pb-1' : 'pb-2',
     ]"
   >
+    <p v-if="archiveLabel" :data-archive-person="archive?.personId" :class="['mb-0.5 truncate text-[10px] leading-tight text-neutral-500 dark:text-neutral-400', role === 'user' && variant === 'desktop' ? 'text-right' : 'text-left']">
+      {{ archiveLabel }}
+    </p>
     <Swipeable
       v-slot="swipe"
       :enabled="replyEnabled"

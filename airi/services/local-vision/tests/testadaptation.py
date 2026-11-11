@@ -37,8 +37,8 @@ class AdaptationTests(unittest.TestCase):
         self.base = Encoder().feature(None)
         self.now = 0
 
-    def sample(self, cosine=1, quality='accepted', track='1', box=None):
-        self.now += .3
+    def sample(self, cosine=1, quality='accepted', track='1', box=None, interval=.3):
+        self.now += interval
         body = box or [0, 0, 1, 1]
         self.learning.frame([(track, body)], self.now)
         vector = np.zeros(512, np.float32)
@@ -74,6 +74,14 @@ class AdaptationTests(unittest.TestCase):
         self.people.revoke_extensions(self.person, records[0]['round_id'])
         self.assertLess(self.gallery.scores(vector)[0][0], .55)
         self.assertEqual(len(self.people.profile(self.person, 'airi')['poses']), 1)
+
+    def test_one_hz_with_jitter_still_requires_base_confirmation_before_and_after_learning(self):
+        for cosine in (1, 1, 1, .85, .65, .45):
+            self.sample(cosine, interval=1.02)
+        self.assertEqual(self.people.extension_records(self.person), [])
+        for cosine in (.65, .85, 1, 1, 1):
+            self.sample(cosine, interval=1.02)
+        self.assertEqual(len(self.people.extension_records(self.person)), 1)
 
     def test_face_loss_body_jump_or_long_gap_prevents_learning_even_after_same_face_returns(self):
         for disruption in ('lost', 'jump', 'gap', 'multiple'):

@@ -37,7 +37,7 @@ const actorSchema = pipe(strictObject({
   display_name: nullable(pipe(string(), maxLength(64))),
   visible_cues: pipe(array(picklist(['head_facing_camera', 'hand_visible', 'mouth_corner_raised'])), maxLength(8)),
 }), check(actor => actor.identity_status === 'confirmed'
-  ? !!actor.person_id && !!actor.display_name
+  ? !!actor.person_id && actor.display_name !== null
   : actor.person_id === null && actor.display_name === null))
 
 export const observationSchema = strictObject({
@@ -81,7 +81,8 @@ export const frameResultSchema = strictObject({
 })
 export type FrameResult = InferOutput<typeof frameResultSchema>
 
-export const personsSchema = array(strictObject({ person_id: id, display_name: pipe(string(), maxLength(64)) }))
+const personSchema = strictObject({ person_id: id, display_name: pipe(string(), maxLength(64)) })
+export const personsSchema = array(personSchema)
 export type VisionPerson = InferOutput<typeof personsSchema>[number]
 
 export const learningSchema = strictObject({
@@ -94,6 +95,7 @@ export const learningSchema = strictObject({
   name_state: picklist(['idle', 'confirming', 'correcting', 'confirmed']),
 })
 export const socialSchema = strictObject({
+  recipient: nullable(personSchema),
   learning: learningSchema,
   rules: array(strictObject({ id, text: pipe(string(), maxLength(2000)), updated_at: number() })),
   profile: nullable(strictObject({

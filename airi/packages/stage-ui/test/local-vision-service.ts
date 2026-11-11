@@ -13,7 +13,7 @@ export function visionServiceFixture(): Plugin {
     configureServer(server) {
       const sockets = new WebSocketServer({ noServer: true })
       const bindings = new Map<string, { session_binding_id: string, source_id: string, epoch: number, privacy_generation: number }>()
-      const scenes = new Map<string, { actors: Observation['payload']['actors'], paused?: boolean, nameState?: SocialState['learning']['name_state'] }>()
+      const scenes = new Map<string, { actors: Observation['payload']['actors'], paused?: boolean, nameState?: SocialState['learning']['name_state'], learning?: SocialState['learning'], turns?: Array<SocialState['learning']> }>()
       let introduced = false
       server.httpServer?.on('close', () => sockets.close())
       server.httpServer?.on('upgrade', (request, socket, head) => {
@@ -98,6 +98,14 @@ export function visionServiceFixture(): Plugin {
         if (action === 'ticket')
           return response.end(JSON.stringify({ ticket: binding }))
         if (action === 'conversation') {
+          const scene = scenes.get(binding)
+          if (scene?.turns) {
+            const learning = scene.turns.shift()
+            if (!learning)
+              return response.writeHead(409).end('{"error":"unexpected-turn"}')
+            scene.learning = learning
+            return response.end(JSON.stringify({ learning }))
+          }
           introduced = true
           return response.end(JSON.stringify({ learning: { name: 'Alex', person_id: 'alex', samples: 10, poses: ['front'], learning: false, awaiting_name: false, name_state: 'confirmed' } }))
         }
@@ -108,9 +116,9 @@ export function visionServiceFixture(): Plugin {
           if (scene) {
             const actor = scene.actors.length === 1 ? scene.actors[0] : undefined
             const known = actor?.identity_status === 'confirmed'
-            return response.end(JSON.stringify({ learning: { name: known ? actor.display_name : '', person_id: known ? actor.person_id : null, samples: 0, poses: [], learning: false, awaiting_name: false, name_state: scene.nameState ?? 'idle' }, rules: [], profile: known ? { person_id: actor.person_id, display_name: actor.display_name, poses: ['front'], memories: [], created_at: 1, last_seen: 2 } : null }))
+            return response.end(JSON.stringify({ learning: scene.learning ?? { name: known ? actor.display_name : '', person_id: known ? actor.person_id : null, samples: 0, poses: [], learning: false, awaiting_name: false, name_state: scene.nameState ?? 'idle' }, rules: [], recipient: known ? { person_id: actor.person_id, display_name: actor.display_name } : null, profile: known ? { person_id: actor.person_id, display_name: actor.display_name, poses: ['front'], memories: [], created_at: 1, last_seen: 2 } : null }))
           }
-          return response.end(JSON.stringify({ learning: { name: '', person_id: null, samples: 0, poses: [], learning: false, awaiting_name: !introduced, name_state: 'idle' }, rules: [], profile: introduced ? { person_id: 'alex', display_name: 'Alex', poses: ['front'], memories: [{ text: 'My name is Alex', at: 1 }], created_at: 1, last_seen: 2 } : null }))
+          return response.end(JSON.stringify({ learning: { name: '', person_id: null, samples: 0, poses: [], learning: false, awaiting_name: !introduced, name_state: 'idle' }, rules: [], recipient: introduced ? { person_id: 'alex', display_name: 'Alex' } : null, profile: introduced ? { person_id: 'alex', display_name: 'Alex', poses: ['front'], memories: [{ text: 'My name is Alex', at: 1 }], created_at: 1, last_seen: 2 } : null }))
         }
         response.writeHead(404).end('{}')
       })
